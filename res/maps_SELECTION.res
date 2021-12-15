@@ -1,0 +1,2 @@
+IMAGE image_SELECTION_BGB "maps/selection/tiles_SELECTION_BGB.png" BEST DUPLICATE
+IMAGE image_SELECTION_BGA "maps/selection/tiles_SELECTION_BGA.png" BEST DUPLICATE

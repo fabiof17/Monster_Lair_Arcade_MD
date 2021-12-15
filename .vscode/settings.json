@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "sprites.h": "c",
+        "xutility": "c",
+        "variables.h": "c",
+        "maps_ecran_titre.h": "c",
+        "type_traits": "c",
+        "xtr1common": "c",
+        "palettes.h": "c",
+        "main.h": "c",
+        "sprites_jeu.h": "c",
+        "init.h": "c",
+        "routines.h": "c",
+        "maps_niveau1.h": "c",
+        "gestionpad.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
