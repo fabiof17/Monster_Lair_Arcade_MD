@@ -130,18 +130,11 @@ void creaEnnemis_Niveau1()
                 // Si on trouve un emplacement vide
                 if(ptrEnnemi->Init==0)
                 {
+                    tileID_ENNEMI=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
                     // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
                     // tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis] : PosY
                     // tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis] : ID
-                    tileID_ENNEMI=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
 
-                    ptrEnnemi->Init=1;
-                    ptrEnnemi->Phase=1;
-                    ptrEnnemi->PointsVie=1;
-                    ptrEnnemi->PosX=328;
-                    ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
-                    ptrEnnemi->CompteurFrame=i;
-                    ptrEnnemi->IndexFrame=0;
                     
                     switch(tileID_ENNEMI)
                     {
@@ -150,7 +143,14 @@ void creaEnnemis_Niveau1()
                         /////////////////
                         case 1:
 
+                            ptrEnnemi->Init=1;
                             ptrEnnemi->ID=1;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
 
                             ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_H, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
                             SPR_setAnim(ptrEnnemi->SpriteE,0);
@@ -163,7 +163,14 @@ void creaEnnemis_Niveau1()
                         /////////////////////
                         case 2:
 
+                            ptrEnnemi->Init=1;
                             ptrEnnemi->ID=2;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
 
                             ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
                             SPR_setAnim(ptrEnnemi->SpriteE,0);                    
@@ -178,7 +185,14 @@ void creaEnnemis_Niveau1()
                         ////////////
                         case 3:
 
+                            ptrEnnemi->Init=1;
                             ptrEnnemi->ID=3;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
 
                             ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
                             SPR_setAnim(ptrEnnemi->SpriteE,0);                    
@@ -193,13 +207,61 @@ void creaEnnemis_Niveau1()
                         /////////////////
                         case 4:
 
-                            ptrEnnemi->ID=4;
-
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=1;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
                             ptrEnnemi->PosX=323;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
                             ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_V, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
                             SPR_setAnim(ptrEnnemi->SpriteE,0);                    
 
 
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        /////////////////////////
+                        // BULOTS DOUBLE BOULE //
+                        /////////////////////////
+                        case 5:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=5;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);                    
+
+
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        //////////////////////////////
+                        // ESCARGOTS H BOULE DE FEU //
+                        //////////////////////////////
+                        case 6:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=6;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_H, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);
 
                             indexCreaEnnemis++;
                             return;
@@ -339,6 +401,76 @@ void mvtEnnemis_Niveau1()
                     /////////////////
                     case 4:
                         
+                        ptrEnnemi->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame==8)
+                        {
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 12 (13 étapes)
+                            if(ptrEnnemi->IndexFrame==13)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
+
+                    /////////////////////////
+                    // BULOTS DOUBLE BOULE //
+                    /////////////////////////
+                    case 5:
+
+                        ptrEnnemi->PosX-=(vitesseScrolling+1);
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 6 images (0 à 5)
+                        if(ptrEnnemi->CompteurFrame==6)
+                        {
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 3 (4 étapes)
+                            if(ptrEnnemi->IndexFrame==4)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
+
+                    //////////////////////////////
+                    // ESCARGOTS H BOULE DE FEU //
+                    //////////////////////////////
+                    case 6:
+
                         ptrEnnemi->PosX-=vitesseScrolling;
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
