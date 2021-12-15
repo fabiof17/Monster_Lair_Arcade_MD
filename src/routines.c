@@ -138,7 +138,7 @@ void creaEnnemis_Niveau1()
                     ptrEnnemi->Init=1;
                     ptrEnnemi->Phase=1;
                     ptrEnnemi->PointsVie=1;
-                    ptrEnnemi->PosX=336;
+                    ptrEnnemi->PosX=328;
                     ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
                     ptrEnnemi->CompteurFrame=i;
                     ptrEnnemi->IndexFrame=0;
@@ -150,58 +150,59 @@ void creaEnnemis_Niveau1()
                         /////////////////
                         case 1:
 
-                        ptrEnnemi->ID=1;
+                            ptrEnnemi->ID=1;
 
-                        ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_H, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
-                        SPR_setAnim(ptrEnnemi->SpriteE,0);
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_H, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);
 
-                        indexCreaEnnemis++;
-                        return;
+                            indexCreaEnnemis++;
+                            return;
 
                         /////////////////////
                         // BULOTS SHURIKEN //
                         /////////////////////
                         case 2:
 
-                        ptrEnnemi->ID=2;
+                            ptrEnnemi->ID=2;
 
-                        ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
-                        SPR_setAnim(ptrEnnemi->SpriteE,0);                    
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);                    
 
 
 
-                        indexCreaEnnemis++;
-                        return;
+                            indexCreaEnnemis++;
+                            return;
  
                         ////////////
                         // BULOTS //
                         ////////////
                         case 3:
 
-                        ptrEnnemi->ID=3;
+                            ptrEnnemi->ID=3;
 
-                        ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
-                        SPR_setAnim(ptrEnnemi->SpriteE,0);                    
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);                    
 
 
 
-                        indexCreaEnnemis++;
-                        return;
+                            indexCreaEnnemis++;
+                            return;
  
                         /////////////////
                         // ESCARGOTS V //
                         /////////////////
                         case 4:
 
-                        ptrEnnemi->ID=4;
+                            ptrEnnemi->ID=4;
 
-                        ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_V, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
-                        SPR_setAnim(ptrEnnemi->SpriteE,0);                    
+                            ptrEnnemi->PosX=323;
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_V, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);                    
 
 
 
-                        indexCreaEnnemis++;
-                        return;
+                            indexCreaEnnemis++;
+                            return;
 
                     }
 
@@ -232,104 +233,142 @@ void mvtEnnemis_Niveau1()
                     // ESCARGOTS H //
                     /////////////////
                     case 1:
-                    ptrEnnemi->PosX-=vitesseScrolling;
-                    SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
-                    // Anim des tiles
-                    ptrEnnemi->CompteurFrame+=1;
+                        ptrEnnemi->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
-                    // MAJ des tiles toutes les 8 images (0 à 7)
-                    if(ptrEnnemi->CompteurFrame==8)
-                    {
-                        ptrEnnemi->CompteurFrame=0;
-                        ptrEnnemi->IndexFrame+=1;
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
 
-                        // Cycle de FRAME de 0 à 12 (13 étapes)
-                        if(ptrEnnemi->IndexFrame==13)
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame==8)
                         {
-                            ptrEnnemi->IndexFrame=0;
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 12 (13 étapes)
+                            if(ptrEnnemi->IndexFrame==13)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }
 
-                        SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
-                    }
-
-                    // Si l'ennemi sort de l'écran
-                    // 3 tiles (24 px) de large  
-                    if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
-                    {
-                        SPR_releaseSprite(ptrEnnemi->SpriteE);
-                        ptrEnnemi->Init=0;
-                    }
-                    break;
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
 
                     /////////////////////
                     // BULOTS SHURIKEN //
                     /////////////////////
                     case 2:
-                    ptrEnnemi->PosX-=(vitesseScrolling+1);
-                    SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
-                    // Anim des tiles
-                    ptrEnnemi->CompteurFrame+=1;
+                        ptrEnnemi->PosX-=(vitesseScrolling+1);
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
-                    // MAJ des tiles toutes les 6 images (0 à 5)
-                    if(ptrEnnemi->CompteurFrame==6)
-                    {
-                        ptrEnnemi->CompteurFrame=0;
-                        ptrEnnemi->IndexFrame+=1;
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
 
-                        // Cycle de FRAME de 0 à 3 (4 étapes)
-                        if(ptrEnnemi->IndexFrame==4)
+                        // MAJ des tiles toutes les 6 images (0 à 5)
+                        if(ptrEnnemi->CompteurFrame==6)
                         {
-                            ptrEnnemi->IndexFrame=0;
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 3 (4 étapes)
+                            if(ptrEnnemi->IndexFrame==4)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }
 
-                        SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
-                    }
-
-                    // Si l'ennemi sort de l'écran
-                    // 3 tiles (24 px) de large  
-                    if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
-                    {
-                        SPR_releaseSprite(ptrEnnemi->SpriteE);
-                        ptrEnnemi->Init=0;
-                    }
-                    break;
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
  
                     ////////////
                     // BULOTS //
                     ////////////
                     case 3:
-                    ptrEnnemi->PosX-=(vitesseScrolling+1);
-                    SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
-                    // Anim des tiles
-                    ptrEnnemi->CompteurFrame+=1;
+                        ptrEnnemi->PosX-=(vitesseScrolling+1);
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
-                    // MAJ des tiles toutes les 6 images (0 à 5)
-                    if(ptrEnnemi->CompteurFrame==6)
-                    {
-                        ptrEnnemi->CompteurFrame=0;
-                        ptrEnnemi->IndexFrame+=1;
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
 
-                        // Cycle de FRAME de 0 à 3 (4 étapes)
-                        if(ptrEnnemi->IndexFrame==4)
+                        // MAJ des tiles toutes les 6 images (0 à 5)
+                        if(ptrEnnemi->CompteurFrame==6)
                         {
-                            ptrEnnemi->IndexFrame=0;
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 3 (4 étapes)
+                            if(ptrEnnemi->IndexFrame==4)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }
 
-                        SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
-                    }
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
 
-                    // Si l'ennemi sort de l'écran
-                    // 3 tiles (24 px) de large  
-                    if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
-                    {
-                        SPR_releaseSprite(ptrEnnemi->SpriteE);
-                        ptrEnnemi->Init=0;
-                    }
-                    break;
- 
+                    /////////////////
+                    // ESCARGOTS V //
+                    /////////////////
+                    case 4:
+                        
+                        ptrEnnemi->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame==8)
+                        {
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 12 (13 étapes)
+                            if(ptrEnnemi->IndexFrame==13)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
+
                 }
 
             }

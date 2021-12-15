@@ -61,13 +61,14 @@ void MainLoop()
                 //Phases_Joueur();
                 //collision_Decor(Joueur);
 
-                /*monTexte=tileID_G +'0';
-                texte=&monTexte;
-                VDP_drawTextBG(BG_B, monTexte, 30, 10);*/
+                /*monTexte[0]=(char)indexCreaEnnemis;
+                texte=&monTexte[0];
+                
+                VDP_drawTextBG(BG_A, monTexte, 30, 10);*/
                 
                 updateScrolling_Niveau1();
 
-                //mvtEnnemis_Niveau1();
+
                 creaEnnemis_Niveau1();
                 mvtEnnemis_Niveau1();
             }

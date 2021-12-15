@@ -8,5 +8,6 @@ extern const SpriteDefinition tiles_Sprite_PAUSE2;
 extern const SpriteDefinition tiles_Sprite_Joueur_H;
 extern const SpriteDefinition tiles_Sprite_ESCARGOT_H;
 extern const SpriteDefinition tiles_Sprite_BULOT;
+extern const SpriteDefinition tiles_Sprite_ESCARGOT_V;
 
 #endif // _RES_SPRITES_JEU_H_
