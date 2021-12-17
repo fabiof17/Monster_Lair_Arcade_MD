@@ -266,6 +266,66 @@ void creaEnnemis_Niveau1()
                             indexCreaEnnemis++;
                             return;
 
+                        ///////////
+                        // MORSE //
+                        ///////////
+                        case 7:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=7;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_MORSE, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        //////////////
+                        // POULPE 1 //
+                        //////////////
+                        case 8:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=8;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_POULPE, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        //////////////
+                        // POULPE 2 //
+                        //////////////
+                        case 9:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=9;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_POULPE, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
                     }
 
                 }
@@ -500,6 +560,111 @@ void mvtEnnemis_Niveau1()
                             ptrEnnemi->Init=0;
                         }
                         break;
+
+                    ///////////
+                    // MORSE //
+                    ///////////
+                    case 7:
+
+                        ptrEnnemi->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                        /*
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame==8)
+                        {
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 12 (13 étapes)
+                            if(ptrEnnemi->IndexFrame==13)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }*/
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-48 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
+
+                    //////////////
+                    // POULPE 1 //
+                    //////////////
+                    case 8:
+
+                        ptrEnnemi->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                        /*
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame==8)
+                        {
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 12 (13 étapes)
+                            if(ptrEnnemi->IndexFrame==13)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }*/
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-64 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;                   
+
+                    //////////////
+                    // POULPE 2 //
+                    //////////////
+                    case 9:
+
+                        ptrEnnemi->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                        /*
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame==8)
+                        {
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 12 (13 étapes)
+                            if(ptrEnnemi->IndexFrame==13)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }*/
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-64 || ptrEnnemi->PosY>224 )
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break; 
 
                 }
 
