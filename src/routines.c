@@ -622,7 +622,7 @@ void mvtEnnemis_Niveau1()
                             ptrEnnemi->ptrPosition = &anim_POULPE1[0];
                         }
                         
-                        ptrEnnemi->PosY = (s16)ptrEnnemi->ptrPosition;
+                        ptrEnnemi->PosY = ptrEnnemi->*ptrPosition;
 
 
 
