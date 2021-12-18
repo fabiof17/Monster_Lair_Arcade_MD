@@ -1,6 +1,9 @@
 #ifndef _VARIABLES_H
 #define _VARIABLES_H
 
+#define MAX_ETAPES_POULPE1 50
+#define MAX_ETAPES_POULPE2 55
+
 ///////////////////////////////////
 //		Variables principales
 ///////////////////////////////////
@@ -62,15 +65,15 @@ extern SpriteJoueur_ *Joueur;
 typedef struct
 {
     Sprite* SpriteE;
-    u8 Init;                // Sprite créé ou non
-    u8 ID;                  // Type d'ennemi
-    u8 PointsVie;           // Nb points de vie
-    s16 PosX;               // Position X
-    s16 PosY;               // Position Y
-    u8 Phase;              // 1 = vivant / 2 = touché
-    u8 CompteurFrame;  // Compteur pour passer à la prochaine FRAME
-    u8 IndexFrame;     // Index des FRAME
-    //u8 Bonus;             // Type de bonus
+    u8 Init;                    // Sprite créé ou non
+    u8 ID;                      // Type d'ennemi
+    u8 PointsVie;               // Nb points de vie
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+    u8 Phase;                   // 1 = vivant / 2 = touché / 3 = mort
+    u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
+    u8 IndexFrame;              // Index de FRAME
+    s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpriteEnnemi_;
 
 extern SpriteEnnemi_ Ennemi[10];

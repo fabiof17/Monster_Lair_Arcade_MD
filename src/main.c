@@ -68,7 +68,6 @@ void MainLoop()
                 
                 updateScrolling_Niveau1();
 
-
                 creaEnnemis_Niveau1();
                 mvtEnnemis_Niveau1();
             }
