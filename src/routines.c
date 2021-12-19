@@ -568,7 +568,7 @@ void mvtEnnemis_Niveau1()
                     ///////////
                     case 7:
 
-                        ptrEnnemi->PosX-=vitesseScrolling;
+                        ptrEnnemi->PosX -= vitesseScrolling;
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
                         /*
                         // Anim des tiles
@@ -590,8 +590,8 @@ void mvtEnnemis_Niveau1()
                         }*/
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
-                        if(ptrEnnemi->PosX<-48 || ptrEnnemi->PosY>224 )
+                        // 6 tiles (48 px) de large  
+                        if(ptrEnnemi->PosX<-48 || ptrEnnemi->PosY>224)
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
@@ -603,31 +603,36 @@ void mvtEnnemis_Niveau1()
                     //////////////
                     case 8:
 
-                        ptrEnnemi->PosX-=vitesseScrolling;
+                        ptrEnnemi->PosX -= vitesseScrolling;
+                        ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
+
+                        //texte=(itoa(*(ptrEnnemi->ptrPosition)));                       
+                        //VDP_drawTextBG(BG_A, texte, 30, 10);
+
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+
+
+
+                        ptrEnnemi->ptrPosition++;
+                        
+                        if(ptrEnnemi->ptrPosition >= &ptrEnnemi->ptrPosition[MAX_ETAPES_POULPE1])
+                        {
+                            ptrEnnemi->ptrPosition=&anim_POULPE1[0];
+                        }
+                        
+
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
-                        if(ptrEnnemi->PosX<-64 || ptrEnnemi->PosY>224 )
+                        // 4 tiles (32 px) de large  
+                        if(ptrEnnemi->PosX<-32 || ptrEnnemi->PosY>224)
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            //break;
                         }
-                        break;
+
 
                         
-                        ptrEnnemi->ptrPosition++;
-                        
-                        if(ptrEnnemi->ptrPosition == &ptrEnnemi->ptrPosition[MAX_ETAPES_POULPE1])
-                        {
-                            ptrEnnemi->ptrPosition = &anim_POULPE1[0];
-                        }
-                        
-                        ptrEnnemi->PosY = *ptrEnnemi->ptrPosition;
-
-
-
-
-                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
                         /*
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
@@ -646,7 +651,7 @@ void mvtEnnemis_Niveau1()
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }*/
-
+                        break;
                   
 
                     //////////////
@@ -654,8 +659,32 @@ void mvtEnnemis_Niveau1()
                     //////////////
                     case 9:
 
-                        ptrEnnemi->PosX-=vitesseScrolling;
+                        ptrEnnemi->PosX -= vitesseScrolling;
+                        ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+
+
+
+                        ptrEnnemi->ptrPosition++;
+                        
+                        if(ptrEnnemi->ptrPosition >= &ptrEnnemi->ptrPosition[MAX_ETAPES_POULPE2])
+                        {
+                            ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+                        }
+                        
+
+
+                        // Si l'ennemi sort de l'écran
+                        // 4 tiles (32 px) de large  
+                        if(ptrEnnemi->PosX<-32 || ptrEnnemi->PosY>224)
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+
+
+                        
                         /*
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
@@ -674,14 +703,6 @@ void mvtEnnemis_Niveau1()
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }*/
-
-                        // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
-                        if(ptrEnnemi->PosX<-64 || ptrEnnemi->PosY>224 )
-                        {
-                            SPR_releaseSprite(ptrEnnemi->SpriteE);
-                            ptrEnnemi->Init=0;
-                        }
                         break; 
 
                 }

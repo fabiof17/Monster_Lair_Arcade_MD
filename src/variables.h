@@ -1,8 +1,8 @@
 #ifndef _VARIABLES_H
 #define _VARIABLES_H
 
-#define MAX_ETAPES_POULPE1 50
-#define MAX_ETAPES_POULPE2 55
+#define MAX_ETAPES_POULPE1 49
+#define MAX_ETAPES_POULPE2 54
 
 ///////////////////////////////////
 //		Variables principales
@@ -20,6 +20,8 @@ extern u16 GameOver;
 extern u16 PauseJeu;
 
 extern u8 num_Niveau;
+
+
 
 ///////////////////////////////////
 //		Variables scrolling
