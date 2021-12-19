@@ -606,7 +606,7 @@ void mvtEnnemis_Niveau1()
                         ptrEnnemi->PosX -= vitesseScrolling;
                         ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
 
-                        //texte=(itoa(*(ptrEnnemi->ptrPosition)));                       
+                        //texte=(itoa(*(ptrEnnemi->ptrPosition)));                     
                         //VDP_drawTextBG(BG_A, texte, 30, 10);
 
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
@@ -615,7 +615,7 @@ void mvtEnnemis_Niveau1()
 
                         ptrEnnemi->ptrPosition++;
                         
-                        if(ptrEnnemi->ptrPosition >= &ptrEnnemi->ptrPosition[MAX_ETAPES_POULPE1])
+                        if(ptrEnnemi->ptrPosition >= &anim_POULPE1[MAX_ETAPES_POULPE1])
                         {
                             ptrEnnemi->ptrPosition=&anim_POULPE1[0];
                         }
@@ -668,7 +668,7 @@ void mvtEnnemis_Niveau1()
 
                         ptrEnnemi->ptrPosition++;
                         
-                        if(ptrEnnemi->ptrPosition >= &ptrEnnemi->ptrPosition[MAX_ETAPES_POULPE2])
+                        if(ptrEnnemi->ptrPosition >= &anim_POULPE2[MAX_ETAPES_POULPE2])
                         {
                             ptrEnnemi->ptrPosition=&anim_POULPE2[0];
                         }
