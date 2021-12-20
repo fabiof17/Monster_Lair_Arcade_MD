@@ -80,6 +80,11 @@ void updateTiles_Niveau1()
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_PELICAN, DMA);
     }
+    else if(CamPosX<-3772 && CamPosX>-3774)
+    {
+        //PAL_setColors(49, &palette_NIVEAU1_BGA2, 6, DMA);
+        PAL_setPaletteColors(16, &palette_NIVEAU1_ESCARGOT, DMA);
+    }    
     else if(CamPosX<-4016 && CamPosX>-4018)
     {
         //PAL_setColors(49, &palette_NIVEAU1_BGA2, 6, DMA);
@@ -754,7 +759,7 @@ void mvtEnnemis_Niveau1()
                     /////////////
                     case 11:
 
-                        ptrEnnemi->PosX -= vitesseScrolling;
+                        ptrEnnemi->PosX-=(vitesseScrolling+1);
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
                         /*
                         // Anim des tiles
@@ -790,7 +795,7 @@ void mvtEnnemis_Niveau1()
                     //////////////////////
                     case 10:
 
-                        ptrEnnemi->PosX -= vitesseScrolling;
+                        ptrEnnemi->PosX-=(vitesseScrolling+1);
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
                         /*
                         // Anim des tiles

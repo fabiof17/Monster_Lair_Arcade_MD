@@ -75,7 +75,7 @@ typedef struct
     u8 Phase;                   // 1 = vivant / 2 = touché / 3 = mort
     u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
     u8 IndexFrame;              // Index de FRAME
-    s16 *ptrPosition;     // Pointeur dans le tableau de position
+    s16 *ptrPosition;           // Pointeur dans le tableau de position
 } SpriteEnnemi_;
 
 extern SpriteEnnemi_ Ennemi[10];
