@@ -15,3 +15,4 @@ SPRITE tiles_Sprite_BULOT "sprites/niveau1/tiles_BULOT.png" 3 3 NONE 0
 SPRITE tiles_Sprite_ESCARGOT_V "sprites/niveau1/tiles_ESCARGOT_V.png" 3 3 NONE 0
 SPRITE tiles_Sprite_MORSE "sprites/niveau1/tiles_MORSE.png" 6 5 NONE 0
 SPRITE tiles_Sprite_POULPE "sprites/niveau1/tiles_POULPE.png" 4 4 NONE 0
+SPRITE tiles_Sprite_PELICAN "sprites/niveau1/tiles_PELICAN.png" 3 3 NONE 0

@@ -76,7 +76,11 @@ void updateTiles_Niveau1()
 
 
     // CHANGEMENTS PALETTE
-    if(CamPosX<-4016 && CamPosX>-4018)
+    if(CamPosX<-2600 && CamPosX>-2602)
+    {
+        PAL_setPaletteColors(16, &palette_NIVEAU1_PELICAN, DMA);
+    }
+    else if(CamPosX<-4016 && CamPosX>-4018)
     {
         //PAL_setColors(49, &palette_NIVEAU1_BGA2, 6, DMA);
         PAL_setPaletteColors(48, &palette_NIVEAU1_BGA2, DMA);
@@ -328,6 +332,47 @@ void creaEnnemis_Niveau1()
                             indexCreaEnnemis++;
                             return;
 
+                        ///////////////
+                        //  PELICAN  //
+                        ///////////////
+                        case 10:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=10;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+                            //ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_PELICAN, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        ////////////////////////
+                        //  PELICAN SHURIKEN  //
+                        ////////////////////////
+                        case 11:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=11;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+                            //ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_PELICAN, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
                     }
 
                 }
@@ -343,6 +388,8 @@ void mvtEnnemis_Niveau1()
 {    
     if(CamPosX>-4336)
     {
+        
+        
         for(i=0;i<11;i++)
         {          
             SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
@@ -606,9 +653,6 @@ void mvtEnnemis_Niveau1()
                         ptrEnnemi->PosX -= vitesseScrolling;
                         ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
 
-                        //texte=(itoa(*(ptrEnnemi->ptrPosition)));                     
-                        //VDP_drawTextBG(BG_A, texte, 30, 10);
-
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
 
@@ -704,6 +748,77 @@ void mvtEnnemis_Niveau1()
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }*/
                         break; 
+
+                    /////////////
+                    // PELICAN //
+                    /////////////
+                    case 11:
+
+                        ptrEnnemi->PosX -= vitesseScrolling;
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                        /*
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame==8)
+                        {
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 12 (13 étapes)
+                            if(ptrEnnemi->IndexFrame==13)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }*/
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224)
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
+
+
+                    //////////////////////
+                    // PELICAN SHURIKEN //
+                    //////////////////////
+                    case 10:
+
+                        ptrEnnemi->PosX -= vitesseScrolling;
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                        /*
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame==8)
+                        {
+                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 12 (13 étapes)
+                            if(ptrEnnemi->IndexFrame==13)
+                            {
+                                ptrEnnemi->IndexFrame=0;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }*/
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224)
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                        }
+                        break;
 
                 }
 

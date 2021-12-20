@@ -44,8 +44,10 @@ u8 compteurTile=0; // 0 -> 7 //
 Sprite *sprite_Vie[3];
 Sprite *sprite_Pause[2];
 
-SpriteJoueur_ *Joueur;
+SpriteJoueur_ Joueur;
 SpriteEnnemi_ Ennemi[10];
+
+SpriteJoueur_ *ptrJoueur;
 
 // TILEMAPS
 Map *tilemapCollision;

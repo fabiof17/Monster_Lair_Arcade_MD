@@ -60,8 +60,8 @@ typedef struct
     u16 pt_Coll2_Y;
 } SpriteJoueur_;
 
-extern SpriteJoueur_ *Joueur;
-
+extern SpriteJoueur_ Joueur;
+extern SpriteJoueur_ *ptrJoueur;
 
 
 typedef struct

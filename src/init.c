@@ -484,19 +484,19 @@ void InitNiveau1()
     /* JOUEUR */
     /**********/
     // Création d'un pointeur de type "SpritePerso_" contenant la variable "Joueur".
-    //SpriteJoueur_ *Sp_Joueur=&Joueur;
+    ptrJoueur=&Joueur;
 
-    Joueur->SpriteJ = SPR_addSprite(&tiles_Sprite_Joueur_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_Joueur_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
 
     // HASE CHUTE DEBUT //
-    Joueur->phase=99;
+    ptrJoueur->phase=99;
 
     // ORIENTE DROITE //
-    Joueur->axe=0;
+    ptrJoueur->axe=0;
 
     // POSITION //
-    Joueur->PosX=0;
-    Joueur->PosY=128;
+    ptrJoueur->PosX=0;
+    ptrJoueur->PosY=128;
 
     /***********/
     /* ENNEMIS */
@@ -533,7 +533,7 @@ void InitNiveau1()
     VDP_setBackgroundColor(32);
 
     PAL_setPalette(PAL0, palette_NIVEAU1_WINDOW.data, DMA);
-    PAL_setPalette(PAL1, palette_NIVEAU1_ENNEMIS.data, DMA);
+    PAL_setPalette(PAL1, palette_NIVEAU1_ESCARGOT.data, DMA);
     PAL_setPalette(PAL2, palette_NIVEAU1_BGB.data, DMA);
     PAL_setPalette(PAL3, palette_NIVEAU1_BGA.data, DMA);
 
