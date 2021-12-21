@@ -76,18 +76,19 @@ void updateTiles_Niveau1()
 
 
     // CHANGEMENTS PALETTE
+    
     if(CamPosX<-2600 && CamPosX>-2602)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_PELICAN, DMA);
     }
+    
     else if(CamPosX<-3772 && CamPosX>-3774)
     {
-        //PAL_setColors(49, &palette_NIVEAU1_BGA2, 6, DMA);
         PAL_setPaletteColors(16, &palette_NIVEAU1_ESCARGOT, DMA);
-    }    
+    }
+
     else if(CamPosX<-4016 && CamPosX>-4018)
     {
-        //PAL_setColors(49, &palette_NIVEAU1_BGA2, 6, DMA);
         PAL_setPaletteColors(48, &palette_NIVEAU1_BGA2, DMA);
     }
 
@@ -457,8 +458,8 @@ void mvtEnnemis_Niveau1()
                             ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
-                            // Cycle de FRAME de 0 à 3 (4 étapes)
-                            if(ptrEnnemi->IndexFrame==4)
+                            // Cycle de FRAME de 0 à 11 (12 étapes)
+                            if(ptrEnnemi->IndexFrame==12)
                             {
                                 ptrEnnemi->IndexFrame=0;
                             }
@@ -492,8 +493,8 @@ void mvtEnnemis_Niveau1()
                             ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
-                            // Cycle de FRAME de 0 à 3 (4 étapes)
-                            if(ptrEnnemi->IndexFrame==4)
+                            // Cycle de FRAME de 0 à 11 (12 étapes)
+                            if(ptrEnnemi->IndexFrame==12)
                             {
                                 ptrEnnemi->IndexFrame=0;
                             }
@@ -562,8 +563,8 @@ void mvtEnnemis_Niveau1()
                             ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
-                            // Cycle de FRAME de 0 à 3 (4 étapes)
-                            if(ptrEnnemi->IndexFrame==4)
+                            // Cycle de FRAME de 0 à 11 (12 étapes)
+                            if(ptrEnnemi->IndexFrame==12)
                             {
                                 ptrEnnemi->IndexFrame=0;
                             }
@@ -761,7 +762,7 @@ void mvtEnnemis_Niveau1()
 
                         ptrEnnemi->PosX-=(vitesseScrolling+1);
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-                        /*
+                        
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
 
@@ -771,14 +772,14 @@ void mvtEnnemis_Niveau1()
                             ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
-                            // Cycle de FRAME de 0 à 12 (13 étapes)
-                            if(ptrEnnemi->IndexFrame==13)
+                            // Cycle de FRAME de 0 à 11 (12 étapes)
+                            if(ptrEnnemi->IndexFrame==12)
                             {
                                 ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
-                        }*/
+                        }
 
                         // Si l'ennemi sort de l'écran
                         // 3 tiles (24 px) de large  
@@ -797,7 +798,7 @@ void mvtEnnemis_Niveau1()
 
                         ptrEnnemi->PosX-=(vitesseScrolling+1);
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-                        /*
+                        
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
 
@@ -807,15 +808,15 @@ void mvtEnnemis_Niveau1()
                             ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
-                            // Cycle de FRAME de 0 à 12 (13 étapes)
-                            if(ptrEnnemi->IndexFrame==13)
+                            // Cycle de FRAME de 0 à 11 (12 étapes)
+                            if(ptrEnnemi->IndexFrame==12)
                             {
                                 ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
-                        }*/
-
+                        }
+                        
                         // Si l'ennemi sort de l'écran
                         // 3 tiles (24 px) de large  
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224)
