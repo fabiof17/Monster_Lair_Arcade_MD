@@ -119,6 +119,16 @@ void collision_Decor(SpriteJoueur_ *ptrJoueur)
     }
 }
 
+void creaEnnemi()
+{
+    //
+}
+
+void initEnnemi(SpriteEnnemi_ *ptrEnnemi, s16 posX, s16 posY, u8 PointsVie, u8 ID)
+{
+    //
+}
+
 void creaEnnemis_Niveau1()
 {
     if(CamPosX>-4336)
@@ -127,10 +137,9 @@ void creaEnnemis_Niveau1()
     }
     
 
-    // Si compteurTile est supérieur à 7
+    // Si CamPosX est divisible par 8
     if(compteurTile>7)
     {
-        // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
         if (-CamPosX>>3 == tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis])
         {          
             // On scanne les emplacements vides
@@ -140,57 +149,259 @@ void creaEnnemis_Niveau1()
 
                 // Si on trouve un emplacement vide
                 if(ptrEnnemi->Init==0)
-                {                    
-                    // tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis] : ID
-                    ptrEnnemi->ID=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
-                    
-                    ptrEnnemi->Init=1;
-                    ptrEnnemi->Phase=1;
-                    ptrEnnemi->PointsVie=1;
-                    ptrEnnemi->CompteurFrame=i;
-                    ptrEnnemi->IndexFrame=0;
-
-                    if(ptrEnnemi->ID==4)
-                    {
-                        ptrEnnemi->PosX=323;
-                    }
-                    else
-                    {
-                        ptrEnnemi->PosX=325;
-                    }
-                    
+                {
+                    tileID_ENNEMI=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
+                    // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
                     // tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis] : PosY
-                    ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                    // tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis] : ID
+
+                    
+                    switch(tileID_ENNEMI)
+                    {
+                        /////////////////
+                        // ESCARGOTS H //
+                        /////////////////
+                        case 1:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=1;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_H, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        /////////////////////
+                        // BULOTS SHURIKEN //
+                        /////////////////////
+                        case 2:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=2;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurPosition=0;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);                 
 
 
 
-                    if(ptrEnnemi->ID==7)
-                    {
-                        ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
-                    }
-                    else if(ptrEnnemi->ID==8)
-                    {
-                        ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
-                        ptrEnnemi->ptrPosition=&anim_POULPE1[0];
-                    }
-                     else if(ptrEnnemi->ID==9)
-                    {
-                        ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
-                        ptrEnnemi->ptrPosition=&anim_POULPE2[0];
-                    }
-                    else
-                    {
-                        ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            indexCreaEnnemis++;
+                            return;
+ 
+                        ////////////
+                        // BULOTS //
+                        ////////////
+                        case 3:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=3;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurPosition=0;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);                    
+
+
+
+                            indexCreaEnnemis++;
+                            return;
+ 
+                        /////////////////
+                        // ESCARGOTS V //
+                        /////////////////
+                        case 4:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=1;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=323;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_V, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);              
+
+
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        /////////////////////////
+                        // BULOTS DOUBLE BOULE //
+                        /////////////////////////
+                        case 5:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=5;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurPosition=0;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_BULOT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);                    
+
+
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        //////////////////////////////
+                        // ESCARGOTS H BOULE DE FEU //
+                        //////////////////////////////
+                        case 6:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=6;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_ESCARGOT_H, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        ///////////
+                        // MORSE //
+                        ///////////
+                        case 7:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=7;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_MORSE, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        //////////////
+                        // POULPE 1 //
+                        //////////////
+                        case 8:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=8;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+                            ptrEnnemi->ptrPosition=&anim_POULPE1[0];
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_POULPE, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        //////////////
+                        // POULPE 2 //
+                        //////////////
+                        case 9:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=9;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+                            ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_POULPE, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        ///////////////
+                        //  PELICAN  //
+                        ///////////////
+                        case 10:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=10;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurPosition=0;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+                            //ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_PELICAN, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
+
+                        ////////////////////////
+                        //  PELICAN SHURIKEN  //
+                        ////////////////////////
+                        case 11:
+
+                            ptrEnnemi->Init=1;
+                            ptrEnnemi->ID=11;
+                            ptrEnnemi->Phase=1;
+                            ptrEnnemi->PointsVie=1;
+                            ptrEnnemi->PosX=328;
+                            ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                            ptrEnnemi->CompteurPosition=0;
+                            ptrEnnemi->CompteurFrame=i;
+                            ptrEnnemi->IndexFrame=0;
+                            //ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+
+                            ptrEnnemi->SpriteE = SPR_addSprite(&tiles_Sprite_PELICAN, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+                            //SPR_setAnim(ptrEnnemi->SpriteE,0);
+
+                            indexCreaEnnemis++;
+                            return;
                     }
 
-                    indexCreaEnnemis++;
-                    break;
                 }
             }
         }
 
-        // On remet le compteur entre 0 et 7
-        compteurTile-=8;  
+        // On remet le compteur à 0
+        compteurTile-=8;   
     }
 }
 
@@ -320,9 +531,9 @@ void mvtEnnemis_Niveau1()
                         ptrEnnemi->CompteurFrame+=1;
 
                         // MAJ des tiles toutes les 6 images (0 à 5)
-                        if(ptrEnnemi->CompteurFrame>5)
+                        if(ptrEnnemi->CompteurFrame==6)
                         {
-                            ptrEnnemi->CompteurFrame-=6;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)

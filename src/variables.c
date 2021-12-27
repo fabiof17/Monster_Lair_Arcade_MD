@@ -49,6 +49,8 @@ SpriteEnnemi_ Ennemi[10];
 
 SpriteJoueur_ *ptrJoueur;
 
+const SpriteDefinition *adrResEnnemi[12];
+
 // TILEMAPS
 Map *tilemapCollision;
 Map *tilemapEnnemis;

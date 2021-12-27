@@ -509,6 +509,18 @@ void InitNiveau1()
         Ennemi[i].Init=0;
     }
 
+    // Init adresse sreesources sprites ennemis
+    adrResEnnemi[1]=&tiles_Sprite_ESCARGOT_H;
+    adrResEnnemi[2]=&tiles_Sprite_BULOT;
+    adrResEnnemi[3]=&tiles_Sprite_BULOT;
+    adrResEnnemi[4]=&tiles_Sprite_ESCARGOT_V;
+    adrResEnnemi[5]=&tiles_Sprite_BULOT;
+    adrResEnnemi[6]=&tiles_Sprite_ESCARGOT_H;
+    adrResEnnemi[7]=&tiles_Sprite_MORSE;
+    adrResEnnemi[8]=&tiles_Sprite_POULPE;
+    adrResEnnemi[9]=&tiles_Sprite_POULPE;
+    adrResEnnemi[10]=&tiles_Sprite_PELICAN;
+    adrResEnnemi[11]=&tiles_Sprite_PELICAN;
 
     /////////////////////////////
     // TILEMAP COLLISION DECOR //
