@@ -58,6 +58,10 @@ typedef struct
     u16 pt_Coll1_Y;
     u16 pt_Coll2_X;
     u16 pt_Coll2_Y;
+    u8 CompteurFrameArret;           // Compteur pour passer à la prochaine FRAME ARRET
+    u8 IndexFrameArret;              // Index de FRAME ARRET
+    u8 CompteurFrameBloque;           // Compteur pour passer à la prochaine FRAME ARRET
+    u8 IndexFrameBloque;              // Index de FRAME ARRET
 } SpriteJoueur_;
 
 extern SpriteJoueur_ Joueur;

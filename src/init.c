@@ -498,6 +498,12 @@ void InitNiveau1()
     ptrJoueur->PosX=0;
     ptrJoueur->PosY=128;
 
+    ptrJoueur->CompteurFrameBloque=0;
+    ptrJoueur->IndexFrameBloque=0;
+
+    ptrJoueur->CompteurFrameArret=0;
+    ptrJoueur->IndexFrameArret=0;
+
     /***********/
     /* ENNEMIS */
     /***********/

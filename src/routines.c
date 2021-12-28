@@ -788,5 +788,61 @@ void mvtEnnemis_Niveau1()
 
 void TilesJoueur()
 {
-    //
+    ///////////////
+    //   ARRET   //
+    /////////////// 
+    if(ptrJoueur->Phase==0)
+    {
+        if(ptrJoueur->PosX==117)
+        {
+            ptrJoueur->CompteurFrameArret=0;
+            ptrJoueur->IndexFrameArret=0;
+
+            SPR_setAnim(ptrJoueur->SpriteJ,1);
+
+            // Anim des tiles
+            ptrJoueur->CompteurFrameBloque+=1;
+
+            // MAJ des tiles toutes les 5 images (0 à 4)
+            if(ptrJoueur->CompteurFrameBloque>4)
+            {
+                ptrJoueur->CompteurFrameBloque=0;
+                ptrJoueur->IndexFrameBloque+=1;
+
+                // Cycle de FRAME de 0 à 2 (3 étapes)
+                if(ptrJoueur->IndexFrameBloque>2)
+                {
+                    ptrJoueur->IndexFrameBloque=0;
+                }   
+            }
+
+            SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameBloque);            
+        }
+
+        else
+        {
+            SPR_setAnim(ptrJoueur->SpriteJ,0);
+
+            ptrJoueur->CompteurFrameBloque=0;
+            ptrJoueur->IndexFrameBloque=0;
+
+            // Anim des tiles
+            ptrJoueur->CompteurFrameArret+=1;
+
+            // MAJ des tiles toutes les 10 images (0 à 9)
+            if(ptrJoueur->CompteurFrameArret>9)
+            {
+                ptrJoueur->CompteurFrameArret=0;
+                ptrJoueur->IndexFrameArret+=1;
+
+                // Cycle de FRAME de 0 à 2 (3 étapes)
+                if(ptrJoueur->IndexFrameArret>2)
+                {
+                    ptrJoueur->IndexFrameArret=0;
+                }   
+            }
+
+            SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameArret); 
+        }        
+    }
 }

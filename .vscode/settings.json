@@ -12,7 +12,8 @@
         "init.h": "c",
         "routines.h": "c",
         "maps_niveau1.h": "c",
-        "gestionpad.h": "c"
+        "gestionpad.h": "c",
+        "genesis.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

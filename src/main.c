@@ -67,6 +67,9 @@ void MainLoop()
 
                 creaEnnemis_Niveau1();
                 mvtEnnemis_Niveau1();
+
+                // MAJ sprites
+                //SPR_update();
             }
 
 

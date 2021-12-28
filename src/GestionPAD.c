@@ -83,15 +83,14 @@ void Phases_Joueur()
         {
             ptrJoueur->Axe=0;
             ptrJoueur->Phase=1;
-            return;
         }
         // Si le joueur marche vers la gauche
         else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==1)
         {
             ptrJoueur->Axe=0;
             SPR_setVFlip(ptrJoueur->SpriteJ, FALSE);
-            return;
-        }       
+        }
+        return;
     }
 
     ////////////////
@@ -104,14 +103,13 @@ void Phases_Joueur()
         {
             ptrJoueur->Axe=1;
             ptrJoueur->Phase=1;
-            return;
         }
-        // Si le joueur marche vers la gauche
+        // Si le joueur marche vers la droite
         else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==0)
         {
             ptrJoueur->Axe=1;
             SPR_setVFlip(ptrJoueur->SpriteJ, TRUE);
-            return;
         }
+        return;
     }
 }
