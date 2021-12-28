@@ -867,6 +867,11 @@ void MvtJoueur()
         if(ptrJoueur->Axe==0)
         {
             ptrJoueur->PosX+=1;
+
+            if(ptrJoueur->PosX>228)
+            {
+                ptrJoueur->PosX=228;
+            }
         }
 
         // Si joueur va vers la gauche
