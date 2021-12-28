@@ -82,7 +82,7 @@ void updateTiles_Niveau1()
         PAL_setPaletteColors(16, &palette_NIVEAU1_PELICAN, DMA);
     }
     
-    else if(CamPosX<-3772 && CamPosX>-3774)
+    else if(CamPosX<-3702 && CamPosX>-3704)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
     }
