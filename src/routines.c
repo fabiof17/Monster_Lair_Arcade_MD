@@ -132,7 +132,7 @@ void collision_Decor()
     }
 }
 
-void creaEnnemis_Niveau1()
+void CreaEnnemis_Niveau1()
 {
     if(CamPosX>-4336)
     {
@@ -217,7 +217,7 @@ void creaEnnemis_Niveau1()
     }
 }
 
-void mvtEnnemis_Niveau1()
+void MvtEnnemis_Niveau1()
 {    
     if(CamPosX>-4336)
     {       
@@ -786,6 +786,203 @@ void mvtEnnemis_Niveau1()
     }
 }
 
+void Phases_Joueur()
+{
+    // Gestion manette
+	u16 value=JOY_readJoypad(JOY_1);
+
+    ///////////////
+    //   ARRET   //
+    /////////////// 
+    if(value==0)
+    {
+        // Si le joueur ne tombe pas
+        if(ptrJoueur->Phase!=2)
+        {
+            ptrJoueur->Phase=0;
+        }
+        //return;
+    }
+
+    ////////////////
+    //   DROITE   //
+    ////////////////
+    if(value & BUTTON_RIGHT)
+    {
+        // Si joueur à l'arrêt
+        if(ptrJoueur->Phase==0)
+        {
+            ptrJoueur->Axe=0;
+            ptrJoueur->Phase=1;
+        }
+        // Si le joueur marche vers la gauche
+        else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==1)
+        {
+            ptrJoueur->Axe=0;
+        }
+        //return;
+    }
+
+    ////////////////
+    //   GAUCHE   //
+    ////////////////
+    if(value & BUTTON_LEFT)
+    {
+        // Si joueur à l'arrêt
+        if(ptrJoueur->Phase==0)
+        {
+            ptrJoueur->Axe=1;
+            ptrJoueur->Phase=1;
+        }
+        // Si le joueur marche vers la droite
+        else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==0)
+        {
+            ptrJoueur->Axe=1;
+        }
+        //return;
+    }
+}
+
+void MvtJoueur()
+{
+    ///////////////
+    //   ARRET   //
+    /////////////// 
+    if(ptrJoueur->Phase==0)
+    {
+        ptrJoueur->PosX-=1;
+
+        if(ptrJoueur->PosX<-11)
+        {
+            ptrJoueur->PosX=-11;
+        }
+
+        SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
+        return;
+    }
+
+    else if(ptrJoueur->Phase==1)
+    {
+        // Si joueur va vers la droite
+        if(ptrJoueur->Axe==0)
+        {
+            ptrJoueur->PosX+=1;
+        }
+
+        // Si joueur va vers la gauche
+        else
+        {
+            ptrJoueur->PosX-=2;
+
+            if(ptrJoueur->PosX<-11)
+            {
+                ptrJoueur->PosX=-11;
+            }
+        }
+
+        SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
+        return;        
+    }
+
+
+    //SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
+}
+
+void TilesBloque()
+{
+    ptrJoueur->CompteurFrameArret=0;
+    ptrJoueur->IndexFrameArret=0;
+    ptrJoueur->CompteurFrameMarche=0;
+    ptrJoueur->IndexFrameMarche=0;
+
+    SPR_setAnim(ptrJoueur->SpriteJ,1);
+
+    SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+
+    // Anim des tiles
+    ptrJoueur->CompteurFrameBloque+=1;
+
+    // MAJ des tiles toutes les 5 images (0 à 4)
+    if(ptrJoueur->CompteurFrameBloque>4)
+    {
+        ptrJoueur->CompteurFrameBloque=0;
+        ptrJoueur->IndexFrameBloque+=1;
+
+        // Cycle de FRAME de 0 à 2 (3 étapes)
+        if(ptrJoueur->IndexFrameBloque>2)
+        {
+            ptrJoueur->IndexFrameBloque=0;
+        }   
+    }
+
+    SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameBloque);
+}
+
+void TilesArret()
+{
+    SPR_setAnim(ptrJoueur->SpriteJ,0);
+
+    ptrJoueur->CompteurFrameBloque=0;
+    ptrJoueur->IndexFrameBloque=0;
+    ptrJoueur->CompteurFrameMarche=0;
+    ptrJoueur->IndexFrameMarche=0;
+
+    // Anim des tiles
+    ptrJoueur->CompteurFrameArret+=1;
+
+    // MAJ des tiles toutes les 10 images (0 à 9)
+    if(ptrJoueur->CompteurFrameArret>9)
+    {
+        ptrJoueur->CompteurFrameArret=0;
+        ptrJoueur->IndexFrameArret+=1;
+
+        // Cycle de FRAME de 0 à 2 (3 étapes)
+        if(ptrJoueur->IndexFrameArret>2)
+        {
+            ptrJoueur->IndexFrameArret=0;
+        }   
+    }
+
+    SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameArret);
+}
+
+void TilesMarche()
+{
+    SPR_setAnim(ptrJoueur->SpriteJ,2);
+
+    if(ptrJoueur->Axe==0)
+    {
+        SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+    }
+    else
+    {
+        SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
+    }
+    
+    ptrJoueur->CompteurFrameBloque=0;
+    ptrJoueur->IndexFrameBloque=0;
+    ptrJoueur->CompteurFrameArret=0;
+    ptrJoueur->IndexFrameArret=0;
+
+    // Anim des tiles
+    ptrJoueur->CompteurFrameMarche+=1;
+
+    // MAJ des tiles toutes les 6 images (0 à 5)
+    if(ptrJoueur->CompteurFrameMarche>5)
+    {
+        ptrJoueur->CompteurFrameMarche=0;
+        ptrJoueur->IndexFrameMarche+=1;
+
+        // Cycle de FRAME de 0 à 3 (4 étapes)
+        if(ptrJoueur->IndexFrameMarche>3)
+        {
+            ptrJoueur->IndexFrameMarche=0;
+        }   
+    }
+
+    SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameMarche);
+}
+
 void TilesJoueur()
 {
     ///////////////
@@ -793,56 +990,38 @@ void TilesJoueur()
     /////////////// 
     if(ptrJoueur->Phase==0)
     {
-        if(ptrJoueur->PosX==117)
+        // BLOQUE
+        if(ptrJoueur->PosX==-11)
         {
-            ptrJoueur->CompteurFrameArret=0;
-            ptrJoueur->IndexFrameArret=0;
-
-            SPR_setAnim(ptrJoueur->SpriteJ,1);
-
-            // Anim des tiles
-            ptrJoueur->CompteurFrameBloque+=1;
-
-            // MAJ des tiles toutes les 5 images (0 à 4)
-            if(ptrJoueur->CompteurFrameBloque>4)
-            {
-                ptrJoueur->CompteurFrameBloque=0;
-                ptrJoueur->IndexFrameBloque+=1;
-
-                // Cycle de FRAME de 0 à 2 (3 étapes)
-                if(ptrJoueur->IndexFrameBloque>2)
-                {
-                    ptrJoueur->IndexFrameBloque=0;
-                }   
-            }
-
-            SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameBloque);            
+            TilesBloque();
+            return;          
         }
 
+        // ARRET
         else
         {
-            SPR_setAnim(ptrJoueur->SpriteJ,0);
+            TilesArret();
+            return;  
+        }       
+    }
 
-            ptrJoueur->CompteurFrameBloque=0;
-            ptrJoueur->IndexFrameBloque=0;
+    ////////////////
+    //   MARCHE   //
+    ////////////////
+    else if(ptrJoueur->Phase==1)
+    {
+        // BLOQUE
+        if(ptrJoueur->PosX==-11)
+        {
+            TilesBloque();
+            return;          
+        }
 
-            // Anim des tiles
-            ptrJoueur->CompteurFrameArret+=1;
-
-            // MAJ des tiles toutes les 10 images (0 à 9)
-            if(ptrJoueur->CompteurFrameArret>9)
-            {
-                ptrJoueur->CompteurFrameArret=0;
-                ptrJoueur->IndexFrameArret+=1;
-
-                // Cycle de FRAME de 0 à 2 (3 étapes)
-                if(ptrJoueur->IndexFrameArret>2)
-                {
-                    ptrJoueur->IndexFrameArret=0;
-                }   
-            }
-
-            SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameArret); 
-        }        
+        // MARCHE
+        else
+        {
+            TilesMarche();
+            return;  
+        }     
     }
 }

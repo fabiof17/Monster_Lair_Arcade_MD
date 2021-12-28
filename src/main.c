@@ -62,14 +62,12 @@ void MainLoop()
                 Scrolling_Niveau1();
 
                 Phases_Joueur();
+                MvtJoueur();
                 TilesJoueur();
-                //collision_Decor(Joueur);
 
-                creaEnnemis_Niveau1();
-                mvtEnnemis_Niveau1();
+                CreaEnnemis_Niveau1();
+                MvtEnnemis_Niveau1();
 
-                // MAJ sprites
-                //SPR_update();
             }
 
 

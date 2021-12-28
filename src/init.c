@@ -495,8 +495,10 @@ void InitNiveau1()
     ptrJoueur->Axe=0;
 
     // POSITION //
-    ptrJoueur->PosX=0;
+    ptrJoueur->PosX=96;
     ptrJoueur->PosY=128;
+
+    SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
 
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
