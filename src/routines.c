@@ -76,13 +76,23 @@ void updateTiles_Niveau1()
 
 
     // CHANGEMENTS PALETTE
-    
-    if(CamPosX<-2600 && CamPosX>-2602)
+
+     if(CamPosX<-700 && CamPosX>-702)
+    {
+        PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
+    }
+
+    else if(CamPosX<-1110 && CamPosX>-1112)
+    {
+        PAL_setPaletteColors(16, &palette_NIVEAU1_ESCARGOT, DMA);
+    }
+
+    else if(CamPosX<-2600 && CamPosX>-2602)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_PELICAN, DMA);
     }
     
-    else if(CamPosX<-3702 && CamPosX>-3704)
+    else if(CamPosX<-3700 && CamPosX>-3702)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
     }
@@ -95,8 +105,11 @@ void updateTiles_Niveau1()
 
 }
 
-void collision_Decor(SpriteJoueur_ *ptrJoueur)
+void collision_Decor()
 {
+    u16 *ptrtileID_G=&tileID_G;
+    u16 *ptrtileID_D=&tileID_D;
+    
     // Point collision bas gauche
     ptrJoueur->pt_Coll1_X=SPR_getPositionX(ptrJoueur->SpriteJ)+8;
     ptrJoueur->pt_Coll1_Y=SPR_getPositionY(ptrJoueur->SpriteJ)+32;
@@ -109,13 +122,13 @@ void collision_Decor(SpriteJoueur_ *ptrJoueur)
     // Récuperation ID de tile de collision
     if(CamPosX>=7)
     {
-        tileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-        tileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
     }
     else
     {
-        tileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-        tileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
     }
 }
 
@@ -148,7 +161,6 @@ void creaEnnemis_Niveau1()
                     ptrEnnemi->Phase=1;
                     ptrEnnemi->PointsVie=1;
 
-                    //ptrEnnemi->CompteurDeplacement=0;
                     ptrEnnemi->CompteurPosition=0;
                     ptrEnnemi->CompteurFrame=i;
                     ptrEnnemi->IndexFrame=0;

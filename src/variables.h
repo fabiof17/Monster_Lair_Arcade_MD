@@ -74,7 +74,6 @@ typedef struct
     s16 PosY;                   // Position Y
     u8 Phase;                   // 1 = vivant / 2 = touché / 3 = mort
     bool axe;                   // 0 = Bas / 1 = Haut
-    //u8 CompteurDeplacement;     // Compteur pour déplacr le sprite
     u8 CompteurPosition;        // Compteur pour déclencher le déplacement du sprite
     u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
     u8 IndexFrame;              // Index de FRAME
