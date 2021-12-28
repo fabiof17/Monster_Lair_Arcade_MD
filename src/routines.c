@@ -9,7 +9,7 @@
 #include <GestionPAD.h>
 #include <sprites_JEU.h>
 
-void updateScrolling_Niveau1()
+void Scrolling_Niveau1()
 {
     // MOUVEMENT CAMERA //
     CamPosX-=vitesseScrolling;
@@ -56,7 +56,7 @@ void updateScrolling_Niveau1()
     }
 }
 
-void updateTiles_Niveau1()
+void Tiles_Niveau1()
 {
     // MISE A JOUR TILEMAP //
     if(CamPosX>-4336)
@@ -165,7 +165,7 @@ void creaEnnemis_Niveau1()
                     ptrEnnemi->CompteurFrame=i;
                     ptrEnnemi->IndexFrame=0;
 
-                    ptrEnnemi->axe=0;
+                    ptrEnnemi->Axe=0;
 
                     // Les escargots V ont une position en X à part
                     if(ptrEnnemi->ID==4)
@@ -381,12 +381,12 @@ void mvtEnnemis_Niveau1()
 
                         // Position Y
                         // Orienté vers le bas
-                        if(ptrEnnemi->axe==0)
+                        if(ptrEnnemi->Axe==0)
                         {
                             if(ptrEnnemi->CompteurPosition>79)
                             {
                                 ptrEnnemi->CompteurPosition=0;
-                                ptrEnnemi->axe=1;
+                                ptrEnnemi->Axe=1;
                                 SPR_setVFlip(ptrEnnemi->SpriteE, TRUE);
                             }
                             else
@@ -398,12 +398,12 @@ void mvtEnnemis_Niveau1()
                             }                            
                         }
                         // Orienté vers le haut
-                        else if(ptrEnnemi->axe==1)
+                        else if(ptrEnnemi->Axe==1)
                         {
                             if(ptrEnnemi->CompteurPosition>79)
                             {
                                 ptrEnnemi->CompteurPosition=0;
-                                ptrEnnemi->axe=0;
+                                ptrEnnemi->Axe=0;
                                 SPR_setVFlip(ptrEnnemi->SpriteE, FALSE);
                             }
                             else
@@ -784,4 +784,9 @@ void mvtEnnemis_Niveau1()
             }
         }
     }
+}
+
+void TilesJoueur()
+{
+    //
 }

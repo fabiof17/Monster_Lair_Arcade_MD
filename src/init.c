@@ -489,10 +489,10 @@ void InitNiveau1()
     ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_Joueur_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
 
     // HASE CHUTE DEBUT //
-    ptrJoueur->phase=99;
+    ptrJoueur->Phase=99;
 
     // ORIENTE DROITE //
-    ptrJoueur->axe=0;
+    ptrJoueur->Axe=0;
 
     // POSITION //
     ptrJoueur->PosX=0;

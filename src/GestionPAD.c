@@ -54,25 +54,64 @@ void Pause_Jeu()
 }
 
 
-void Phases_Joueur(SpriteJoueur_ *spr)
+
+void Phases_Joueur()
 {
-    // Déclaration manette
-    u16 value=JOY_readJoypad(JOY_1);
+    // Gestion manette
+	u16 value=JOY_readJoypad(JOY_1);
 
-    // Désactivation auto-fire
-    if (!value) StatutJoy++;
-    if (StatutJoy>4) StatutJoy=4;
-
-
-    // PHASE ARRET //
-    if(spr->phase==0)
+    ///////////////
+    //   ARRET   //
+    /////////////// 
+    if(value==0)
     {
-        //
+        // Si le joueur ne tombe pas
+        if(ptrJoueur->Phase!=2)
+        {
+            ptrJoueur->Phase=0;
+        }
+        return;
     }
 
+    ////////////////
+    //   DROITE   //
+    ////////////////
+    if(value & BUTTON_RIGHT)
+    {
+        // Si joueur à l'arrêt
+        if(ptrJoueur->Phase==0)
+        {
+            ptrJoueur->Axe=0;
+            ptrJoueur->Phase=1;
+            return;
+        }
+        // Si le joueur marche vers la gauche
+        else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==1)
+        {
+            ptrJoueur->Axe=0;
+            SPR_setVFlip(ptrJoueur->SpriteJ, FALSE);
+            return;
+        }       
+    }
 
-
-
-
-
+    ////////////////
+    //   GAUCHE   //
+    ////////////////
+    if(value & BUTTON_LEFT)
+    {
+        // Si joueur à l'arrêt
+        if(ptrJoueur->Phase==0)
+        {
+            ptrJoueur->Axe=1;
+            ptrJoueur->Phase=1;
+            return;
+        }
+        // Si le joueur marche vers la gauche
+        else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==0)
+        {
+            ptrJoueur->Axe=1;
+            SPR_setVFlip(ptrJoueur->SpriteJ, TRUE);
+            return;
+        }
+    }
 }

@@ -58,10 +58,12 @@ void MainLoop()
             // Jeu en Pause ?
             if(PauseJeu==0)
             {
-                //Phases_Joueur();
-                //collision_Decor(Joueur);
+                
+                Scrolling_Niveau1();
 
-                updateScrolling_Niveau1();
+                Phases_Joueur();
+                TilesJoueur();
+                //collision_Decor(Joueur);
 
                 creaEnnemis_Niveau1();
                 mvtEnnemis_Niveau1();
@@ -73,7 +75,7 @@ void MainLoop()
             SPR_update();
 
             // MAJ tiles BG
-            updateTiles_Niveau1();
+            Tiles_Niveau1();
 
             // Vblank
             SYS_doVBlankProcess();

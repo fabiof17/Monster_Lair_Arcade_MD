@@ -50,8 +50,8 @@ extern Sprite *sprite_Pause[2];
 typedef struct
 {
     Sprite* SpriteJ;
-    u8 phase; // 0=ARRET - 1=MARCHE - 2=CHUTE - 99=CHITE DEBUT
-    u8 axe; // 0=DROITE - 1=GAUCHE
+    u8 Phase; // 0=ARRET - 1=MARCHE - 2=CHUTE - 99=CHITE DEBUT
+    u8 Axe; // 0=DROITE - 1=GAUCHE
     s16 PosX;
     s16 PosY;
     u16 pt_Coll1_X;
@@ -73,7 +73,7 @@ typedef struct
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
     u8 Phase;                   // 1 = vivant / 2 = touché / 3 = mort
-    bool axe;                   // 0 = Bas / 1 = Haut
+    bool Axe;                   // 0 = Bas / 1 = Haut
     u8 CompteurPosition;        // Compteur pour déclencher le déplacement du sprite
     u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
     u8 IndexFrame;              // Index de FRAME
