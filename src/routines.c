@@ -84,7 +84,7 @@ void updateTiles_Niveau1()
     
     else if(CamPosX<-3772 && CamPosX>-3774)
     {
-        PAL_setPaletteColors(16, &palette_NIVEAU1_ESCARGOT, DMA);
+        PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
     }
 
     else if(CamPosX<-4016 && CamPosX>-4018)
@@ -143,19 +143,21 @@ void creaEnnemis_Niveau1()
                 {                    
                     // tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis] : ID
                     ptrEnnemi->ID=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
-                    
+
                     ptrEnnemi->Init=1;
                     ptrEnnemi->Phase=1;
                     ptrEnnemi->PointsVie=1;
                     ptrEnnemi->CompteurFrame=i;
                     ptrEnnemi->IndexFrame=0;
 
+                    // Les escargots V ont une position en X à part
                     if(ptrEnnemi->ID==4)
                     {
                         ptrEnnemi->PosX=323;
                     }
                     else
                     {
+                        // Tous les autres ennemis
                         ptrEnnemi->PosX=325;
                     }
                     
@@ -163,7 +165,7 @@ void creaEnnemis_Niveau1()
                     ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
 
 
-
+                    // Différentes palettes pour les ennemis
                     if(ptrEnnemi->ID==7)
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
@@ -220,15 +222,15 @@ void mvtEnnemis_Niveau1()
                         ptrEnnemi->CompteurFrame+=1;
 
                         // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame==8)
+                        if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->CompteurFrame-=8;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 12 (13 étapes)
-                            if(ptrEnnemi->IndexFrame==13)
+                            if(ptrEnnemi->IndexFrame>12)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->IndexFrame-=13;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
@@ -270,15 +272,15 @@ void mvtEnnemis_Niveau1()
                         ptrEnnemi->CompteurFrame+=1;
 
                         // MAJ des tiles toutes les 6 images (0 à 5)
-                        if(ptrEnnemi->CompteurFrame==6)
+                        if(ptrEnnemi->CompteurFrame>5)
                         {
-                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->CompteurFrame-=6;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
-                            if(ptrEnnemi->IndexFrame==12)
+                            if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->IndexFrame-=12;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
@@ -326,9 +328,9 @@ void mvtEnnemis_Niveau1()
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
-                            if(ptrEnnemi->IndexFrame==12)
+                            if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->IndexFrame-=12;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
@@ -355,15 +357,15 @@ void mvtEnnemis_Niveau1()
                         ptrEnnemi->CompteurFrame+=1;
 
                         // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame==8)
+                        if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->CompteurFrame-=8;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 12 (13 étapes)
-                            if(ptrEnnemi->IndexFrame==13)
+                            if(ptrEnnemi->IndexFrame>12)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->IndexFrame-=13;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
@@ -405,15 +407,15 @@ void mvtEnnemis_Niveau1()
                         ptrEnnemi->CompteurFrame+=1;
 
                         // MAJ des tiles toutes les 6 images (0 à 5)
-                        if(ptrEnnemi->CompteurFrame==6)
+                        if(ptrEnnemi->CompteurFrame>5)
                         {
-                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->CompteurFrame-=6;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
-                            if(ptrEnnemi->IndexFrame==12)
+                            if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->IndexFrame-=12;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
@@ -440,15 +442,15 @@ void mvtEnnemis_Niveau1()
                         ptrEnnemi->CompteurFrame+=1;
 
                         // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame==8)
+                        if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->CompteurFrame-=8;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 12 (13 étapes)
-                            if(ptrEnnemi->IndexFrame==13)
+                            if(ptrEnnemi->IndexFrame>12)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->IndexFrame-=13;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
@@ -607,22 +609,37 @@ void mvtEnnemis_Niveau1()
                     /////////////
                     case 11:
 
-                        ptrEnnemi->PosX-=(vitesseScrolling+1);
+                        if(ptrEnnemi->CompteurPosition==0)
+                        {
+                            ptrEnnemi->PosX-=(vitesseScrolling);
+                        }
+                        else if(ptrEnnemi->CompteurPosition==1)
+                        {
+                            ptrEnnemi->PosX-=(vitesseScrolling+1);
+                        }
+
+                        ptrEnnemi->CompteurPosition++;
+
+                        if(ptrEnnemi->CompteurPosition==2)
+                        {
+                            ptrEnnemi->CompteurPosition=0;
+                        }
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
                         
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
 
                         // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame==8)
+                        if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->CompteurFrame-=8;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
-                            if(ptrEnnemi->IndexFrame==12)
+                            if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->IndexFrame-=12;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
@@ -643,22 +660,37 @@ void mvtEnnemis_Niveau1()
                     //////////////////////
                     case 10:
 
-                        ptrEnnemi->PosX-=(vitesseScrolling+1);
+                        if(ptrEnnemi->CompteurPosition==0)
+                        {
+                            ptrEnnemi->PosX-=(vitesseScrolling);
+                        }
+                        else if(ptrEnnemi->CompteurPosition==1)
+                        {
+                            ptrEnnemi->PosX-=(vitesseScrolling+1);
+                        }
+
+                        ptrEnnemi->CompteurPosition++;
+
+                        if(ptrEnnemi->CompteurPosition==2)
+                        {
+                            ptrEnnemi->CompteurPosition=0;
+                        }
+                        
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
                         
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
 
                         // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame==8)
+                        if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame=0;
+                            ptrEnnemi->CompteurFrame-=8;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
-                            if(ptrEnnemi->IndexFrame==12)
+                            if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->IndexFrame-=12;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);

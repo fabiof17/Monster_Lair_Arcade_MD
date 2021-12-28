@@ -14,4 +14,5 @@ PALETTE palette_NIVEAU1_BGB "maps/niveau1/tiles_NIVEAU1_BGB.png"
 PALETTE palette_NIVEAU1_WINDOW "maps/niveau1/tiles_NIVEAU1_WINDOW.png"
 
 PALETTE palette_NIVEAU1_ESCARGOT "sprites/niveau1/tiles_ESCARGOT_H.png"
+PALETTE palette_NIVEAU1_BULOT "sprites/niveau1/tiles_BULOT.png"
 PALETTE palette_NIVEAU1_PELICAN "sprites/niveau1/tiles_PELICAN.png"
