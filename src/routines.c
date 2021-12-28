@@ -147,8 +147,13 @@ void creaEnnemis_Niveau1()
                     ptrEnnemi->Init=1;
                     ptrEnnemi->Phase=1;
                     ptrEnnemi->PointsVie=1;
+
+                    //ptrEnnemi->CompteurDeplacement=0;
+                    ptrEnnemi->CompteurPosition=0;
                     ptrEnnemi->CompteurFrame=i;
                     ptrEnnemi->IndexFrame=0;
+
+                    ptrEnnemi->axe=0;
 
                     // Les escargots V ont une position en X à part
                     if(ptrEnnemi->ID==4)
@@ -215,6 +220,7 @@ void mvtEnnemis_Niveau1()
                     /////////////////
                     case 1:
 
+                        // Position X
                         ptrEnnemi->PosX-=vitesseScrolling;
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
@@ -250,6 +256,7 @@ void mvtEnnemis_Niveau1()
                     /////////////////////
                     case 2:
 
+                        // Position X
                         if(ptrEnnemi->CompteurPosition==0)
                         {
                             ptrEnnemi->PosX-=(vitesseScrolling);
@@ -300,6 +307,7 @@ void mvtEnnemis_Niveau1()
                     ////////////
                     case 3:
 
+                        // Position X
                         if(ptrEnnemi->CompteurPosition==0)
                         {
                             ptrEnnemi->PosX-=(vitesseScrolling);
@@ -350,7 +358,47 @@ void mvtEnnemis_Niveau1()
                     /////////////////
                     case 4:
                         
+                        // Position X
                         ptrEnnemi->PosX-=vitesseScrolling;
+
+                        ptrEnnemi->CompteurPosition+=1;
+
+                        // Position Y
+                        // Orienté vers le bas
+                        if(ptrEnnemi->axe==0)
+                        {
+                            if(ptrEnnemi->CompteurPosition>79)
+                            {
+                                ptrEnnemi->CompteurPosition=0;
+                                ptrEnnemi->axe=1;
+                                SPR_setVFlip(ptrEnnemi->SpriteE, TRUE);
+                            }
+                            else
+                            {
+                                if(ptrEnnemi->CompteurPosition%2==0)
+                                {
+                                     ptrEnnemi->PosY+=1;
+                                }                              
+                            }                            
+                        }
+                        // Orienté vers le haut
+                        else if(ptrEnnemi->axe==1)
+                        {
+                            if(ptrEnnemi->CompteurPosition>79)
+                            {
+                                ptrEnnemi->CompteurPosition=0;
+                                ptrEnnemi->axe=0;
+                                SPR_setVFlip(ptrEnnemi->SpriteE, FALSE);
+                            }
+                            else
+                            {
+                                if(ptrEnnemi->CompteurPosition%2==0)
+                                {
+                                     ptrEnnemi->PosY-=1;
+                                } 
+                            }  
+                        }
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
                         // Anim des tiles
@@ -385,6 +433,7 @@ void mvtEnnemis_Niveau1()
                     /////////////////////////
                     case 5:
 
+                        // Position X
                         if(ptrEnnemi->CompteurPosition==0)
                         {
                             ptrEnnemi->PosX-=(vitesseScrolling);
@@ -435,7 +484,9 @@ void mvtEnnemis_Niveau1()
                     //////////////////////////////
                     case 6:
 
+                        // Position X
                         ptrEnnemi->PosX-=vitesseScrolling;
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
                         // Anim des tiles
@@ -470,7 +521,9 @@ void mvtEnnemis_Niveau1()
                     ///////////
                     case 7:
 
+                        // Position X
                         ptrEnnemi->PosX -= vitesseScrolling;
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
                         /*
                         // Anim des tiles
@@ -558,7 +611,10 @@ void mvtEnnemis_Niveau1()
                     //////////////
                     case 9:
 
+                        // Position X
                         ptrEnnemi->PosX -= vitesseScrolling;
+
+                        // Position Y
                         ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
 
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
@@ -609,6 +665,7 @@ void mvtEnnemis_Niveau1()
                     /////////////
                     case 11:
 
+                        // Position X
                         if(ptrEnnemi->CompteurPosition==0)
                         {
                             ptrEnnemi->PosX-=(vitesseScrolling);
@@ -660,6 +717,7 @@ void mvtEnnemis_Niveau1()
                     //////////////////////
                     case 10:
 
+                        // Position X
                         if(ptrEnnemi->CompteurPosition==0)
                         {
                             ptrEnnemi->PosX-=(vitesseScrolling);
