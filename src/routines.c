@@ -183,20 +183,24 @@ void creaEnnemis_Niveau1()
 
 
                     // Différentes palettes pour les ennemis
+                    // MORSE
                     if(ptrEnnemi->ID==7)
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
                     }
+                    // POULPE 1
                     else if(ptrEnnemi->ID==8)
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
                         ptrEnnemi->ptrPosition=&anim_POULPE1[0];
                     }
-                     else if(ptrEnnemi->ID==9)
+                    // POULPE 2
+                    else if(ptrEnnemi->ID==9)
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
                         ptrEnnemi->ptrPosition=&anim_POULPE2[0];
                     }
+                    // Tous les autres ennemis
                     else
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
