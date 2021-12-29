@@ -11,5 +11,4 @@ out/src/routines.o: src/routines.c C:/sgdk/inc/genesis.h \
  C:/sgdk/inc/xgm.h C:/sgdk/inc/z80_ctrl.h C:/sgdk/inc/ym2612.h \
  C:/sgdk/inc/psg.h C:/sgdk/inc/joy.h C:/sgdk/inc/timer.h src/main.h \
  src/init.h src/variables.h res/palettes.h res/maps_NIVEAU1.h \
- src/tilemaps_ennemis.h src/animation_ennemis.h src/GestionPAD.h \
- res/sprites_JEU.h
+ src/tilemaps_ennemis.h src/animation_ennemis.h res/sprites_JEU.h

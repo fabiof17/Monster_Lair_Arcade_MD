@@ -6,7 +6,7 @@
 #include <maps_NIVEAU1.h>
 #include <tilemaps_ennemis.h>
 #include <animation_ennemis.h>
-#include <GestionPAD.h>
+//#include <GestionPAD.h>
 #include <sprites_JEU.h>
 
 void Scrolling_Niveau1()
@@ -122,13 +122,13 @@ void collision_Decor()
     // Récuperation ID de tile de collision
     if(CamPosX>=7)
     {
-        *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-        *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
     }
     else
     {
-        *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-        *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
     }
 }
 
@@ -850,8 +850,11 @@ void MvtJoueur()
     /////////////// 
     if(ptrJoueur->Phase==0)
     {
-        ptrJoueur->PosX-=1;
-
+        if(CamPosX!=-4336)
+        {
+            ptrJoueur->PosX-=1;
+        }
+        
         if(ptrJoueur->PosX<-11)
         {
             ptrJoueur->PosX=-11;
@@ -877,7 +880,14 @@ void MvtJoueur()
         // Si joueur va vers la gauche
         else
         {
-            ptrJoueur->PosX-=2;
+            if(CamPosX!=-4336)
+            {
+                ptrJoueur->PosX-=2;
+            }
+            else
+            {
+                ptrJoueur->PosX-=1;
+            }
 
             if(ptrJoueur->PosX<-11)
             {
@@ -995,11 +1005,19 @@ void TilesJoueur()
     /////////////// 
     if(ptrJoueur->Phase==0)
     {
-        // BLOQUE
+        // BLOQUE        
         if(ptrJoueur->PosX==-11)
         {
-            TilesBloque();
-            return;          
+            if(CamPosX!=-4336)
+            {
+                TilesBloque();
+                return;
+            }
+            else
+            {
+                TilesArret();
+                return;
+            }        
         }
 
         // ARRET
@@ -1016,10 +1034,19 @@ void TilesJoueur()
     else if(ptrJoueur->Phase==1)
     {
         // BLOQUE
+
         if(ptrJoueur->PosX==-11)
         {
-            TilesBloque();
-            return;          
+            if(CamPosX!=-4336)
+            {
+                TilesBloque();
+                return;
+            }
+            else
+            {
+                TilesMarche();
+                return; 
+            }         
         }
 
         // MARCHE
