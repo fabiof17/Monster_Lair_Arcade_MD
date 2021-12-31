@@ -39,6 +39,7 @@ void InitSystem()
 void InitTitre()
 {
 
+
     // init VDP
     VDP_init();
 
@@ -384,6 +385,13 @@ void InitNiveaux()
 
 void InitNiveau1()
 {
+    maxSpeed_Droite = MAX_SPEED_D;
+    maxSpeed_Gauche = MAX_SPEED_G;
+    
+    // Position initiale du sprite : 64 pixels
+    positionX=FIX32(64L);
+    movX = FIX32(0);
+    
     //////////////////////////////////////////////
     //                CREATION  BG              //
     //////////////////////////////////////////////
@@ -495,7 +503,7 @@ void InitNiveau1()
     ptrJoueur->Axe=0;
 
     // POSITION //
-    ptrJoueur->PosX=96;
+    ptrJoueur->PosX=fix32ToInt(positionX);
     ptrJoueur->PosY=128;
 
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);

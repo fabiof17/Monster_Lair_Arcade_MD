@@ -1,6 +1,7 @@
 #include <genesis.h>
 #include <variables.h>
 
+
 ///////////////////////////////////
 //		Variables principales
 ///////////////////////////////////
@@ -18,9 +19,6 @@ u16 PauseJeu=0;
 
 u8 num_Niveau=1;
 
-//Map *bga;
-//Map *bgb;
-
 // CAMERA
 u8 vitesseScrolling=1;
 
@@ -35,8 +33,6 @@ u16 tilemapOffset=0;
 
 u16 tileID_G=0;
 u16 tileID_D=0;
-
-u16 tileID_ENNEMI=0;
 
 u8 compteurTile=0; // 0 -> 7 //
 
@@ -56,5 +52,14 @@ Map *tilemapCollision;
 Map *tilemapEnnemis;
 u8 indexCreaEnnemis=0;
 
-char monTexte[2];
-char *texte;
+// VARIABLES //
+fix32 maxSpeed_Droite;
+fix32 maxSpeed_Gauche;
+//fix32 glissement;
+fix32 jumpSpeed;
+fix32 gravity;
+
+fix32 positionX;
+fix32 positionY;
+fix32 movX;
+fix32 movY;

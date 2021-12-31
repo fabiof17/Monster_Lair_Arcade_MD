@@ -1,6 +1,15 @@
 #ifndef _VARIABLES_H
 #define _VARIABLES_H
 
+// CONSTANTES //
+#define MAX_SPEED_D     FIX32(1L)
+#define MAX_SPEED_G     FIX32(2L)
+#define ACCEL           FIX32(0.08)
+#define GLISSEMENT      FIX32(1L)
+
+#define MAX_POS_D       FIX32(228L)
+#define MAX_POS_G       FIX32(11L)
+
 #define MAX_ETAPES_POULPE1 50
 #define MAX_ETAPES_POULPE2 55
 
@@ -39,7 +48,7 @@ extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 extern u16 tilemapOffset;
 
 ///////////////////////////////////
-//		Sprites
+//		Variables Sprites
 ///////////////////////////////////
 
 extern Sprite *sprite_Vie[3];
@@ -102,11 +111,27 @@ extern Map *tilemapEnnemis;
 extern u16 tileID_G;
 extern u16 tileID_D;
 
-extern u16 tileID_ENNEMI;
 extern u8 indexCreaEnnemis;
 extern u8 compteurTile; // 0 -> 7 //
 
-extern char monTexte[2];
-extern char *texte;
+
+
+extern fix32 maxSpeed_Droite;
+extern fix32 maxSpeed_Gauche;
+//extern fix32 glissement;
+extern fix32 jumpSpeed;
+extern fix32 gravity;
+
+extern fix32 positionX;
+extern fix32 positionY;
+extern fix32 movX;
+extern fix32 movY;
+
+
+
+
+
+
+
 
 #endif // _MAIN

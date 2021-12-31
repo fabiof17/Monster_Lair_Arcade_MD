@@ -1,14 +1,16 @@
 #include <genesis.h>
-#include <main.h>
-#include <init.h>
-#include <variables.h>
-#include <palettes.h>
-#include <maps_NIVEAU1.h>
-#include <tilemaps_ennemis.h>
-#include <animation_ennemis.h>
+#include "main.h"
+#include "init.h"
+#include "variables.h"
+#include "palettes.h"
+#include "maps_NIVEAU1.h"
+#include "tilemaps_ennemis.h"
+#include "animation_ennemis.h"
+#include "sprites_JEU.h"
 //#include <GestionPAD.h>
-#include <sprites_JEU.h>
 
+
+// SCROLLING //
 void Scrolling_Niveau1()
 {
     // MOUVEMENT CAMERA //
@@ -105,6 +107,8 @@ void Tiles_Niveau1()
 
 }
 
+
+//
 void collision_Decor()
 {
     u16 *ptrtileID_G=&tileID_G;
@@ -132,6 +136,8 @@ void collision_Decor()
     }
 }
 
+
+// ENNEMIS NIVEAU 1 //
 void CreaEnnemis_Niveau1()
 {
     if(CamPosX>-4336)
@@ -786,6 +792,8 @@ void MvtEnnemis_Niveau1()
     }
 }
 
+
+// JOUEUR //
 void Phases_Joueur()
 {
     // Gestion manette
@@ -801,13 +809,13 @@ void Phases_Joueur()
         {
             ptrJoueur->Phase=0;
         }
-        //return;
+        return;
     }
 
     ////////////////
     //   DROITE   //
     ////////////////
-    if(value & BUTTON_RIGHT)
+    else if(value & BUTTON_RIGHT)
     {
         // Si joueur à l'arrêt
         if(ptrJoueur->Phase==0)
@@ -820,13 +828,13 @@ void Phases_Joueur()
         {
             ptrJoueur->Axe=0;
         }
-        //return;
+        return;
     }
 
     ////////////////
     //   GAUCHE   //
     ////////////////
-    if(value & BUTTON_LEFT)
+    else if(value & BUTTON_LEFT)
     {
         // Si joueur à l'arrêt
         if(ptrJoueur->Phase==0)
@@ -839,7 +847,7 @@ void Phases_Joueur()
         {
             ptrJoueur->Axe=1;
         }
-        //return;
+        return;
     }
 }
 
@@ -850,57 +858,114 @@ void MvtJoueur()
     /////////////// 
     if(ptrJoueur->Phase==0)
     {
-        if(CamPosX!=-4336)
-        {
-            ptrJoueur->PosX-=1;
-        }
-        
-        if(ptrJoueur->PosX<-11)
-        {
-            ptrJoueur->PosX=-11;
-        }
-
-        SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
-        return;
-    }
-
-    else if(ptrJoueur->Phase==1)
-    {
-        // Si joueur va vers la droite
+        // JOUEUR ORIENTÉ VERS LA DROITE            
         if(ptrJoueur->Axe==0)
         {
-            ptrJoueur->PosX+=1;
-
-            if(ptrJoueur->PosX>228)
+            movX -= ACCEL;
+            //movX -= glissement;
+            if(movX < FIX32(0))
             {
-                ptrJoueur->PosX=228;
+                movX=0;
             }
         }
 
-        // Si joueur va vers la gauche
-        else
+        // JOUEUR ORIENTÉ VERS LA GAUCHE
+        else if(ptrJoueur->Axe==1)
         {
-            if(CamPosX!=-4336)
+            movX += ACCEL;
+            //movX += glissement;
+            if(movX > FIX32(0))
             {
-                ptrJoueur->PosX-=2;
+                movX=0;
             }
-            else
-            {
-                ptrJoueur->PosX-=1;
-            }
-
-            if(ptrJoueur->PosX<-11)
-            {
-                ptrJoueur->PosX=-11;
-            }
-        }
-
-        SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
-        return;        
+        }            
     }
 
+    ////////////////
+    //   MARCHE   //
+    ////////////////
+    else if(ptrJoueur->Phase==1)
+    {
+        /////////////////////////////
+        //         DROITE          //
+        /////////////////////////////
+        if(ptrJoueur->Axe==0)
+        {
+            // ON AJOUTE 'ACCEL' A 'movX'
+            movX += ACCEL;
 
-    //SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
+            // ON BLOQUE LA VITESSE A 'maxSpeed_Droite (1)'
+            if (movX >= maxSpeed_Droite)
+            {
+                movX = maxSpeed_Droite;
+            } 
+        }
+
+        /////////////////////////////
+        //         GAUCHE          //
+        /////////////////////////////
+        else if(ptrJoueur->Axe==1)
+        {
+             // ON SOUSTRAIT 'ACCEL' A 'movX'
+            movX -= ACCEL;
+
+            // SI ON N'EST PAS A LA FIN DU NIVEAU
+            if(CamPosX!=-4336)
+            {
+                // ON BLOQUE LA VITESSE A 'maxSpeed_Gauche (2)'
+                if(movX <= -maxSpeed_Gauche)
+                {
+                    movX = -maxSpeed_Gauche;
+                }
+            }
+
+            // SI ON EST A LA FIN DU NIVEAU
+            else
+            {
+                // ON BLOQUE LA VITESSE A 'maxSpeed_Droite (1)'
+                if(movX <= -maxSpeed_Droite)
+                {
+                    movX = -maxSpeed_Droite;
+                }
+            }
+        }
+    }
+
+     // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
+    positionX += movX;
+
+    // SI ON N'EST PAS A LA FIN DU NIVEAU
+    if(CamPosX!=-4336)
+    {
+        // SI JOUEUR A L'ARRET
+        if(ptrJoueur->Phase==0)
+        {
+            //if(movX == FIX32(0))
+            //{
+                // LE JOUEUR GLISSE
+                positionX -= GLISSEMENT;
+            //}
+        }
+    }
+
+    // SI LE JOUEUR ATTEINT LA GAUCHE DE L'ECRAN
+    if(positionX < -MAX_POS_G)
+    {
+        // IL EST BLOQUÉ
+        positionX = -MAX_POS_G;
+        movX=0;
+    }
+    // SI LE JOUEUR ATTEINT LA DROITE DE L'ECRAN
+    else if(positionX > MAX_POS_D)
+    {
+        // IL EST BLOQUÉ
+        positionX = MAX_POS_D;
+    }
+
+    // ON CONVERTIT 'positionX' en int
+    // 'positionX' EST LA POSITION DU SPRITE
+    ptrJoueur->PosX=fix32ToInt(positionX);
+    SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
 }
 
 void TilesBloque()
@@ -1023,8 +1088,16 @@ void TilesJoueur()
         // ARRET
         else
         {
-            TilesArret();
-            return;  
+            if(movX==0)
+            {
+                TilesArret();
+                return;
+            }
+            else
+            {
+                TilesMarche();
+                return;
+            }      
         }       
     }
 
@@ -1033,27 +1106,7 @@ void TilesJoueur()
     ////////////////
     else if(ptrJoueur->Phase==1)
     {
-        // BLOQUE
-
-        if(ptrJoueur->PosX==-11)
-        {
-            if(CamPosX!=-4336)
-            {
-                TilesBloque();
-                return;
-            }
-            else
-            {
-                TilesMarche();
-                return; 
-            }         
-        }
-
-        // MARCHE
-        else
-        {
-            TilesMarche();
-            return;  
-        }     
+        TilesMarche();
+        return;     
     }
 }
