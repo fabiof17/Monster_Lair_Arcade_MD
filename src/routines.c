@@ -935,7 +935,7 @@ void MvtJoueur()
     positionX += movX;
 
     // SI ON N'EST PAS A LA FIN DU NIVEAU
-    if(CamPosX!=-4336)
+    /*if(CamPosX!=-4336)
     {
         // SI JOUEUR A L'ARRET
         if(ptrJoueur->Phase==0)
@@ -946,7 +946,7 @@ void MvtJoueur()
                 positionX -= GLISSEMENT;
             //}
         }
-    }
+    }*/
 
     // SI LE JOUEUR ATTEINT LA GAUCHE DE L'ECRAN
     if(positionX < -MAX_POS_G)
