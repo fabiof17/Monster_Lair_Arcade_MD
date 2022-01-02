@@ -38,8 +38,6 @@ void InitSystem()
 
 void InitTitre()
 {
-
-
     // init VDP
     VDP_init();
 
@@ -55,7 +53,7 @@ void InitTitre()
     //////////////////////////////////////////////
 
     // safe starting VRAM adress (16)
-    ind = TILE_USERINDEX;
+    u16 ind = TILE_USERINDEX;
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_TITRE.res
@@ -107,6 +105,7 @@ void InitTitre()
     // création des sprites du titre
     Sprite *sprite_Titre[6];
 
+    u16 i;
 
     for (i=0; i<6; i++)
     {
@@ -220,7 +219,7 @@ void InitSelection()
     //////////////////////////////////////////////
 
     // safe starting VRAM adress (16)
-    ind = TILE_USERINDEX;
+    u16 ind = TILE_USERINDEX;
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_SELECTION.res
@@ -273,7 +272,7 @@ void InitSelection()
     SYS_doVBlankProcess();
 
 
-
+    u16 i;
     u8 selectJoueur=0;
 
     for (i=0; i<10; i++)
@@ -401,7 +400,7 @@ void InitNiveau1()
     /********************************************/
 
     // safe starting VRAM adress (16)
-    ind = TILE_USERINDEX;
+    u16 ind = TILE_USERINDEX;
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
@@ -483,6 +482,9 @@ void InitNiveau1()
     /*********/
     /*  VIES */
     /*********/
+
+    u16 i;
+
     for (i=0; i<2; i++)
     {
         sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
@@ -520,7 +522,7 @@ void InitNiveau1()
     // Init de la structure des sprites ennemis.
     // Init=0 car les ennemis n'ont pas encore été créés.
     // Aucune assignation de sprite dans SpriteE.
-    for(i=0;i<11;i++)
+    for(i=0;i<10;i++)
     {
         Ennemi[i].Init=0;
     }

@@ -17,12 +17,9 @@
 //		Variables principales
 ///////////////////////////////////
 
-extern s16 i;
-extern u16 ind;
+//extern u16 ind;
 
 extern u16 StatutJoy;
-
-extern u16 palette[64];
 
 extern u8 nb_Vie;
 extern u16 GameOver;

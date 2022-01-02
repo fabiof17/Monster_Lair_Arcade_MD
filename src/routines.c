@@ -13,6 +13,8 @@
 // SCROLLING //
 void Scrolling_Niveau1()
 {
+    u16 i;
+ 
     // MOUVEMENT CAMERA //
     CamPosX-=vitesseScrolling;
 
@@ -67,11 +69,22 @@ void Tiles_Niveau1()
         {
             if (tilemapOffset>0 && tilemapOffset<520)
             {
+                // BG_B
                 VDP_setTileMapColumnEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, FALSE, FALSE, FALSE, 16), (tilemapOffset>>1)-2, 62+(tilemapOffset>>1), 7, 20, DMA_QUEUE);
                 VDP_setTileMapColumnEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, 16), (tilemapOffset>>1)-2, 62+(tilemapOffset>>1), 27, 4, DMA_QUEUE);
 
-
-                VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 21, DMA_QUEUE);
+                // BG_A
+                // TETE DE DRAGON EN PRIORITE 1
+                if(tilemapOffset>499)
+                {
+                    VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 13, DMA_QUEUE);
+                    VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 20, 8, DMA_QUEUE);
+                }               
+                else
+                {
+                    VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 21, DMA_QUEUE);
+                }
+                
             }
         }
     }
@@ -140,6 +153,8 @@ void collision_Decor()
 // ENNEMIS NIVEAU 1 //
 void CreaEnnemis_Niveau1()
 {
+    u16 i;
+
     if(CamPosX>-4336)
     {
         compteurTile+=vitesseScrolling;
@@ -227,6 +242,8 @@ void MvtEnnemis_Niveau1()
 {    
     if(CamPosX>-4336)
     {       
+        u16 i;
+        
         for(i=0;i<11;i++)
         {          
             SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
@@ -858,6 +875,12 @@ void MvtJoueur()
     /////////////// 
     if(ptrJoueur->Phase==0)
     {
+        // SI ON N'EST PAS A LA FIN DU NIVEAU
+        if(CamPosX!=-4336)
+        {
+            positionX -= GLISSEMENT;
+        }
+
         // JOUEUR ORIENTÉ VERS LA DROITE            
         if(ptrJoueur->Axe==0)
         {
@@ -873,7 +896,6 @@ void MvtJoueur()
         else if(ptrJoueur->Axe==1)
         {
             movX += ACCEL;
-            //movX += glissement;
             if(movX > FIX32(0))
             {
                 movX=0;
@@ -905,48 +927,27 @@ void MvtJoueur()
         //         GAUCHE          //
         /////////////////////////////
         else if(ptrJoueur->Axe==1)
-        {
-             // ON SOUSTRAIT 'ACCEL' A 'movX'
-            movX -= ACCEL;
-
+        {  
             // SI ON N'EST PAS A LA FIN DU NIVEAU
             if(CamPosX!=-4336)
             {
-                // ON BLOQUE LA VITESSE A 'maxSpeed_Gauche (2)'
-                if(movX <= -maxSpeed_Gauche)
-                {
-                    movX = -maxSpeed_Gauche;
-                }
+                positionX -= GLISSEMENT;
             }
 
-            // SI ON EST A LA FIN DU NIVEAU
-            else
+            // ON SOUSTRAIT 'ACCEL' A 'movX'
+            movX -= ACCEL;
+
+           // ON BLOQUE LA VITESSE A 'maxSpeed_Gauche (2)'
+            if(movX <= -maxSpeed_Droite)
             {
-                // ON BLOQUE LA VITESSE A 'maxSpeed_Droite (1)'
-                if(movX <= -maxSpeed_Droite)
-                {
-                    movX = -maxSpeed_Droite;
-                }
+                movX = -maxSpeed_Droite;
             }
         }
     }
 
+
      // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
     positionX += movX;
-
-    // SI ON N'EST PAS A LA FIN DU NIVEAU
-    /*if(CamPosX!=-4336)
-    {
-        // SI JOUEUR A L'ARRET
-        if(ptrJoueur->Phase==0)
-        {
-            //if(movX == FIX32(0))
-            //{
-                // LE JOUEUR GLISSE
-                positionX -= GLISSEMENT;
-            //}
-        }
-    }*/
 
     // SI LE JOUEUR ATTEINT LA GAUCHE DE L'ECRAN
     if(positionX < -MAX_POS_G)

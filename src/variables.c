@@ -6,12 +6,9 @@
 //		Variables principales
 ///////////////////////////////////
 
-s16 i=0;
-u16 ind=0;
+//u16 ind=0;
 
 u16 StatutJoy=0;
-
-u16 palette[64];
 
 u8 nb_Vie=2;
 u16 GameOver=0;
