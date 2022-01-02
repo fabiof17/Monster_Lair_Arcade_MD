@@ -15,6 +15,7 @@ u16 GameOver=0;
 u16 PauseJeu=0;
 
 u8 num_Niveau=1;
+u8 selectJoueur=0;
 
 // CAMERA
 u8 vitesseScrolling=1;

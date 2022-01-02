@@ -271,9 +271,7 @@ void InitSelection()
 
     SYS_doVBlankProcess();
 
-
     u16 i;
-    u8 selectJoueur=0;
 
     for (i=0; i<10; i++)
     {
@@ -384,11 +382,12 @@ void InitNiveaux()
 
 void InitNiveau1()
 {
-    maxSpeed = MAX_SPEED;
-    
+    vitesseScrolling=1;
+       
     // Position initiale du sprite : 64 pixels
     positionX=FIX32(64L);
     movX = FIX32(0);
+    maxSpeed = MAX_SPEED;
     
     //////////////////////////////////////////////
     //                CREATION  BG              //
@@ -495,8 +494,16 @@ void InitNiveau1()
     // Création d'un pointeur de type "SpritePerso_" contenant la variable "Joueur".
     ptrJoueur=&Joueur;
 
-    ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_Joueur_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
-
+    if(selectJoueur==0)
+    {
+        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_Joueur_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    }
+    else
+    {
+        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_Joueur_F, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    
+    }
+    
     // HASE CHUTE DEBUT //
     ptrJoueur->Phase=99;
 
@@ -561,10 +568,18 @@ void InitNiveau1()
 
     VDP_setBackgroundColor(32);
 
-    PAL_setPalette(PAL0, palette_NIVEAU1_WINDOW.data, DMA);
-    PAL_setPalette(PAL1, palette_NIVEAU1_ESCARGOT.data, DMA);
-    PAL_setPalette(PAL2, palette_NIVEAU1_BGB.data, DMA);
-    PAL_setPalette(PAL3, palette_NIVEAU1_BGA.data, DMA);
+    if(selectJoueur==0)
+    {
+        PAL_setPalette(PAL0, palette_JOUEUR_H.data, DMA); // PALETTE PERSO H
+    }
+    else
+    {
+        PAL_setPalette(PAL0, palette_JOUEUR_F.data, DMA); // PALETTE PERSO F
+    }
+    
+    PAL_setPalette(PAL1, palette_NIVEAU1_ESCARGOT.data, DMA);   // PALETTE ENNEMIS
+    PAL_setPalette(PAL2, palette_NIVEAU1_BGB.data, DMA);        // PALETTE BG_B
+    PAL_setPalette(PAL3, palette_NIVEAU1_BGA.data, DMA);        // PALETTE BG_A
 
     // scroll mode
     VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);

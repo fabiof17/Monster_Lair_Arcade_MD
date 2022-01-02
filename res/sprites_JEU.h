@@ -6,6 +6,7 @@ extern const SpriteDefinition tiles_Sprite_VIE;
 extern const SpriteDefinition tiles_Sprite_PAUSE1;
 extern const SpriteDefinition tiles_Sprite_PAUSE2;
 extern const SpriteDefinition tiles_Sprite_Joueur_H;
+extern const SpriteDefinition tiles_Sprite_Joueur_F;
 extern const SpriteDefinition tiles_Sprite_ESCARGOT_H;
 extern const SpriteDefinition tiles_Sprite_BULOT;
 extern const SpriteDefinition tiles_Sprite_ESCARGOT_V;

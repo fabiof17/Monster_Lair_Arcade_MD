@@ -25,6 +25,7 @@ extern u16 GameOver;
 extern u16 PauseJeu;
 
 extern u8 num_Niveau;
+extern u8 selectJoueur;
 
 
 
