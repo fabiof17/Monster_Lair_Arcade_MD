@@ -450,10 +450,21 @@ void InitNiveau1()
     // WINDOW tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
     VDP_loadTileSet(&tileset_NIVEAU1_WINDOW, ind, DMA);
+    
 
     // WINDOW CREATION
     // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
     VDP_setTileMapEx(WINDOW, image_NIVEAU1_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 40, 6, DMA);
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += tileset_NIVEAU1_WINDOW.numTile;
+
+
+    if(selectJoueur==1)
+    {
+        VDP_loadTileSet(&tileset_TETE_F, ind, DMA);
+        VDP_setTileMapEx(WINDOW, image_TETE_F.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);
+    }
 
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += tileset_NIVEAU1_WINDOW.numTile;
@@ -504,7 +515,7 @@ void InitNiveau1()
     
     }
     
-    // HASE CHUTE DEBUT //
+    // PHASE CHUTE DEBUT //
     ptrJoueur->Phase=99;
 
     // ORIENTE DROITE //

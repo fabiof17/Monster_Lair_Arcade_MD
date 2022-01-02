@@ -4,11 +4,13 @@
 extern const TileSet tileset_NIVEAU1_BGB;
 extern const TileSet tileset_NIVEAU1_BGA;
 extern const TileSet tileset_NIVEAU1_WINDOW;
+extern const TileSet tileset_TETE_F;
 extern const TileSet tileset_COLLISION_NIVEAU1;
 extern const TileSet tileset_ENNEMIS_NIVEAU1;
-extern const Image image_NIVEAU1_WINDOW;
 extern const Image image_NIVEAU1_BGB;
 extern const Image image_NIVEAU1_BGA;
+extern const Image image_NIVEAU1_WINDOW;
+extern const Image image_TETE_F;
 extern const MapDefinition tilemap_COLLISION_NIVEAU1;
 extern const MapDefinition tilemap_ENNEMIS_NIVEAU1;
 
