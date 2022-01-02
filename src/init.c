@@ -384,8 +384,7 @@ void InitNiveaux()
 
 void InitNiveau1()
 {
-    maxSpeed_Droite = MAX_SPEED_D;
-    maxSpeed_Gauche = MAX_SPEED_G;
+    maxSpeed = MAX_SPEED;
     
     // Position initiale du sprite : 64 pixels
     positionX=FIX32(64L);

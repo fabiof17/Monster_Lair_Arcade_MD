@@ -2,8 +2,7 @@
 #define _VARIABLES_H
 
 // CONSTANTES //
-#define MAX_SPEED_D     FIX32(1L)
-#define MAX_SPEED_G     FIX32(2L)
+#define MAX_SPEED       FIX32(1L)
 #define ACCEL           FIX32(0.08)
 #define GLISSEMENT      FIX32(1L)
 
@@ -113,9 +112,7 @@ extern u8 compteurTile; // 0 -> 7 //
 
 
 
-extern fix32 maxSpeed_Droite;
-extern fix32 maxSpeed_Gauche;
-//extern fix32 glissement;
+extern fix32 maxSpeed;
 extern fix32 jumpSpeed;
 extern fix32 gravity;
 

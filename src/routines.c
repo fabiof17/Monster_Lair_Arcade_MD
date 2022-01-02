@@ -916,10 +916,10 @@ void MvtJoueur()
             // ON AJOUTE 'ACCEL' A 'movX'
             movX += ACCEL;
 
-            // ON BLOQUE LA VITESSE A 'maxSpeed_Droite (1)'
-            if (movX >= maxSpeed_Droite)
+            // ON BLOQUE LA VITESSE A 'maxSpeed (1)'
+            if (movX >= maxSpeed)
             {
-                movX = maxSpeed_Droite;
+                movX = maxSpeed;
             } 
         }
 
@@ -937,10 +937,10 @@ void MvtJoueur()
             // ON SOUSTRAIT 'ACCEL' A 'movX'
             movX -= ACCEL;
 
-           // ON BLOQUE LA VITESSE A 'maxSpeed_Gauche (2)'
-            if(movX <= -maxSpeed_Droite)
+           // ON BLOQUE LA VITESSE A 'maxSpeed (1)'
+            if(movX <= -maxSpeed)
             {
-                movX = -maxSpeed_Droite;
+                movX = -maxSpeed;
             }
         }
     }

@@ -50,9 +50,7 @@ Map *tilemapEnnemis;
 u8 indexCreaEnnemis=0;
 
 // VARIABLES //
-fix32 maxSpeed_Droite;
-fix32 maxSpeed_Gauche;
-//fix32 glissement;
+fix32 maxSpeed;
 fix32 jumpSpeed;
 fix32 gravity;
 
