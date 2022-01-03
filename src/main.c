@@ -64,25 +64,23 @@ void MainLoop()
 
                 Scrolling_Niveau1();
 
-                //Phases_Joueur();
-                //MvtJoueur();
-                //TilesJoueur();
-
                 CreaEnnemis_Niveau1();
                 MvtEnnemis_Niveau1();
 
             }
 
 
-
             // MAJ sprites
             SPR_update();
+
+            // Vblank
+            SYS_doVBlankProcess();
 
             // MAJ tiles BG
             Tiles_Niveau1();
 
             // Vblank
-            SYS_doVBlankProcess();
+            //SYS_doVBlankProcess();
 
         }
         

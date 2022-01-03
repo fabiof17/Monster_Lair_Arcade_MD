@@ -261,6 +261,30 @@ void InitSelection()
 
 
     //////////////////////////////////////////////
+    //                  SPRITES                 //
+    //////////////////////////////////////////////
+
+    /*********/
+    /*  VIES */
+    /*********/
+
+    u16 i;
+
+    SPR_init();
+
+    for (i=0; i<2; i++)
+    {
+        sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_H, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+    }
+
+    for (i=0; i<2; i++)
+    {    
+        sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_F, 272+(i<<4), 200, TILE_ATTR(PAL2, TRUE, FALSE, FALSE));
+    }
+    
+    SPR_update();
+
+    //////////////////////////////////////////////
     //               CHARGEMENT PALETTES        //
     //////////////////////////////////////////////
 
@@ -270,8 +294,6 @@ void InitSelection()
     PAL_setPalette(PAL2, palette_02_SELECTION.data, DMA);
 
     SYS_doVBlankProcess();
-
-    u16 i;
 
     for (i=0; i<10; i++)
     {

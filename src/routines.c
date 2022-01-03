@@ -92,27 +92,27 @@ void Tiles_Niveau1()
 
     // CHANGEMENTS PALETTE
 
-     if(CamPosX<-700 && CamPosX>-702)
+     if(CamPosX<-700 && CamPosX>-704)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
     }
 
-    else if(CamPosX<-1110 && CamPosX>-1112)
+    else if(CamPosX<-1110 && CamPosX>-1114)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_ESCARGOT, DMA);
     }
 
-    else if(CamPosX<-2600 && CamPosX>-2602)
+    else if(CamPosX<-2600 && CamPosX>-2604)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_PELICAN, DMA);
     }
     
-    else if(CamPosX<-3700 && CamPosX>-3702)
+    else if(CamPosX<-3700 && CamPosX>-3704)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
     }
 
-    else if(CamPosX<-4016 && CamPosX>-4018)
+    else if(CamPosX<-4016 && CamPosX>-4020)
     {
         PAL_setPaletteColors(48, &palette_NIVEAU1_BGA2, DMA);
     }
