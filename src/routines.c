@@ -65,8 +65,8 @@ void Tiles_Niveau1()
     // MISE A JOUR TILEMAP //
     if(CamPosX>-4336)
     {
-        if (CamPosX%8==0)
-        {
+        //if (CamPosX%8==0)
+        //{
             if (tilemapOffset>0 && tilemapOffset<520)
             {
                 // BG_B
@@ -86,7 +86,7 @@ void Tiles_Niveau1()
                 }
                 
             }
-        }
+        //}
     }
 
 
@@ -874,7 +874,7 @@ void MvtJoueur()
     //   ARRET   //
     /////////////// 
     if(ptrJoueur->Phase==0)
-    {
+    { 
         // SI ON N'EST PAS A LA FIN DU NIVEAU
         if(CamPosX!=-4336)
         {
@@ -945,6 +945,7 @@ void MvtJoueur()
         }
     }
 
+    vitesseScrolling=1;
 
      // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
     positionX += movX;
@@ -961,6 +962,8 @@ void MvtJoueur()
     {
         // IL EST BLOQUÉ
         positionX = MAX_POS_D;
+
+        vitesseScrolling=2;
     }
 
     // ON CONVERTIT 'positionX' en int

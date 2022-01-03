@@ -58,12 +58,15 @@ void MainLoop()
             // Jeu en Pause ?
             if(PauseJeu==0)
             {
-                
-                Scrolling_Niveau1();
-
                 Phases_Joueur();
                 MvtJoueur();
                 TilesJoueur();
+
+                Scrolling_Niveau1();
+
+                //Phases_Joueur();
+                //MvtJoueur();
+                //TilesJoueur();
 
                 CreaEnnemis_Niveau1();
                 MvtEnnemis_Niveau1();

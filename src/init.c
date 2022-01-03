@@ -384,6 +384,7 @@ void InitNiveau1()
 {
     nb_Vie=2;
     vitesseScrolling=1;
+    compteurTile=0;
        
     // Position initiale du sprite : 64 pixels
     positionX=FIX32(64L);
