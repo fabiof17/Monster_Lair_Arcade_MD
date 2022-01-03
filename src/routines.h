@@ -3,8 +3,9 @@
 
 extern void Scrolling_Niveau1();
 extern void Tiles_Niveau1();
+extern void ChgtPalette_Niveau1();
 
-extern void collision_Decor();
+extern void Collision_Decor();
 
 extern void Phases_Joueur();
 extern void MvtJoueur();

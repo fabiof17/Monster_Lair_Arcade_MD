@@ -73,14 +73,14 @@ void MainLoop()
             // MAJ sprites
             SPR_update();
 
-            // Vblank
-            SYS_doVBlankProcess();
-
             // MAJ tiles BG
             Tiles_Niveau1();
 
             // Vblank
-            //SYS_doVBlankProcess();
+            SYS_doVBlankProcess();
+
+            // CHANGEMENT DES PALETTES
+            ChgtPalette_Niveau1();
 
         }
         

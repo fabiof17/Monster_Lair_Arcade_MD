@@ -88,8 +88,10 @@ void Tiles_Niveau1()
             }
         //}
     }
+}
 
-
+void ChgtPalette_Niveau1()
+{
     // CHANGEMENTS PALETTE
 
      if(CamPosX<-700 && CamPosX>-704)
@@ -116,13 +118,10 @@ void Tiles_Niveau1()
     {
         PAL_setPaletteColors(48, &palette_NIVEAU1_BGA2, DMA);
     }
-
-
 }
 
-
 //
-void collision_Decor()
+void Collision_Decor()
 {
     u16 *ptrtileID_G=&tileID_G;
     u16 *ptrtileID_D=&tileID_D;
