@@ -382,6 +382,7 @@ void InitNiveaux()
 
 void InitNiveau1()
 {
+    nb_Vie=2;
     vitesseScrolling=1;
        
     // Position initiale du sprite : 64 pixels
@@ -459,7 +460,8 @@ void InitNiveau1()
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += tileset_NIVEAU1_WINDOW.numTile;
 
-
+    // SI JOUEUR FEMME
+    // TETE FEMME DANS LE LAYER WINDOW
     if(selectJoueur==1)
     {
         VDP_loadTileSet(&tileset_TETE_F, ind, DMA);
@@ -494,9 +496,17 @@ void InitNiveau1()
 
     u16 i;
 
-    for (i=0; i<2; i++)
+    for (i=0; i<nb_Vie; i++)
     {
-        sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+        if(selectJoueur==0)
+        {
+            sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_H, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+        }
+        else
+        {
+            sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_F, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+        
+        }
     }
 
     /**********/
@@ -507,11 +517,11 @@ void InitNiveau1()
 
     if(selectJoueur==0)
     {
-        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_Joueur_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     }
     else
     {
-        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_Joueur_F, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_F, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     
     }
     

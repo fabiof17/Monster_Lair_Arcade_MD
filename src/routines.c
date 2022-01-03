@@ -971,12 +971,13 @@ void MvtJoueur()
 
 void TilesBloque()
 {
+    SPR_setAnim(ptrJoueur->SpriteJ,1);
+
     ptrJoueur->CompteurFrameArret=0;
     ptrJoueur->IndexFrameArret=0;
+
     ptrJoueur->CompteurFrameMarche=0;
     ptrJoueur->IndexFrameMarche=0;
-
-    SPR_setAnim(ptrJoueur->SpriteJ,1);
 
     SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
 
@@ -1005,6 +1006,7 @@ void TilesArret()
 
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
+
     ptrJoueur->CompteurFrameMarche=0;
     ptrJoueur->IndexFrameMarche=0;
 
@@ -1030,6 +1032,13 @@ void TilesArret()
 void TilesMarche()
 {
     SPR_setAnim(ptrJoueur->SpriteJ,2);
+    
+    ptrJoueur->CompteurFrameBloque=0;
+    ptrJoueur->IndexFrameBloque=0;
+    
+    ptrJoueur->CompteurFrameArret=0;
+    ptrJoueur->IndexFrameArret=0;
+
 
     if(ptrJoueur->Axe==0)
     {
@@ -1039,11 +1048,6 @@ void TilesMarche()
     {
         SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
     }
-    
-    ptrJoueur->CompteurFrameBloque=0;
-    ptrJoueur->IndexFrameBloque=0;
-    ptrJoueur->CompteurFrameArret=0;
-    ptrJoueur->IndexFrameArret=0;
 
     // Anim des tiles
     ptrJoueur->CompteurFrameMarche+=1;
@@ -1062,6 +1066,20 @@ void TilesMarche()
     }
 
     SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameMarche);
+}
+
+void TilesDerapage()
+{
+    SPR_setAnim(ptrJoueur->SpriteJ,5);
+
+    ptrJoueur->CompteurFrameBloque=0;
+    ptrJoueur->IndexFrameBloque=0;
+
+    ptrJoueur->CompteurFrameArret=0;
+    ptrJoueur->IndexFrameArret=0;
+
+    ptrJoueur->CompteurFrameMarche=0;
+    ptrJoueur->IndexFrameMarche=0;   
 }
 
 void TilesJoueur()
@@ -1107,7 +1125,32 @@ void TilesJoueur()
     ////////////////
     else if(ptrJoueur->Phase==1)
     {
-        TilesMarche();
-        return;     
+        // SI JOUEUR VA VERS LA DROITE
+        if(ptrJoueur->Axe==0)
+        {
+            if(movX < FIX32(0))
+            {
+                TilesDerapage();
+            }
+            else
+            {
+                TilesMarche();
+                return;
+            }
+        }
+
+        // SI JOUEUR VA VERS LA GAUCHE
+        else if(ptrJoueur->Axe==1)
+        {
+            if(movX > FIX32(0))
+            {
+                TilesDerapage();
+            }
+            else
+            {
+                TilesMarche();
+                return;
+            }
+        }    
     }
 }

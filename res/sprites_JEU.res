@@ -1,14 +1,15 @@
 // ECRAN TITRE //
-SPRITE tiles_Sprite_TITRE "sprites/titre/tiles_TITRE.png" 4 3 NONE 0
+SPRITE tiles_Sprite_TITRE "sprites/titre/tiles_TITRE.png" 4 3 BEST 0
 
 // GLOBAL //
-SPRITE tiles_Sprite_VIE "sprites/global/tile_VIE.png" 2 2 NONE 0
+SPRITE tiles_Sprite_VIE_H "sprites/global/tile_VIE_H.png" 2 2 BEST 0
+SPRITE tiles_Sprite_VIE_F "sprites/global/tile_VIE_F.png" 2 2 BEST 0
 
-SPRITE tiles_Sprite_PAUSE1 "sprites/global/tiles_PAUSE1.png" 4 1 NONE 0
-SPRITE tiles_Sprite_PAUSE2 "sprites/global/tiles_PAUSE2.png" 1 1 NONE 0
+SPRITE tiles_Sprite_PAUSE1 "sprites/global/tiles_PAUSE1.png" 4 1 BEST 0
+SPRITE tiles_Sprite_PAUSE2 "sprites/global/tiles_PAUSE2.png" 1 1 BEST 0
 
-SPRITE tiles_Sprite_Joueur_H "sprites/global/tiles_JOUEUR_H.png" 4 4 NONE 0
-SPRITE tiles_Sprite_Joueur_F "sprites/global/tiles_JOUEUR_F.png" 4 4 NONE 0
+SPRITE tiles_Sprite_JOUEUR_H "sprites/global/tiles_JOUEUR_H.png" 4 4 NONE 0
+SPRITE tiles_Sprite_JOUEUR_F "sprites/global/tiles_JOUEUR_F.png" 4 4 NONE 0
 
 // NIVEAU 1 //
 SPRITE tiles_Sprite_ESCARGOT_H "sprites/niveau1/tiles_ESCARGOT_H.png" 3 3 NONE 0
