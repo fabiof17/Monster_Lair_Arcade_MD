@@ -45,6 +45,8 @@ void StartMain()
 
 void MainLoop()
 {
+    SYS_showFrameLoad(TRUE);
+    
     switch (num_Niveau)
     {
         case 1:
@@ -64,8 +66,8 @@ void MainLoop()
 
                 Scrolling_Niveau1();
 
-                CreaEnnemis_Niveau1();
-                MvtEnnemis_Niveau1();
+                CreaSprites_Niveau1();
+                MvtSprites_Niveau1();
 
             }
 

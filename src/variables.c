@@ -34,12 +34,15 @@ u16 tileID_D=0;
 
 u8 compteurTile=0; // 0 -> 7 //
 
+char texteSortie[8];
+
 // SPRITES
 Sprite *sprite_Vie[3];
 Sprite *sprite_Pause[2];
 
 SpriteJoueur_ Joueur;
 SpriteEnnemi_ Ennemi[10];
+SpritePlateforme_ Plateforme[5];
 
 SpriteJoueur_ *ptrJoueur;
 
@@ -48,7 +51,9 @@ const SpriteDefinition *adrResEnnemi[12];
 // TILEMAPS
 Map *tilemapCollision;
 Map *tilemapEnnemis;
-u8 indexCreaEnnemis=0;
+
+u8 indexCreaEnnemis;
+u8 indexCreaPlateformes;
 
 // VARIABLES //
 fix32 maxSpeed;

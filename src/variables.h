@@ -27,7 +27,7 @@ extern u16 PauseJeu;
 extern u8 num_Niveau;
 extern u8 selectJoueur;
 
-
+extern char texteSortie[8];
 
 ///////////////////////////////////
 //		Variables scrolling
@@ -96,6 +96,18 @@ extern SpriteEnnemi_ Ennemi[10];
 extern const SpriteDefinition *adrResEnnemi[12];
 
 
+typedef struct
+{
+    Sprite* SpriteP;
+    u8 ID;                      // Type de plateforme
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+    s16 *ptrPosition;           // Pointeur dans le tableau de position
+} SpritePlateforme_;
+
+extern SpritePlateforme_ Plateforme[5];
+
+
 
 
 
@@ -109,6 +121,7 @@ extern u16 tileID_G;
 extern u16 tileID_D;
 
 extern u8 indexCreaEnnemis;
+extern u8 indexCreaPlateformes;
 extern u8 compteurTile; // 0 -> 7 //
 
 

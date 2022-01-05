@@ -15,7 +15,9 @@ extern void TilesBloque();
 extern void TilesArret();
 extern void TilesMarche();
 
-extern void CreaEnnemis_Niveau1();
-extern void MvtEnnemis_Niveau1();
+extern void CreaSprites_Niveau1();
+extern void MvtSprites_Niveau1();
+
+extern void VDP_drawInt();
 
 #endif // _MAIN

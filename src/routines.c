@@ -5,6 +5,7 @@
 #include "palettes.h"
 #include "maps_NIVEAU1.h"
 #include "tilemaps_ennemis.h"
+#include "tilemaps_plateformes.h"
 #include "animation_ennemis.h"
 #include "sprites_JEU.h"
 //#include <GestionPAD.h>
@@ -149,8 +150,8 @@ void Collision_Decor()
 }
 
 
-// ENNEMIS NIVEAU 1 //
-void CreaEnnemis_Niveau1()
+// SPRITES NIVEAU 1 //
+void CreaSprites_Niveau1()
 {
     u16 i;
 
@@ -232,12 +233,14 @@ void CreaEnnemis_Niveau1()
             }
         }
 
+        // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
+
         // On remet le compteur entre 0 et 7
         compteurTile-=8;  
     }
 }
 
-void MvtEnnemis_Niveau1()
+void MvtSprites_Niveau1()
 {    
     if(CamPosX>-4336)
     {       
@@ -1155,4 +1158,10 @@ void TilesJoueur()
             }
         }    
     }
+}
+
+void VDP_drawInt(s32 valeur,u8 zeros,u8 x, u8 y)
+{
+	intToStr(valeur,texteSortie,zeros); //MIN -500.000.000 - MAX 500.000.000
+	VDP_drawText(texteSortie,x,y);
 }
