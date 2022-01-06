@@ -66,28 +66,25 @@ void Tiles_Niveau1()
     // MISE A JOUR TILEMAP //
     if(CamPosX>-4336)
     {
-        //if (CamPosX%8==0)
-        //{
-            if (tilemapOffset>0 && tilemapOffset<520)
-            {
-                // BG_B
-                VDP_setTileMapColumnEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, FALSE, FALSE, FALSE, 16), (tilemapOffset>>1)-2, 62+(tilemapOffset>>1), 7, 20, DMA_QUEUE);
-                VDP_setTileMapColumnEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, 16), (tilemapOffset>>1)-2, 62+(tilemapOffset>>1), 27, 4, DMA_QUEUE);
+        if (tilemapOffset>0 && tilemapOffset<520)
+        {
+            // BG_B
+            VDP_setTileMapColumnEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, FALSE, FALSE, FALSE, 16), (tilemapOffset>>1)-2, 62+(tilemapOffset>>1), 7, 20, DMA_QUEUE);
+            VDP_setTileMapColumnEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, 16), (tilemapOffset>>1)-2, 62+(tilemapOffset>>1), 27, 4, DMA_QUEUE);
 
-                // BG_A
-                // TETE DE DRAGON EN PRIORITE 1
-                if(tilemapOffset>499)
-                {
-                    VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 13, DMA_QUEUE);
-                    VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 20, 8, DMA_QUEUE);
-                }               
-                else
-                {
-                    VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 21, DMA_QUEUE);
-                }
-                
+            // BG_A
+            // TETE DE DRAGON EN PRIORITE 1
+            if(tilemapOffset>499)
+            {
+                VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 13, DMA_QUEUE);
+                VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 20, 8, DMA_QUEUE);
+            }               
+            else
+            {
+                VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 21, DMA_QUEUE);
             }
-        //}
+            
+        }
     }
 }
 
@@ -164,6 +161,10 @@ void CreaSprites_Niveau1()
     // Si compteurTile est supérieur à 7
     if(compteurTile>7)
     {
+        /////////////////
+        //   ENNEMIS   //
+        /////////////////
+
         // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
         if (-CamPosX>>3 == tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis])
         {          
@@ -233,7 +234,44 @@ void CreaSprites_Niveau1()
             }
         }
 
-        // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
+        /////////////////////
+        //   PLATEFORMES   //
+        /////////////////////
+
+        // tilemapCreaPlateformes_Niveau[0][indexCreaPlateformes] : PosX
+        if (-CamPosX>>3 == tilemapCreaPlateformes_Niveau1[0][indexCreaPlateformes])
+        {          
+            // On scanne les emplacements vides
+            for(i=0;i<3;i++)
+            {
+                SpritePlateforme_ *ptrPlateforme=&Plateforme[i];
+
+                // Si on trouve un emplacement vide
+                if(ptrPlateforme->Init==0)
+                {
+                    // tilemapCreaPlateformes_Niveau1[2][indexCreaPlateformes] : ID
+                    ptrPlateforme->ID=tilemapCreaPlateformes_Niveau1[2][indexCreaPlateformes];
+
+                    ptrPlateforme->Init=1;
+                    ptrPlateforme->PosX=321;
+
+                    // tilemapCreaPlateformes_Niveau1[1][indexCreaPlateformes] : PosY
+                    ptrPlateforme->PosY=(u16)tilemapCreaPlateformes_Niveau1[1][indexCreaPlateformes]<<3;
+
+
+                    // PLATEFORME VERTICALE 1 //
+                    //if(ptrPlateforme->ID==1)
+                    //{
+                        ptrPlateforme->SpriteP = SPR_addSprite(&tiles_Sprite_PLATEFORME, ptrPlateforme->PosX, ptrPlateforme->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
+                    //}
+
+
+                    indexCreaPlateformes++;
+                    break;
+                }
+
+            }
+        }
 
         // On remet le compteur entre 0 et 7
         compteurTile-=8;  
@@ -245,7 +283,11 @@ void MvtSprites_Niveau1()
     if(CamPosX>-4336)
     {       
         u16 i;
-        
+
+        /////////////////
+        //   ENNEMIS   //
+        /////////////////
+
         for(i=0;i<11;i++)
         {          
             SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
@@ -808,6 +850,60 @@ void MvtSprites_Niveau1()
 
             }
         }
+
+        /////////////////////
+        //   PLATEFORMES   //
+        /////////////////////
+
+        for(i=0;i<3;i++)
+        {
+            SpritePlateforme_ *ptrPlateforme=&Plateforme[i];
+
+            // Si le sprite a été créé
+            if(ptrPlateforme->Init==1)
+            {
+                // On vérifie le type de plateforme 
+                switch(ptrPlateforme->ID)              
+                {
+                    ///////////////////
+                    // PLATEFORME V1 //
+                    ///////////////////
+                    case 1:
+                        // Position X
+
+                        ptrPlateforme->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
+
+                        // Si la plateforme sort de l'écran
+                        // 4 tiles (32 px) de large  
+                        if(ptrPlateforme->PosX<-64)
+                        {
+                            SPR_releaseSprite(ptrPlateforme->SpriteP);
+                            ptrPlateforme->Init=0;
+                        }
+                        break;
+
+                   ///////////////////
+                    // PLATEFORME H1 //
+                    ///////////////////
+                    case 2:
+                        // Position X
+
+                        ptrPlateforme->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
+
+                        // Si la plateforme sort de l'écran
+                        // 4 tiles (32 px) de large  
+                        if(ptrPlateforme->PosX<-64)
+                        {
+                            SPR_releaseSprite(ptrPlateforme->SpriteP);
+                            ptrPlateforme->Init=0;
+                        }
+                        break;
+
+                }
+            }
+        }
     }
 }
 
@@ -886,7 +982,7 @@ void MvtJoueur()
         // JOUEUR ORIENTÉ VERS LA DROITE            
         if(ptrJoueur->Axe==0)
         {
-            movX -= ACCEL;
+            movX -= ACCEL_D;
             //movX -= glissement;
             if(movX < FIX32(0))
             {
@@ -897,7 +993,7 @@ void MvtJoueur()
         // JOUEUR ORIENTÉ VERS LA GAUCHE
         else if(ptrJoueur->Axe==1)
         {
-            movX += ACCEL;
+            movX += ACCEL_G;
             if(movX > FIX32(0))
             {
                 movX=0;
@@ -915,8 +1011,8 @@ void MvtJoueur()
         /////////////////////////////
         if(ptrJoueur->Axe==0)
         {
-            // ON AJOUTE 'ACCEL' A 'movX'
-            movX += ACCEL;
+            // ON AJOUTE 'ACCEL_D' A 'movX'
+            movX += ACCEL_D;
 
             // ON BLOQUE LA VITESSE A 'maxSpeed (1)'
             if (movX >= maxSpeed)
@@ -936,8 +1032,8 @@ void MvtJoueur()
                 positionX -= GLISSEMENT;
             }
 
-            // ON SOUSTRAIT 'ACCEL' A 'movX'
-            movX -= ACCEL;
+            // ON SOUSTRAIT 'ACCEL_D' A 'movX'
+            movX -= ACCEL_G;
 
            // ON BLOQUE LA VITESSE A 'maxSpeed (1)'
             if(movX <= -maxSpeed)

@@ -3,7 +3,8 @@
 
 // CONSTANTES //
 #define MAX_SPEED       FIX32(1L)
-#define ACCEL           FIX32(0.08)
+#define ACCEL_D         FIX32(0.08)
+#define ACCEL_G         FIX32(0.16)
 #define GLISSEMENT      FIX32(1L)
 
 #define MAX_POS_D       FIX32(228L)
@@ -99,13 +100,14 @@ extern const SpriteDefinition *adrResEnnemi[12];
 typedef struct
 {
     Sprite* SpriteP;
+    u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type de plateforme
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
     s16 *ptrPosition;           // Pointeur dans le tableau de position
 } SpritePlateforme_;
 
-extern SpritePlateforme_ Plateforme[5];
+extern SpritePlateforme_ Plateforme[3];
 
 
 

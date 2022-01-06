@@ -14,5 +14,6 @@ extern const SpriteDefinition tiles_Sprite_ESCARGOT_V;
 extern const SpriteDefinition tiles_Sprite_MORSE;
 extern const SpriteDefinition tiles_Sprite_POULPE;
 extern const SpriteDefinition tiles_Sprite_PELICAN;
+extern const SpriteDefinition tiles_Sprite_PLATEFORME;
 
 #endif // _RES_SPRITES_JEU_H_

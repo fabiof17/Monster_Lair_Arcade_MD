@@ -42,7 +42,7 @@ Sprite *sprite_Pause[2];
 
 SpriteJoueur_ Joueur;
 SpriteEnnemi_ Ennemi[10];
-SpritePlateforme_ Plateforme[5];
+SpritePlateforme_ Plateforme[3];
 
 SpriteJoueur_ *ptrJoueur;
 
