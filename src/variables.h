@@ -107,7 +107,7 @@ typedef struct
     s16 *ptrPosition;           // Pointeur dans le tableau de position
 } SpritePlateforme_;
 
-extern SpritePlateforme_ Plateforme[3];
+extern SpritePlateforme_ Plateforme[5];
 
 
 

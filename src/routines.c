@@ -242,7 +242,7 @@ void CreaSprites_Niveau1()
         if (-CamPosX>>3 == tilemapCreaPlateformes_Niveau1[0][indexCreaPlateformes])
         {          
             // On scanne les emplacements vides
-            for(i=0;i<3;i++)
+            for(i=0;i<6;i++)
             {
                 SpritePlateforme_ *ptrPlateforme=&Plateforme[i];
 
@@ -855,7 +855,7 @@ void MvtSprites_Niveau1()
         //   PLATEFORMES   //
         /////////////////////
 
-        for(i=0;i<3;i++)
+        for(i=0;i<6;i++)
         {
             SpritePlateforme_ *ptrPlateforme=&Plateforme[i];
 
