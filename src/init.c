@@ -434,7 +434,8 @@ void InitNiveau1()
 
     // BGB CREATION
     // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
-    VDP_setTileMapEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, FALSE, FALSE, FALSE, ind), 0, 0, 0, 0, 64, 31, CPU);
+    VDP_setTileMapEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, FALSE, FALSE, FALSE, ind), 0, 0, 0, 0, 64, 27, CPU);
+    VDP_setTileMapEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, ind), 0, 27, 0, 27, 64, 4, CPU);
     //VDP_setTileMap(BG_B, image_NIVEAU1_BGB.tilemap, 0, 0, 64, 28, CPU);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
