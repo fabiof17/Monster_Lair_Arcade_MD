@@ -251,19 +251,24 @@ void CreaSprites_Niveau1()
                 {
                     // tilemapCreaPlateformes_Niveau1[2][indexCreaPlateformes] : ID
                     ptrPlateforme->ID=tilemapCreaPlateformes_Niveau1[2][indexCreaPlateformes];
-
                     ptrPlateforme->Init=1;
-                    ptrPlateforme->PosX=321;
+                    ptrPlateforme->declencheur=0;
 
+                    // POSITION X
+                    ptrPlateforme->PosX=321;
+                    // POSITION Y
                     // tilemapCreaPlateformes_Niveau1[1][indexCreaPlateformes] : PosY
                     ptrPlateforme->PosY=(u16)tilemapCreaPlateformes_Niveau1[1][indexCreaPlateformes]<<3;
 
 
+                    ptrPlateforme->SpriteP = SPR_addSprite(&tiles_Sprite_PLATEFORME, ptrPlateforme->PosX, ptrPlateforme->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
+
+
                     // PLATEFORME VERTICALE 1 //
-                    //if(ptrPlateforme->ID==1)
-                    //{
-                        ptrPlateforme->SpriteP = SPR_addSprite(&tiles_Sprite_PLATEFORME, ptrPlateforme->PosX, ptrPlateforme->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
-                    //}
+                    if(ptrPlateforme->ID==1 || ptrPlateforme->ID==3)
+                    {
+                        ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];                       
+                    }
 
 
                     indexCreaPlateformes++;
@@ -865,12 +870,39 @@ void MvtSprites_Niveau1()
                 // On vérifie le type de plateforme 
                 switch(ptrPlateforme->ID)              
                 {
-                    ///////////////////
-                    // PLATEFORME V1 //
-                    ///////////////////
+                    ///////////////////////////////////////
+                    // PLATEFORME VERTICALE VERS LE HAUT //
+                    ///////////////////////////////////////
                     case 1:
                         // Position X
+                        ptrPlateforme->PosX-=vitesseScrolling;
+                        // POSITION Y
+                        ptrPlateforme->PosY += *(ptrPlateforme->ptrPosition);
 
+                        SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
+
+
+                        ptrPlateforme->ptrPosition++;
+                        
+                        if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
+                        {
+                            ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
+                        }
+
+                        // Si la plateforme sort de l'écran
+                        // 4 tiles (32 px) de large  
+                        if(ptrPlateforme->PosX<-64)
+                        {
+                            SPR_releaseSprite(ptrPlateforme->SpriteP);
+                            ptrPlateforme->Init=0;
+                        }
+                        break;
+
+                    ////////////////////////////
+                    // PLATEFORME HORIZONTALE //
+                    ////////////////////////////
+                    case 2:
+                        // Position X
                         ptrPlateforme->PosX-=vitesseScrolling;
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
@@ -883,14 +915,80 @@ void MvtSprites_Niveau1()
                         }
                         break;
 
-                   ///////////////////
-                    // PLATEFORME H1 //
-                    ///////////////////
-                    case 2:
+                    //////////////////////////////////////
+                    // PLATEFORME VERTICALE VERS LE BAS //
+                    //////////////////////////////////////
+                    case 3:
                         // Position X
-
                         ptrPlateforme->PosX-=vitesseScrolling;
+                        // POSITION Y
+                        ptrPlateforme->PosY -= *(ptrPlateforme->ptrPosition);
+
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
+
+
+                        ptrPlateforme->ptrPosition++;
+                        
+                        if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
+                        {
+                            ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
+                        }
+
+                        // Si la plateforme sort de l'écran
+                        // 4 tiles (32 px) de large  
+                        if(ptrPlateforme->PosX<-64)
+                        {
+                            SPR_releaseSprite(ptrPlateforme->SpriteP);
+                            ptrPlateforme->Init=0;
+                        }
+                        break;
+
+                    //////////////////////////////////////////////////////
+                    // PLATEFORME VERTICALE VERS LE BAS (DECLENCHEMENT) //
+                    //////////////////////////////////////////////////////
+                    case 4:
+                          // Position X
+                        ptrPlateforme->PosX-=vitesseScrolling;
+                        // POSITION Y
+                        ptrPlateforme->PosY -= *(ptrPlateforme->ptrPosition);
+
+                        SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
+
+
+                        ptrPlateforme->ptrPosition++;
+                        
+                        if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
+                        {
+                            ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
+                        }
+
+                        // Si la plateforme sort de l'écran
+                        // 4 tiles (32 px) de large  
+                        if(ptrPlateforme->PosX<-64)
+                        {
+                            SPR_releaseSprite(ptrPlateforme->SpriteP);
+                            ptrPlateforme->Init=0;
+                        }
+                        break;
+
+                    ///////////////////////////////////////////////////////
+                    // PLATEFORME VERTICALE VERS LE HAUT (DECLENCHEMENT) //
+                    ///////////////////////////////////////////////////////
+                    case 5:
+                        // Position X
+                        ptrPlateforme->PosX-=vitesseScrolling;
+                        // POSITION Y
+                        ptrPlateforme->PosY += *(ptrPlateforme->ptrPosition);
+
+                        SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
+
+
+                        ptrPlateforme->ptrPosition++;
+                        
+                        if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
+                        {
+                            ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
+                        }
 
                         // Si la plateforme sort de l'écran
                         // 4 tiles (32 px) de large  

@@ -2,7 +2,12 @@
 #define _TILEMAPS_PLATEFORMES_H
 
 // TILEMAP CREATION PLATEFORMES NIVEAU 1 //
-const u16 tilemapCreaPlateformes_Niveau1[3][5] = { {58,122,248,282,318} , {20,20,17,16,18} , {1,1,2,1,1} };
+// 1 : VERTICAL VERS LE HAUT
+// 2 : HORIZONTAL
+// 3 : VERTICAL VERS LE BAS
+// 4 : VERTICAL VERS LE BAS  (DECLENCHEMENT)
+// 5 : VERTICAL VERS LE HAUT (DECLENCHEMENT)
+const u16 tilemapCreaPlateformes_Niveau1[3][6] = { {58,122,248,282,318,358} , {20,20,17,16,18,18} , {1,1,2,3,4,5} };
 
 
 #endif // _MAIN

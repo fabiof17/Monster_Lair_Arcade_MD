@@ -12,6 +12,7 @@
 
 #define MAX_ETAPES_POULPE1 50
 #define MAX_ETAPES_POULPE2 55
+#define MAX_ETAPES_PF_V1   69
 
 ///////////////////////////////////
 //		Variables principales
@@ -102,6 +103,7 @@ typedef struct
     Sprite* SpriteP;
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type de plateforme
+    u8 declencheur;             // Plateforme qui commence à bouger quand on saute dessus
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
     s16 *ptrPosition;           // Pointeur dans le tableau de position
