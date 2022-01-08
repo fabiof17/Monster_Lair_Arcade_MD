@@ -58,7 +58,7 @@ extern Sprite *sprite_Pause[2];
 typedef struct
 {
     Sprite* SpriteJ;
-    u8 Phase; // 0=ARRET - 1=MARCHE - 2=CHUTE - 99=CHITE DEBUT
+    u8 Phase; // 0=ARRET - 1=MARCHE - 2=CHUTE - 98=CHUTE DEBUT - 99=TOUCHÉ - 100=MORT
     u8 Axe; // 0=DROITE - 1=GAUCHE
     s16 PosX;
     s16 PosY;
@@ -75,20 +75,23 @@ typedef struct
 } SpriteJoueur_;
 
 extern SpriteJoueur_ Joueur;
-extern SpriteJoueur_ *ptrJoueur;
 
 
 // ENNEMIS //
 typedef struct
 {
     Sprite* SpriteE;
+    u8 Phase;                   // 1 = vivant / 2 = touché / 3 = mort
+    bool Axe;                   // 0 = Bas / 1 = Haut
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type d'ennemi
     u8 PointsVie;               // Nb points de vie
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
-    u8 Phase;                   // 1 = vivant / 2 = touché / 3 = mort
-    bool Axe;                   // 0 = Bas / 1 = Haut
+    u16 pt_Coll1_X;
+    u16 pt_Coll1_Y;
+    u16 pt_Coll2_X;
+    u16 pt_Coll2_Y;
     u8 CompteurPosition;        // Compteur pour déclencher le déplacement du sprite
     u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
     u8 IndexFrame;              // Index de FRAME
@@ -126,6 +129,7 @@ extern Map *tilemapCollision;
 extern u16 tileID_G;
 extern u16 tileID_D;
 
+extern u8 nb_Ennemis;
 extern u8 indexCreaEnnemis;
 extern u8 indexCreaPlateformes;
 extern u8 compteurTile; // 0 -> 7 //
@@ -133,8 +137,8 @@ extern u8 compteurTile; // 0 -> 7 //
 
 
 extern fix32 maxSpeed;
-extern fix32 jumpSpeed;
-extern fix32 gravity;
+//extern fix32 jumpSpeed;
+//extern fix32 gravity;
 
 extern fix32 positionX;
 extern fix32 positionY;

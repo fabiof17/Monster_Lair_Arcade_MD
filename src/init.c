@@ -409,6 +409,7 @@ void InitNiveau1()
     vitesseScrolling=1;
     compteurTile=0;
 
+    nb_Ennemis=0;
     indexCreaEnnemis=0;
     indexCreaPlateformes=0;
        
@@ -541,7 +542,7 @@ void InitNiveau1()
     /* JOUEUR */
     /**********/
     // Création d'un pointeur de type "SpritePerso_" contenant la variable "Joueur".
-    ptrJoueur=&Joueur;
+    SpriteJoueur_ *ptrJoueur=&Joueur;
 
     if(selectJoueur==0)
     {
@@ -554,7 +555,7 @@ void InitNiveau1()
     }
     
     // PHASE CHUTE DEBUT //
-    ptrJoueur->Phase=99;
+    ptrJoueur->Phase=50;
 
     // ORIENTE DROITE //
     ptrJoueur->Axe=0;

@@ -11,6 +11,12 @@
 //#include <GestionPAD.h>
 
 
+void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
+{
+	intToStr(valeur,texteSortie,zeros); //MIN -500.000.000 - MAX 500.000.000
+	VDP_drawText(texteSortie,x,y);
+}
+
 // SCROLLING //
 void Scrolling_Niveau1()
 {
@@ -126,6 +132,7 @@ void Collision_Decor()
 
     u8 offsetTilemap;
 
+    SpriteJoueur_ *ptrJoueur=&Joueur;
 
     // Récuperation ID de tile de collision
     if(CamPosX>=7)
@@ -142,6 +149,60 @@ void Collision_Decor()
     *ptrtileID_D=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll2_X >> 3) - (CamPosX >> 3) - offsetTilemap  , ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
 }
 
+void Collision_Ennemis()
+{  
+    // SI IL Y A DES ENNEMIS
+    if(nb_Ennemis != 0)
+    {
+        u16 i;
+
+        SpriteJoueur_ *ptrJoueur=&Joueur;
+
+        // SI LE JOUEUR PAS TOUCHÉ NI MORT
+        if(ptrJoueur->Phase != 99 && ptrJoueur->Phase != 100)
+        {
+            // ON CYCLE DANS LE TABLEAU DES ENNEMIS
+            for(i=0;i<11;i++)
+            {
+                SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
+
+                // Si le sprite a été créé
+                if(ptrEnnemi->Init==1)
+                {
+                    // *---*---*---*---*
+                    // |   |   |   |   |
+                    // *---*---*---*---*
+                    // |   |   |   |   |
+                    // *---*--[X]--*---*
+                    // |   |   |   |   |
+                    // *---*---*---*---*
+                    // |   |   |   |   |
+                    // *---*---*---*---*
+                    
+                    // LIMITE GAUCHE DU SPRITE ENNEMI (ptrEnnemi->PosX)
+                    if(ptrJoueur->PosX+16 >= ptrEnnemi->PosX)
+                    {
+                        // LIMITE DROITE DU SPRITE ENNEMI (ptrEnnemi->PosX+24)
+                        if(ptrJoueur->PosX+16 <= ptrEnnemi->PosX+24)
+                        {
+                            // LIMITE HAUT DU SPRITE ENNEMI
+                            if(ptrJoueur->PosY+16 >= ptrEnnemi->PosY)
+                            {
+                                //
+                                if(ptrJoueur->PosY+16 <= ptrEnnemi->PosY+24)
+                                {
+                                    //VDP_drawInt( 1 , 3 , 36 , 10);
+                                    break;
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 void Collisions_Globales()
 {
@@ -232,6 +293,7 @@ void CreaSprites_Niveau1()
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
                     }
 
+                    nb_Ennemis+=1;
                     indexCreaEnnemis++;
                     break;
                 }
@@ -340,6 +402,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
                         break;
 
@@ -391,6 +454,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
                         break;
  
@@ -442,6 +506,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
                         break;
 
@@ -517,6 +582,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
                         break;
 
@@ -568,6 +634,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
                         break;
 
@@ -605,6 +672,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
                         break;
 
@@ -642,6 +710,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
                         break;
 
@@ -672,6 +741,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                             //break;
                         }
 
@@ -728,6 +798,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
 
 
@@ -755,58 +826,6 @@ void MvtSprites_Niveau1()
                     /////////////
                     // PELICAN //
                     /////////////
-                    case 11:
-
-                        // Position X
-                        if(ptrEnnemi->CompteurPosition==0)
-                        {
-                            ptrEnnemi->PosX-=(vitesseScrolling);
-                        }
-                        else if(ptrEnnemi->CompteurPosition==1)
-                        {
-                            ptrEnnemi->PosX-=(vitesseScrolling+1);
-                        }
-
-                        ptrEnnemi->CompteurPosition++;
-
-                        if(ptrEnnemi->CompteurPosition==2)
-                        {
-                            ptrEnnemi->CompteurPosition=0;
-                        }
-
-                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-                        
-                        // Anim des tiles
-                        ptrEnnemi->CompteurFrame+=1;
-
-                        // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame>7)
-                        {
-                            ptrEnnemi->CompteurFrame-=8;
-                            ptrEnnemi->IndexFrame+=1;
-
-                            // Cycle de FRAME de 0 à 11 (12 étapes)
-                            if(ptrEnnemi->IndexFrame>11)
-                            {
-                                ptrEnnemi->IndexFrame-=12;
-                            }
-
-                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
-                        }
-
-                        // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
-                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224)
-                        {
-                            SPR_releaseSprite(ptrEnnemi->SpriteE);
-                            ptrEnnemi->Init=0;
-                        }
-                        break;
-
-
-                    //////////////////////
-                    // PELICAN SHURIKEN //
-                    //////////////////////
                     case 10:
 
                         // Position X
@@ -825,6 +844,59 @@ void MvtSprites_Niveau1()
                         {
                             ptrEnnemi->CompteurPosition=0;
                         }
+
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                        
+                        // Anim des tiles
+                        ptrEnnemi->CompteurFrame+=1;
+
+                        // MAJ des tiles toutes les 8 images (0 à 7)
+                        if(ptrEnnemi->CompteurFrame>7)
+                        {
+                            ptrEnnemi->CompteurFrame-=8;
+                            ptrEnnemi->IndexFrame+=1;
+
+                            // Cycle de FRAME de 0 à 11 (12 étapes)
+                            if(ptrEnnemi->IndexFrame>11)
+                            {
+                                ptrEnnemi->IndexFrame-=12;
+                            }
+
+                            SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
+                        }
+
+                        // Si l'ennemi sort de l'écran
+                        // 3 tiles (24 px) de large  
+                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224)
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
+                        }
+                        break;
+
+
+                    //////////////////////
+                    // PELICAN SHURIKEN //
+                    //////////////////////
+                    case 11:
+
+                        // Position X
+                        if(ptrEnnemi->CompteurPosition==0)
+                        {
+                            ptrEnnemi->PosX-=(vitesseScrolling);
+                        }
+                        else if(ptrEnnemi->CompteurPosition==1)
+                        {
+                            ptrEnnemi->PosX-=(vitesseScrolling+1);
+                        }
+
+                        ptrEnnemi->CompteurPosition++;
+
+                        if(ptrEnnemi->CompteurPosition==2)
+                        {
+                            ptrEnnemi->CompteurPosition=0;
+                        }
                         
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
                         
@@ -852,6 +924,7 @@ void MvtSprites_Niveau1()
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
                         break;
 
@@ -1029,6 +1102,8 @@ void Phases_Joueur()
     // Gestion manette
 	u16 value=JOY_readJoypad(JOY_1);
 
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
     ///////////////
     //   ARRET   //
     /////////////// 
@@ -1083,6 +1158,8 @@ void Phases_Joueur()
 
 void MvtJoueur()
 {
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+    
     ///////////////
     //   ARRET   //
     /////////////// 
@@ -1196,6 +1273,8 @@ void MvtJoueur()
 
 void TilesBloque()
 {
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+    
     SPR_setAnim(ptrJoueur->SpriteJ,1);
 
     ptrJoueur->CompteurFrameArret=0;
@@ -1227,6 +1306,8 @@ void TilesBloque()
 
 void TilesArret()
 {
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+    
     SPR_setAnim(ptrJoueur->SpriteJ,0);
 
     ptrJoueur->CompteurFrameBloque=0;
@@ -1256,6 +1337,8 @@ void TilesArret()
 
 void TilesMarche()
 {
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+    
     SPR_setAnim(ptrJoueur->SpriteJ,2);
     
     ptrJoueur->CompteurFrameBloque=0;
@@ -1295,6 +1378,8 @@ void TilesMarche()
 
 void TilesDerapage()
 {
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+    
     SPR_setAnim(ptrJoueur->SpriteJ,5);
 
     ptrJoueur->CompteurFrameBloque=0;
@@ -1309,6 +1394,8 @@ void TilesDerapage()
 
 void TilesJoueur()
 {
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+    
     ///////////////
     //   ARRET   //
     /////////////// 
@@ -1378,10 +1465,4 @@ void TilesJoueur()
             }
         }    
     }
-}
-
-void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
-{
-	intToStr(valeur,texteSortie,zeros); //MIN -500.000.000 - MAX 500.000.000
-	VDP_drawText(texteSortie,x,y);
 }

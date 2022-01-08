@@ -6,6 +6,7 @@ extern void Tiles_Niveau1();
 extern void ChgtPalette_Niveau1();
 
 extern void Collision_Decor();
+extern void Collision_Ennemis();
 
 extern void Phases_Joueur();
 extern void MvtJoueur();

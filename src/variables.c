@@ -44,7 +44,6 @@ SpriteJoueur_ Joueur;
 SpriteEnnemi_ Ennemi[10];
 SpritePlateforme_ Plateforme[5];
 
-SpriteJoueur_ *ptrJoueur;
 
 const SpriteDefinition *adrResEnnemi[12];
 
@@ -52,13 +51,14 @@ const SpriteDefinition *adrResEnnemi[12];
 Map *tilemapCollision;
 //Map *tilemapEnnemis;
 
+u8 nb_Ennemis;
 u8 indexCreaEnnemis;
 u8 indexCreaPlateformes;
 
 // VARIABLES //
 fix32 maxSpeed;
-fix32 jumpSpeed;
-fix32 gravity;
+//fix32 jumpSpeed;
+//fix32 gravity;
 
 fix32 positionX;
 fix32 positionY;
