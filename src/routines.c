@@ -137,9 +137,12 @@ void Collision_Decor()
         offsetTilemap=0;
     }
 
-    *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3)+offsetTilemap, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-    *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3)+offsetTilemap, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+    
+    *ptrtileID_G=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll1_X >> 3) - ( CamPosX >> 3 ) - offsetTilemap -2 , ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+    *ptrtileID_D=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll2_X >> 3) - ( CamPosX >> 3 ) - offsetTilemap -2 , ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+    
 }
+
 
 void Collisions_Globales()
 {
