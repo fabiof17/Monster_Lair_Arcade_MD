@@ -878,7 +878,6 @@ void MvtSprites_Niveau1()
                         ptrPlateforme->PosX-=vitesseScrolling;
                         // POSITION Y
                         ptrPlateforme->PosY += *(ptrPlateforme->ptrPosition);
-
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
 
@@ -923,7 +922,6 @@ void MvtSprites_Niveau1()
                         ptrPlateforme->PosX-=vitesseScrolling;
                         // POSITION Y
                         ptrPlateforme->PosY -= *(ptrPlateforme->ptrPosition);
-
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
 
@@ -947,11 +945,10 @@ void MvtSprites_Niveau1()
                     // PLATEFORME VERTICALE VERS LE BAS (DECLENCHEMENT) //
                     //////////////////////////////////////////////////////
                     case 4:
-                          // Position X
+                        // Position X
                         ptrPlateforme->PosX-=vitesseScrolling;
                         // POSITION Y
                         ptrPlateforme->PosY -= *(ptrPlateforme->ptrPosition);
-
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
 
@@ -979,7 +976,6 @@ void MvtSprites_Niveau1()
                         ptrPlateforme->PosX-=vitesseScrolling;
                         // POSITION Y
                         ptrPlateforme->PosY += *(ptrPlateforme->ptrPosition);
-
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
 
