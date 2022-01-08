@@ -138,9 +138,8 @@ void Collision_Decor()
     }
 
     
-    *ptrtileID_G=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll1_X >> 3) - ( CamPosX >> 3 ) - offsetTilemap -2 , ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-    *ptrtileID_D=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll2_X >> 3) - ( CamPosX >> 3 ) - offsetTilemap -2 , ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-    
+    *ptrtileID_G=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll1_X >> 3) - (CamPosX >> 3) - offsetTilemap  , ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+    *ptrtileID_D=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll2_X >> 3) - (CamPosX >> 3) - offsetTilemap  , ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
 }
 
 
@@ -1188,8 +1187,8 @@ void MvtJoueur()
     ptrJoueur->pt_Coll1_X = ptrJoueur->PosX+8;
     ptrJoueur->pt_Coll1_Y = ptrJoueur->PosY+32;
 
-    ptrJoueur->pt_Coll1_X = ptrJoueur->PosX+24;
-    ptrJoueur->pt_Coll1_Y = ptrJoueur->pt_Coll1_Y;
+    ptrJoueur->pt_Coll2_X = ptrJoueur->PosX+24;
+    ptrJoueur->pt_Coll2_Y = ptrJoueur->pt_Coll1_Y;
 
 
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
