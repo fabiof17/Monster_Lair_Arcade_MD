@@ -69,6 +69,13 @@ void MainLoop()
                 CreaSprites_Niveau1();
                 MvtSprites_Niveau1();
 
+                Collision_Decor();
+
+                VDP_drawInt(tileID_G, 1, 36, 10);
+
+                //VDP_drawInt(ptrJoueur->pt_Coll1_X, 3, 39, 10);
+                //VDP_drawInt(ptrJoueur->pt_Coll1_Y, 3, 39, 12);
+
             }
 
 

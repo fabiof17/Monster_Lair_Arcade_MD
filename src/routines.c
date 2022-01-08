@@ -118,19 +118,11 @@ void ChgtPalette_Niveau1()
     }
 }
 
-//
+// COLLISIONS
 void Collision_Decor()
 {
     u16 *ptrtileID_G=&tileID_G;
     u16 *ptrtileID_D=&tileID_D;
-    
-    // Point collision bas gauche
-    ptrJoueur->pt_Coll1_X=SPR_getPositionX(ptrJoueur->SpriteJ)+8;
-    ptrJoueur->pt_Coll1_Y=SPR_getPositionY(ptrJoueur->SpriteJ)+32;
-
-    // Point collision bas droite
-    ptrJoueur->pt_Coll2_X=SPR_getPositionX(ptrJoueur->SpriteJ)+23;
-    //spr->pt_Coll2_Y=spr->pt_Coll1_Y;
 
 
     // Récuperation ID de tile de collision
@@ -146,12 +138,17 @@ void Collision_Decor()
     }
 }
 
+void Collisions_Globales()
+{
+    //
+}
+
 
 // SPRITES NIVEAU 1 //
 void CreaSprites_Niveau1()
 {
     u16 i;
-
+    
     if(CamPosX>-4336)
     {
         compteurTile+=vitesseScrolling;
@@ -161,6 +158,8 @@ void CreaSprites_Niveau1()
     // Si compteurTile est supérieur à 7
     if(compteurTile>7)
     {
+        u8 delta = compteurTile-8;
+        
         /////////////////
         //   ENNEMIS   //
         /////////////////
@@ -192,12 +191,12 @@ void CreaSprites_Niveau1()
                     // Les escargots V ont une position en X à part
                     if(ptrEnnemi->ID==4)
                     {
-                        ptrEnnemi->PosX=323;
+                        ptrEnnemi->PosX=323-delta;
                     }
                     else
                     {
                         // Tous les autres ennemis
-                        ptrEnnemi->PosX=325;
+                        ptrEnnemi->PosX=325-delta;
                     }
                     
                     // tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis] : PosY
@@ -255,7 +254,7 @@ void CreaSprites_Niveau1()
                     ptrPlateforme->declencheur=0;
 
                     // POSITION X
-                    ptrPlateforme->PosX=321;
+                    ptrPlateforme->PosX=321-delta;
                     // POSITION Y
                     // tilemapCreaPlateformes_Niveau1[1][indexCreaPlateformes] : PosY
                     ptrPlateforme->PosY=(u16)tilemapCreaPlateformes_Niveau1[1][indexCreaPlateformes]<<3;
@@ -265,7 +264,7 @@ void CreaSprites_Niveau1()
 
 
                     // PLATEFORME VERTICALE 1 //
-                    if(ptrPlateforme->ID==1 || ptrPlateforme->ID==3)
+                    if(ptrPlateforme->ID==1 || ptrPlateforme->ID==3 || ptrPlateforme->ID==5)
                     {
                         ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];                       
                     }
@@ -279,7 +278,7 @@ void CreaSprites_Niveau1()
         }
 
         // On remet le compteur entre 0 et 7
-        compteurTile-=8;  
+        compteurTile = delta;
     }
 }
 
@@ -860,7 +859,7 @@ void MvtSprites_Niveau1()
         //   PLATEFORMES   //
         /////////////////////
 
-        for(i=0;i<6;i++)
+        for(i=0;i<7;i++)
         {
             SpritePlateforme_ *ptrPlateforme=&Plateforme[i];
 
@@ -985,6 +984,23 @@ void MvtSprites_Niveau1()
                         {
                             ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
                         }
+
+                        // Si la plateforme sort de l'écran
+                        // 4 tiles (32 px) de large  
+                        if(ptrPlateforme->PosX<-64)
+                        {
+                            SPR_releaseSprite(ptrPlateforme->SpriteP);
+                            ptrPlateforme->Init=0;
+                        }
+                        break;
+
+                    /////////////////////////////////
+                    // PLATEFORME VERTICALE RAPIDE //
+                    /////////////////////////////////
+                    case 6:
+                        // Position X
+                        ptrPlateforme->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
                         // Si la plateforme sort de l'écran
                         // 4 tiles (32 px) de large  
@@ -1161,6 +1177,15 @@ void MvtJoueur()
     // ON CONVERTIT 'positionX' en int
     // 'positionX' EST LA POSITION DU SPRITE
     ptrJoueur->PosX=fix32ToInt(positionX);
+
+    // MAJ POINTS DE COLLISION DU JOUEUR
+    ptrJoueur->pt_Coll1_X = ptrJoueur->PosX+8;
+    ptrJoueur->pt_Coll1_Y = ptrJoueur->PosY+32;
+
+    ptrJoueur->pt_Coll1_X = ptrJoueur->PosX+24;
+    ptrJoueur->pt_Coll1_Y = ptrJoueur->pt_Coll1_Y;
+
+
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
 }
 
@@ -1350,7 +1375,7 @@ void TilesJoueur()
     }
 }
 
-void VDP_drawInt(s32 valeur,u8 zeros,u8 x, u8 y)
+void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 {
 	intToStr(valeur,texteSortie,zeros); //MIN -500.000.000 - MAX 500.000.000
 	VDP_drawText(texteSortie,x,y);

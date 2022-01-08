@@ -29,7 +29,7 @@ extern u16 PauseJeu;
 extern u8 num_Niveau;
 extern u8 selectJoueur;
 
-extern char texteSortie[8];
+extern char texteSortie[2];
 
 ///////////////////////////////////
 //		Variables scrolling
@@ -54,7 +54,7 @@ extern Sprite *sprite_Vie[3];
 extern Sprite *sprite_Pause[2];
 
 
-
+// JOUEUR //
 typedef struct
 {
     Sprite* SpriteJ;
@@ -78,6 +78,7 @@ extern SpriteJoueur_ Joueur;
 extern SpriteJoueur_ *ptrJoueur;
 
 
+// ENNEMIS //
 typedef struct
 {
     Sprite* SpriteE;
@@ -98,12 +99,14 @@ extern SpriteEnnemi_ Ennemi[10];
 extern const SpriteDefinition *adrResEnnemi[12];
 
 
+// PLATEFORMES //
 typedef struct
 {
     Sprite* SpriteP;
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type de plateforme
-    u8 declencheur;             // Plateforme qui commence à bouger quand on saute dessus
+    u8 mouvante;                // Plateforme qui se déclenche ou non
+    u8 declencheur;             // Déclencheur d'animation
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
     s16 *ptrPosition;           // Pointeur dans le tableau de position
@@ -119,7 +122,6 @@ extern SpritePlateforme_ Plateforme[5];
 
 
 extern Map *tilemapCollision;
-extern Map *tilemapEnnemis;
 
 extern u16 tileID_G;
 extern u16 tileID_D;

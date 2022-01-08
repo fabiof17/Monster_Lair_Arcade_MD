@@ -595,20 +595,14 @@ void InitNiveau1()
     adrResEnnemi[10]=&tiles_Sprite_PELICAN;
     adrResEnnemi[11]=&tiles_Sprite_PELICAN;
 
+    SPR_update();
+
     /////////////////////////////
     // TILEMAP COLLISION DECOR //
     /////////////////////////////
     // Pointeur *tilemapCollision de type Map déclaré dans variables.h
     // MAP tilemap_COLLISION_NIVEAU1 déclarée dans maps_NIVEAU1.res
     tilemapCollision=MAP_create(&tilemap_COLLISION_NIVEAU1, BG_A, TILE_ATTR_FULL(PAL0, FALSE, FALSE, FALSE, TILE_USERINDEX));
-
-    //////////////////////////////
-    // TILEMAP CREATION ENNEMIS //
-    //////////////////////////////
-    tilemapEnnemis=MAP_create(&tilemap_ENNEMIS_NIVEAU1, BG_B, TILE_ATTR_FULL(PAL0, FALSE, FALSE, FALSE, TILE_USERINDEX));
-    
-
-    SPR_update();
 
 
     //////////////////////////////////////////////

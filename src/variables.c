@@ -34,7 +34,7 @@ u16 tileID_D=0;
 
 u8 compteurTile=0; // 0 -> 7 //
 
-char texteSortie[8];
+char texteSortie[2];
 
 // SPRITES
 Sprite *sprite_Vie[3];
@@ -50,7 +50,7 @@ const SpriteDefinition *adrResEnnemi[12];
 
 // TILEMAPS
 Map *tilemapCollision;
-Map *tilemapEnnemis;
+//Map *tilemapEnnemis;
 
 u8 indexCreaEnnemis;
 u8 indexCreaPlateformes;
