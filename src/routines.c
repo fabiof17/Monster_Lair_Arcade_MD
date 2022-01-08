@@ -124,18 +124,21 @@ void Collision_Decor()
     u16 *ptrtileID_G=&tileID_G;
     u16 *ptrtileID_D=&tileID_D;
 
+    u8 offsetTilemap;
+
 
     // Récuperation ID de tile de collision
     if(CamPosX>=7)
     {
-        *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-        *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3)+1, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        offsetTilemap=1;
     }
     else
     {
-        *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
-        *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3), ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+        offsetTilemap=0;
     }
+
+    *ptrtileID_G=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll1_X>>3) - (CamPosX>>3)+offsetTilemap, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
+    *ptrtileID_D=MAP_getTile( tilemapCollision, (ptrJoueur->pt_Coll2_X>>3) - (CamPosX>>3)+offsetTilemap, ptrJoueur->pt_Coll1_Y>>3 ) & TILE_INDEX_MASK;
 }
 
 void Collisions_Globales()
