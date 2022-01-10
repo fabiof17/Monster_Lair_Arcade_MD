@@ -421,7 +421,7 @@ void InitNiveau1()
     movY = FIX32(0);
     maxSpeed_H = MAX_SPEED_H;
     maxSpeed_V = MAX_SPEED_V;
-    //gravite = GRAVITE;
+    maxSpeed_S = MAX_SPEED_S;
     
     //////////////////////////////////////////////
     //                CREATION  BG              //
@@ -576,6 +576,8 @@ void InitNiveau1()
 
     ptrJoueur->CompteurFrameArret=0;
     ptrJoueur->IndexFrameArret=0;
+
+    //ptrJoueur->ptrPosition=&anim_SAUT[0];
 
     /***********/
     /* ENNEMIS */

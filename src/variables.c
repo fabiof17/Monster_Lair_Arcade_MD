@@ -59,7 +59,7 @@ u8 indexCreaPlateformes;
 // VARIABLES //
 fix32 maxSpeed_H;
 fix32 maxSpeed_V;
-//fix32 gravite;
+fix32 maxSpeed_S;
 
 fix32 positionX;
 fix32 positionY;

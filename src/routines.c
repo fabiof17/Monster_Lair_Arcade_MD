@@ -8,7 +8,6 @@
 #include "tilemaps_plateformes.h"
 #include "animation_sprites.h"
 #include "sprites_JEU.h"
-//#include <GestionPAD.h>
 
 
 void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
@@ -1130,8 +1129,9 @@ void Phases_Joueur()
     if(value==0)
     {
         // Si le joueur ne tombe pas
-        if(ptrJoueur->Phase!=98)
+        if(ptrJoueur->Phase!=2 && ptrJoueur->Phase!=3 && ptrJoueur->Phase!=98)
         {
+            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Phase=0;
         }
         return;
@@ -1145,12 +1145,14 @@ void Phases_Joueur()
         // Si joueur à l'arrêt
         if(ptrJoueur->Phase==0)
         {
+            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Axe=0;
             ptrJoueur->Phase=1;
         }
         // Si le joueur marche vers la gauche
         else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==1)
         {
+            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Axe=0;
         }
         return;
@@ -1164,12 +1166,14 @@ void Phases_Joueur()
         // Si joueur à l'arrêt
         if(ptrJoueur->Phase==0)
         {
+            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Axe=1;
             ptrJoueur->Phase=1;
         }
         // Si le joueur marche vers la droite
         else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==0)
         {
+            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Axe=1;
         }
         return;
@@ -1189,6 +1193,8 @@ void MvtJoueur()
     /////////////// 
     if(ptrJoueur->Phase==0)
     { 
+        //ptrJoueur->ptrPosition=&anim_SAUT[0];
+        
         // SI ON N'EST PAS A LA FIN DU NIVEAU
         if(CamPosX!=-4336)
         {
@@ -1246,6 +1252,8 @@ void MvtJoueur()
     ////////////////
     else if(ptrJoueur->Phase==1)
     {
+        //ptrJoueur->ptrPosition=&anim_SAUT[0];
+        
         // MAJ POINTS DE COLLISION DU JOUEUR //
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
         ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
@@ -1306,6 +1314,107 @@ void MvtJoueur()
     }
 
     ////////////////
+    //    SAUT   //
+    ////////////////
+    else if(ptrJoueur->Phase==2)
+    {
+
+        /////////////////////////////
+        //      BOUTON DROITE      //
+        /////////////////////////////
+        if(value & BUTTON_RIGHT)
+        {
+            ptrJoueur->Axe=0;
+            
+            // ON AJOUTE 'ACCEL_D' A 'movX'
+            movX += ACCEL_D;
+
+            // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
+            if (movX >= maxSpeed_S)
+            {
+                movX = maxSpeed_S;
+            } 
+        }
+
+        /////////////////////////////
+        //      BOUTON GAUCHE      //
+        /////////////////////////////
+        else if(value & BUTTON_LEFT)
+        {  
+            ptrJoueur->Axe=1;
+            
+            // ON SOUSTRAIT 'ACCEL_D' A 'movX'
+            movX -= ACCEL_G;
+
+        // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
+            if(movX <= -maxSpeed_S)
+            {
+                movX = -maxSpeed_S;
+            }
+        }
+
+        /////////////////////////////
+        //       AUCUN BOUTON      //
+        /////////////////////////////
+        else if(value == 0)
+        {
+            // JOUEUR ORIENTÉ VERS LA DROITE            
+            if(ptrJoueur->Axe==0)
+            {
+                movX -= ACCEL_D;
+                if(movX < FIX32(0))
+                {
+                    movX=0;
+                }
+            }
+
+            // JOUEUR ORIENTÉ VERS LA GAUCHE
+            else if(ptrJoueur->Axe==1)
+            {
+                movX += ACCEL_D;
+                if(movX > FIX32(0))
+                {
+                    movX=0;
+                }
+            }
+        }
+
+        // SI ON N'EST PAS A LA FIN DU NIVEAU
+        if(CamPosX!=-4336)
+        {
+            positionX -= GLISSEMENT;
+        }
+
+        // Position Y
+        ptrJoueur->PosY += *(ptrJoueur->ptrPosition);
+
+        ptrJoueur->ptrPosition++;
+        
+        if(ptrJoueur->ptrPosition > &anim_SAUT[MAX_ETAPES_SAUT])
+        {
+            ptrJoueur->ptrPosition = &anim_SAUT[MAX_ETAPES_SAUT];
+        }
+
+        // MAJ POINTS DE COLLISION DU JOUEUR //
+        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
+        ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
+        ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
+        
+        
+        // TEST COLLISION DECOR //
+        Collision_Decor();
+
+        // SI LE JOUEUR TOMBE
+        if(tileID_G==1 || tileID_D==1)
+        {
+            // PHASE CHUTE
+            ptrJoueur->Phase=0;
+            ptrJoueur->PosY = (posTileY<<3)-32;
+        }
+
+    }
+
+    ////////////////
     //    CHUTE   //
     ////////////////
     else if(ptrJoueur->Phase==98)
@@ -1329,6 +1438,9 @@ void MvtJoueur()
         // SI LE JOUEUR NE TOUCHE PAS LE SOL
         else
         {
+             /////////////////////////////
+            //      BOUTON DROITE      //
+            /////////////////////////////
             if(value & BUTTON_RIGHT)
             {
                 ptrJoueur->Axe=0;
@@ -1344,26 +1456,52 @@ void MvtJoueur()
             }
 
             /////////////////////////////
-            //         GAUCHE          //
+            //      BOUTON GAUCHE      //
             /////////////////////////////
             else if(value & BUTTON_LEFT)
             {  
                 ptrJoueur->Axe=1;
                 
-                // SI ON N'EST PAS A LA FIN DU NIVEAU
-                if(CamPosX!=-4336)
-                {
-                    positionX -= GLISSEMENT;
-                }
-
                 // ON SOUSTRAIT 'ACCEL_D' A 'movX'
-                movX -= ACCEL_G;
+                movX -= ACCEL_D;
 
             // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
                 if(movX <= -maxSpeed_H)
                 {
                     movX = -maxSpeed_H;
                 }
+            }
+
+            /////////////////////////////
+            //       AUCUN BOUTON      //
+            /////////////////////////////
+            else if(value == 0)
+            {
+                // JOUEUR ORIENTÉ VERS LA DROITE            
+                if(ptrJoueur->Axe==0)
+                {
+                    movX -= ACCEL_D;
+                    if(movX < FIX32(0))
+                    {
+                        movX=0;
+                    }
+                }
+
+                // JOUEUR ORIENTÉ VERS LA GAUCHE
+                else if(ptrJoueur->Axe==1)
+                {
+                    movX += ACCEL_G;
+                    if(movX > FIX32(0))
+                    {
+                        movX=0;
+                    }
+                }
+            }
+
+            // SI ON N'EST PAS A LA FIN DU NIVEAU
+            if(CamPosX!=-4336)
+            {
+                positionX -= GLISSEMENT;
             }
 
             movY += ACCEL_B;
@@ -1373,7 +1511,11 @@ void MvtJoueur()
             {
                 movY = maxSpeed_V;
             }
-            
+
+            // ON AJOUTE 'movY' A L'ACCUMULATEUR 'positionY'
+            positionY += movY;
+            ptrJoueur->PosY=fix32ToInt(positionY); 
+
         }
     }
 
@@ -1400,16 +1542,16 @@ void MvtJoueur()
         vitesseScrolling=2;
     }
 
-     // ON AJOUTE 'movY' A L'ACCUMULATEUR 'positionY'
-    positionY += movY;
-
     // ON CONVERTIT 'positionX' en int
     // 'positionX' EST LA POSITION X DU SPRITE
     ptrJoueur->PosX=fix32ToInt(positionX);
 
     // ON CONVERTIT 'positionY' en int
     // 'positionY' EST LA POSITION Y DU SPRITE
-    ptrJoueur->PosY=fix32ToInt(positionY);
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++//
+    //
+    //   GROSSE ERREUR
+    //ptrJoueur->PosY=fix32ToInt(positionY);
 
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
 
@@ -1551,6 +1693,15 @@ void TilesSaut()
 
     ptrJoueur->CompteurFrameMarche=0;
     ptrJoueur->IndexFrameMarche=0;   
+
+    if(ptrJoueur->Axe==0)
+    {
+        SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+    }
+    else
+    {
+        SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
+    }
 }
 
 void TilesJoueur()
@@ -1625,6 +1776,15 @@ void TilesJoueur()
                 return;
             }
         }    
+    }
+
+    ////////////////
+    //     SAUT   //
+    ////////////////
+    else if(ptrJoueur->Phase==2)
+    {
+        TilesSaut();
+        return;
     }
 
     ////////////////

@@ -10,6 +10,7 @@
 
 void joyEventCallback(u16 joy, u16 changed, u16 state)
 {
+    SpriteJoueur_ *ptrJoueur=&Joueur;
 
     // START //
     if (changed & state & BUTTON_START)
@@ -40,6 +41,15 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
 
     // can't do more in paused state
     if (PauseJeu==1) return;
+
+    // SAUT //
+    if (changed & state & BUTTON_C)
+    {
+        if(ptrJoueur->Phase==0 || ptrJoueur->Phase==1)
+        {
+            ptrJoueur->Phase=2;
+        }
+    }
 
 }
 
@@ -105,8 +115,7 @@ void MainLoop()
                 CreaSprites_Niveau1();
                 MvtSprites_Niveau1();
 
-                //Collision_Decor();
-                Collision_Ennemis();
+                //Collision_Ennemis();
 
             }
 
@@ -120,7 +129,7 @@ void MainLoop()
             // DEBUG
             //VDP_drawInt( tileID_G , 2 , 36 , 10);
             //VDP_drawInt( tileID_D , 2 , 36 , 11);
-            //VDP_drawInt( Joueur.Phase , 2 , 36 , 13);
+            VDP_drawInt( Joueur.Phase , 2 , 36 , 13);
 
             // Vblank
             SYS_doVBlankProcess();

@@ -2,17 +2,21 @@
 #define _VARIABLES_H
 
 // CONSTANTES //
-#define MAX_SPEED_H     FIX32(1L)
-#define MAX_SPEED_V     FIX32(3L)
+#define MAX_SPEED_H     FIX32(1L) // VITESSE MAX HORIZONTALE
+#define MAX_SPEED_V     FIX32(3L) // VITESSE MAX VERTICALE
+#define MAX_SPEED_S     FIX32(2L) // VITESSE MAX SAUT
+
 #define ACCEL_D         FIX32(0.08)
 #define ACCEL_G         FIX32(0.16)
-#define ACCEL_B         FIX32(0.20)
+#define ACCEL_B         FIX32(0.1)
+//#define ACCEL_S         FIX32(0.1)
 #define GLISSEMENT      FIX32(1L)
-//#define GRAVITE         FIX32(4L)
+//#define ACCELERATION    FIX32(2L)
 
 #define MAX_POS_D       FIX32(228L)
 #define MAX_POS_G       FIX32(11L)
 
+#define MAX_ETAPES_SAUT    28
 #define MAX_ETAPES_POULPE1 50
 #define MAX_ETAPES_POULPE2 55
 #define MAX_ETAPES_PF_V1   69
@@ -61,20 +65,20 @@ extern Sprite *sprite_Pause[2];
 typedef struct
 {
     Sprite* SpriteJ;
-    u8 Phase; // 0=ARRET - 1=MARCHE - 2=TIR - 3=SAUT - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
+    u8 Phase; // 0=ARRET - 1=MARCHE - 2=SAUT - 3=TIR - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
     u8 Axe; // 0=DROITE - 1=GAUCHE
     s16 PosX;
     s16 PosY;
     u16 pt_Coll1_X;
     u16 pt_Coll1_Y;
     u16 pt_Coll2_X;
-    //u16 pt_Coll2_Y;
-    u8 CompteurFrameArret;          // Compteur pour passer à la prochaine FRAME ARRET
-    u8 IndexFrameArret;             // Index de FRAME ARRET
-    u8 CompteurFrameBloque;         // Compteur pour passer à la prochaine FRAME BLOQUÉ
-    u8 IndexFrameBloque;            // Index de FRAME BLOQUÉ
-    u8 CompteurFrameMarche;         // Compteur pour passer à la prochaine FRAME MARCHE
-    u8 IndexFrameMarche;            // Index de FRAME MARCHE
+    u8 CompteurFrameArret;      // Compteur pour passer à la prochaine FRAME ARRET
+    u8 IndexFrameArret;         // Index de FRAME ARRET
+    u8 CompteurFrameBloque;     // Compteur pour passer à la prochaine FRAME BLOQUÉ
+    u8 IndexFrameBloque;        // Index de FRAME BLOQUÉ
+    u8 CompteurFrameMarche;     // Compteur pour passer à la prochaine FRAME MARCHE
+    u8 IndexFrameMarche;        // Index de FRAME MARCHE
+    const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpriteJoueur_;
 
 extern SpriteJoueur_ Joueur;
@@ -150,7 +154,7 @@ extern u8 compteurTile; // 0 -> 7 //
 ///////////////////////////////////
 extern fix32 maxSpeed_H;
 extern fix32 maxSpeed_V;
-//extern fix32 gravite;
+extern fix32 maxSpeed_S;
 
 extern fix32 positionX;
 extern fix32 positionY;
