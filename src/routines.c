@@ -280,12 +280,14 @@ void CreaSprites_Niveau1()
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
                         ptrEnnemi->ptrPosition=&anim_POULPE1[0];
+                        SPR_setDepth(ptrEnnemi->SpriteE,7);
                     }
                     // POULPE 2
                     else if(ptrEnnemi->ID==9)
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
                         ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+                        SPR_setDepth(ptrEnnemi->SpriteE,7);
                     }
                     // Tous les autres ennemis
                     else

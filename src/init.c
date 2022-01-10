@@ -548,11 +548,11 @@ void InitNiveau1()
 
     if(selectJoueur==0)
     {
-        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_H, 0, 128, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
     }
     else
     {
-        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_F, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_F, 0, 128, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
     
     }
     
