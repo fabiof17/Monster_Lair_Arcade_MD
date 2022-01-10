@@ -6,11 +6,44 @@
 #include <variables.h>
 #include <palettes.h>
 #include <routines.h>
-#include <GestionPAD.h>
 #include <sprites_JEU.h>
 
-// Procédure principale
+void joyEventCallback(u16 joy, u16 changed, u16 state)
+{
 
+    // START //
+    if (changed & state & BUTTON_START)
+    {
+        // Mettre en mode Pause //
+        if (PauseJeu==0)
+        {
+            PauseJeu=1;
+            StatutJoy=0;
+
+            SPR_setPosition(sprite_Pause[0], 140, 116);
+            SPR_setPosition(sprite_Pause[1], 172, 116);
+
+            //break;
+        }
+        // Sortir du mode Pause //
+        else if (PauseJeu==1)
+        {
+            PauseJeu=0;
+            StatutJoy=0;
+
+            SPR_setPosition(sprite_Pause[0], -40, 0);
+            SPR_setPosition(sprite_Pause[1], -32, 0);
+
+            //break;
+        }
+    }
+
+    // can't do more in paused state
+    if (PauseJeu==1) return;
+
+}
+
+// Procédure principale //
 int main(u16 hardreset)
 {
 
@@ -25,7 +58,7 @@ int main(u16 hardreset)
     return 0;
 }
 
-
+// Titre + Selection joueur //
 void StartMain()
 {
     // Init Ecran Titre
@@ -43,19 +76,19 @@ void StartMain()
     return;  
 }
 
+// Boucle Niveaux //
 void MainLoop()
 {
     SYS_showFrameLoad(TRUE);
+
+    // Manette
+    JOY_setEventHandler(joyEventCallback);
     
     switch (num_Niveau)
     {
         case 1:
         while(TRUE)
         {
-            // Manette
-            Pause_Jeu();
-
-
 
             // Jeu en Pause ?
             if(PauseJeu==0)

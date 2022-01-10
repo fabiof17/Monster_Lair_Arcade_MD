@@ -24,7 +24,7 @@ extern u16 StatutJoy;
 
 extern u8 nb_Vie;
 extern u16 GameOver;
-extern u16 PauseJeu;
+extern bool PauseJeu;
 
 extern u8 num_Niveau;
 extern u8 selectJoueur;

@@ -12,7 +12,7 @@ u16 StatutJoy=0;
 
 u8 nb_Vie=2;
 u16 GameOver=0;
-u16 PauseJeu=0;
+bool PauseJeu=0;
 
 u8 num_Niveau=1;
 u8 selectJoueur=0;
