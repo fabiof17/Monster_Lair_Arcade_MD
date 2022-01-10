@@ -6,7 +6,7 @@
 #include "maps_NIVEAU1.h"
 #include "tilemaps_ennemis.h"
 #include "tilemaps_plateformes.h"
-#include "animation_ennemis.h"
+#include "animation_sprites.h"
 #include "sprites_JEU.h"
 //#include <GestionPAD.h>
 
@@ -292,9 +292,9 @@ void CreaSprites_Niveau1()
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
                     }
-
-                    nb_Ennemis+=1;
+                    
                     indexCreaEnnemis++;
+                    nb_Ennemis+=1;
                     break;
                 }
             }
@@ -338,6 +338,7 @@ void CreaSprites_Niveau1()
 
 
                     indexCreaPlateformes++;
+                    nb_Plateformes+=1;
                     break;
                 }
 
@@ -1076,6 +1077,23 @@ void MvtSprites_Niveau1()
                     // PLATEFORME VERTICALE RAPIDE //
                     /////////////////////////////////
                     case 6:
+                        // Position X
+                        ptrPlateforme->PosX-=vitesseScrolling;
+                        SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
+
+                        // Si la plateforme sort de l'écran
+                        // 4 tiles (32 px) de large  
+                        if(ptrPlateforme->PosX<-64)
+                        {
+                            SPR_releaseSprite(ptrPlateforme->SpriteP);
+                            ptrPlateforme->Init=0;
+                        }
+                        break;
+
+                    ////////////////////////////////////////////
+                    // PLATEFORME HORIZONTALE (DECLENCHEMENT) //
+                    ////////////////////////////////////////////
+                    case 7:
                         // Position X
                         ptrPlateforme->PosX-=vitesseScrolling;
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);

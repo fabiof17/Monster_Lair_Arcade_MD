@@ -411,6 +411,8 @@ void InitNiveau1()
 
     nb_Ennemis=0;
     indexCreaEnnemis=0;
+
+    nb_Plateformes=0;
     indexCreaPlateformes=0;
        
     // Position initiale du sprite : 64 pixels

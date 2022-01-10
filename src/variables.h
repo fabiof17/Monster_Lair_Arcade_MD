@@ -32,7 +32,7 @@ extern u8 selectJoueur;
 extern char texteSortie[2];
 
 ///////////////////////////////////
-//		Variables scrolling
+//		Variables scrolling      //
 ///////////////////////////////////
 
 extern u8 vitesseScrolling;
@@ -47,7 +47,7 @@ extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 extern u16 tilemapOffset;
 
 ///////////////////////////////////
-//		Variables Sprites
+//		Variables Sprites        //
 ///////////////////////////////////
 
 extern Sprite *sprite_Vie[3];
@@ -77,11 +77,12 @@ typedef struct
 extern SpriteJoueur_ Joueur;
 
 
+
 // ENNEMIS //
 typedef struct
 {
     Sprite* SpriteE;
-    u8 Phase;                   // 1 = vivant / 2 = touché / 3 = mort
+    u8 Phase;                   // 0 = ARRET / 1 = MARCHE
     bool Axe;                   // 0 = Bas / 1 = Haut
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type d'ennemi
@@ -95,11 +96,14 @@ typedef struct
     u8 CompteurPosition;        // Compteur pour déclencher le déplacement du sprite
     u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
     u8 IndexFrame;              // Index de FRAME
-    s16 *ptrPosition;           // Pointeur dans le tableau de position
+    const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpriteEnnemi_;
 
 extern SpriteEnnemi_ Ennemi[10];
 extern const SpriteDefinition *adrResEnnemi[12];
+extern u8 indexCreaEnnemis;
+extern u8 nb_Ennemis;
+
 
 
 // PLATEFORMES //
@@ -112,11 +116,12 @@ typedef struct
     u8 declencheur;             // Déclencheur d'animation
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
-    s16 *ptrPosition;           // Pointeur dans le tableau de position
+    const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpritePlateforme_;
 
 extern SpritePlateforme_ Plateforme[5];
-
+extern u8 indexCreaPlateformes;
+extern u8 nb_Plateformes;
 
 
 
@@ -129,15 +134,16 @@ extern Map *tilemapCollision;
 extern u16 tileID_G;
 extern u16 tileID_D;
 
-extern u8 nb_Ennemis;
-extern u8 indexCreaEnnemis;
-extern u8 indexCreaPlateformes;
+
+
+
 extern u8 compteurTile; // 0 -> 7 //
 
 
-
+///////////////////////////////////
+//		 Variables Joueur        //
+///////////////////////////////////
 extern fix32 maxSpeed;
-//extern fix32 jumpSpeed;
 //extern fix32 gravity;
 
 extern fix32 positionX;
