@@ -32,6 +32,8 @@ u16 tilemapOffset=0;
 u16 tileID_G=0;
 u16 tileID_D=0;
 
+u16 posTileY;
+
 u8 compteurTile=0; // 0 -> 7 //
 
 char texteSortie[2];
@@ -55,8 +57,9 @@ u8 indexCreaEnnemis;
 u8 indexCreaPlateformes;
 
 // VARIABLES //
-fix32 maxSpeed;
-//fix32 gravity;
+fix32 maxSpeed_H;
+fix32 maxSpeed_V;
+//fix32 gravite;
 
 fix32 positionX;
 fix32 positionY;

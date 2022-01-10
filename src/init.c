@@ -9,7 +9,6 @@
 #include "sprites_JEU.h"
 #include "palettes.h"
 #include "routines.h"
-#include "GestionPAD.h"
 
 ///////////////////////////////
 //        INIT SYSTEME       //
@@ -417,8 +416,12 @@ void InitNiveau1()
        
     // Position initiale du sprite : 64 pixels
     positionX=FIX32(64L);
+    positionY=FIX32(128L);
     movX = FIX32(0);
-    maxSpeed = MAX_SPEED;
+    movY = FIX32(0);
+    maxSpeed_H = MAX_SPEED_H;
+    maxSpeed_V = MAX_SPEED_V;
+    //gravite = GRAVITE;
     
     //////////////////////////////////////////////
     //                CREATION  BG              //
@@ -548,23 +551,23 @@ void InitNiveau1()
 
     if(selectJoueur==0)
     {
-        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_H, 0, 128, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     }
     else
     {
-        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_F, 0, 128, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_F, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     
     }
     
     // PHASE CHUTE DEBUT //
-    ptrJoueur->Phase=50;
+    ptrJoueur->Phase=0;
 
     // ORIENTE DROITE //
     ptrJoueur->Axe=0;
 
     // POSITION //
     ptrJoueur->PosX=fix32ToInt(positionX);
-    ptrJoueur->PosY=128;
+    ptrJoueur->PosY=fix32ToInt(positionY);
 
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
 

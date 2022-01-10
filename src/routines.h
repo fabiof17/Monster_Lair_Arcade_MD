@@ -15,6 +15,7 @@ extern void TilesJoueur();
 extern void TilesBloque();
 extern void TilesArret();
 extern void TilesMarche();
+extern void TilesSaut();
 
 extern void CreaSprites_Niveau1();
 extern void MvtSprites_Niveau1();

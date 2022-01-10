@@ -11,4 +11,4 @@ out/src/init.o: src/init.c C:/sgdk/inc/genesis.h C:/sgdk/inc/config.h \
  C:/sgdk/inc/z80_ctrl.h C:/sgdk/inc/ym2612.h C:/sgdk/inc/psg.h \
  C:/sgdk/inc/joy.h C:/sgdk/inc/timer.h src/main.h src/init.h \
  src/variables.h res/maps_TITRE.h res/maps_SELECTION.h res/maps_NIVEAU1.h \
- res/sprites_JEU.h res/palettes.h src/routines.h src/GestionPAD.h
+ res/sprites_JEU.h res/palettes.h src/routines.h

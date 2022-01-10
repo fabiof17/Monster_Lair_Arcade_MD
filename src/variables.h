@@ -2,10 +2,13 @@
 #define _VARIABLES_H
 
 // CONSTANTES //
-#define MAX_SPEED       FIX32(1L)
+#define MAX_SPEED_H     FIX32(1L)
+#define MAX_SPEED_V     FIX32(3L)
 #define ACCEL_D         FIX32(0.08)
 #define ACCEL_G         FIX32(0.16)
+#define ACCEL_B         FIX32(0.20)
 #define GLISSEMENT      FIX32(1L)
+//#define GRAVITE         FIX32(4L)
 
 #define MAX_POS_D       FIX32(228L)
 #define MAX_POS_G       FIX32(11L)
@@ -58,14 +61,14 @@ extern Sprite *sprite_Pause[2];
 typedef struct
 {
     Sprite* SpriteJ;
-    u8 Phase; // 0=ARRET - 1=MARCHE - 2=CHUTE - 98=CHUTE DEBUT - 99=TOUCHÉ - 100=MORT
+    u8 Phase; // 0=ARRET - 1=MARCHE - 2=TIR - 3=SAUT - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
     u8 Axe; // 0=DROITE - 1=GAUCHE
     s16 PosX;
     s16 PosY;
     u16 pt_Coll1_X;
     u16 pt_Coll1_Y;
     u16 pt_Coll2_X;
-    u16 pt_Coll2_Y;
+    //u16 pt_Coll2_Y;
     u8 CompteurFrameArret;          // Compteur pour passer à la prochaine FRAME ARRET
     u8 IndexFrameArret;             // Index de FRAME ARRET
     u8 CompteurFrameBloque;         // Compteur pour passer à la prochaine FRAME BLOQUÉ
@@ -131,6 +134,8 @@ extern u8 nb_Plateformes;
 
 extern Map *tilemapCollision;
 
+extern u16 posTileY;
+
 extern u16 tileID_G;
 extern u16 tileID_D;
 
@@ -143,8 +148,9 @@ extern u8 compteurTile; // 0 -> 7 //
 ///////////////////////////////////
 //		 Variables Joueur        //
 ///////////////////////////////////
-extern fix32 maxSpeed;
-//extern fix32 gravity;
+extern fix32 maxSpeed_H;
+extern fix32 maxSpeed_V;
+//extern fix32 gravite;
 
 extern fix32 positionX;
 extern fix32 positionY;

@@ -68,7 +68,7 @@ void StartMain()
     InitSelection();
 
     // Init Niveaux
-    InitNiveaux();
+    //InitNiveaux();
 
     // Boucle du jeu
     MainLoop();
@@ -79,6 +79,8 @@ void StartMain()
 // Boucle Niveaux //
 void MainLoop()
 {
+    InitNiveaux();
+    
     SYS_showFrameLoad(TRUE);
 
     // Manette
@@ -93,6 +95,7 @@ void MainLoop()
             // Jeu en Pause ?
             if(PauseJeu==0)
             {
+                //Collision_Decor();
                 Phases_Joueur();
                 MvtJoueur();
                 TilesJoueur();
@@ -102,7 +105,7 @@ void MainLoop()
                 CreaSprites_Niveau1();
                 MvtSprites_Niveau1();
 
-                Collision_Decor();
+                //Collision_Decor();
                 Collision_Ennemis();
 
             }
@@ -114,9 +117,10 @@ void MainLoop()
             // MAJ tiles BG
             Tiles_Niveau1();
 
-            
-
-            //VDP_drawInt( nb_Ennemis , 2 , 36 , 10);
+            // DEBUG
+            //VDP_drawInt( tileID_G , 2 , 36 , 10);
+            //VDP_drawInt( tileID_D , 2 , 36 , 11);
+            //VDP_drawInt( Joueur.Phase , 2 , 36 , 13);
 
             // Vblank
             SYS_doVBlankProcess();
