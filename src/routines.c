@@ -1414,7 +1414,10 @@ void MvtJoueur()
             // PHASE CHUTE
             ptrJoueur->Phase=0;
             ptrJoueur->PosY = (posTileY<<3)-32;
+            positionY = intToFix32(ptrJoueur->PosY);
         }
+
+
 
     }
 

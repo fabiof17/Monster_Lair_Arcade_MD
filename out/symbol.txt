@@ -1461,9 +1461,9 @@ e0ff01f9 b compteurTile
 e0ff01fc b scrollOffset_TILE_NIVEAU1_BGB
 e0ff0234 b scrollOffset_TILE_NIVEAU1_BGA
 e0ff026c b tilemapOffset
-e0ff026e b positionY
-e0ff0272 b maxSpeed_V
-e0ff0276 b movY
+e0ff026e b maxSpeed_V
+e0ff0272 b movY
+e0ff0276 b positionY
 e0ff027a b maxSpeed_G
 e0ff027e b maxSpeed_D
 e0ff0282 b movX
