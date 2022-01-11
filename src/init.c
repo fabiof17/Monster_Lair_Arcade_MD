@@ -419,7 +419,8 @@ void InitNiveau1()
     positionY=FIX32(128L);
     movX = FIX32(0);
     movY = FIX32(0);
-    maxSpeed_H = MAX_SPEED_H;
+    maxSpeed_D = MAX_SPEED_D;
+    maxSpeed_G = MAX_SPEED_G;
     maxSpeed_V = MAX_SPEED_V;
     maxSpeed_S = MAX_SPEED_S;
     

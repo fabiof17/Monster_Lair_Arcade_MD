@@ -57,7 +57,8 @@ u8 indexCreaEnnemis;
 u8 indexCreaPlateformes;
 
 // VARIABLES //
-fix32 maxSpeed_H;
+fix32 maxSpeed_D;
+fix32 maxSpeed_G;
 fix32 maxSpeed_V;
 fix32 maxSpeed_S;
 

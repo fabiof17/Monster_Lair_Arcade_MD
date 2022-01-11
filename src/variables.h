@@ -2,9 +2,10 @@
 #define _VARIABLES_H
 
 // CONSTANTES //
-#define MAX_SPEED_H     FIX32(1L) // VITESSE MAX HORIZONTALE
+#define MAX_SPEED_D     FIX32(1L) // VITESSE MAX HORIZONTALE DROITE
+#define MAX_SPEED_G     FIX32(2L) // VITESSE MAX HORIZONTALE GAUCHE
 #define MAX_SPEED_V     FIX32(3L) // VITESSE MAX VERTICALE
-#define MAX_SPEED_S     FIX32(2L) // VITESSE MAX SAUT
+#define MAX_SPEED_S     FIX32(1L) // VITESSE MAX SAUT
 
 #define ACCEL_D         FIX32(0.08)
 #define ACCEL_G         FIX32(0.16)
@@ -16,7 +17,7 @@
 #define MAX_POS_D       FIX32(228L)
 #define MAX_POS_G       FIX32(11L)
 
-#define MAX_ETAPES_SAUT    28
+#define MAX_ETAPES_SAUT    40
 #define MAX_ETAPES_POULPE1 50
 #define MAX_ETAPES_POULPE2 55
 #define MAX_ETAPES_PF_V1   69
@@ -152,7 +153,8 @@ extern u8 compteurTile; // 0 -> 7 //
 ///////////////////////////////////
 //		 Variables Joueur        //
 ///////////////////////////////////
-extern fix32 maxSpeed_H;
+extern fix32 maxSpeed_D;
+extern fix32 maxSpeed_G;
 extern fix32 maxSpeed_V;
 extern fix32 maxSpeed_S;
 

@@ -129,7 +129,7 @@ void MainLoop()
             // DEBUG
             //VDP_drawInt( tileID_G , 2 , 36 , 10);
             //VDP_drawInt( tileID_D , 2 , 36 , 11);
-            VDP_drawInt( Joueur.Phase , 2 , 36 , 13);
+            //VDP_drawInt( Joueur.Phase , 2 , 36 , 13);
 
             // Vblank
             SYS_doVBlankProcess();

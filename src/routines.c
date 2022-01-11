@@ -208,7 +208,6 @@ void Collisions_Globales()
     //
 }
 
-
 // SPRITES NIVEAU 1 //
 void CreaSprites_Niveau1()
 {
@@ -1114,7 +1113,6 @@ void MvtSprites_Niveau1()
     }
 }
 
-
 // JOUEUR //
 void Phases_Joueur()
 {
@@ -1181,16 +1179,15 @@ void Phases_Joueur()
 }
 
 void MvtJoueur()
-{
-    
+{    
     // Gestion manette
 	u16 value=JOY_readJoypad(JOY_1);    
     
     SpriteJoueur_ *ptrJoueur=&Joueur;
     
-    ///////////////
-    //   ARRET   //
-    /////////////// 
+    /****************************/
+    //           ARRET          //
+    /****************************/ 
     if(ptrJoueur->Phase==0)
     { 
         //ptrJoueur->ptrPosition=&anim_SAUT[0];
@@ -1247,9 +1244,9 @@ void MvtJoueur()
 
     }
 
-    ////////////////
-    //   MARCHE   //
-    ////////////////
+    /****************************/
+    //           MARCHE         //
+    /****************************/
     else if(ptrJoueur->Phase==1)
     {
         //ptrJoueur->ptrPosition=&anim_SAUT[0];
@@ -1281,10 +1278,10 @@ void MvtJoueur()
                 // ON AJOUTE 'ACCEL_D' A 'movX'
                 movX += ACCEL_D;
 
-                // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
-                if (movX >= maxSpeed_H)
+                // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+                if (movX >= maxSpeed_D)
                 {
-                    movX = maxSpeed_H;
+                    movX = maxSpeed_D;
                 } 
             }
 
@@ -1294,18 +1291,18 @@ void MvtJoueur()
             else if(ptrJoueur->Axe==1)
             {  
                 // SI ON N'EST PAS A LA FIN DU NIVEAU
-                if(CamPosX!=-4336)
+                /*if(CamPosX!=-4336)
                 {
                     positionX -= GLISSEMENT;
-                }
+                }*/
 
                 // ON SOUSTRAIT 'ACCEL_D' A 'movX'
                 movX -= ACCEL_G;
 
-            // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
-                if(movX <= -maxSpeed_H)
+            // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+                if(movX <= -maxSpeed_G)
                 {
-                    movX = -maxSpeed_H;
+                    movX = -maxSpeed_G;
                 }
             }
 
@@ -1313,9 +1310,9 @@ void MvtJoueur()
         }
     }
 
-    ////////////////
-    //    SAUT   //
-    ////////////////
+    /****************************/
+    //            SAUT          //
+    /****************************/
     else if(ptrJoueur->Phase==2)
     {
 
@@ -1329,11 +1326,17 @@ void MvtJoueur()
             // ON AJOUTE 'ACCEL_D' A 'movX'
             movX += ACCEL_D;
 
-            // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
-            if (movX >= maxSpeed_S)
+            // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+            if (movX >= maxSpeed_D)
             {
-                movX = maxSpeed_S;
+                movX = maxSpeed_D;
             } 
+            // SI ON N'EST PAS A LA FIN DU NIVEAU
+            /*if(CamPosX!=-4336)
+            {
+                positionX -= GLISSEMENT;
+            }*/
+
         }
 
         /////////////////////////////
@@ -1346,10 +1349,10 @@ void MvtJoueur()
             // ON SOUSTRAIT 'ACCEL_D' A 'movX'
             movX -= ACCEL_G;
 
-        // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
-            if(movX <= -maxSpeed_S)
+        // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+            if(movX <= -maxSpeed_G)
             {
-                movX = -maxSpeed_S;
+                movX = -maxSpeed_G;
             }
         }
 
@@ -1371,21 +1374,22 @@ void MvtJoueur()
             // JOUEUR ORIENTÉ VERS LA GAUCHE
             else if(ptrJoueur->Axe==1)
             {
-                movX += ACCEL_D;
+                movX += ACCEL_G;
                 if(movX > FIX32(0))
                 {
                     movX=0;
                 }
             }
-        }
+        
 
-        // SI ON N'EST PAS A LA FIN DU NIVEAU
-        if(CamPosX!=-4336)
-        {
-            positionX -= GLISSEMENT;
+            // SI ON N'EST PAS A LA FIN DU NIVEAU
+            if(CamPosX!=-4336)
+            {
+                positionX -= GLISSEMENT;
+            }
         }
-
         // Position Y
+        
         ptrJoueur->PosY += *(ptrJoueur->ptrPosition);
 
         ptrJoueur->ptrPosition++;
@@ -1414,9 +1418,9 @@ void MvtJoueur()
 
     }
 
-    ////////////////
-    //    CHUTE   //
-    ////////////////
+    /****************************/
+    //           CHUTE          //
+    /****************************/
     else if(ptrJoueur->Phase==98)
     {
         // MAJ POINTS DE COLLISION DU JOUEUR //
@@ -1448,10 +1452,10 @@ void MvtJoueur()
                 // ON AJOUTE 'ACCEL_D' A 'movX'
                 movX += ACCEL_D;
 
-                // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
-                if (movX >= maxSpeed_H)
+                // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+                if (movX >= maxSpeed_D)
                 {
-                    movX = maxSpeed_H;
+                    movX = maxSpeed_D;
                 } 
             }
 
@@ -1465,10 +1469,10 @@ void MvtJoueur()
                 // ON SOUSTRAIT 'ACCEL_D' A 'movX'
                 movX -= ACCEL_D;
 
-            // ON BLOQUE LA VITESSE A 'maxSpeed_H (1)'
-                if(movX <= -maxSpeed_H)
+            // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+                if(movX <= -maxSpeed_D)
                 {
-                    movX = -maxSpeed_H;
+                    movX = -maxSpeed_D;
                 }
             }
 
@@ -1548,14 +1552,8 @@ void MvtJoueur()
 
     // ON CONVERTIT 'positionY' en int
     // 'positionY' EST LA POSITION Y DU SPRITE
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++//
-    //
-    //   GROSSE ERREUR
-    //ptrJoueur->PosY=fix32ToInt(positionY);
 
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
-
-
 }
 
 void TilesBloque()
