@@ -20,7 +20,7 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 void Scrolling_Niveau1()
 {
     u16 i;
- 
+
     // MOUVEMENT CAMERA //
     CamPosX-=vitesseScrolling;
 
@@ -44,12 +44,12 @@ void Scrolling_Niveau1()
         {
             scrollOffset_TILE_NIVEAU1_BGA[i]=CamPosX;
         }
-        
+
         // scrolling par tile
         VDP_setHorizontalScrollTile(BG_A, 7, scrollOffset_TILE_NIVEAU1_BGA, 21, DMA_QUEUE);
-        
 
-   
+
+
         // BG_B
         // NUAGES
         for (i=0; i<17; i++)
@@ -60,7 +60,7 @@ void Scrolling_Niveau1()
         for (i=17; i<21; i++)
         {
             scrollOffset_TILE_NIVEAU1_BGB[i]=CamPosX;
-        }   
+        }
 
         VDP_setHorizontalScrollTile(BG_B, 7, scrollOffset_TILE_NIVEAU1_BGB, 24, DMA_QUEUE);
     }
@@ -83,12 +83,12 @@ void Tiles_Niveau1()
             {
                 VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 21, DMA_QUEUE);
                 //VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 20, 8, DMA_QUEUE);
-            }               
+            }
             else
             {
                 VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, 191), tilemapOffset-2, 62+tilemapOffset, 7, 21, DMA_QUEUE);
             }
-            
+
         }
     }
 }
@@ -111,7 +111,7 @@ void ChgtPalette_Niveau1()
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_PELICAN, DMA);
     }
-    
+
     else if(CamPosX<-3700 && CamPosX>-3704)
     {
         PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
@@ -143,13 +143,13 @@ void Collision_Decor()
     }
 
     posTileY=ptrJoueur->pt_Coll1_Y>>3;
-    
+
     *ptrtileID_G=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll1_X >> 3) - (CamPosX >> 3) - offsetTilemap  , posTileY ) & TILE_INDEX_MASK;
     *ptrtileID_D=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll2_X >> 3) - (CamPosX >> 3) - offsetTilemap  , posTileY ) & TILE_INDEX_MASK;
 }
 
 void Collision_Ennemis()
-{  
+{
     // SI IL Y A DES ENNEMIS
     if(nb_Ennemis != 0)
     {
@@ -177,7 +177,7 @@ void Collision_Ennemis()
                     // *---*---*---*---*
                     // |   |   |   |   |
                     // *---*---*---*---*
-                    
+
                     // LIMITE GAUCHE DU SPRITE ENNEMI (ptrEnnemi->PosX)
                     if(ptrJoueur->PosX+16 >= ptrEnnemi->PosX)
                     {
@@ -192,7 +192,7 @@ void Collision_Ennemis()
                                 {
                                     //VDP_drawInt( 1 , 3 , 36 , 10);
                                     break;
-                                    
+
                                 }
                             }
                         }
@@ -212,25 +212,25 @@ void Collisions_Globales()
 void CreaSprites_Niveau1()
 {
     u16 i;
-    
+
     if(CamPosX>-4336)
     {
         compteurTile+=vitesseScrolling;
     }
-    
+
 
     // Si compteurTile est supérieur à 7
     if(compteurTile>7)
     {
         u8 delta = compteurTile-8;
-        
+
         /////////////////
         //   ENNEMIS   //
         /////////////////
 
         // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
         if (-CamPosX>>3 == tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis])
-        {          
+        {
             // On scanne les emplacements vides
             for(i=0;i<11;i++)
             {
@@ -238,7 +238,7 @@ void CreaSprites_Niveau1()
 
                 // Si on trouve un emplacement vide
                 if(ptrEnnemi->Init==0)
-                {                    
+                {
                     // tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis] : ID
                     ptrEnnemi->ID=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
 
@@ -262,7 +262,7 @@ void CreaSprites_Niveau1()
                         // Tous les autres ennemis
                         ptrEnnemi->PosX=325-delta;
                     }
-                    
+
                     // tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis] : PosY
                     ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
 
@@ -292,7 +292,7 @@ void CreaSprites_Niveau1()
                     {
                         ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
                     }
-                    
+
                     indexCreaEnnemis++;
                     nb_Ennemis+=1;
                     break;
@@ -306,7 +306,7 @@ void CreaSprites_Niveau1()
 
         // tilemapCreaPlateformes_Niveau[0][indexCreaPlateformes] : PosX
         if (-CamPosX>>3 == tilemapCreaPlateformes_Niveau1[0][indexCreaPlateformes])
-        {          
+        {
             // On scanne les emplacements vides
             for(i=0;i<6;i++)
             {
@@ -333,7 +333,7 @@ void CreaSprites_Niveau1()
                     // PLATEFORME VERTICALE 1 //
                     if(ptrPlateforme->ID==1 || ptrPlateforme->ID==3 || ptrPlateforme->ID==5)
                     {
-                        ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];                       
+                        ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
                     }
 
 
@@ -351,9 +351,9 @@ void CreaSprites_Niveau1()
 }
 
 void MvtSprites_Niveau1()
-{    
+{
     if(CamPosX>-4336)
-    {       
+    {
         u16 i;
 
         /////////////////
@@ -361,14 +361,14 @@ void MvtSprites_Niveau1()
         /////////////////
 
         for(i=0;i<11;i++)
-        {          
+        {
             SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
-            
+
             // Si le sprite a été créé
             if(ptrEnnemi->Init==1)
             {
-                // On vérifie le type d'ennemi 
-                switch(ptrEnnemi->ID)              
+                // On vérifie le type d'ennemi
+                switch(ptrEnnemi->ID)
                 {
                     /////////////////
                     // ESCARGOTS H //
@@ -398,7 +398,7 @@ void MvtSprites_Niveau1()
                         }
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
+                        // 3 tiles (24 px) de large
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -428,7 +428,7 @@ void MvtSprites_Niveau1()
                         {
                             ptrEnnemi->CompteurPosition=0;
                         }
-                        
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
                         // Anim des tiles
@@ -450,7 +450,7 @@ void MvtSprites_Niveau1()
                         }
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
+                        // 3 tiles (24 px) de large
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -458,7 +458,7 @@ void MvtSprites_Niveau1()
                             nb_Ennemis-=1;
                         }
                         break;
- 
+
                     ////////////
                     // BULOTS //
                     ////////////
@@ -480,7 +480,7 @@ void MvtSprites_Niveau1()
                         {
                             ptrEnnemi->CompteurPosition=0;
                         }
-                        
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
                         // Anim des tiles
@@ -502,7 +502,7 @@ void MvtSprites_Niveau1()
                         }
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
+                        // 3 tiles (24 px) de large
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -515,7 +515,7 @@ void MvtSprites_Niveau1()
                     // ESCARGOTS V //
                     /////////////////
                     case 4:
-                        
+
                         // Position X
                         ptrEnnemi->PosX-=vitesseScrolling;
 
@@ -536,8 +536,8 @@ void MvtSprites_Niveau1()
                                 if(ptrEnnemi->CompteurPosition%2==0)
                                 {
                                      ptrEnnemi->PosY+=1;
-                                }                              
-                            }                            
+                                }
+                            }
                         }
                         // Orienté vers le haut
                         else if(ptrEnnemi->Axe==1)
@@ -553,8 +553,8 @@ void MvtSprites_Niveau1()
                                 if(ptrEnnemi->CompteurPosition%2==0)
                                 {
                                      ptrEnnemi->PosY-=1;
-                                } 
-                            }  
+                                }
+                            }
                         }
 
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
@@ -578,7 +578,7 @@ void MvtSprites_Niveau1()
                         }
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
+                        // 3 tiles (24 px) de large
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -608,7 +608,7 @@ void MvtSprites_Niveau1()
                         {
                             ptrEnnemi->CompteurPosition=0;
                         }
-                        
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
                         // Anim des tiles
@@ -630,7 +630,7 @@ void MvtSprites_Niveau1()
                         }
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
+                        // 3 tiles (24 px) de large
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -668,7 +668,7 @@ void MvtSprites_Niveau1()
                         }
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
+                        // 3 tiles (24 px) de large
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -706,7 +706,7 @@ void MvtSprites_Niveau1()
                         }*/
 
                         // Si l'ennemi sort de l'écran
-                        // 6 tiles (48 px) de large  
+                        // 6 tiles (48 px) de large
                         if(ptrEnnemi->PosX<-48 || ptrEnnemi->PosY>224)
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -728,16 +728,16 @@ void MvtSprites_Niveau1()
 
 
                         ptrEnnemi->ptrPosition++;
-                        
+
                         if(ptrEnnemi->ptrPosition >= &anim_POULPE1[MAX_ETAPES_POULPE1])
                         {
                             ptrEnnemi->ptrPosition=&anim_POULPE1[0];
                         }
-                        
+
 
 
                         // Si l'ennemi sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrEnnemi->PosX<-32 || ptrEnnemi->PosY>224)
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -747,7 +747,7 @@ void MvtSprites_Niveau1()
                         }
 
 
-                        
+
                         /*
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
@@ -767,7 +767,7 @@ void MvtSprites_Niveau1()
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }*/
                         break;
-                  
+
 
                     //////////////
                     // POULPE 2 //
@@ -785,16 +785,16 @@ void MvtSprites_Niveau1()
 
 
                         ptrEnnemi->ptrPosition++;
-                        
+
                         if(ptrEnnemi->ptrPosition >= &anim_POULPE2[MAX_ETAPES_POULPE2])
                         {
                             ptrEnnemi->ptrPosition=&anim_POULPE2[0];
                         }
-                        
+
 
 
                         // Si l'ennemi sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrEnnemi->PosX<-32 || ptrEnnemi->PosY>224)
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -803,7 +803,7 @@ void MvtSprites_Niveau1()
                         }
 
 
-                        
+
                         /*
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
@@ -822,7 +822,7 @@ void MvtSprites_Niveau1()
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }*/
-                        break; 
+                        break;
 
                     /////////////
                     // PELICAN //
@@ -847,7 +847,7 @@ void MvtSprites_Niveau1()
                         }
 
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-                        
+
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
 
@@ -867,7 +867,7 @@ void MvtSprites_Niveau1()
                         }
 
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
+                        // 3 tiles (24 px) de large
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224)
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -898,9 +898,9 @@ void MvtSprites_Niveau1()
                         {
                             ptrEnnemi->CompteurPosition=0;
                         }
-                        
+
                         SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-                        
+
                         // Anim des tiles
                         ptrEnnemi->CompteurFrame+=1;
 
@@ -918,9 +918,9 @@ void MvtSprites_Niveau1()
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(u16)ptrEnnemi->IndexFrame);
                         }
-                        
+
                         // Si l'ennemi sort de l'écran
-                        // 3 tiles (24 px) de large  
+                        // 3 tiles (24 px) de large
                         if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224)
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
@@ -945,8 +945,8 @@ void MvtSprites_Niveau1()
             // Si le sprite a été créé
             if(ptrPlateforme->Init==1)
             {
-                // On vérifie le type de plateforme 
-                switch(ptrPlateforme->ID)              
+                // On vérifie le type de plateforme
+                switch(ptrPlateforme->ID)
                 {
                     ///////////////////////////////////////
                     // PLATEFORME VERTICALE VERS LE HAUT //
@@ -960,14 +960,14 @@ void MvtSprites_Niveau1()
 
 
                         ptrPlateforme->ptrPosition++;
-                        
+
                         if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
                         {
                             ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
                         }
 
                         // Si la plateforme sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrPlateforme->PosX<-64)
                         {
                             SPR_releaseSprite(ptrPlateforme->SpriteP);
@@ -984,7 +984,7 @@ void MvtSprites_Niveau1()
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
                         // Si la plateforme sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrPlateforme->PosX<-64)
                         {
                             SPR_releaseSprite(ptrPlateforme->SpriteP);
@@ -1004,14 +1004,14 @@ void MvtSprites_Niveau1()
 
 
                         ptrPlateforme->ptrPosition++;
-                        
+
                         if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
                         {
                             ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
                         }
 
                         // Si la plateforme sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrPlateforme->PosX<-64)
                         {
                             SPR_releaseSprite(ptrPlateforme->SpriteP);
@@ -1031,14 +1031,14 @@ void MvtSprites_Niveau1()
 
 
                         ptrPlateforme->ptrPosition++;
-                        
+
                         if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
                         {
                             ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
                         }
 
                         // Si la plateforme sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrPlateforme->PosX<-64)
                         {
                             SPR_releaseSprite(ptrPlateforme->SpriteP);
@@ -1058,14 +1058,14 @@ void MvtSprites_Niveau1()
 
 
                         ptrPlateforme->ptrPosition++;
-                        
+
                         if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
                         {
                             ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
                         }
 
                         // Si la plateforme sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrPlateforme->PosX<-64)
                         {
                             SPR_releaseSprite(ptrPlateforme->SpriteP);
@@ -1082,7 +1082,7 @@ void MvtSprites_Niveau1()
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
                         // Si la plateforme sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrPlateforme->PosX<-64)
                         {
                             SPR_releaseSprite(ptrPlateforme->SpriteP);
@@ -1099,7 +1099,7 @@ void MvtSprites_Niveau1()
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
                         // Si la plateforme sort de l'écran
-                        // 4 tiles (32 px) de large  
+                        // 4 tiles (32 px) de large
                         if(ptrPlateforme->PosX<-64)
                         {
                             SPR_releaseSprite(ptrPlateforme->SpriteP);
@@ -1123,13 +1123,12 @@ void Phases_Joueur()
 
     ///////////////
     //   ARRET   //
-    /////////////// 
+    ///////////////
     if(value==0)
     {
         // Si le joueur ne tombe pas
         if(ptrJoueur->Phase!=2 && ptrJoueur->Phase!=3 && ptrJoueur->Phase!=98)
         {
-            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Phase=0;
         }
         return;
@@ -1143,14 +1142,12 @@ void Phases_Joueur()
         // Si joueur à l'arrêt
         if(ptrJoueur->Phase==0)
         {
-            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Axe=0;
             ptrJoueur->Phase=1;
         }
         // Si le joueur marche vers la gauche
         else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==1)
         {
-            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Axe=0;
         }
         return;
@@ -1164,14 +1161,12 @@ void Phases_Joueur()
         // Si joueur à l'arrêt
         if(ptrJoueur->Phase==0)
         {
-            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Axe=1;
             ptrJoueur->Phase=1;
         }
         // Si le joueur marche vers la droite
         else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==0)
         {
-            ptrJoueur->ptrPosition=&anim_SAUT[0];
             ptrJoueur->Axe=1;
         }
         return;
@@ -1179,32 +1174,30 @@ void Phases_Joueur()
 }
 
 void MvtJoueur()
-{    
+{
     // Gestion manette
-	u16 value=JOY_readJoypad(JOY_1);    
-    
+	u16 value=JOY_readJoypad(JOY_1);
+
     SpriteJoueur_ *ptrJoueur=&Joueur;
-    
+
+
+    /****************************/
     /****************************/
     //           ARRET          //
-    /****************************/ 
+    /****************************/
+    /****************************/
     if(ptrJoueur->Phase==0)
-    { 
-        //ptrJoueur->ptrPosition=&anim_SAUT[0];
+    {
         
-        // SI ON N'EST PAS A LA FIN DU NIVEAU
-        if(CamPosX!=-4336)
-        {
-            positionX -= GLISSEMENT;
-        }
+        /****************************/
+        //     COLLISIONS DECOR     //
+        /****************************/
 
         // MAJ POINTS DE COLLISION DU JOUEUR //
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
         ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
         ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
 
-        
-        
         // TEST COLLISION DECOR //
         Collision_Decor();
 
@@ -1215,14 +1208,23 @@ void MvtJoueur()
             ptrJoueur->Phase=98;
         }
 
+
         // SI LE JOUEUR NE TOMBE PAS
         else
-        {
-            // JOUEUR ORIENTÉ VERS LA DROITE            
+        {    
+            // SI ON N'EST PAS A LA FIN DU NIVEAU
+            if(CamPosX!=-4336)
+            {
+                if(movX>= FIX32(-1L))
+                {
+                    positionX -= GLISSEMENT;
+                }
+            }
+    
+            // JOUEUR ORIENTÉ VERS LA DROITE
             if(ptrJoueur->Axe==0)
             {
-                movX -= ACCEL_D;
-                //movX -= glissement;
+                movX -= ACCEL_D;               
                 if(movX < FIX32(0))
                 {
                     movX=0;
@@ -1244,19 +1246,24 @@ void MvtJoueur()
 
     }
 
+
+    /****************************/
     /****************************/
     //           MARCHE         //
     /****************************/
+    /****************************/
     else if(ptrJoueur->Phase==1)
     {
-        //ptrJoueur->ptrPosition=&anim_SAUT[0];
-        
+        /****************************/
+        //     COLLISIONS DECOR     //
+        /****************************/
+
         // MAJ POINTS DE COLLISION DU JOUEUR //
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
         ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
         ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
-        
-        
+
+
         // TEST COLLISION DECOR //
         Collision_Decor();
 
@@ -1282,24 +1289,25 @@ void MvtJoueur()
                 if (movX >= maxSpeed_D)
                 {
                     movX = maxSpeed_D;
-                } 
+                }
             }
 
             /////////////////////////////
             //         GAUCHE          //
             /////////////////////////////
             else if(ptrJoueur->Axe==1)
-            {  
-                // SI ON N'EST PAS A LA FIN DU NIVEAU
-                /*if(CamPosX!=-4336)
-                {
-                    positionX -= GLISSEMENT;
-                }*/
-
-                // ON SOUSTRAIT 'ACCEL_D' A 'movX'
+            {
                 movX -= ACCEL_G;
 
-            // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+            if(CamPosX!=-4336)
+            {
+                if(movX >= FIX32(-1L))
+                {
+                    positionX -= GLISSEMENT;
+                }
+            }
+
+                // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
                 if(movX <= -maxSpeed_G)
                 {
                     movX = -maxSpeed_G;
@@ -1310,8 +1318,11 @@ void MvtJoueur()
         }
     }
 
+
+    /****************************/
     /****************************/
     //            SAUT          //
+    /****************************/
     /****************************/
     else if(ptrJoueur->Phase==2)
     {
@@ -1322,7 +1333,7 @@ void MvtJoueur()
         if(value & BUTTON_RIGHT)
         {
             ptrJoueur->Axe=0;
-            
+
             // ON AJOUTE 'ACCEL_D' A 'movX'
             movX += ACCEL_D;
 
@@ -1330,22 +1341,16 @@ void MvtJoueur()
             if (movX >= maxSpeed_D)
             {
                 movX = maxSpeed_D;
-            } 
-            // SI ON N'EST PAS A LA FIN DU NIVEAU
-            /*if(CamPosX!=-4336)
-            {
-                positionX -= GLISSEMENT;
-            }*/
-
+            }
         }
 
         /////////////////////////////
         //      BOUTON GAUCHE      //
         /////////////////////////////
         else if(value & BUTTON_LEFT)
-        {  
+        {
             ptrJoueur->Axe=1;
-            
+
             // ON SOUSTRAIT 'ACCEL_D' A 'movX'
             movX -= ACCEL_G;
 
@@ -1361,7 +1366,7 @@ void MvtJoueur()
         /////////////////////////////
         else if(value == 0)
         {
-            // JOUEUR ORIENTÉ VERS LA DROITE            
+            // JOUEUR ORIENTÉ VERS LA DROITE
             if(ptrJoueur->Axe==0)
             {
                 movX -= ACCEL_D;
@@ -1380,7 +1385,7 @@ void MvtJoueur()
                     movX=0;
                 }
             }
-        
+
 
             // SI ON N'EST PAS A LA FIN DU NIVEAU
             if(CamPosX!=-4336)
@@ -1389,11 +1394,11 @@ void MvtJoueur()
             }
         }
         // Position Y
-        
+
         ptrJoueur->PosY += *(ptrJoueur->ptrPosition);
 
         ptrJoueur->ptrPosition++;
-        
+
         if(ptrJoueur->ptrPosition > &anim_SAUT[MAX_ETAPES_SAUT])
         {
             ptrJoueur->ptrPosition = &anim_SAUT[MAX_ETAPES_SAUT];
@@ -1403,17 +1408,18 @@ void MvtJoueur()
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
         ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
         ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
-        
-        
+
+
         // TEST COLLISION DECOR //
         Collision_Decor();
 
         // SI LE JOUEUR TOMBE
         if(tileID_G==1 || tileID_D==1)
         {
-            // PHASE CHUTE
+            // PHASE ARRET
             ptrJoueur->Phase=0;
             ptrJoueur->PosY = (posTileY<<3)-32;
+            ptrJoueur->ptrPosition=&anim_SAUT[0];
             positionY = intToFix32(ptrJoueur->PosY);
         }
 
@@ -1421,8 +1427,11 @@ void MvtJoueur()
 
     }
 
+
+    /****************************/
     /****************************/
     //           CHUTE          //
+    /****************************/
     /****************************/
     else if(ptrJoueur->Phase==98)
     {
@@ -1430,8 +1439,8 @@ void MvtJoueur()
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
         ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
         ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
-        
-        
+
+
         // TEST COLLISION DECOR //
         Collision_Decor();
 
@@ -1440,6 +1449,7 @@ void MvtJoueur()
         {
             // PHASE CHUTE
             ptrJoueur->Phase=0;
+            ptrJoueur->ptrPosition=&anim_SAUT[0];
         }
 
         // SI LE JOUEUR NE TOUCHE PAS LE SOL
@@ -1451,7 +1461,7 @@ void MvtJoueur()
             if(value & BUTTON_RIGHT)
             {
                 ptrJoueur->Axe=0;
-                
+
                 // ON AJOUTE 'ACCEL_D' A 'movX'
                 movX += ACCEL_D;
 
@@ -1459,16 +1469,16 @@ void MvtJoueur()
                 if (movX >= maxSpeed_D)
                 {
                     movX = maxSpeed_D;
-                } 
+                }
             }
 
             /////////////////////////////
             //      BOUTON GAUCHE      //
             /////////////////////////////
             else if(value & BUTTON_LEFT)
-            {  
+            {
                 ptrJoueur->Axe=1;
-                
+
                 // ON SOUSTRAIT 'ACCEL_D' A 'movX'
                 movX -= ACCEL_D;
 
@@ -1484,7 +1494,7 @@ void MvtJoueur()
             /////////////////////////////
             else if(value == 0)
             {
-                // JOUEUR ORIENTÉ VERS LA DROITE            
+                // JOUEUR ORIENTÉ VERS LA DROITE
                 if(ptrJoueur->Axe==0)
                 {
                     movX -= ACCEL_D;
@@ -1521,7 +1531,7 @@ void MvtJoueur()
 
             // ON AJOUTE 'movY' A L'ACCUMULATEUR 'positionY'
             positionY += movY;
-            ptrJoueur->PosY=fix32ToInt(positionY); 
+            ptrJoueur->PosY=fix32ToInt(positionY);
 
         }
     }
@@ -1562,7 +1572,7 @@ void MvtJoueur()
 void TilesBloque()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
-    
+
     SPR_setAnim(ptrJoueur->SpriteJ,1);
 
     ptrJoueur->CompteurFrameArret=0;
@@ -1586,7 +1596,7 @@ void TilesBloque()
         if(ptrJoueur->IndexFrameBloque>2)
         {
             ptrJoueur->IndexFrameBloque=0;
-        }   
+        }
     }
 
     SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameBloque);
@@ -1595,7 +1605,7 @@ void TilesBloque()
 void TilesArret()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
-    
+
     SPR_setAnim(ptrJoueur->SpriteJ,0);
 
     ptrJoueur->CompteurFrameBloque=0;
@@ -1617,7 +1627,7 @@ void TilesArret()
         if(ptrJoueur->IndexFrameArret>2)
         {
             ptrJoueur->IndexFrameArret=0;
-        }   
+        }
     }
 
     SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameArret);
@@ -1626,12 +1636,12 @@ void TilesArret()
 void TilesMarche()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
-    
+
     SPR_setAnim(ptrJoueur->SpriteJ,2);
-    
+
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
-    
+
     ptrJoueur->CompteurFrameArret=0;
     ptrJoueur->IndexFrameArret=0;
 
@@ -1658,7 +1668,7 @@ void TilesMarche()
         if(ptrJoueur->IndexFrameMarche>3)
         {
             ptrJoueur->IndexFrameMarche=0;
-        }   
+        }
     }
 
     SPR_setFrame(ptrJoueur->SpriteJ,(u16)ptrJoueur->IndexFrameMarche);
@@ -1667,7 +1677,7 @@ void TilesMarche()
 void TilesDerapage()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
-    
+
     SPR_setAnim(ptrJoueur->SpriteJ,5);
 
     ptrJoueur->CompteurFrameBloque=0;
@@ -1677,13 +1687,13 @@ void TilesDerapage()
     ptrJoueur->IndexFrameArret=0;
 
     ptrJoueur->CompteurFrameMarche=0;
-    ptrJoueur->IndexFrameMarche=0;   
+    ptrJoueur->IndexFrameMarche=0;
 }
 
 void TilesSaut()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
-    
+
     SPR_setAnim(ptrJoueur->SpriteJ,3);
 
     ptrJoueur->CompteurFrameBloque=0;
@@ -1693,7 +1703,7 @@ void TilesSaut()
     ptrJoueur->IndexFrameArret=0;
 
     ptrJoueur->CompteurFrameMarche=0;
-    ptrJoueur->IndexFrameMarche=0;   
+    ptrJoueur->IndexFrameMarche=0;
 
     if(ptrJoueur->Axe==0)
     {
@@ -1708,13 +1718,13 @@ void TilesSaut()
 void TilesJoueur()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
-    
+
     ///////////////
     //   ARRET   //
-    /////////////// 
+    ///////////////
     if(ptrJoueur->Phase==0)
     {
-        // BLOQUE        
+        // BLOQUE
         if(ptrJoueur->PosX==-11)
         {
             if(CamPosX!=-4336)
@@ -1726,7 +1736,7 @@ void TilesJoueur()
             {
                 TilesArret();
                 return;
-            }        
+            }
         }
 
         // ARRET
@@ -1741,8 +1751,8 @@ void TilesJoueur()
             {
                 TilesMarche();
                 return;
-            }      
-        }       
+            }
+        }
     }
 
     ////////////////
@@ -1776,7 +1786,7 @@ void TilesJoueur()
                 TilesMarche();
                 return;
             }
-        }    
+        }
     }
 
     ////////////////
