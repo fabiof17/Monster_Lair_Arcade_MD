@@ -1181,17 +1181,17 @@ void MvtJoueur()
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
 
-    /****************************/
-    /****************************/
+    //--------------------------//
+    //--------------------------//
     //           ARRET          //
-    /****************************/
-    /****************************/
+    //--------------------------//
+    //--------------------------//
     if(ptrJoueur->Phase==0)
     {
-        
-        /****************************/
+
+        //--------------------------//
         //     COLLISIONS DECOR     //
-        /****************************/
+        //--------------------------//
 
         // MAJ POINTS DE COLLISION DU JOUEUR //
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
@@ -1211,7 +1211,11 @@ void MvtJoueur()
 
         // SI LE JOUEUR NE TOMBE PAS
         else
-        {    
+        {
+            //--------------------------//
+            //         POSITION X       //
+            //--------------------------//
+
             // SI ON N'EST PAS A LA FIN DU NIVEAU
             if(CamPosX!=-4336)
             {
@@ -1220,11 +1224,11 @@ void MvtJoueur()
                     positionX -= GLISSEMENT;
                 }
             }
-    
+
             // JOUEUR ORIENTÉ VERS LA DROITE
             if(ptrJoueur->Axe==0)
             {
-                movX -= ACCEL_D;               
+                movX -= ACCEL_D;
                 if(movX < FIX32(0))
                 {
                     movX=0;
@@ -1241,22 +1245,26 @@ void MvtJoueur()
                 }
             }
 
+            //--------------------------//
+            //         POSITION Y       //
+            //--------------------------//
+
             ptrJoueur->PosY = (posTileY<<3)-32;
         }
 
     }
 
 
-    /****************************/
-    /****************************/
+    //--------------------------//
+    //--------------------------//
     //           MARCHE         //
-    /****************************/
-    /****************************/
+    //--------------------------//
+    //--------------------------//
     else if(ptrJoueur->Phase==1)
     {
-        /****************************/
+        //--------------------------//
         //     COLLISIONS DECOR     //
-        /****************************/
+        //--------------------------//
 
         // MAJ POINTS DE COLLISION DU JOUEUR //
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
@@ -1274,9 +1282,14 @@ void MvtJoueur()
             ptrJoueur->Phase=98;
         }
 
+
         // SI LE JOUEUR NE TOMBE PAS
         else
         {
+            //--------------------------//
+            //         POSITION X       //
+            //--------------------------//
+
             /////////////////////////////
             //         DROITE          //
             /////////////////////////////
@@ -1299,13 +1312,13 @@ void MvtJoueur()
             {
                 movX -= ACCEL_G;
 
-            if(CamPosX!=-4336)
-            {
-                if(movX >= FIX32(-1L))
+                if(CamPosX!=-4336)
                 {
-                    positionX -= GLISSEMENT;
+                    if(movX >= FIX32(-1L))
+                    {
+                        positionX -= GLISSEMENT;
+                    }
                 }
-            }
 
                 // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
                 if(movX <= -maxSpeed_G)
@@ -1314,18 +1327,26 @@ void MvtJoueur()
                 }
             }
 
+
+            //--------------------------//
+            //         POSITION Y       //
+            //--------------------------//
+
             ptrJoueur->PosY = (posTileY<<3)-32;
         }
     }
 
 
-    /****************************/
-    /****************************/
+    //--------------------------//
+    //--------------------------//
     //            SAUT          //
-    /****************************/
-    /****************************/
+    //--------------------------//
+    //--------------------------//
     else if(ptrJoueur->Phase==2)
     {
+        //--------------------------//
+        //         POSITION X       //
+        //--------------------------//
 
         /////////////////////////////
         //      BOUTON DROITE      //
@@ -1354,7 +1375,7 @@ void MvtJoueur()
             // ON SOUSTRAIT 'ACCEL_D' A 'movX'
             movX -= ACCEL_G;
 
-        // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+            // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
             if(movX <= -maxSpeed_G)
             {
                 movX = -maxSpeed_G;
@@ -1366,6 +1387,14 @@ void MvtJoueur()
         /////////////////////////////
         else if(value == 0)
         {
+            // SI ON N'EST PAS A LA FIN DU NIVEAU
+            if(CamPosX!=-4336)
+            {
+
+                    positionX -= GLISSEMENT;
+
+            }
+
             // JOUEUR ORIENTÉ VERS LA DROITE
             if(ptrJoueur->Axe==0)
             {
@@ -1385,15 +1414,12 @@ void MvtJoueur()
                     movX=0;
                 }
             }
-
-
-            // SI ON N'EST PAS A LA FIN DU NIVEAU
-            if(CamPosX!=-4336)
-            {
-                positionX -= GLISSEMENT;
-            }
         }
-        // Position Y
+
+
+        //--------------------------//
+        //         POSITION Y       //
+        //--------------------------//
 
         ptrJoueur->PosY += *(ptrJoueur->ptrPosition);
 
@@ -1403,6 +1429,11 @@ void MvtJoueur()
         {
             ptrJoueur->ptrPosition = &anim_SAUT[MAX_ETAPES_SAUT];
         }
+
+
+        //--------------------------//
+        //     COLLISIONS DECOR     //
+        //--------------------------//
 
         // MAJ POINTS DE COLLISION DU JOUEUR //
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
@@ -1422,19 +1453,20 @@ void MvtJoueur()
             ptrJoueur->ptrPosition=&anim_SAUT[0];
             positionY = intToFix32(ptrJoueur->PosY);
         }
-
-
-
     }
 
 
-    /****************************/
-    /****************************/
+    //--------------------------//
+    //--------------------------//
     //           CHUTE          //
-    /****************************/
-    /****************************/
+    //--------------------------//
+    //--------------------------//
     else if(ptrJoueur->Phase==98)
     {
+        //--------------------------//
+        //     COLLISIONS DECOR     //
+        //--------------------------//
+
         // MAJ POINTS DE COLLISION DU JOUEUR //
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
         ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
@@ -1455,7 +1487,11 @@ void MvtJoueur()
         // SI LE JOUEUR NE TOUCHE PAS LE SOL
         else
         {
-             /////////////////////////////
+            //--------------------------//
+            //         POSITION X       //
+            //--------------------------//
+
+            /////////////////////////////
             //      BOUTON DROITE      //
             /////////////////////////////
             if(value & BUTTON_RIGHT)
@@ -1531,8 +1567,13 @@ void MvtJoueur()
 
             // ON AJOUTE 'movY' A L'ACCUMULATEUR 'positionY'
             positionY += movY;
-            ptrJoueur->PosY=fix32ToInt(positionY);
 
+
+            //--------------------------//
+            //         POSITION Y       //
+            //--------------------------//
+
+            ptrJoueur->PosY=fix32ToInt(positionY);
         }
     }
 
@@ -1562,9 +1603,6 @@ void MvtJoueur()
     // ON CONVERTIT 'positionX' en int
     // 'positionX' EST LA POSITION X DU SPRITE
     ptrJoueur->PosX=fix32ToInt(positionX);
-
-    // ON CONVERTIT 'positionY' en int
-    // 'positionY' EST LA POSITION Y DU SPRITE
 
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
 }
