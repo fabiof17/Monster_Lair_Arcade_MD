@@ -16,6 +16,7 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 	VDP_drawText(texteSortie,x,y);
 }
 
+
 // SCROLLING //
 void Scrolling_Niveau1()
 {
@@ -123,6 +124,7 @@ void ChgtPalette_Niveau1()
     }
 }
 
+
 // COLLISIONS
 void Collision_Decor()
 {
@@ -222,6 +224,7 @@ void Collisions_Globales()
 {
     //
 }
+
 
 // SPRITES NIVEAU 1 //
 void CreaSprites_Niveau1()
@@ -1128,6 +1131,7 @@ void MvtSprites_Niveau1()
     }
 }
 
+
 // JOUEUR //
 void Phases_Joueur()
 {
@@ -1613,6 +1617,8 @@ void MvtJoueur()
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
 }
 
+
+// TILES //
 void TilesBloque()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;

@@ -34,8 +34,6 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
 
             SPR_setPosition(sprite_Pause[0], -40, 0);
             SPR_setPosition(sprite_Pause[1], -32, 0);
-
-            //break;
         }
     }
 
