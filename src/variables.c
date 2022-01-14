@@ -60,7 +60,7 @@ u8 indexCreaPlateformes;
 fix32 maxSpeed_D;
 fix32 maxSpeed_G;
 fix32 maxSpeed_V;
-fix32 maxSpeed_S;
+//fix32 maxSpeed_S;
 
 fix32 positionX;
 fix32 positionY;

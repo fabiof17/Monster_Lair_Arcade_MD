@@ -422,7 +422,7 @@ void InitNiveau1()
     maxSpeed_D = MAX_SPEED_D;
     maxSpeed_G = MAX_SPEED_G;
     maxSpeed_V = MAX_SPEED_V;
-    maxSpeed_S = MAX_SPEED_S;
+    //maxSpeed_S = MAX_SPEED_S;
     
     //////////////////////////////////////////////
     //                CREATION  BG              //

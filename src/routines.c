@@ -142,6 +142,21 @@ void Collision_Decor()
         offsetTilemap=0;
     }
 
+    // MAJ POINTS DE COLLISION DU JOUEUR //
+    if(ptrJoueur->PosX>=0)
+    {        
+        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
+    }
+    else
+    {
+        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+11;
+    }
+
+    ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
+    ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
+
+
+
     posTileY=ptrJoueur->pt_Coll1_Y>>3;
 
     *ptrtileID_G=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll1_X >> 3) - (CamPosX >> 3) - offsetTilemap  , posTileY ) & TILE_INDEX_MASK;
@@ -1193,10 +1208,7 @@ void MvtJoueur()
         //     COLLISIONS DECOR     //
         //--------------------------//
 
-        // MAJ POINTS DE COLLISION DU JOUEUR //
-        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
-        ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
-        ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
+
 
         // TEST COLLISION DECOR //
         Collision_Decor();
@@ -1265,12 +1277,6 @@ void MvtJoueur()
         //--------------------------//
         //     COLLISIONS DECOR     //
         //--------------------------//
-
-        // MAJ POINTS DE COLLISION DU JOUEUR //
-        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
-        ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
-        ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
-
 
         // TEST COLLISION DECOR //
         Collision_Decor();
@@ -1372,8 +1378,15 @@ void MvtJoueur()
         {
             ptrJoueur->Axe=1;
 
-            // ON SOUSTRAIT 'ACCEL_D' A 'movX'
             movX -= ACCEL_G;
+
+            if(CamPosX!=-4336)
+            {
+                if(movX >= FIX32(-1L))
+                {
+                    positionX -= GLISSEMENT;
+                }
+            }
 
             // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
             if(movX <= -maxSpeed_G)
@@ -1382,17 +1395,23 @@ void MvtJoueur()
             }
         }
 
-        /////////////////////////////
-        //       AUCUN BOUTON      //
-        /////////////////////////////
-        else if(value == 0)
+        //////////////////////////////////////////
+        //       AUCUN BOUTON DE DIRECTION      //
+        //////////////////////////////////////////
+
+        else if((value & BUTTON_DIR) == 0)
         {
+            //--------------------------//
+            //         POSITION X       //
+            //--------------------------//
+
             // SI ON N'EST PAS A LA FIN DU NIVEAU
             if(CamPosX!=-4336)
             {
-
+                if(movX>= FIX32(-1L))
+                {
                     positionX -= GLISSEMENT;
-
+                }
             }
 
             // JOUEUR ORIENTÉ VERS LA DROITE
@@ -1430,16 +1449,12 @@ void MvtJoueur()
             ptrJoueur->ptrPosition = &anim_SAUT[MAX_ETAPES_SAUT];
         }
 
+        positionY = intToFix32(ptrJoueur->PosY);
+
 
         //--------------------------//
         //     COLLISIONS DECOR     //
         //--------------------------//
-
-        // MAJ POINTS DE COLLISION DU JOUEUR //
-        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
-        ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
-        ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
-
 
         // TEST COLLISION DECOR //
         Collision_Decor();
@@ -1463,15 +1478,6 @@ void MvtJoueur()
     //--------------------------//
     else if(ptrJoueur->Phase==98)
     {
-        //--------------------------//
-        //     COLLISIONS DECOR     //
-        //--------------------------//
-
-        // MAJ POINTS DE COLLISION DU JOUEUR //
-        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
-        ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+33;
-        ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
-
 
         // TEST COLLISION DECOR //
         Collision_Decor();

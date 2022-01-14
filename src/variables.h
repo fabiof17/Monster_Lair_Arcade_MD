@@ -5,14 +5,13 @@
 #define MAX_SPEED_D     FIX32(1L) // VITESSE MAX HORIZONTALE DROITE
 #define MAX_SPEED_G     FIX32(2L) // VITESSE MAX HORIZONTALE GAUCHE
 #define MAX_SPEED_V     FIX32(3L) // VITESSE MAX VERTICALE
-#define MAX_SPEED_S     FIX32(1L) // VITESSE MAX SAUT
+//#define MAX_SPEED_S     FIX32(1L) // VITESSE MAX SAUT
 
 #define ACCEL_D         FIX32(0.08)
 #define ACCEL_G         FIX32(0.16)
 #define ACCEL_B         FIX32(0.1)
 //#define ACCEL_S         FIX32(0.1)
 #define GLISSEMENT      FIX32(1L)
-//#define ACCELERATION    FIX32(2L)
 
 #define MAX_POS_D       FIX32(228L)
 #define MAX_POS_G       FIX32(11L)
@@ -156,7 +155,7 @@ extern u8 compteurTile; // 0 -> 7 //
 extern fix32 maxSpeed_D;
 extern fix32 maxSpeed_G;
 extern fix32 maxSpeed_V;
-extern fix32 maxSpeed_S;
+//extern fix32 maxSpeed_S;
 
 extern fix32 positionX;
 extern fix32 positionY;

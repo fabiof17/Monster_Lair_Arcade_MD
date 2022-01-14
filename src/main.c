@@ -91,7 +91,7 @@ void MainLoop()
 {
     InitNiveaux();
     
-    SYS_showFrameLoad(TRUE);
+    //SYS_showFrameLoad(TRUE);
 
     // Manette
     JOY_setEventHandler(joyEventCallback);
@@ -101,6 +101,8 @@ void MainLoop()
         case 1:
         while(TRUE)
         {
+
+            //u16 value=JOY_readJoypad(JOY_1);
 
             // Jeu en Pause ?
             if(PauseJeu==0)
@@ -127,9 +129,11 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
+            //VDP_drawInt( Joueur.Phase , 2 , 36 , 8);
+
             //VDP_drawInt( tileID_G , 2 , 36 , 10);
             //VDP_drawInt( tileID_D , 2 , 36 , 11);
-            //VDP_drawInt( Joueur.Phase , 2 , 36 , 13);
+            //VDP_drawInt( fix32ToInt(movX) , 2 , 36 , 13);
 
             // Vblank
             SYS_doVBlankProcess();
