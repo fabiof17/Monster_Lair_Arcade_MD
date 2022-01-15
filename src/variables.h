@@ -22,10 +22,8 @@
 #define MAX_ETAPES_PF_V1   69
 
 ///////////////////////////////////
-//		Variables principales
+//		Variables principales    //
 ///////////////////////////////////
-
-//extern u16 ind;
 
 extern u16 StatutJoy;
 
@@ -51,8 +49,6 @@ extern s16 scrollOffset_TILE_TITRE[10];
 extern s16 scrollOffset_TILE_NIVEAU1_BGA[28];
 extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 
-extern u16 tilemapOffset;
-
 ///////////////////////////////////
 //		Variables Sprites        //
 ///////////////////////////////////
@@ -61,7 +57,10 @@ extern Sprite *sprite_Vie[3];
 extern Sprite *sprite_Pause[2];
 
 
-// JOUEUR //
+
+//----------------------------------------------------//
+//                       JOUEUR                       //
+//----------------------------------------------------//
 typedef struct
 {
     Sprite* SpriteJ;
@@ -84,8 +83,23 @@ typedef struct
 extern SpriteJoueur_ Joueur;
 
 
+///////////////////////////////////
+//		 Variables Joueur        //
+///////////////////////////////////
+extern fix32 maxSpeed_D;
+extern fix32 maxSpeed_G;
+extern fix32 maxSpeed_V;
 
-// ENNEMIS //
+extern fix32 positionX;
+extern fix32 positionY;
+extern fix32 movX;
+extern fix32 movY;
+
+
+
+//----------------------------------------------------//
+//                      ENNEMIS                       //
+//----------------------------------------------------//
 typedef struct
 {
     Sprite* SpriteE;
@@ -113,7 +127,9 @@ extern u8 nb_Ennemis;
 
 
 
-// PLATEFORMES //
+//----------------------------------------------------//
+//                    PLATEFORMES                     //
+//----------------------------------------------------//
 typedef struct
 {
     Sprite* SpriteP;
@@ -132,41 +148,16 @@ extern u8 nb_Plateformes;
 
 
 
-
-
-
-
+//----------------------------------------------------//
+//                      TILEMAPS                      //
+//----------------------------------------------------//
 extern Map *tilemapCollision;
-
-extern u16 posTileY;
 
 extern u16 tileID_G;
 extern u16 tileID_D;
-
-
-
+extern u16 posTileY;
 
 extern u8 compteurTile; // 0 -> 7 //
-
-
-///////////////////////////////////
-//		 Variables Joueur        //
-///////////////////////////////////
-extern fix32 maxSpeed_D;
-extern fix32 maxSpeed_G;
-extern fix32 maxSpeed_V;
-//extern fix32 maxSpeed_S;
-
-extern fix32 positionX;
-extern fix32 positionY;
-extern fix32 movX;
-extern fix32 movY;
-
-
-
-
-
-
-
+extern u16 tilemapOffset;
 
 #endif // _MAIN

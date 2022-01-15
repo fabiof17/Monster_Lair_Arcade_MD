@@ -1469,8 +1469,8 @@ e0ff027a b maxSpeed_D
 e0ff027e b positionX
 e0ff0282 b movX
 e0ff0288 b GameOver
-e0ff028a b CamPosY
-e0ff028c b texteSortie
+e0ff028a b texteSortie
+e0ff028c b CamPosY
 e0ff028e b bmp_buffer_read
 e0ff0292 b bmp_buffer_0
 e0ff0296 b bmp_buffer_1
