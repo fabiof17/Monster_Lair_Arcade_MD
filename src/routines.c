@@ -1119,6 +1119,11 @@ void MvtSprites_Niveau1()
                         ptrPlateforme->PosX-=vitesseScrolling;
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
+                        ptrPlateforme->pt_Coll1_X=ptrPlateforme->PosX;
+                        ptrPlateforme->pt_Coll1_Y=ptrPlateforme->PosY;
+                        ptrPlateforme->pt_Coll2_X=ptrPlateforme->PosX+63;
+                        ptrPlateforme->pt_Coll2_Y=ptrPlateforme->pt_Coll1_Y;
+
                         // Si la plateforme sort de l'écran
                         // 8 tiles (64 px) de large
                         if(ptrPlateforme->PosX<-64)
@@ -1194,7 +1199,6 @@ void MvtSprites_Niveau1()
                             nb_Plateformes-=1;
                         }
                         break;
-                        break;
 
                     ///////////////////////////////////////////////////////
                     // PLATEFORME VERTICALE VERS LE HAUT (DECLENCHEMENT) //
@@ -1227,7 +1231,6 @@ void MvtSprites_Niveau1()
                             ptrPlateforme->Init=0;
                             nb_Plateformes-=1;
                         }
-                        break;
                         break;
 
                     /////////////////////////////////
@@ -1475,12 +1478,22 @@ void MvtJoueur()
                 {
                     positionX -= GLISSEMENT;
                 }
+
+                // ON BLOQUE LA VITESSE A 'maxSpeed_G (2)'
+                if(movX <= -maxSpeed_G)
+                {
+                    movX = -maxSpeed_G;
+                }
+
             }
 
             // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
-            if(movX <= -maxSpeed_G)
+            else
             {
-                movX = -maxSpeed_G;
+                if(movX <= -maxSpeed_D)
+                {
+                    movX = -maxSpeed_D;
+                }
             }
         }
 

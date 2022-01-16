@@ -14,7 +14,8 @@
         "maps_niveau1.h": "c",
         "gestionpad.h": "c",
         "genesis.h": "c",
-        "animation_ennemis.h": "c"
+        "animation_ennemis.h": "c",
+        "animation_sprites.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

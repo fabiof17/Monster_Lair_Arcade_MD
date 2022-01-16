@@ -73,10 +73,10 @@ typedef struct
     u8 Axe; // 0=DROITE - 1=GAUCHE
     s16 PosX;
     s16 PosY;
-    u16 pt_Coll1_X;
-    u16 pt_Coll1_Y;
-    u16 pt_Coll2_X;
-    u16 pt_Coll2_Y;
+    s16 pt_Coll1_X;
+    s16 pt_Coll1_Y;
+    s16 pt_Coll2_X;
+    s16 pt_Coll2_Y;
     u8 CompteurFrameArret;      // Compteur pour passer à la prochaine FRAME ARRET
     u8 IndexFrameArret;         // Index de FRAME ARRET
     u8 CompteurFrameBloque;     // Compteur pour passer à la prochaine FRAME BLOQUÉ
@@ -116,10 +116,10 @@ typedef struct
     u8 PointsVie;               // Nb points de vie
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
-    u16 pt_Coll1_X;
-    u16 pt_Coll1_Y;
-    u16 pt_Coll2_X;
-    u16 pt_Coll2_Y;
+    s16 pt_Coll1_X;
+    s16 pt_Coll1_Y;
+    s16 pt_Coll2_X;
+    s16 pt_Coll2_Y;
     u8 CompteurPosition;        // Compteur pour déclencher le déplacement du sprite
     u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
     u8 IndexFrame;              // Index de FRAME
@@ -145,10 +145,10 @@ typedef struct
     u8 declencheur;             // Déclencheur d'animation
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
-    u16 pt_Coll1_X;
-    u16 pt_Coll1_Y;
-    u16 pt_Coll2_X;
-    u16 pt_Coll2_Y;
+    s16 pt_Coll1_X;
+    s16 pt_Coll1_Y;
+    s16 pt_Coll2_X;
+    s16 pt_Coll2_Y;
     const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpritePlateforme_;
 
