@@ -89,7 +89,7 @@ void MainLoop()
 {
     InitNiveaux();
     
-    //SYS_showFrameLoad(TRUE);
+    SYS_showFrameLoad(TRUE);
 
     // Manette
     JOY_setEventHandler(joyEventCallback);
@@ -107,14 +107,14 @@ void MainLoop()
             {
                 //Collision_Decor();
                 Phases_Joueur();
-                MvtJoueur();
-                TilesJoueur();
 
                 Scrolling_Niveau1();
 
                 CreaSprites_Niveau1();
                 MvtSprites_Niveau1();
 
+                MvtJoueur();
+                TilesJoueur();
                 //Collision_Ennemis();
 
             }
@@ -127,11 +127,9 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            //VDP_drawInt( Joueur.Phase , 2 , 36 , 8);
-
-            //VDP_drawInt( tileID_G , 2 , 36 , 10);
-            //VDP_drawInt( tileID_D , 2 , 36 , 11);
-            //VDP_drawInt( fix32ToInt(movX) , 2 , 36 , 13);
+            //VDP_drawInt( contactPlt_OK , 2 , 36 , 8);
+            VDP_drawInt( Plateforme[0].pt_Coll1_X , 2 , 36 , 8);
+            VDP_drawInt( Joueur.pt_Coll1_X , 2 , 36 , 10);
 
             // Vblank
             SYS_doVBlankProcess();

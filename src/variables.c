@@ -67,6 +67,7 @@ const SpriteDefinition *adrResEnnemi[12];
 SpritePlateforme_ Plateforme[5];
 u8 indexCreaPlateformes;
 u8 nb_Plateformes;
+bool contactPlt_OK=0;
 
 //----------------------------------------------------//
 //                      TILEMAPS                      //
@@ -82,3 +83,5 @@ u16 tilemapOffset=0;
 
 u8 nb_Ennemis;
 u8 indexCreaEnnemis;
+
+//bool contactSol_OK=0;

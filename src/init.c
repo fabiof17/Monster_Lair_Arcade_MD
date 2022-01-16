@@ -413,16 +413,17 @@ void InitNiveau1()
 
     nb_Plateformes=0;
     indexCreaPlateformes=0;
-       
-    // Position initiale du sprite : 64 pixels
+    contactPlt_OK=0;
+          
+    // Position X initiale du sprite : 64 pixels
     positionX=FIX32(64L);
+    // Position Y initiale du sprite : 128 pixels
     positionY=FIX32(128L);
     movX = FIX32(0);
     movY = FIX32(0);
     maxSpeed_D = MAX_SPEED_D;
     maxSpeed_G = MAX_SPEED_G;
     maxSpeed_V = MAX_SPEED_V;
-    //maxSpeed_S = MAX_SPEED_S;
     
     //////////////////////////////////////////////
     //                CREATION  BG              //

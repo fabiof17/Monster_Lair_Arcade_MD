@@ -71,6 +71,7 @@ typedef struct
     u16 pt_Coll1_X;
     u16 pt_Coll1_Y;
     u16 pt_Coll2_X;
+    u16 pt_Coll2_Y;
     u8 CompteurFrameArret;      // Compteur pour passer à la prochaine FRAME ARRET
     u8 IndexFrameArret;         // Index de FRAME ARRET
     u8 CompteurFrameBloque;     // Compteur pour passer à la prochaine FRAME BLOQUÉ
@@ -139,12 +140,17 @@ typedef struct
     u8 declencheur;             // Déclencheur d'animation
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
+    u16 pt_Coll1_X;
+    u16 pt_Coll1_Y;
+    u16 pt_Coll2_X;
+    u16 pt_Coll2_Y;
     const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpritePlateforme_;
 
 extern SpritePlateforme_ Plateforme[5];
 extern u8 indexCreaPlateformes;
 extern u8 nb_Plateformes;
+extern bool contactPlt_OK;
 
 
 
@@ -159,5 +165,7 @@ extern u16 posTileY;
 
 extern u8 compteurTile; // 0 -> 7 //
 extern u16 tilemapOffset;
+
+//bool contactSol_OK;
 
 #endif // _MAIN
