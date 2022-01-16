@@ -105,7 +105,6 @@ void MainLoop()
             // Jeu en Pause ?
             if(PauseJeu==0)
             {
-                //Collision_Decor();
                 Phases_Joueur();
 
                 Scrolling_Niveau1();
@@ -115,7 +114,6 @@ void MainLoop()
 
                 MvtJoueur();
                 TilesJoueur();
-                //Collision_Ennemis();
 
             }
 
@@ -127,9 +125,10 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            //VDP_drawInt( contactPlt_OK , 2 , 36 , 8);
-            VDP_drawInt( Plateforme[0].pt_Coll1_X , 2 , 36 , 8);
-            VDP_drawInt( Joueur.pt_Coll1_X , 2 , 36 , 10);
+            //VDP_drawInt( Plateforme[0].pt_Coll1_X ,  3 , 12 , 8);
+            //VDP_drawInt( contactPlt_OK ,  3 , 17 , 8);
+
+            //VDP_drawInt( Joueur.pt_Coll1_X+64 ,  3 , 22 , 6);
 
             // Vblank
             SYS_doVBlankProcess();

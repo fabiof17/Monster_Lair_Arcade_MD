@@ -140,7 +140,9 @@ void MAJ_PtsCollision_Joueur()
     }
     ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+34;
 
-    ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+24;
+    ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+21;
+    ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
+
     posTileY=ptrJoueur->pt_Coll1_Y>>3;
 }
 
@@ -224,7 +226,7 @@ void Collision_Ennemis()
 void Collision_Plateformes()
 {
     u8 i;
-    
+    u16 value=JOY_readJoypad(JOY_1);
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
     // SI DES PLATEFORMES ONT ÉTÉ CRÉÉES //
@@ -244,26 +246,33 @@ void Collision_Plateformes()
                 //       COIN BAS GAUCHE DU JOUEUR        //
                 //----------------------------------------//
                 // Si pt collision X G joueur >= pt collision X G plateforme
-                if(ptrJoueur->pt_Coll1_X >= ptrPlateforme->pt_Coll1_X)
+                if(ptrJoueur->pt_Coll1_X+64 >= ptrPlateforme->pt_Coll1_X+64)
                 {
                     // Si pt collision X G joueur <= pt collision X D plateforme
-                    if((ptrJoueur->pt_Coll1_X <= ptrPlateforme->pt_Coll2_X))
+                    if((ptrJoueur->pt_Coll1_X+64 <= ptrPlateforme->pt_Coll2_X+64))
                     {
                         // Si pt collision Y G joueur >= pt collision Y G plateforme
                         if(ptrJoueur->pt_Coll1_Y >= ptrPlateforme->pt_Coll1_Y)
                         {
                             // Si pt collision Y G joueur >= pt collision Y G plateforme +7
-                            if(ptrJoueur->pt_Coll1_Y <= ptrPlateforme->pt_Coll1_Y+7)
+                            if(ptrJoueur->pt_Coll1_Y <= ptrPlateforme->pt_Coll1_Y+15)
                             {
-                                // Position du joueur = position de la plateforme-hauteur du sprite (32px)
+                                // Il y a contact
                                 contactPlt_OK=1;
 
+                                // Position du joueur = position de la plateforme-hauteur du sprite (32px)
                                 ptrJoueur->PosY = ptrPlateforme->PosY-32;
+
+                                // MAJ de la variable positionY
                                 positionY=intToFix32(ptrJoueur->PosY);
+
+                                // réinit de l'accélération verticale
                                 movY=0;
 
+                                // réinit de l'anim de saut 
+                                ptrJoueur->ptrPosition=&anim_SAUT[0];
 
-                                u16 value=JOY_readJoypad(JOY_1);
+
 
                                 if((value & BUTTON_DIR) == 0)
                                 {
@@ -282,26 +291,33 @@ void Collision_Plateformes()
                 //       COIN BAS DROITE DU JOUEUR        //
                 //----------------------------------------//
                 // Si pt collision X D joueur >= pt collision X G plateforme
-                else if(ptrJoueur->pt_Coll2_X >= ptrPlateforme->pt_Coll1_X)
+                else if(ptrJoueur->pt_Coll2_X+64 >= ptrPlateforme->pt_Coll1_X+64)
                 {
                     // Si pt collision X D joueur <= pt collision X D plateforme
-                    if((ptrJoueur->pt_Coll2_X <= ptrPlateforme->pt_Coll2_X))
+                    if((ptrJoueur->pt_Coll2_X+64 <= ptrPlateforme->pt_Coll2_X+64))
                     {
                         // Si pt collision Y D joueur >= pt collision Y G plateforme
                         if(ptrJoueur->pt_Coll2_Y >= ptrPlateforme->pt_Coll1_Y)
                         {
                             // Si pt collision Y D joueur >= pt collision Y G plateforme +7
-                            if(ptrJoueur->pt_Coll2_Y <= ptrPlateforme->pt_Coll1_Y+7)
+                            if(ptrJoueur->pt_Coll2_Y <= ptrPlateforme->pt_Coll1_Y+15)
                             {
-                                // Position du joueur = position de la plateforme-hauteur du sprite (32px)
+                                // Il y a contact
                                 contactPlt_OK=1;
 
+                                // Position du joueur = position de la plateforme-hauteur du sprite (32px)
                                 ptrJoueur->PosY = ptrPlateforme->PosY-32;
+
+                                // MAJ de la variable positionY
                                 positionY=intToFix32(ptrJoueur->PosY);
+
+                                // réinit de l'accélération verticale
                                 movY=0;
 
+                                // réinit de l'anim de saut 
+                                ptrJoueur->ptrPosition=&anim_SAUT[0];
 
-                                u16 value=JOY_readJoypad(JOY_1);
+
 
                                 if((value & BUTTON_DIR) == 0)
                                 {
@@ -1406,7 +1422,7 @@ void MvtJoueur()
                 // PHASE CHUTE
                 ptrJoueur->Phase=98;
             }
-
+        
             // SI LE JOUEUR NE CHUTE PAS
             else
             {
@@ -1416,7 +1432,7 @@ void MvtJoueur()
 
         }
 
-
+        ptrJoueur->ptrPosition=&anim_SAUT[0];
     }
 
 
@@ -1510,6 +1526,7 @@ void MvtJoueur()
                 positionY=intToFix32(ptrJoueur->PosY);
             }
         }
+        ptrJoueur->ptrPosition=&anim_SAUT[0];
     }
 
 
@@ -1610,16 +1627,6 @@ void MvtJoueur()
         //         POSITION Y       //
         //--------------------------//
 
-        // MAJ POINTS DE COLLISION DU JOUEUR //
-        MAJ_PtsCollision_Joueur();
-
-        //--------------------------------//
-        //     COLLISIONS PLATEFORMES     //
-        //--------------------------------//
-
-        Collision_Plateformes();
-
-
         //--------------------------------//
         //          ANIM DE SAUT          //
         //--------------------------------//
@@ -1632,31 +1639,40 @@ void MvtJoueur()
             ptrJoueur->ptrPosition = &anim_SAUT[MAX_ETAPES_SAUT];
         }
 
-        positionY = intToFix32(ptrJoueur->PosY);
-
         // MAJ POINTS DE COLLISION DU JOUEUR //
         MAJ_PtsCollision_Joueur();
 
+        //--------------------------------//
+        //     COLLISIONS PLATEFORMES     //
+        //--------------------------------//
 
-        // SI PAS DE CONTACT AVEC PLATEFORME
+        Collision_Plateformes();
+
+        positionY = intToFix32(ptrJoueur->PosY);
+
+        // SI PAS DE CONTACT AVEC PLATEFORME //
         if(contactPlt_OK == 0)
         {
-            //--------------------------//
-            //     COLLISIONS DECOR     //
-            //--------------------------//
-
-            // TEST COLLISION DECOR //
-            Collision_Decor();
-
-
-            // SI LE JOUEUR CHUTE
-            if(tileID_G==1 || tileID_D==1)
+            // SI LE JOUEUR EST EN PHASE DESCENDANTE DU SAUT //
+            if(ptrJoueur->ptrPosition > &anim_SAUT[21])
             {
-                // PHASE ARRET
-                ptrJoueur->Phase=0;
-                ptrJoueur->PosY = (posTileY<<3)-32;
-                ptrJoueur->ptrPosition=&anim_SAUT[0];
-                positionY = intToFix32(ptrJoueur->PosY);
+                //--------------------------//
+                //     COLLISIONS DECOR     //
+                //--------------------------//
+
+                // TEST COLLISION DECOR //
+                Collision_Decor();
+
+
+                // SI LE JOUEUR CHUTE //
+                if(tileID_G==1 || tileID_D==1)
+                {
+                    // PHASE ARRET //
+                    ptrJoueur->Phase=0;
+                    ptrJoueur->PosY = (posTileY<<3)-32;
+                    ptrJoueur->ptrPosition=&anim_SAUT[0];
+                    positionY = intToFix32(ptrJoueur->PosY);
+                }
             }
         }
     }
@@ -1801,7 +1817,7 @@ void MvtJoueur()
     //----------------------------------------------------//
     vitesseScrolling=1;
 
-     // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX' ***************************************************
+     // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
     positionX += movX;
 
     // SI LE JOUEUR ATTEINT LA GAUCHE DE L'ECRAN
@@ -1825,6 +1841,10 @@ void MvtJoueur()
     ptrJoueur->PosX=fix32ToInt(positionX);
 
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
+
+    SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7);
+    SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7);
+
 }
 
 

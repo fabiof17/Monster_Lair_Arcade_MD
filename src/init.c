@@ -9,6 +9,7 @@
 #include "sprites_JEU.h"
 #include "palettes.h"
 #include "routines.h"
+//#include "animation_sprites.h"
 
 ///////////////////////////////
 //        INIT SYSTEME       //
@@ -579,7 +580,21 @@ void InitNiveau1()
     ptrJoueur->CompteurFrameArret=0;
     ptrJoueur->IndexFrameArret=0;
 
-    //ptrJoueur->ptrPosition=&anim_SAUT[0];
+    ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
+    ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+34;
+    ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+21;
+    ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
+
+    posTileY=ptrJoueur->pt_Coll1_Y>>3;
+
+    /***********/
+    /* REPERES */
+    /***********/
+
+    sprite_repere_BG=SPR_addSprite(&tiles_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    sprite_repere_BD=SPR_addSprite(&tiles_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+
+
 
     /***********/
     /* ENNEMIS */
