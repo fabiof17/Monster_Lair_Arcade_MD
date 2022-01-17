@@ -5,12 +5,10 @@
 #define MAX_SPEED_D     FIX32(1L) // VITESSE MAX HORIZONTALE DROITE
 #define MAX_SPEED_G     FIX32(2L) // VITESSE MAX HORIZONTALE GAUCHE
 #define MAX_SPEED_V     FIX32(3L) // VITESSE MAX VERTICALE
-//#define MAX_SPEED_S     FIX32(1L) // VITESSE MAX SAUT
 
 #define ACCEL_D         FIX32(0.08)
 #define ACCEL_G         FIX32(0.16)
 #define ACCEL_B         FIX32(0.1)
-//#define ACCEL_S         FIX32(0.1)
 #define GLISSEMENT      FIX32(1L)
 
 #define MAX_POS_D       FIX32(228L)
@@ -83,6 +81,8 @@ typedef struct
     u8 IndexFrameBloque;        // Index de FRAME BLOQUÉ
     u8 CompteurFrameMarche;     // Compteur pour passer à la prochaine FRAME MARCHE
     u8 IndexFrameMarche;        // Index de FRAME MARCHE
+    u8 CompteurFrameTir;        // Compteur pour passer à la prochaine FRAME TIR
+    u8 IndexFrameTir;           // Index de FRAME TIR
     const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpriteJoueur_;
 

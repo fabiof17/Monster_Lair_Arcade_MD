@@ -11,6 +11,9 @@ SPRITE tiles_Sprite_PAUSE2 "sprites/global/tiles_PAUSE2.png" 1 1 BEST 0
 SPRITE tiles_Sprite_JOUEUR_H "sprites/global/tiles_JOUEUR_H.png" 4 4 NONE 0 NONE NONE
 SPRITE tiles_Sprite_JOUEUR_F "sprites/global/tiles_JOUEUR_F.png" 4 4 NONE 0 NONE NONE
 
+SPRITE tiles_Sprite_JOUEUR_H_HAUT "sprites/global/tiles_JOUEUR_H_HAUT.png" 4 2 NONE 0 NONE NONE
+SPRITE tiles_Sprite_JOUEUR_H_BAS "sprites/global/tiles_JOUEUR_H_BAS.png" 4 2 NONE 0 NONE NONE
+
 SPRITE tiles_repere_BG "sprites/global/repere_BG.png" 1 1 BEST 0
 SPRITE tiles_repere_BD "sprites/global/repere_BD.png" 1 1 BEST 0
 SPRITE tiles_repere_HG "sprites/global/repere_HG.png" 1 1 BEST 0

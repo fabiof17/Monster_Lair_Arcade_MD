@@ -49,6 +49,14 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
         }
     }
 
+    if (changed & state & BUTTON_B)
+    {
+        if(ptrJoueur->Phase==2)
+        {
+            ptrJoueur->Phase=4;
+        }
+    }
+
 }
 
 // Procédure principale //
@@ -89,7 +97,7 @@ void MainLoop()
 {
     InitNiveaux();
     
-    SYS_showFrameLoad(TRUE);
+    //SYS_showFrameLoad(TRUE);
 
     // Manette
     JOY_setEventHandler(joyEventCallback);
@@ -117,7 +125,6 @@ void MainLoop()
 
             }
 
-
             // MAJ sprites
             SPR_update();
 
@@ -125,24 +132,15 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            //VDP_drawInt( Plateforme[0].pt_Coll1_X ,  3 , 12 , 8);
-            //VDP_drawInt( contactPlt_OK ,  3 , 17 , 8);
-
-            //VDP_drawInt( Joueur.pt_Coll1_X+64 ,  3 , 22 , 6);
+            //VDP_drawInt( Joueur.CompteurFrameTir ,  3 , 12 , 8);
+            //VDP_drawInt( Joueur.IndexFrameTir ,  3 , 12 , 9);
 
             // Vblank
             SYS_doVBlankProcess();
 
             // CHANGEMENT DES PALETTES
             ChgtPalette_Niveau1();
-
-        }
-        
-        break;
-
-
+        }       
+        //break;
     }
-
-    //updateCamera();
-    //SYS_doVBlankProcess();
 }

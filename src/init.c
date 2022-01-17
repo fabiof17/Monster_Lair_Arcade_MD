@@ -580,6 +580,9 @@ void InitNiveau1()
     ptrJoueur->CompteurFrameArret=0;
     ptrJoueur->IndexFrameArret=0;
 
+    ptrJoueur->CompteurFrameTir=0;
+    ptrJoueur->IndexFrameTir=0;
+
     ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
     ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+34;
     ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+21;
@@ -591,8 +594,8 @@ void InitNiveau1()
     /* REPERES */
     /***********/
 
-    sprite_repere_BG=SPR_addSprite(&tiles_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
-    sprite_repere_BD=SPR_addSprite(&tiles_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    //sprite_repere_BG=SPR_addSprite(&tiles_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    //sprite_repere_BD=SPR_addSprite(&tiles_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
 
 
 
