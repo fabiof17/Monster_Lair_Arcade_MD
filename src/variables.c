@@ -61,14 +61,14 @@ fix32 movY;
 //----------------------------------------------------//
 //                      ENNEMIS                       //
 //----------------------------------------------------//
-SpriteEnnemi_ Ennemi[10];
+SpriteEnnemi_ Ennemi[MAX_ENNEMIS];
 const SpriteDefinition *adrResEnnemi[12];
 
 
 //----------------------------------------------------//
 //                    PLATEFORMES                     //
 //----------------------------------------------------//
-SpritePlateforme_ Plateforme[5];
+SpritePlateforme_ Plateforme[MAX_PLATEFORMES];
 u8 indexCreaPlateformes;
 u8 nb_Plateformes;
 bool contactPlt_OK=0;

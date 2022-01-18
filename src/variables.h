@@ -19,6 +19,9 @@
 #define MAX_ETAPES_POULPE2 55
 #define MAX_ETAPES_PF_V1   69
 
+#define MAX_ENNEMIS        11
+#define MAX_PLATEFORMES     7
+
 ///////////////////////////////////
 //		Variables principales    //
 ///////////////////////////////////
@@ -126,7 +129,7 @@ typedef struct
     const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpriteEnnemi_;
 
-extern SpriteEnnemi_ Ennemi[10];
+extern SpriteEnnemi_ Ennemi[MAX_ENNEMIS];
 extern const SpriteDefinition *adrResEnnemi[12];
 extern u8 indexCreaEnnemis;
 extern u8 nb_Ennemis;
@@ -152,7 +155,7 @@ typedef struct
     const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpritePlateforme_;
 
-extern SpritePlateforme_ Plateforme[5];
+extern SpritePlateforme_ Plateforme[MAX_PLATEFORMES];
 extern u8 indexCreaPlateformes;
 extern u8 nb_Plateformes;
 extern bool contactPlt_OK;

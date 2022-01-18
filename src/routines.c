@@ -181,7 +181,7 @@ void Collision_Ennemis()
         if(ptrJoueur->Phase != 99 && ptrJoueur->Phase != 100)
         {
             // ON CYCLE DANS LE TABLEAU DES ENNEMIS
-            for(i=0;i<11;i++)
+            for(i=0;i<MAX_ENNEMIS;i++)
             {
                 SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
 
@@ -235,7 +235,7 @@ void Collision_Plateformes()
         contactPlt_OK=0;
 
         // On scanne les emplacements vides
-        for(i=0;i<6;i++)
+        for(i=0;i<MAX_PLATEFORMES;i++)
         {
             SpritePlateforme_ *ptrPlateforme=&Plateforme[i];
 
@@ -361,8 +361,15 @@ void CreaSprites_Niveau1()
         // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
         if (-CamPosX>>3 == tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis])
         {
+            #ifndef RELEASE
+            if(indexCreaEnnemis * sizeof(tilemapCreaEnnemis_Niveau1[0][0]) >= sizeof(tilemapCreaEnnemis_Niveau1))
+            {
+                SYS_die("Je viens de péter la limite de tilemapCreaEnnemis_Niveau1");
+            }
+            #endif
+
             // On scanne les emplacements vides
-            for(i=0;i<11;i++)
+            for(i=0;i<MAX_ENNEMIS;i++)
             {
                 SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
 
@@ -438,7 +445,7 @@ void CreaSprites_Niveau1()
         if (-CamPosX>>3 == tilemapCreaPlateformes_Niveau1[0][indexCreaPlateformes])
         {
             // On scanne les emplacements vides
-            for(i=0;i<6;i++)
+            for(i=0;i<MAX_PLATEFORMES;i++)
             {
                 SpritePlateforme_ *ptrPlateforme=&Plateforme[i];
 
@@ -490,7 +497,7 @@ void MvtSprites_Niveau1()
         //   ENNEMIS   //
         /////////////////
 
-        for(i=0;i<11;i++)
+        for(i=0;i<MAX_ENNEMIS;i++)
         {
             SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
 
@@ -515,13 +522,13 @@ void MvtSprites_Niveau1()
                         // MAJ des tiles toutes les 8 images (0 à 7)
                         if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame-=8;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 12 (13 étapes)
                             if(ptrEnnemi->IndexFrame>12)
                             {
-                                ptrEnnemi->IndexFrame-=13;
+                                ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
@@ -567,13 +574,13 @@ void MvtSprites_Niveau1()
                         // MAJ des tiles toutes les 6 images (0 à 5)
                         if(ptrEnnemi->CompteurFrame>5)
                         {
-                            ptrEnnemi->CompteurFrame-=6;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
                             if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame-=12;
+                                ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
@@ -619,13 +626,13 @@ void MvtSprites_Niveau1()
                         // MAJ des tiles toutes les 6 images (0 à 5)
                         if(ptrEnnemi->CompteurFrame>5)
                         {
-                            ptrEnnemi->CompteurFrame-=6;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
                             if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame-=12;
+                                ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
@@ -695,13 +702,13 @@ void MvtSprites_Niveau1()
                         // MAJ des tiles toutes les 8 images (0 à 7)
                         if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame-=8;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 12 (13 étapes)
                             if(ptrEnnemi->IndexFrame>12)
                             {
-                                ptrEnnemi->IndexFrame-=13;
+                                ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
@@ -747,13 +754,13 @@ void MvtSprites_Niveau1()
                         // MAJ des tiles toutes les 6 images (0 à 5)
                         if(ptrEnnemi->CompteurFrame>5)
                         {
-                            ptrEnnemi->CompteurFrame-=6;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
                             if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame-=12;
+                                ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
@@ -785,13 +792,13 @@ void MvtSprites_Niveau1()
                         // MAJ des tiles toutes les 8 images (0 à 7)
                         if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame-=8;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 12 (13 étapes)
                             if(ptrEnnemi->IndexFrame>12)
                             {
-                                ptrEnnemi->IndexFrame-=13;
+                                ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
@@ -984,13 +991,13 @@ void MvtSprites_Niveau1()
                         // MAJ des tiles toutes les 8 images (0 à 7)
                         if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame-=8;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
                             if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame-=12;
+                                ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
@@ -1037,13 +1044,13 @@ void MvtSprites_Niveau1()
                         // MAJ des tiles toutes les 8 images (0 à 7)
                         if(ptrEnnemi->CompteurFrame>7)
                         {
-                            ptrEnnemi->CompteurFrame-=8;
+                            ptrEnnemi->CompteurFrame=0;
                             ptrEnnemi->IndexFrame+=1;
 
                             // Cycle de FRAME de 0 à 11 (12 étapes)
                             if(ptrEnnemi->IndexFrame>11)
                             {
-                                ptrEnnemi->IndexFrame-=12;
+                                ptrEnnemi->IndexFrame=0;
                             }
 
                             SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
@@ -1068,7 +1075,7 @@ void MvtSprites_Niveau1()
         //   PLATEFORMES   //
         /////////////////////
 
-        for(i=0;i<7;i++)
+        for(i=0;i<MAX_PLATEFORMES;i++)
         {
             SpritePlateforme_ *ptrPlateforme=&Plateforme[i];
 
@@ -2177,7 +2184,7 @@ void TilesSautTir()
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
     SPR_setAnim(ptrJoueur->SpriteJ,4);
-    //SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameTir);
+    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameTir);
     
     
     if(ptrJoueur->Axe==0)
@@ -2197,7 +2204,7 @@ void TilesSautTir()
     if(ptrJoueur->CompteurFrameTir>7)
     {
         ptrJoueur->CompteurFrameTir=0;
-        //ptrJoueur->IndexFrameTir++;
+        ptrJoueur->IndexFrameTir++;
     
         // Cycle de FRAME de 0 à 2 (3 étapes)
         if(ptrJoueur->IndexFrameTir>2)
