@@ -246,10 +246,10 @@ void Collision_Plateformes()
                 //       COIN BAS GAUCHE DU JOUEUR        //
                 //----------------------------------------//
                 // Si pt collision X G joueur >= pt collision X G plateforme
-                if(ptrJoueur->pt_Coll1_X+64 >= ptrPlateforme->pt_Coll1_X+64)
+                if(ptrJoueur->pt_Coll1_X >= ptrPlateforme->pt_Coll1_X)
                 {
                     // Si pt collision X G joueur <= pt collision X D plateforme
-                    if((ptrJoueur->pt_Coll1_X+64 <= ptrPlateforme->pt_Coll2_X+64))
+                    if((ptrJoueur->pt_Coll1_X <= ptrPlateforme->pt_Coll2_X))
                     {
                         // Si pt collision Y G joueur >= pt collision Y G plateforme
                         if(ptrJoueur->pt_Coll1_Y >= ptrPlateforme->pt_Coll1_Y)
@@ -291,10 +291,10 @@ void Collision_Plateformes()
                 //       COIN BAS DROITE DU JOUEUR        //
                 //----------------------------------------//
                 // Si pt collision X D joueur >= pt collision X G plateforme
-                else if(ptrJoueur->pt_Coll2_X+64 >= ptrPlateforme->pt_Coll1_X+64)
+                else if(ptrJoueur->pt_Coll2_X >= ptrPlateforme->pt_Coll1_X)
                 {
                     // Si pt collision X D joueur <= pt collision X D plateforme
-                    if((ptrJoueur->pt_Coll2_X+64 <= ptrPlateforme->pt_Coll2_X+64))
+                    if((ptrJoueur->pt_Coll2_X <= ptrPlateforme->pt_Coll2_X))
                     {
                         // Si pt collision Y D joueur >= pt collision Y G plateforme
                         if(ptrJoueur->pt_Coll2_Y >= ptrPlateforme->pt_Coll1_Y)
@@ -361,12 +361,12 @@ void CreaSprites_Niveau1()
         // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
         if (-CamPosX>>3 == tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis])
         {
-            #ifndef RELEASE
+            /*#ifndef RELEASE
             if(indexCreaEnnemis * sizeof(tilemapCreaEnnemis_Niveau1[0][0]) >= sizeof(tilemapCreaEnnemis_Niveau1))
             {
                 SYS_die("Je viens de péter la limite de tilemapCreaEnnemis_Niveau1");
             }
-            #endif
+            #endif*/
 
             // On scanne les emplacements vides
             for(i=0;i<MAX_ENNEMIS;i++)
