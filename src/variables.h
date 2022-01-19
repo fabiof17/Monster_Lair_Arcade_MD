@@ -2,25 +2,33 @@
 #define _VARIABLES_H
 
 // CONSTANTES //
-#define MAX_SPEED_D     FIX32(1L) // VITESSE MAX HORIZONTALE DROITE
-#define MAX_SPEED_G     FIX32(2L) // VITESSE MAX HORIZONTALE GAUCHE
-#define MAX_SPEED_V     FIX32(3L) // VITESSE MAX VERTICALE
+#define MAX_SPEED_D     FIX32(1L)   // VITESSE MAX HORIZONTALE DROITE
+#define MAX_SPEED_G     FIX32(2L)   // VITESSE MAX HORIZONTALE GAUCHE
+#define MAX_SPEED_V     FIX32(3L)   // VITESSE MAX VERTICALE
 
-#define ACCEL_D         FIX32(0.08)
-#define ACCEL_G         FIX32(0.16)
-#define ACCEL_B         FIX32(0.1)
+#define ACCEL_D         FIX32(0.08)  // ACCELERATION DROITE
+#define ACCEL_G         FIX32(0.16)  // ACCELERATION GAUCHE
+#define ACCEL_B         FIX32(0.1)   // ACCELERATION BAS (CHUTE)
 #define GLISSEMENT      FIX32(1L)
 
 #define MAX_POS_D       FIX32(228L)
 #define MAX_POS_G       FIX32(11L)
 
-#define MAX_ETAPES_SAUT    40
-#define MAX_ETAPES_POULPE1 50
-#define MAX_ETAPES_POULPE2 55
-#define MAX_ETAPES_PF_V1   69
+#define MAX_ETAPES_SAUT     40
+#define MAX_ETAPES_POULPE1  50
+#define MAX_ETAPES_POULPE2  55
+#define MAX_ETAPES_PF_V1    69
 
-#define MAX_ENNEMIS        11
-#define MAX_PLATEFORMES     7
+#define MAX_ENNEMIS         11
+#define MAX_PLATEFORMES      7
+
+#define ARRET                0
+#define MARCHE               1
+#define SAUT                 2
+#define TIR                  3
+#define SAUT_TIR             4
+#define CHUTE                5
+
 
 ///////////////////////////////////
 //		Variables principales    //

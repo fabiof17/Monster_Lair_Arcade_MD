@@ -2,11 +2,11 @@
 #include <genesis.h>
 #include <dma.h>
 #include <main.h>
-#include <init.h>
-#include <variables.h>
-#include <palettes.h>
-#include <routines.h>
-#include <sprites_JEU.h>
+#include "init.h"
+#include "variables.h"
+#include "palettes.h"
+#include "routines.h"
+#include "sprites_JEU.h"
 
 void joyEventCallback(u16 joy, u16 changed, u16 state)
 {
@@ -43,17 +43,27 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
     // SAUT //
     if (changed & state & BUTTON_C)
     {
-        if(ptrJoueur->Phase==0 || ptrJoueur->Phase==1)
+        if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
         {
-            ptrJoueur->Phase=2;
+            ptrJoueur->Phase=SAUT;
         }
     }
 
+    // TIR //
     if (changed & state & BUTTON_B)
     {
-        if(ptrJoueur->Phase==2)
+        // SI LE JOUEUR SAUTE //
+        if(ptrJoueur->Phase==SAUT)
         {
-            ptrJoueur->Phase=4;
+            // SAUT + TIR
+            ptrJoueur->Phase=SAUT_TIR;
+        }
+
+        // SI JOUEUR ARRET OU MARCHE //
+        else if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
+        {
+            // MARCHE + TIR
+            ptrJoueur->Phase=TIR;
         }
     }
 
@@ -132,8 +142,7 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            //VDP_drawInt( Joueur.CompteurFrameTir ,  3 , 12 , 8);
-            //VDP_drawInt( Joueur.IndexFrameTir ,  3 , 12 , 9);
+            //VDP_drawInt( Joueur.Phase ,  2 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();

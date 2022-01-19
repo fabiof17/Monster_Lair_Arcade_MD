@@ -276,11 +276,17 @@ void Collision_Plateformes()
 
                                 if((value & BUTTON_DIR) == 0)
                                 {
-                                    ptrJoueur->Phase=0;
+                                    if(ptrJoueur->Phase!=TIR)
+                                    {
+                                        ptrJoueur->Phase=ARRET;
+                                    }
                                 }
                                 else if(value & BUTTON_RIGHT || value & BUTTON_LEFT)
                                 {
-                                    ptrJoueur->Phase=1;
+                                    if(ptrJoueur->Phase!=TIR)
+                                    {
+                                        ptrJoueur->Phase=MARCHE;
+                                    }
                                 }
                                 return;
                             }
@@ -321,11 +327,11 @@ void Collision_Plateformes()
 
                                 if((value & BUTTON_DIR) == 0)
                                 {
-                                    ptrJoueur->Phase=0;
+                                    ptrJoueur->Phase=ARRET;
                                 }
                                 else if(value & BUTTON_RIGHT || value & BUTTON_LEFT)
                                 {
-                                    ptrJoueur->Phase=1;
+                                    ptrJoueur->Phase=MARCHE;
                                 }
                                 return;
                             }
@@ -380,7 +386,7 @@ void CreaSprites_Niveau1()
                     ptrEnnemi->ID=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
 
                     ptrEnnemi->Init=1;
-                    ptrEnnemi->Phase=1;
+                    ptrEnnemi->Phase=MARCHE;
                     ptrEnnemi->PointsVie=1;
 
                     ptrEnnemi->CompteurPosition=0;
@@ -1307,9 +1313,9 @@ void Phases_Joueur()
     if(value==0)
     {
         // Si le joueur ne tombe pas
-        if(ptrJoueur->Phase!=2 && ptrJoueur->Phase!=3 && ptrJoueur->Phase!=4 && ptrJoueur->Phase!=98)
+        if(ptrJoueur->Phase!=SAUT && ptrJoueur->Phase!=TIR && ptrJoueur->Phase!=SAUT_TIR && ptrJoueur->Phase!=CHUTE)
         {
-            ptrJoueur->Phase=0;
+            ptrJoueur->Phase=ARRET;
         }
         return;
     }
@@ -1320,13 +1326,13 @@ void Phases_Joueur()
     else if(value & BUTTON_RIGHT)
     {
         // Si joueur à l'arrêt
-        if(ptrJoueur->Phase==0)
+        if(ptrJoueur->Phase==ARRET)
         {
             ptrJoueur->Axe=0;
-            ptrJoueur->Phase=1;
+            ptrJoueur->Phase=MARCHE;
         }
         // Si le joueur marche vers la gauche
-        else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==1)
+        else if(ptrJoueur->Phase==MARCHE && ptrJoueur->Axe==1)
         {
             ptrJoueur->Axe=0;
         }
@@ -1339,13 +1345,13 @@ void Phases_Joueur()
     else if(value & BUTTON_LEFT)
     {
         // Si joueur à l'arrêt
-        if(ptrJoueur->Phase==0)
+        if(ptrJoueur->Phase==ARRET)
         {
             ptrJoueur->Axe=1;
-            ptrJoueur->Phase=1;
+            ptrJoueur->Phase=MARCHE;
         }
         // Si le joueur marche vers la droite
-        else if(ptrJoueur->Phase==1 && ptrJoueur->Axe==0)
+        else if(ptrJoueur->Phase==MARCHE && ptrJoueur->Axe==0)
         {
             ptrJoueur->Axe=1;
         }
@@ -1365,7 +1371,7 @@ void MvtJoueur()
     //                        ARRET                       //
     //----------------------------------------------------//
     //----------------------------------------------------//
-    if(ptrJoueur->Phase==0)
+    if(ptrJoueur->Phase==ARRET)
     {
         //--------------------------//
         //         POSITION X       //
@@ -1430,7 +1436,7 @@ void MvtJoueur()
             if(tileID_G==0 && tileID_D==0)
             {
                 // PHASE CHUTE
-                ptrJoueur->Phase=98;
+                ptrJoueur->Phase=CHUTE;
             }
         
             // SI LE JOUEUR NE CHUTE PAS
@@ -1451,7 +1457,7 @@ void MvtJoueur()
     //                       MARCHE                       //
     //----------------------------------------------------//
     //----------------------------------------------------//
-    else if(ptrJoueur->Phase==1)
+    else if(ptrJoueur->Phase==MARCHE)
     {
         //--------------------------//
         //         POSITION X       //
@@ -1535,7 +1541,7 @@ void MvtJoueur()
             if(tileID_G==0 && tileID_D==0)
             {
                 // PHASE CHUTE
-                ptrJoueur->Phase=98;
+                ptrJoueur->Phase=CHUTE;
                 return;
             }
 
@@ -1555,7 +1561,7 @@ void MvtJoueur()
     //                        SAUT                        //
     //----------------------------------------------------//
     //----------------------------------------------------//
-    else if(ptrJoueur->Phase==2)
+    else if(ptrJoueur->Phase==SAUT)
     {
         //--------------------------//
         //         POSITION X       //
@@ -1688,7 +1694,7 @@ void MvtJoueur()
                 if(tileID_G==1 || tileID_D==1)
                 {
                     // PHASE ARRET //
-                    ptrJoueur->Phase=0;
+                    ptrJoueur->Phase=ARRET;
                     ptrJoueur->PosY = (posTileY<<3)-32;
                     ptrJoueur->ptrPosition=&anim_SAUT[0];
                     positionY = intToFix32(ptrJoueur->PosY);
@@ -1702,10 +1708,148 @@ void MvtJoueur()
 
     //----------------------------------------------------//
     //----------------------------------------------------//
+    //                         TIR                        //
+    //----------------------------------------------------//
+    //----------------------------------------------------//
+    else if(ptrJoueur->Phase==TIR)
+    {
+        //--------------------------//
+        //         POSITION X       //
+        //--------------------------//
+
+        /////////////////////////////
+        //      BOUTON DROITE      //
+        /////////////////////////////
+        if(value & BUTTON_RIGHT)
+        {
+            ptrJoueur->Axe=0;
+
+            // ON AJOUTE 'ACCEL_D' A 'movX'
+            movX += ACCEL_D;
+
+            // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+            if (movX >= maxSpeed_D)
+            {
+                movX = maxSpeed_D;
+            }
+        }
+
+        /////////////////////////////
+        //      BOUTON GAUCHE      //
+        /////////////////////////////
+        else if(value & BUTTON_LEFT)
+        {
+            ptrJoueur->Axe=1;
+
+            movX -= ACCEL_G;
+
+            if(CamPosX!=-4336)
+            {
+                if(movX >= FIX32(-1L))
+                {
+                    positionX -= GLISSEMENT;
+                }
+            }
+
+            // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+            if(movX <= -maxSpeed_G)
+            {
+                movX = -maxSpeed_G;
+            }
+        }
+
+        //////////////////////////////////////////
+        //       AUCUN BOUTON DE DIRECTION      //
+        //////////////////////////////////////////
+
+        else if((value & BUTTON_DIR) == 0)
+        {
+            //--------------------------//
+            //         POSITION X       //
+            //--------------------------//
+
+            // SI ON N'EST PAS A LA FIN DU NIVEAU
+            if(CamPosX!=-4336)
+            {
+                if(movX>= FIX32(-1L))
+                {
+                    positionX -= GLISSEMENT;
+                }
+            }
+
+            // JOUEUR ORIENTÉ VERS LA DROITE
+            if(ptrJoueur->Axe==0)
+            {
+                movX -= ACCEL_D;
+                if(movX < FIX32(0))
+                {
+                    movX=0;
+                }
+            }
+
+            // JOUEUR ORIENTÉ VERS LA GAUCHE
+            else if(ptrJoueur->Axe==1)
+            {
+                movX += ACCEL_G;
+                if(movX > FIX32(0))
+                {
+                    movX=0;
+                }
+            }
+        }
+
+
+        //--------------------------//
+        //         POSITION Y       //
+        //--------------------------//
+
+        // MAJ POINTS DE COLLISION DU JOUEUR //
+        MAJ_PtsCollision_Joueur();
+
+
+        //--------------------------------//
+        //     COLLISIONS PLATEFORMES     //
+        //--------------------------------//
+
+        Collision_Plateformes();
+
+
+        // SI PAS DE CONTACT AVEC PLATEFORME
+        if(contactPlt_OK == 0)
+        {
+            //--------------------------//
+            //     COLLISIONS DECOR     //
+            //--------------------------//
+
+            // TEST COLLISION DECOR //
+            Collision_Decor();
+
+
+            // SI LE JOUEUR CHUTE
+            if(tileID_G==0 && tileID_D==0)
+            {
+                // PHASE CHUTE
+                ptrJoueur->Phase=CHUTE;
+                return;
+            }
+
+            // SI LE JOUEUR NE CHUTE PAS
+            else if(tileID_G==1 || tileID_D==1)
+            {
+                ptrJoueur->PosY = (posTileY<<3)-32;
+                positionY=intToFix32(ptrJoueur->PosY);
+            }
+        }
+        //ptrJoueur->ptrPosition=&anim_SAUT[0];
+    }
+
+
+    //----------------------------------------------------//
+    //----------------------------------------------------//
     //                    SAUT + TIR                      //
     //----------------------------------------------------//
     //----------------------------------------------------//
-    else if(ptrJoueur->Phase==4)
+    else if(ptrJoueur->Phase==SAUT_TIR)
     {
         //--------------------------//
         //         POSITION X       //
@@ -1838,7 +1982,15 @@ void MvtJoueur()
                 if(tileID_G==1 || tileID_D==1)
                 {
                     // PHASE ARRET //
-                    ptrJoueur->Phase=0;
+                    if(ptrJoueur->Phase==SAUT_TIR)
+                    {
+                        ptrJoueur->Phase=TIR;
+                    }
+                    else
+                    {
+                        ptrJoueur->Phase=ARRET;
+                    }
+                    
                     ptrJoueur->PosY=(posTileY<<3)-32;
                     ptrJoueur->ptrPosition=&anim_SAUT[0];
                     positionY=intToFix32(ptrJoueur->PosY);
@@ -1853,7 +2005,7 @@ void MvtJoueur()
     //                       CHUTE                        //
     //----------------------------------------------------//
     //----------------------------------------------------//
-    else if(ptrJoueur->Phase==98)
+    else if(ptrJoueur->Phase==CHUTE)
     {
         //--------------------------//
         //         POSITION X       //
@@ -1968,7 +2120,7 @@ void MvtJoueur()
             if(tileID_G==1 || tileID_D==1)
             {
                 // PHASE CHUTE
-                ptrJoueur->Phase=0;
+                ptrJoueur->Phase=ARRET;
                 ptrJoueur->ptrPosition=&anim_SAUT[0];
             }
 
@@ -2179,6 +2331,44 @@ void TilesSaut()
     }
 }
 
+void TilesTir()
+{
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    SPR_setAnim(ptrJoueur->SpriteJ,4);
+    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameTir);
+    
+    
+    if(ptrJoueur->Axe==0)
+    {
+        SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+    }
+    else
+    {
+        SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
+    }
+    
+    
+    // Anim des tiles
+    ptrJoueur->CompteurFrameTir+=1;
+
+    // MAJ des tiles toutes les 8 images (0 à 7)
+    if(ptrJoueur->CompteurFrameTir>7)
+    {
+        ptrJoueur->CompteurFrameTir=0;
+        ptrJoueur->IndexFrameTir++;
+    
+        // Cycle de FRAME de 0 à 2 (3 étapes)
+        if(ptrJoueur->IndexFrameTir>2)
+        {
+            ptrJoueur->IndexFrameTir=0;
+            ptrJoueur->Phase=ARRET;
+            return;
+
+        }
+    }
+}
+
 void TilesSautTir()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
@@ -2209,8 +2399,8 @@ void TilesSautTir()
         // Cycle de FRAME de 0 à 2 (3 étapes)
         if(ptrJoueur->IndexFrameTir>2)
         {
-            ptrJoueur->IndexFrameTir=2;
-            ptrJoueur->Phase=2;
+            ptrJoueur->IndexFrameTir=0;
+            ptrJoueur->Phase=SAUT;
         }
     }
 }
@@ -2222,7 +2412,7 @@ void TilesJoueur()
     ///////////////
     //   ARRET   //
     ///////////////
-    if(ptrJoueur->Phase==0)
+    if(ptrJoueur->Phase==ARRET)
     {
         // BLOQUE
         if(ptrJoueur->PosX==-11)
@@ -2258,7 +2448,7 @@ void TilesJoueur()
     ////////////////
     //   MARCHE   //
     ////////////////
-    else if(ptrJoueur->Phase==1)
+    else if(ptrJoueur->Phase==MARCHE)
     {
         // SI JOUEUR VA VERS LA DROITE
         if(ptrJoueur->Axe==0)
@@ -2294,16 +2484,25 @@ void TilesJoueur()
     ////////////////
     //     SAUT   //
     ////////////////
-    else if(ptrJoueur->Phase==2)
+    else if(ptrJoueur->Phase==SAUT)
     {
         TilesSaut();
         return;
     }
 
     //////////////////////
-    //     SAUT + TIR   //
+    //        TIR       //
     //////////////////////
-    else if(ptrJoueur->Phase==4)
+    else if(ptrJoueur->Phase==TIR)
+    {
+        TilesTir();
+        return;
+    }
+
+    ///////////////////////
+    //     SAUT + TIR    //
+    ///////////////////////
+    else if(ptrJoueur->Phase==SAUT_TIR)
     {
         TilesSautTir();
         return;
@@ -2312,7 +2511,7 @@ void TilesJoueur()
     ////////////////
     //    CHUTE   //
     ////////////////
-    else if(ptrJoueur->Phase==98)
+    else if(ptrJoueur->Phase==CHUTE)
     {
         TilesSaut();
         return;
