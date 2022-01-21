@@ -210,8 +210,9 @@ void Collision_Ennemis()
                                 //
                                 if(ptrJoueur->PosY+16 <= ptrEnnemi->PosY+24)
                                 {
-                                    //VDP_drawInt( 1 , 3 , 36 , 10);
-                                    break;
+                                    ptrJoueur->Phase=TOUCHE;
+                                    ptrJoueur->ptrPosition=&anim_TOUCHE[0];
+                                    return;
 
                                 }
                             }
@@ -269,7 +270,7 @@ void Collision_Plateformes()
                                 // réinit de l'accélération verticale
                                 movY=0;
 
-                                // réinit de l'anim de saut 
+                                // réinit de l'anim de saut
                                 ptrJoueur->ptrPosition=&anim_SAUT[0];
 
 
@@ -320,7 +321,7 @@ void Collision_Plateformes()
                                 // réinit de l'accélération verticale
                                 movY=0;
 
-                                // réinit de l'anim de saut 
+                                // réinit de l'anim de saut
                                 ptrJoueur->ptrPosition=&anim_SAUT[0];
 
 
@@ -1313,7 +1314,7 @@ void Phases_Joueur()
     if(value==0)
     {
         // Si le joueur ne tombe pas
-        if(ptrJoueur->Phase!=SAUT && ptrJoueur->Phase!=TIR && ptrJoueur->Phase!=SAUT_TIR && ptrJoueur->Phase!=CHUTE)
+        if(ptrJoueur->Phase!=SAUT && ptrJoueur->Phase!=TIR && ptrJoueur->Phase!=SAUT_TIR && ptrJoueur->Phase!=CHUTE && ptrJoueur->Phase!=TOUCHE && ptrJoueur->Phase!=APPARITION)
         {
             ptrJoueur->Phase=ARRET;
         }
@@ -1363,7 +1364,9 @@ void MvtJoueur()
 {
     // Gestion manette
 	u16 value=JOY_readJoypad(JOY_1);
+
     SpriteJoueur_ *ptrJoueur=&Joueur;
+    SpriteDragon_ *ptrDragon=&Dragon;
 
 
     //----------------------------------------------------//
@@ -1438,7 +1441,7 @@ void MvtJoueur()
                 // PHASE CHUTE
                 ptrJoueur->Phase=CHUTE;
             }
-        
+
             // SI LE JOUEUR NE CHUTE PAS
             else
             {
@@ -1553,6 +1556,9 @@ void MvtJoueur()
             }
         }
         ptrJoueur->ptrPosition=&anim_SAUT[0];
+
+
+        Collision_Ennemis();
     }
 
 
@@ -1990,7 +1996,7 @@ void MvtJoueur()
                     {
                         ptrJoueur->Phase=ARRET;
                     }
-                    
+
                     ptrJoueur->PosY=(posTileY<<3)-32;
                     ptrJoueur->ptrPosition=&anim_SAUT[0];
                     positionY=intToFix32(ptrJoueur->PosY);
@@ -2133,6 +2139,143 @@ void MvtJoueur()
     }
 
 
+    //----------------------------------------------------//
+    //----------------------------------------------------//
+    //                       TOUCHE                       //
+    //----------------------------------------------------//
+    //----------------------------------------------------//
+    else if(ptrJoueur->Phase==TOUCHE)
+    {
+        //--------------------------//
+        //         POSITION X       //
+        //--------------------------//
+
+        // SI ON N'EST PAS A LA FIN DU NIVEAU
+        if(CamPosX!=-4336)
+        {
+            if(movX>= FIX32(-1L))
+            {
+                positionX -= GLISSEMENT;
+            }
+        }
+
+        // JOUEUR ORIENTÉ VERS LA DROITE
+        if(ptrJoueur->Axe==0)
+        {
+            movX -= ACCEL_D;
+            if(movX < FIX32(0))
+            {
+                movX=0;
+            }
+        }
+
+        // JOUEUR ORIENTÉ VERS LA GAUCHE
+        else if(ptrJoueur->Axe==1)
+        {
+            movX += ACCEL_G;
+            if(movX > FIX32(0))
+            {
+                movX=0;
+            }
+        }
+
+        //--------------------------//
+        //         POSITION Y       //
+        //--------------------------//
+
+        //--------------------------------//
+        //          ANIM DE SAUT          //
+        //--------------------------------//
+
+        ptrJoueur->PosY += *(ptrJoueur->ptrPosition);
+        ptrJoueur->ptrPosition++;
+
+        if(ptrJoueur->ptrPosition > &anim_TOUCHE[MAX_ETAPES_TOUCHE])
+        {
+            ptrJoueur->ptrPosition = &anim_TOUCHE[MAX_ETAPES_TOUCHE];
+        }
+
+        // JOUEUR TOUCHE BAS DE L'ÉCRAN //
+        if(ptrJoueur->PosY>192)
+        {
+            ptrJoueur->Phase=APPARITION;
+            ptrJoueur->Axe=0;
+            ptrJoueur->PosX=63;
+            ptrJoueur->PosY=16;
+            positionX=intToFix32(63);
+            positionY=intToFix32(16);
+            movX=0;
+
+            PAL_setPalette(PAL0, palette_DRAGON.data, DMA);
+        }
+
+    }
+
+
+    //----------------------------------------------------//
+    //----------------------------------------------------//
+    //                     APPARITION                     //
+    //----------------------------------------------------//
+    //----------------------------------------------------//
+    else if(ptrJoueur->Phase==APPARITION)
+    {
+        // DESCENTE //
+        if(ptrJoueur->compteurApparition<56)
+        {
+            ptrJoueur->PosY+=1;
+            positionY=intToFix32(ptrJoueur->PosY);
+
+            ptrDragon->PosX=ptrJoueur->PosX;
+            ptrDragon->PosY=ptrJoueur->PosY-25;
+        }
+
+        // ATTENTE DE LARGAGE //
+        else if(ptrJoueur->compteurApparition>55)
+        {
+            //--------------------------//
+            //         POSITION X       //
+            //--------------------------//
+
+            /////////////////////////////
+            //      BOUTON DROITE      //
+            /////////////////////////////
+            if(value & BUTTON_RIGHT)
+            {
+                ptrJoueur->PosX+=1;
+
+                // LIMITE DROITE ECRAN //
+                if(ptrJoueur->PosX>159)
+                {
+                    ptrJoueur->PosX=159;
+                }
+
+                positionX=intToFix32(ptrJoueur->PosX);
+                ptrDragon->PosX=ptrJoueur->PosX;
+            }
+
+            /////////////////////////////
+            //      BOUTON GAUCHE      //
+            /////////////////////////////
+            else if(value & BUTTON_LEFT)
+            {
+                ptrJoueur->PosX-=1;
+
+                // LIMITE GAUCHE ECRAN //
+                if(ptrJoueur->PosX<31)
+                {
+                    ptrJoueur->PosX=31;
+                }
+
+                positionX=intToFix32(ptrJoueur->PosX);
+                ptrDragon->PosX=ptrJoueur->PosX;
+            }
+
+
+        }
+
+        ptrJoueur->compteurApparition++;
+    }
+
 
     //----------------------------------------------------//
     //             NOUVELLE POSITION DU SPRITE            //
@@ -2162,7 +2305,10 @@ void MvtJoueur()
     // 'positionX' EST LA NOUVELLE POSITION X DU SPRITE
     ptrJoueur->PosX=fix32ToInt(positionX);
 
+    // JOUEUR //
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
+    // DRAGON
+    SPR_setPosition(ptrDragon->SpriteD, ptrDragon->PosX, ptrDragon->PosY);
 
     //SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7);
     //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7);
@@ -2204,7 +2350,7 @@ void TilesBloque()
         {
             ptrJoueur->IndexFrameBloque=0;
         }
-    }    
+    }
 }
 
 void TilesArret()
@@ -2238,7 +2384,7 @@ void TilesArret()
         {
             ptrJoueur->IndexFrameArret=0;
         }
-    }   
+    }
 }
 
 void TilesMarche()
@@ -2281,7 +2427,7 @@ void TilesMarche()
         {
             ptrJoueur->IndexFrameMarche=0;
         }
-    }  
+    }
 }
 
 void TilesDerapage()
@@ -2336,9 +2482,17 @@ void TilesTir()
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
     SPR_setAnim(ptrJoueur->SpriteJ,4);
-    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameTir);
-    
-    
+    SPR_setFrame(ptrJoueur->SpriteJ,1);
+
+    ptrJoueur->CompteurFrameBloque=0;
+    ptrJoueur->IndexFrameBloque=0;
+
+    ptrJoueur->CompteurFrameArret=0;
+    ptrJoueur->IndexFrameArret=0;
+
+    ptrJoueur->CompteurFrameMarche=0;
+    ptrJoueur->IndexFrameMarche=0;
+
     if(ptrJoueur->Axe==0)
     {
         SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
@@ -2347,8 +2501,8 @@ void TilesTir()
     {
         SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
     }
-    
-    
+
+
     // Anim des tiles
     ptrJoueur->CompteurFrameTir+=1;
 
@@ -2356,16 +2510,8 @@ void TilesTir()
     if(ptrJoueur->CompteurFrameTir>7)
     {
         ptrJoueur->CompteurFrameTir=0;
-        ptrJoueur->IndexFrameTir++;
-    
-        // Cycle de FRAME de 0 à 2 (3 étapes)
-        if(ptrJoueur->IndexFrameTir>2)
-        {
-            ptrJoueur->IndexFrameTir=0;
-            ptrJoueur->Phase=ARRET;
-            return;
-
-        }
+        ptrJoueur->Phase=ARRET;
+        return;
     }
 }
 
@@ -2375,8 +2521,8 @@ void TilesSautTir()
 
     SPR_setAnim(ptrJoueur->SpriteJ,4);
     SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameTir);
-    
-    
+
+
     if(ptrJoueur->Axe==0)
     {
         SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
@@ -2385,8 +2531,8 @@ void TilesSautTir()
     {
         SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
     }
-    
-    
+
+
     // Anim des tiles
     ptrJoueur->CompteurFrameTir+=1;
 
@@ -2395,15 +2541,66 @@ void TilesSautTir()
     {
         ptrJoueur->CompteurFrameTir=0;
         ptrJoueur->IndexFrameTir++;
-    
-        // Cycle de FRAME de 0 à 2 (3 étapes)
-        if(ptrJoueur->IndexFrameTir>2)
+
+        // Cycle de FRAME de 0 à 1 (2 étapes)
+        if(ptrJoueur->IndexFrameTir>1)
         {
             ptrJoueur->IndexFrameTir=0;
             ptrJoueur->Phase=SAUT;
         }
     }
 }
+
+void TilesTouche()
+{
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    SPR_setAnim(ptrJoueur->SpriteJ,6);
+    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameTouche);
+
+    ptrJoueur->CompteurFrameBloque=0;
+    ptrJoueur->IndexFrameBloque=0;
+
+    ptrJoueur->CompteurFrameArret=0;
+    ptrJoueur->IndexFrameArret=0;
+
+    ptrJoueur->CompteurFrameMarche=0;
+    ptrJoueur->IndexFrameMarche=0;
+
+    ptrJoueur->CompteurFrameTir=0;
+    ptrJoueur->IndexFrameTir=0;
+
+    // Anim des tiles
+    ptrJoueur->CompteurFrameTouche+=1;
+
+    // MAJ des tiles toutes les 8 images (0 à 7)
+    if(ptrJoueur->CompteurFrameTouche>7)
+    {
+        ptrJoueur->CompteurFrameTouche=0;
+        ptrJoueur->IndexFrameTouche++;
+
+        // Cycle de FRAME de 0 à 3 (4 étapes)
+        if(ptrJoueur->IndexFrameTouche>3)
+        {
+            ptrJoueur->IndexFrameTouche=0;
+        }
+    }
+}
+
+void TilesApparition()
+{
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    SPR_setAnim(ptrJoueur->SpriteJ,7);
+
+    // TILES DU DRAGON //
+    ptrJoueur->CompteurFrameTouche=0;
+    ptrJoueur->IndexFrameTouche=0;
+
+    //
+}
+
+
 
 void TilesJoueur()
 {
@@ -2514,6 +2711,24 @@ void TilesJoueur()
     else if(ptrJoueur->Phase==CHUTE)
     {
         TilesSaut();
+        return;
+    }
+
+    /////////////////
+    //    TOUCHE   //
+    /////////////////
+    else if(ptrJoueur->Phase==TOUCHE)
+    {
+        TilesTouche();
+        return;
+    }
+
+    /////////////////////
+    //    APPARITION   //
+    /////////////////////
+    else if(ptrJoueur->Phase==APPARITION)
+    {
+        TilesApparition();
         return;
     }
 }

@@ -13,6 +13,7 @@ extern const Palette palette_NIVEAU1_BGA2;
 extern const Palette palette_NIVEAU1_BGB;
 extern const Palette palette_JOUEUR_H;
 extern const Palette palette_JOUEUR_F;
+extern const Palette palette_DRAGON;
 extern const Palette palette_NIVEAU1_ESCARGOT;
 extern const Palette palette_NIVEAU1_BULOT;
 extern const Palette palette_NIVEAU1_PELICAN;

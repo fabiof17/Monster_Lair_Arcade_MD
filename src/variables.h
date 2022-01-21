@@ -8,26 +8,29 @@
 
 #define ACCEL_D         FIX32(0.08)  // ACCELERATION DROITE
 #define ACCEL_G         FIX32(0.16)  // ACCELERATION GAUCHE
-#define ACCEL_B         FIX32(0.1)   // ACCELERATION BAS (CHUTE)
+#define ACCEL_B         FIX32(0.25)  // ACCELERATION BAS (CHUTE)
 #define GLISSEMENT      FIX32(1L)
 
 #define MAX_POS_D       FIX32(228L)
 #define MAX_POS_G       FIX32(11L)
 
-#define MAX_ETAPES_SAUT     40
-#define MAX_ETAPES_POULPE1  50
-#define MAX_ETAPES_POULPE2  55
-#define MAX_ETAPES_PF_V1    69
+#define MAX_ETAPES_SAUT         40
+#define MAX_ETAPES_TOUCHE       38
+#define MAX_ETAPES_POULPE1      50
+#define MAX_ETAPES_POULPE2      55
+#define MAX_ETAPES_PF_V1        69
 
-#define MAX_ENNEMIS         11
-#define MAX_PLATEFORMES      7
+#define MAX_ENNEMIS             11
+#define MAX_PLATEFORMES         7
 
-#define ARRET                0
-#define MARCHE               1
-#define SAUT                 2
-#define TIR                  3
-#define SAUT_TIR             4
-#define CHUTE                5
+#define ARRET                   0
+#define MARCHE                  1
+#define SAUT                    2
+#define TIR                     3
+#define SAUT_TIR                4
+#define CHUTE                   5
+#define TOUCHE                  6
+#define APPARITION              7
 
 
 ///////////////////////////////////
@@ -70,8 +73,6 @@ extern Sprite *sprite_repere_BD;
 extern Sprite *sprite_repere_HG;
 extern Sprite *sprite_repere_HD;
 
-
-
 //----------------------------------------------------//
 //                       JOUEUR                       //
 //----------------------------------------------------//
@@ -80,12 +81,18 @@ typedef struct
     Sprite* SpriteJ;
     u8 Phase; // 0=ARRET - 1=MARCHE - 2=SAUT - 3=TIR - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
     u8 Axe; // 0=DROITE - 1=GAUCHE
+
     s16 PosX;
     s16 PosY;
     s16 pt_Coll1_X;
     s16 pt_Coll1_Y;
     s16 pt_Coll2_X;
     s16 pt_Coll2_Y;
+
+    bool invincible;
+    u8 compteurInvincible;
+    u16 compteurApparition;
+
     u8 CompteurFrameArret;      // Compteur pour passer à la prochaine FRAME ARRET
     u8 IndexFrameArret;         // Index de FRAME ARRET
     u8 CompteurFrameBloque;     // Compteur pour passer à la prochaine FRAME BLOQUÉ
@@ -94,6 +101,9 @@ typedef struct
     u8 IndexFrameMarche;        // Index de FRAME MARCHE
     u8 CompteurFrameTir;        // Compteur pour passer à la prochaine FRAME TIR
     u8 IndexFrameTir;           // Index de FRAME TIR
+    u8 CompteurFrameTouche;     // Compteur pour passer à la prochaine FRAME TIR
+    u8 IndexFrameTouche;        // Index de FRAME TIR
+
     const s16 *ptrPosition;     // Pointeur dans le tableau de position
 } SpriteJoueur_;
 
@@ -167,6 +177,22 @@ extern SpritePlateforme_ Plateforme[MAX_PLATEFORMES];
 extern u8 indexCreaPlateformes;
 extern u8 nb_Plateformes;
 extern bool contactPlt_OK;
+
+
+
+//----------------------------------------------------//
+//                       DRAGON                       //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteD;
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+    u8 CompteurFrameVol;        // Compteur pour passer à la prochaine FRAME VOL
+    u8 IndexFrameVol;           // Index de FRAME VOL
+} SpriteDragon_;
+
+extern SpriteDragon_ Dragon;
 
 
 

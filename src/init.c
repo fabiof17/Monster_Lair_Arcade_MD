@@ -547,6 +547,15 @@ void InitNiveau1()
     }
 
     /**********/
+    /* DRAGON */
+    /**********/
+    SpriteDragon_ *ptrDragon=&Dragon;
+
+    ptrDragon->SpriteD=SPR_addSprite(&tiles_Sprite_DRAGON, 0, 0, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    SPR_setAnim(ptrDragon->SpriteD,0);
+    SPR_setFrame(ptrDragon->SpriteD,0);
+
+    /**********/
     /* JOUEUR */
     /**********/
     // Création d'un pointeur de type "SpritePerso_" contenant la variable "Joueur".
@@ -574,6 +583,7 @@ void InitNiveau1()
 
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
 
+    // INIT DES COMPTEURS //
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
 
@@ -582,6 +592,9 @@ void InitNiveau1()
 
     ptrJoueur->CompteurFrameTir=0;
     ptrJoueur->IndexFrameTir=0;
+
+    ptrJoueur->CompteurFrameTouche=0;
+    ptrJoueur->IndexFrameTouche=0; 
 
     ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
     ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+34;
