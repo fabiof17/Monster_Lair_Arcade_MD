@@ -1477,12 +1477,15 @@ void MvtJoueur()
                 ptrJoueur->PosY = (posTileY<<3)-32;
                 positionY=intToFix32(ptrJoueur->PosY);
             }
-
         }
 
         ptrJoueur->ptrPosition=&anim_SAUT[0];
 
-        Collision_Ennemis();
+
+        if(ptrJoueur->invincible==0)
+        {
+            Collision_Ennemis();
+        }        
     }
 
 
@@ -1586,10 +1589,14 @@ void MvtJoueur()
                 positionY=intToFix32(ptrJoueur->PosY);
             }
         }
+
         ptrJoueur->ptrPosition=&anim_SAUT[0];
 
 
-        Collision_Ennemis();
+        if(ptrJoueur->invincible==0)
+        {
+            Collision_Ennemis();
+        }
     }
 
 
@@ -1741,7 +1748,10 @@ void MvtJoueur()
             }
         }
 
-        Collision_Ennemis();
+        if(ptrJoueur->invincible==0)
+        {
+            Collision_Ennemis();
+        }
     }
 
 
@@ -1880,7 +1890,10 @@ void MvtJoueur()
             }
         }
 
-        Collision_Ennemis();
+        if(ptrJoueur->invincible==0)
+        {
+            Collision_Ennemis();
+        }
     }
 
 
@@ -2038,7 +2051,10 @@ void MvtJoueur()
             }
         }
 
-        Collision_Ennemis();
+        if(ptrJoueur->invincible==0)
+        {
+            Collision_Ennemis();
+        }
     }
 
 
@@ -2173,7 +2189,10 @@ void MvtJoueur()
             }
         }
 
-        Collision_Ennemis();
+        if(ptrJoueur->invincible==0)
+        {
+            Collision_Ennemis();
+        }
     }
 
 
@@ -2365,6 +2384,11 @@ void MvtJoueur()
     //SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7);
     //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7);
 
+}
+
+void PosJoueurInvincible()
+{
+    //
 }
 
 

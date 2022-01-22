@@ -152,7 +152,7 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            VDP_drawInt( Dragon.Phase ,  2 , 12 , 6);
+            //VDP_drawInt( Dragon.Phase ,  2 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();

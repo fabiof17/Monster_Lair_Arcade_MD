@@ -582,6 +582,8 @@ void InitNiveau1()
     // ORIENTE DROITE //
     ptrJoueur->Axe=0;
 
+    ptrJoueur->invincible=0;
+
     // POSITION //
     ptrJoueur->PosX=fix32ToInt(positionX);
     ptrJoueur->PosY=fix32ToInt(positionY);
