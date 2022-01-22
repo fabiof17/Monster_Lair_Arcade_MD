@@ -32,6 +32,10 @@
 #define TOUCHE                  6
 #define APPARITION              7
 
+#define ATTENTE_DRAGON          0
+#define VOL_DRAGON              1
+#define SORTIE_DRAGON           2
+
 
 ///////////////////////////////////
 //		Variables principales    //
@@ -89,10 +93,10 @@ typedef struct
     s16 pt_Coll2_X;
     s16 pt_Coll2_Y;
 
+    u16 compteurApparition;
     bool invincible;
     u8 compteurInvincible;
-    u16 compteurApparition;
-
+    
     u8 CompteurFrameArret;      // Compteur pour passer à la prochaine FRAME ARRET
     u8 IndexFrameArret;         // Index de FRAME ARRET
     u8 CompteurFrameBloque;     // Compteur pour passer à la prochaine FRAME BLOQUÉ
@@ -186,6 +190,7 @@ extern bool contactPlt_OK;
 typedef struct
 {
     Sprite* SpriteD;
+    u8 Phase;
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
     u8 CompteurFrameVol;        // Compteur pour passer à la prochaine FRAME VOL

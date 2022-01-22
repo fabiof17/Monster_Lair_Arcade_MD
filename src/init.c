@@ -551,6 +551,11 @@ void InitNiveau1()
     /**********/
     SpriteDragon_ *ptrDragon=&Dragon;
 
+    ptrDragon->Phase=ATTENTE_DRAGON;
+
+    ptrDragon->CompteurFrameVol=0;
+    ptrDragon->IndexFrameVol=0;
+
     ptrDragon->SpriteD=SPR_addSprite(&tiles_Sprite_DRAGON, 0, 0, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     SPR_setAnim(ptrDragon->SpriteD,0);
     SPR_setFrame(ptrDragon->SpriteD,0);

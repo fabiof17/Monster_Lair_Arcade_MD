@@ -1297,6 +1297,35 @@ void MvtSprites_Niveau1()
             }
         }
     }
+
+    //////////////////
+    //    DRAGON    //
+    //////////////////
+    SpriteDragon_ *ptrDragon=&Dragon;
+
+    if(ptrDragon->Phase==SORTIE_DRAGON)
+    {
+        ptrDragon->PosY-=1;
+
+        if(ptrDragon->PosY==0)
+        {
+            ptrDragon->Phase=ATTENTE_DRAGON;
+            ptrDragon->CompteurFrameVol=0;
+            ptrDragon->IndexFrameVol=0;
+            ptrDragon->PosX=10;
+            ptrDragon->PosY=0;
+
+            if(selectJoueur==0)
+            {
+                PAL_setPalette(PAL0, palette_JOUEUR_H.data, DMA); // PALETTE PERSO H
+            }
+            else
+            {
+                PAL_setPalette(PAL0, palette_JOUEUR_F.data, DMA); // PALETTE PERSO F
+            }
+        }
+    }
+
 }
 
 
@@ -1452,6 +1481,8 @@ void MvtJoueur()
         }
 
         ptrJoueur->ptrPosition=&anim_SAUT[0];
+
+        Collision_Ennemis();
     }
 
 
@@ -1709,6 +1740,8 @@ void MvtJoueur()
                 }
             }
         }
+
+        Collision_Ennemis();
     }
 
 
@@ -1846,7 +1879,8 @@ void MvtJoueur()
                 positionY=intToFix32(ptrJoueur->PosY);
             }
         }
-        //ptrJoueur->ptrPosition=&anim_SAUT[0];
+
+        Collision_Ennemis();
     }
 
 
@@ -2003,6 +2037,8 @@ void MvtJoueur()
                 }
             }
         }
+
+        Collision_Ennemis();
     }
 
 
@@ -2136,6 +2172,8 @@ void MvtJoueur()
                 ptrJoueur->PosY=fix32ToInt(positionY);
             }
         }
+
+        Collision_Ennemis();
     }
 
 
@@ -2199,12 +2237,15 @@ void MvtJoueur()
         if(ptrJoueur->PosY>192)
         {
             ptrJoueur->Phase=APPARITION;
+            ptrDragon->Phase=VOL_DRAGON;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
             ptrJoueur->PosY=16;
             positionX=intToFix32(63);
             positionY=intToFix32(16);
             movX=0;
+
+            SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
 
             PAL_setPalette(PAL0, palette_DRAGON.data, DMA);
         }
@@ -2230,7 +2271,7 @@ void MvtJoueur()
         }
 
         // ATTENTE DE LARGAGE //
-        else if(ptrJoueur->compteurApparition>55)
+        else if(ptrJoueur->compteurApparition>55 && ptrJoueur->compteurApparition<255)
         {
             //--------------------------//
             //         POSITION X       //
@@ -2273,7 +2314,18 @@ void MvtJoueur()
 
         }
 
-        ptrJoueur->compteurApparition++;
+        // ENVOL DRAGON APRES LARGAGE //
+        else if(ptrJoueur->compteurApparition>254)
+        {
+            ptrDragon->Phase=SORTIE_DRAGON;
+            ptrJoueur->compteurApparition=0;
+        }
+
+        // SI LE DRAGON NE S'ENVOLE PAS, ON INCREMENTE LE COMPTEUR //
+        if(ptrDragon->Phase!=SORTIE_DRAGON)
+        {
+            ptrJoueur->compteurApparition++;
+        }
     }
 
 
@@ -2600,11 +2652,47 @@ void TilesApparition()
     //
 }
 
+void TilesDragon()
+{
+    SpriteDragon_ *ptrDragon=&Dragon;
 
+    SPR_setFrame(ptrDragon->SpriteD,(s16)ptrDragon->IndexFrameVol);
+
+    // Anim des tiles
+    ptrDragon->CompteurFrameVol+=1;
+
+    // MAJ des tiles toutes les 6 images (0 à 5)
+    if(ptrDragon->CompteurFrameVol>5)
+    {
+        ptrDragon->CompteurFrameVol=0;
+        ptrDragon->IndexFrameVol+=1;
+
+        // Cycle de FRAME de 0 à 1 (2 étapes)
+        if(ptrDragon->IndexFrameVol>1)
+        {
+            ptrDragon->IndexFrameVol=0;
+        }
+    }
+}
 
 void TilesJoueur()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
+    SpriteDragon_ *ptrDragon=&Dragon;
+
+
+    //--------------//
+    //    DRAGON    //
+    //--------------//
+    if(ptrDragon->Phase!=ATTENTE_DRAGON)
+    {
+        TilesDragon();
+    }
+
+
+    //--------------//
+    //    JOUEUR    //
+    //--------------//
 
     ///////////////
     //   ARRET   //
@@ -2731,4 +2819,5 @@ void TilesJoueur()
         TilesApparition();
         return;
     }
+
 }

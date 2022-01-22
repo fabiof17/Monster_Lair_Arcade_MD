@@ -11,6 +11,7 @@
 void joyEventCallback(u16 joy, u16 changed, u16 state)
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
+    SpriteDragon_ *ptrDragon=&Dragon;
 
     // START //
     if (changed & state & BUTTON_START)
@@ -46,6 +47,15 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
         if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
         {
             ptrJoueur->Phase=SAUT;
+        }
+
+        // LARGAGE APRES RÉAPPARITION //
+        else if(ptrJoueur->Phase==APPARITION)
+        {
+            ptrJoueur->Phase=CHUTE;
+            ptrDragon->Phase=SORTIE_DRAGON;
+            ptrJoueur->compteurApparition=0;
+
         }
     }
 
@@ -142,7 +152,7 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            //VDP_drawInt( Joueur.Phase ,  2 , 12 , 6);
+            VDP_drawInt( Dragon.Phase ,  2 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();
