@@ -1315,14 +1315,8 @@ void MvtSprites_Niveau1()
             ptrDragon->PosX=10;
             ptrDragon->PosY=0;
 
-            if(selectJoueur==0)
-            {
-                PAL_setPalette(PAL0, palette_JOUEUR_H.data, DMA); // PALETTE PERSO H
-            }
-            else
-            {
-                PAL_setPalette(PAL0, palette_JOUEUR_F.data, DMA); // PALETTE PERSO F
-            }
+            PAL_setColor( 10 , 0x000C );
+            PAL_setColor( 13 , 0x06CC );
         }
     }
 
@@ -2266,7 +2260,9 @@ void MvtJoueur()
 
             SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
 
-            PAL_setPalette(PAL0, palette_DRAGON.data, DMA);
+            PAL_setColor( 10 , 0x0A4C );
+            PAL_setColor( 13 , 0x0C6C );
+            //PAL_setPalette(PAL0, palette_DRAGON.data, DMA);
         }
 
     }
