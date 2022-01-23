@@ -2334,6 +2334,7 @@ void MvtJoueur()
         {
             ptrDragon->Phase=SORTIE_DRAGON;
             ptrJoueur->compteurApparition=0;
+            ptrJoueur->Phase=CHUTE;
         }
 
         // SI LE DRAGON NE S'ENVOLE PAS, ON INCREMENTE LE COMPTEUR //
