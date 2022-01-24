@@ -582,7 +582,7 @@ void InitNiveau1()
     // ORIENTE DROITE //
     ptrJoueur->Axe=0;
 
-    ptrJoueur->invincible=0;
+    ptrJoueur->Invincible=0;
 
     // POSITION //
     ptrJoueur->PosX=fix32ToInt(positionX);
@@ -609,6 +609,8 @@ void InitNiveau1()
     ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
 
     posTileY=ptrJoueur->pt_Coll1_Y>>3;
+
+    decalagePosY=0;
 
     /***********/
     /* REPERES */

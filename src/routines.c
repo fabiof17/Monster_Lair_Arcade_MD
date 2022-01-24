@@ -344,6 +344,13 @@ void Collision_Plateformes()
     }
 }
 
+void GetOffsetInvincible()
+{  
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    decalagePosX = ptrJoueur->PosX-16;
+    decalagePosY = ptrJoueur->PosY+32;
+}
 
 // SPRITES NIVEAU 1 //
 void CreaSprites_Niveau1()
@@ -1476,7 +1483,7 @@ void MvtJoueur()
         ptrJoueur->ptrPosition=&anim_SAUT[0];
 
 
-        if(ptrJoueur->invincible==0)
+        if(ptrJoueur->Invincible==0)
         {
             Collision_Ennemis();
         }        
@@ -1587,7 +1594,7 @@ void MvtJoueur()
         ptrJoueur->ptrPosition=&anim_SAUT[0];
 
 
-        if(ptrJoueur->invincible==0)
+        if(ptrJoueur->Invincible==0)
         {
             Collision_Ennemis();
         }
@@ -1742,7 +1749,7 @@ void MvtJoueur()
             }
         }
 
-        if(ptrJoueur->invincible==0)
+        if(ptrJoueur->Invincible==0)
         {
             Collision_Ennemis();
         }
@@ -1884,7 +1891,7 @@ void MvtJoueur()
             }
         }
 
-        if(ptrJoueur->invincible==0)
+        if(ptrJoueur->Invincible==0)
         {
             Collision_Ennemis();
         }
@@ -2045,7 +2052,7 @@ void MvtJoueur()
             }
         }
 
-        if(ptrJoueur->invincible==0)
+        if(ptrJoueur->Invincible==0)
         {
             Collision_Ennemis();
         }
@@ -2180,10 +2187,29 @@ void MvtJoueur()
             else
             {
                 ptrJoueur->PosY=fix32ToInt(positionY);
+
+                // JOUEUR TOUCHE BAS DE L'ÉCRAN //
+                if(ptrJoueur->PosY>192)
+                {
+                    ptrJoueur->Phase=APPARITION;
+                    ptrDragon->Phase=VOL_DRAGON;
+                    ptrJoueur->Invincible=1;
+                    ptrJoueur->Axe=0;
+                    ptrJoueur->PosX=63;
+                    ptrJoueur->PosY=16;
+                    positionX=intToFix32(63);
+                    positionY=intToFix32(16);
+                    movX=0;
+
+                    SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+
+                    PAL_setColor( 10 , 0x0A4C );
+                    PAL_setColor( 13 , 0x0C6C );
+                }
             }
         }
 
-        if(ptrJoueur->invincible==0)
+        if(ptrJoueur->Invincible==0)
         {
             Collision_Ennemis();
         }
@@ -2251,6 +2277,7 @@ void MvtJoueur()
         {
             ptrJoueur->Phase=APPARITION;
             ptrDragon->Phase=VOL_DRAGON;
+            ptrJoueur->Invincible=1;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
             ptrJoueur->PosY=16;
@@ -2262,7 +2289,6 @@ void MvtJoueur()
 
             PAL_setColor( 10 , 0x0A4C );
             PAL_setColor( 13 , 0x0C6C );
-            //PAL_setPalette(PAL0, palette_DRAGON.data, DMA);
         }
 
     }
@@ -2373,6 +2399,30 @@ void MvtJoueur()
     // 'positionX' EST LA NOUVELLE POSITION X DU SPRITE
     ptrJoueur->PosX=fix32ToInt(positionX);
 
+
+    //----------------------------------------------------//
+    //                    ETAT Invincible                 //
+    //----------------------------------------------------//
+
+    if(ptrJoueur->Invincible==1)
+    {
+        ptrJoueur->CompteurInvincible++;
+
+        
+
+        // Invincible PENDANT 60 IMAGES //
+        if(ptrJoueur->CompteurInvincible>59)
+        {
+            ptrJoueur->CompteurInvincible=0;
+            ptrJoueur->Invincible=0;
+        }
+    }
+
+
+
+
+
+
     // JOUEUR //
     SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
     // DRAGON
@@ -2382,12 +2432,6 @@ void MvtJoueur()
     //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7);
 
 }
-
-void PosJoueurInvincible()
-{
-    //
-}
-
 
 // TILES //
 void TilesBloque()

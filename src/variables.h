@@ -94,8 +94,8 @@ typedef struct
     s16 pt_Coll2_Y;
 
     u16 compteurApparition;
-    bool invincible;
-    u8 compteurInvincible;
+    bool Invincible;
+    u8 CompteurInvincible;
     
     u8 CompteurFrameArret;      // Compteur pour passer à la prochaine FRAME ARRET
     u8 IndexFrameArret;         // Index de FRAME ARRET
@@ -126,6 +126,8 @@ extern fix32 positionY;
 extern fix32 movX;
 extern fix32 movY;
 
+extern u16 decalagePosX;
+extern u16 decalagePosY;
 
 
 //----------------------------------------------------//

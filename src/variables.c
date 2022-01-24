@@ -57,6 +57,9 @@ fix32 positionY;
 fix32 movX;
 fix32 movY;
 
+u16 decalagePosX;
+u16 decalagePosY;
+
 
 //----------------------------------------------------//
 //                       DRAGON                       //

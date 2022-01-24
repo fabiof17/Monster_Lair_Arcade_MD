@@ -55,6 +55,7 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
             ptrJoueur->Phase=CHUTE;
             ptrDragon->Phase=SORTIE_DRAGON;
             ptrJoueur->compteurApparition=0;
+            ptrJoueur->Invincible=1;
 
         }
     }
@@ -117,7 +118,7 @@ void MainLoop()
 {
     InitNiveaux();
     
-    //SYS_showFrameLoad(TRUE);
+    SYS_showFrameLoad(TRUE);
 
     // Manette
     JOY_setEventHandler(joyEventCallback);
@@ -151,8 +152,12 @@ void MainLoop()
             // MAJ tiles BG
             Tiles_Niveau1();
 
+            //u16 décalage;
+
+
             // DEBUG
-            //VDP_drawInt( Dragon.Phase ,  2 , 12 , 6);
+            //VDP_drawInt( Joueur.PosY ,  2 , 12 , 6);
+            //VDP_drawInt( SPR_getVisibility(Joueur.SpriteJ) ,  1 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();
