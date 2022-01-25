@@ -156,8 +156,7 @@ void MainLoop()
 
 
             // DEBUG
-            //VDP_drawInt( Joueur.PosY ,  2 , 12 , 6);
-            //VDP_drawInt( SPR_getVisibility(Joueur.SpriteJ) ,  1 , 12 , 6);
+            //VDP_drawInt( Splash.CompteurFrameSplash , 1 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();

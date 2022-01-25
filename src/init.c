@@ -415,6 +415,8 @@ void InitNiveau1()
     nb_Plateformes=0;
     indexCreaPlateformes=0;
     contactPlt_OK=0;
+
+    PosYinvincible=0;
           
     // Position X initiale du sprite : 64 pixels
     positionX=FIX32(64L);
@@ -547,16 +549,35 @@ void InitNiveau1()
     }
 
     /**********/
+    /* SPLASH */
+    /**********/
+    SpriteSplash_ *ptrSplash=&Splash;
+
+    ptrSplash->Init=0;
+    ptrSplash->PosX=48;
+    ptrSplash->PosY=-32;
+    ptrSplash->CompteurFrameSplash=0;
+    ptrSplash->IndexFrameSplash=0;
+
+    ptrSplash->SpriteS=SPR_addSprite(&tiles_Sprite_SPLASH, ptrSplash->PosX, ptrSplash->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
+    SPR_setAnim(ptrSplash->SpriteS,0);
+    SPR_setFrame(ptrSplash->SpriteS,0);
+
+
+    /**********/
     /* DRAGON */
     /**********/
     SpriteDragon_ *ptrDragon=&Dragon;
 
     ptrDragon->Phase=ATTENTE_DRAGON;
 
+    ptrDragon->PosX=0;
+    ptrDragon->PosY=-32;
+
     ptrDragon->CompteurFrameVol=0;
     ptrDragon->IndexFrameVol=0;
 
-    ptrDragon->SpriteD=SPR_addSprite(&tiles_Sprite_DRAGON, 0, 0, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    ptrDragon->SpriteD=SPR_addSprite(&tiles_Sprite_DRAGON, ptrDragon->PosX, ptrDragon->PosY, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     SPR_setAnim(ptrDragon->SpriteD,0);
     SPR_setFrame(ptrDragon->SpriteD,0);
 
@@ -583,6 +604,7 @@ void InitNiveau1()
     ptrJoueur->Axe=0;
 
     ptrJoueur->Invincible=0;
+    ptrJoueur->HorsChamp=0;
 
     // POSITION //
     ptrJoueur->PosX=fix32ToInt(positionX);
@@ -610,7 +632,6 @@ void InitNiveau1()
 
     posTileY=ptrJoueur->pt_Coll1_Y>>3;
 
-    decalagePosY=0;
 
     /***********/
     /* REPERES */

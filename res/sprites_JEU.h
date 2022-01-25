@@ -11,6 +11,7 @@ extern const SpriteDefinition tiles_Sprite_JOUEUR_F;
 extern const SpriteDefinition tiles_Sprite_JOUEUR_H_HAUT;
 extern const SpriteDefinition tiles_Sprite_JOUEUR_H_BAS;
 extern const SpriteDefinition tiles_Sprite_DRAGON;
+extern const SpriteDefinition tiles_Sprite_SPLASH;
 extern const SpriteDefinition tiles_repere_BG;
 extern const SpriteDefinition tiles_repere_BD;
 extern const SpriteDefinition tiles_repere_HG;

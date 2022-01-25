@@ -35,6 +35,7 @@
 #define ATTENTE_DRAGON          0
 #define VOL_DRAGON              1
 #define SORTIE_DRAGON           2
+#define DUREE_INVINCIBLE        60
 
 
 ///////////////////////////////////
@@ -96,6 +97,7 @@ typedef struct
     u16 compteurApparition;
     bool Invincible;
     u8 CompteurInvincible;
+    bool HorsChamp;
     
     u8 CompteurFrameArret;      // Compteur pour passer à la prochaine FRAME ARRET
     u8 IndexFrameArret;         // Index de FRAME ARRET
@@ -126,8 +128,7 @@ extern fix32 positionY;
 extern fix32 movX;
 extern fix32 movY;
 
-extern u16 decalagePosX;
-extern u16 decalagePosY;
+extern u16 PosYinvincible;
 
 
 //----------------------------------------------------//
@@ -200,6 +201,23 @@ typedef struct
 } SpriteDragon_;
 
 extern SpriteDragon_ Dragon;
+
+
+
+//----------------------------------------------------//
+//                       SPLASH                       //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteS;
+    bool Init;
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+    u8 CompteurFrameSplash;          // Compteur pour passer à la prochaine FRAME SPLASH
+    u8 IndexFrameSplash;             // Index de FRAME SPLASH
+} SpriteSplash_;
+
+extern SpriteSplash_ Splash;
 
 
 
