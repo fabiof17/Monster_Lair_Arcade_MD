@@ -35,7 +35,7 @@
 #define ATTENTE_DRAGON          0
 #define VOL_DRAGON              1
 #define SORTIE_DRAGON           2
-#define DUREE_INVINCIBLE        60
+#define DUREE_INVINCIBLE        119
 
 
 ///////////////////////////////////

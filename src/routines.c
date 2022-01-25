@@ -2508,7 +2508,7 @@ void MvtJoueur()
         }
 
         // Invincible PENDANT 60 IMAGES //
-        if(ptrJoueur->CompteurInvincible>59)
+        if(ptrJoueur->CompteurInvincible>DUREE_INVINCIBLE)
         {
             ptrJoueur->CompteurInvincible=0;
             ptrJoueur->Invincible=0;
