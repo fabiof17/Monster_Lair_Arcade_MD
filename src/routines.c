@@ -2486,7 +2486,7 @@ void MvtJoueur()
 
 
     //----------------------------------------------------//
-    //                    ETAT Invincible                 //
+    //                    ETAT INVINCIBLE                 //
     //----------------------------------------------------//
 
     if(ptrJoueur->Invincible==1)
@@ -2512,6 +2512,7 @@ void MvtJoueur()
         {
             ptrJoueur->CompteurInvincible=0;
             ptrJoueur->Invincible=0;
+            ptrJoueur->HorsChamp=0;
             PosYinvincible=0;
         }
     }
