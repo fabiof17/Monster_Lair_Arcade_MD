@@ -169,8 +169,8 @@ typedef struct
     Sprite* SpriteP;
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type de plateforme
-    u8 mouvante;                // Plateforme qui se déclenche ou non
-    u8 declencheur;             // Déclencheur d'animation
+    u8 Mouvante;                // Plateforme qui se déclenche ou non
+    u8 Declencheur;             // Déclencheur d'animation
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
     s16 pt_Coll1_X;

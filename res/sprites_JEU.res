@@ -17,7 +17,7 @@ SPRITE tiles_Sprite_JOUEUR_H_HAUT "sprites/global/tiles_JOUEUR_H_HAUT.png" 4 2 N
 SPRITE tiles_Sprite_JOUEUR_H_BAS "sprites/global/tiles_JOUEUR_H_BAS.png" 4 2 NONE 0 NONE NONE
 
 // DRAGON //
-SPRITE tiles_Sprite_DRAGON "sprites/global/tiles_DRAGON.png" 4 4 NONE 0 NONE NONE
+SPRITE tiles_Sprite_DRAGON "sprites/global/tiles_DRAGON.png" 4 4 NONE 0
 
 // SPLASH //
 SPRITE tiles_Sprite_SPLASH "sprites/global/tiles_SPLASH.png" 4 4 NONE 0
