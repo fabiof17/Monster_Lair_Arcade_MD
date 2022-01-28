@@ -1,6 +1,7 @@
 out/res/sprites_JEU.o: res/sprites_JEU.res \
 H:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/sprites/global/repere_HD.png \
 H:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/sprites/global/tile_VIE_H.png \
+H:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/sprites/global/tiles_AURA.png \
 H:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/sprites/global/tiles_JOUEUR_H.png \
 H:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/sprites/global/repere_HG.png \
 H:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/sprites/global/tiles_JOUEUR_F.png \

@@ -208,7 +208,7 @@ void Collision_Ennemis()
                             if(ptrJoueur->PosY+16 >= ptrEnnemi->PosY)
                             {
                                 //
-                                if(ptrJoueur->PosY+16 <= ptrEnnemi->PosY+24)
+                                if(ptrJoueur->PosY <= ptrEnnemi->PosY+24)
                                 {
                                     ptrJoueur->Phase=TOUCHE;
                                     ptrJoueur->ptrPosition=&anim_TOUCHE[0];

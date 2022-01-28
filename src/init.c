@@ -404,6 +404,8 @@ void InitNiveaux()
 
 void InitNiveau1()
 {
+    u16 i;
+    
     nb_Vie=2;
     
     vitesseScrolling=1;
@@ -531,10 +533,7 @@ void InitNiveau1()
 
     /*********/
     /*  VIES */
-    /*********/
-
-    u16 i;
-
+    /*********/  
     for (i=0; i<nb_Vie; i++)
     {
         if(selectJoueur==0)
