@@ -5,11 +5,11 @@
 #include "variables.h"
 #include "maps_TITRE.h"
 #include "maps_SELECTION.h"
+#include "maps_GLOBALES.h"
 #include "maps_NIVEAU1.h"
 #include "sprites_JEU.h"
 #include "palettes.h"
 #include "routines.h"
-//#include "animation_sprites.h"
 
 ///////////////////////////////
 //        INIT SYSTEME       //
@@ -415,10 +415,13 @@ void InitNiveau1()
     indexCreaEnnemis=0;
 
     nb_Plateformes=0;
-    indexCreaPlateformes=0;
+    IndexCreaPlateformes=0;
     contactPlt_OK=0;
 
     PosYinvincible=0;
+
+    CompteurEnergie=0;
+    Energie=ENERGIE_DEPART;
           
     // Position X initiale du sprite : 64 pixels
     positionX=FIX32(64L);
@@ -507,16 +510,60 @@ void InitNiveau1()
     {
         VDP_loadTileSet(&tileset_TETE_F, ind, DMA);
         VDP_setTileMapEx(WINDOW, image_TETE_F.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);
+ 
+        // we offset tile index by the number of tiles previously loaded in VRAM
+        ind += tileset_TETE_F.numTile;
     }
-
-    // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += tileset_NIVEAU1_WINDOW.numTile;
 
     // Vblank
     SYS_doVBlankProcess();
 
 
     VDP_setVerticalScroll(BG_B, 24);
+
+
+    ////////////////////////////////////////////////////
+    //                  BARRES DE VIE                 //
+    ////////////////////////////////////////////////////
+
+    // On récupère l'adresse en Vram des tiles de la barre d'énergie
+    AdresseVram_BarreEnergie=ind;
+
+    // WINDOW tileset loading in VRAM
+    // getting tileset data from IMAGE structure declared in maps_GLOBAL.res
+    VDP_loadTileSet(&tileset_BARRE_VERTE1, ind, DMA);
+
+    for (i=0; i<ENERGIE_DEPART; i++)
+    {
+        VDP_setTileMapEx(WINDOW, image_BARRE_VERTE1.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 4+i, 3, 0, 0, 1, 2, DMA);
+    }
+    
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += tileset_BARRE_VERTE1.numTile;
+
+
+
+    // On récupère l'adresse en Vram des tiles de la barre noire
+    AdresseVram_BarreVierge=ind;
+
+    // WINDOW tileset loading in VRAM
+    // getting tileset data from IMAGE structure declared in maps_GLOBAL.res
+    VDP_loadTileSet(&tileset_BARRE_VIERGE, ind, DMA);
+
+    for (i=ENERGIE_DEPART; i<ENERGIE_DEPART+7; i++)
+    {
+        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 4+i, 3, 0, 0, 1, 2, DMA);
+    }
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += tileset_BARRE_VIERGE.numTile;
+
+
+    // Vblank
+    SYS_doVBlankProcess();
+
+
+
 
 
     //////////////////////////////////////////////
@@ -624,6 +671,8 @@ void InitNiveau1()
     ptrJoueur->CompteurFrameTouche=0;
     ptrJoueur->IndexFrameTouche=0; 
 
+    ptrJoueur->CompteurApparition=0;
+
     ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
     ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+34;
     ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+21;
@@ -638,6 +687,30 @@ void InitNiveau1()
 
     //sprite_repere_BG=SPR_addSprite(&tiles_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     //sprite_repere_BD=SPR_addSprite(&tiles_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+
+
+
+    /**********/
+    /*  AURA  */
+    /**********/
+    SpriteAura_ *ptrAura=&Aura;
+
+    ptrAura->Init=0;
+    ptrAura->PosX=0;
+    ptrAura->PosY=-24;
+    ptrAura->CompteurFrameAura=0;
+    ptrAura->IndexFrameAura=0;
+
+    
+    if(selectJoueur==0)
+    {
+        ptrAura->SpriteA=SPR_addSprite(&tiles_Sprite_AURA_H, ptrAura->PosX, ptrAura->PosY, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    }
+    else
+    {
+        ptrAura->SpriteA=SPR_addSprite(&tiles_Sprite_AURA_F, ptrAura->PosX, ptrAura->PosY, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    
+    }
 
 
 

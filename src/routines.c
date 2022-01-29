@@ -3,6 +3,7 @@
 #include "init.h"
 #include "variables.h"
 #include "palettes.h"
+#include "maps_GLOBALES.h"
 #include "maps_NIVEAU1.h"
 #include "tilemaps_ennemis.h"
 #include "tilemaps_plateformes.h"
@@ -461,7 +462,7 @@ void CreaSprites_Niveau1()
         /////////////////////
 
         // tilemapCreaPlateformes_Niveau[0][indexCreaPlateformes] : PosX
-        if (-CamPosX>>3 == tilemapCreaPlateformes_Niveau1[0][indexCreaPlateformes])
+        if (-CamPosX>>3 == tilemapCreaPlateformes_Niveau1[0][IndexCreaPlateformes])
         {
             // On scanne les emplacements vides
             for(i=0;i<MAX_PLATEFORMES;i++)
@@ -472,10 +473,10 @@ void CreaSprites_Niveau1()
                 if(ptrPlateforme->Init==0)
                 {
                     // tilemapCreaPlateformes_Niveau1[2][indexCreaPlateformes] : ID
-                    ptrPlateforme->ID=tilemapCreaPlateformes_Niveau1[2][indexCreaPlateformes];
+                    ptrPlateforme->ID=tilemapCreaPlateformes_Niveau1[2][IndexCreaPlateformes];
 
                      // tilemapCreaPlateformes_Niveau1[3][indexCreaPlateformes] : MOUVANTE OU NON
-                    ptrPlateforme->Mouvante=tilemapCreaPlateformes_Niveau1[3][indexCreaPlateformes];
+                    ptrPlateforme->Mouvante=tilemapCreaPlateformes_Niveau1[3][IndexCreaPlateformes];
 
                     //VDP_drawInt( ptrPlateforme->Mouvante , 1 , 12 , 6);
                     //VDP_drawInt( ptrPlateforme->Declencheur , 1 , 14 , 6);
@@ -488,7 +489,7 @@ void CreaSprites_Niveau1()
 
                     // POSITION Y
                     // tilemapCreaPlateformes_Niveau1[1][indexCreaPlateformes] : PosY
-                    ptrPlateforme->PosY=(u16)tilemapCreaPlateformes_Niveau1[1][indexCreaPlateformes]<<3;
+                    ptrPlateforme->PosY=(u16)tilemapCreaPlateformes_Niveau1[1][IndexCreaPlateformes]<<3;
 
 
 
@@ -502,7 +503,7 @@ void CreaSprites_Niveau1()
                     }
 
 
-                    indexCreaPlateformes++;
+                    IndexCreaPlateformes++;
                     nb_Plateformes+=1;
                     break;
                 }
@@ -1121,7 +1122,7 @@ void MvtSprites_Niveau1()
                         ptrPlateforme->PosX-=vitesseScrolling;
 
                         // POSITION Y
-                        ptrPlateforme->PosY += *(ptrPlateforme->ptrPosition);                       
+                        ptrPlateforme->PosY += *(ptrPlateforme->ptrPosition);
                         ptrPlateforme->ptrPosition++;
 
                         if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
@@ -1182,7 +1183,7 @@ void MvtSprites_Niveau1()
                         {
                             // POSITION Y
                             ptrPlateforme->PosY -= *(ptrPlateforme->ptrPosition);
-                            
+
                             ptrPlateforme->ptrPosition++;
 
                             if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
@@ -1221,7 +1222,7 @@ void MvtSprites_Niveau1()
                         {
                             // POSITION Y
                             ptrPlateforme->PosY += *(ptrPlateforme->ptrPosition);
-                            
+
                             ptrPlateforme->ptrPosition++;
 
                             if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
@@ -1282,7 +1283,7 @@ void MvtSprites_Niveau1()
 
                         // POSITION Y
                         ptrPlateforme->PosY -= *(ptrPlateforme->ptrPosition);
-                        
+
                         ptrPlateforme->ptrPosition++;
 
                         if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V1[MAX_ETAPES_PF_V1])
@@ -1428,6 +1429,7 @@ void MvtJoueur()
     SpriteJoueur_ *ptrJoueur=&Joueur;
     SpriteDragon_ *ptrDragon=&Dragon;
     SpriteSplash_ *ptrSplash=&Splash;
+    SpriteAura_ *ptrAura=&Aura;
 
 
     //----------------------------------------------------//
@@ -1517,7 +1519,7 @@ void MvtJoueur()
         if(ptrJoueur->Invincible==0)
         {
             Collision_Ennemis();
-        }        
+        }
     }
 
 
@@ -1675,12 +1677,18 @@ void MvtJoueur()
                 {
                     positionX -= GLISSEMENT;
                 }
+
+                // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+                if(movX <= -maxSpeed_G)
+                {
+                    movX = -maxSpeed_G;
+                }
             }
 
             // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
-            if(movX <= -maxSpeed_G)
+            else if(movX <= -maxSpeed_D)
             {
-                movX = -maxSpeed_G;
+                movX = -maxSpeed_D;
             }
         }
 
@@ -1795,7 +1803,7 @@ void MvtJoueur()
             SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
             // JOUEUR //
-            ptrJoueur->Phase=APPARITION;            
+            ptrJoueur->Phase=APPARITION;
             //ptrJoueur->Invincible=1;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
@@ -2000,12 +2008,18 @@ void MvtJoueur()
                 {
                     positionX -= GLISSEMENT;
                 }
+
+                // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+                if(movX <= -maxSpeed_G)
+                {
+                    movX = -maxSpeed_G;
+                }
             }
 
             // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
-            if(movX <= -maxSpeed_G)
+            else if(movX <= -maxSpeed_D)
             {
-                movX = -maxSpeed_G;
+                movX = -maxSpeed_D;
             }
         }
 
@@ -2126,7 +2140,7 @@ void MvtJoueur()
             SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
             // JOUEUR //
-            ptrJoueur->Phase=APPARITION;            
+            ptrJoueur->Phase=APPARITION;
             //ptrJoueur->Invincible=1;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
@@ -2142,7 +2156,7 @@ void MvtJoueur()
             // CHANGEMENT PALETTE //
             PAL_setColor( 10 , 0x0A4C );
             PAL_setColor( 13 , 0x0C6C );
-        } 
+        }
     }
 
 
@@ -2286,7 +2300,7 @@ void MvtJoueur()
                 SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
                 // JOUEUR //
-                ptrJoueur->Phase=APPARITION;            
+                ptrJoueur->Phase=APPARITION;
                 //ptrJoueur->Invincible=1;
                 ptrJoueur->Axe=0;
                 ptrJoueur->PosX=63;
@@ -2378,7 +2392,7 @@ void MvtJoueur()
             SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
             // JOUEUR //
-            ptrJoueur->Phase=APPARITION;            
+            ptrJoueur->Phase=APPARITION;
             //ptrJoueur->Invincible=1;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
@@ -2410,19 +2424,22 @@ void MvtJoueur()
         // SI LE SPLASH EST EN COURS //
         if(ptrSplash->Init==1)
         {
-            ptrSplash->PosX-=vitesseScrolling;
+            if(CamPosX!=-4336)
+            {
+                ptrSplash->PosX-=vitesseScrolling;
+            }
 
             if(ptrSplash->CompteurFrameSplash==0 && ptrSplash->IndexFrameSplash==7)
             {
                 ptrSplash->PosY-=8;
             }
         }
-        
+
         // SI LE SPLASH EST FINI //
         else
         {
             // DESCENTE //
-            if(ptrJoueur->compteurApparition<56)
+            if(ptrJoueur->CompteurApparition<56)
             {
                 ptrJoueur->PosY+=1;
                 positionY=intToFix32(ptrJoueur->PosY);
@@ -2432,7 +2449,7 @@ void MvtJoueur()
             }
 
             // ATTENTE DE LARGAGE //
-            else if(ptrJoueur->compteurApparition>55 && ptrJoueur->compteurApparition<255)
+            else if(ptrJoueur->CompteurApparition>55 && ptrJoueur->CompteurApparition<255)
             {
                 //--------------------------//
                 //         POSITION X       //
@@ -2476,10 +2493,10 @@ void MvtJoueur()
             }
 
             // ENVOL DRAGON APRES LARGAGE //
-            else if(ptrJoueur->compteurApparition>254)
+            else if(ptrJoueur->CompteurApparition>254)
             {
                 ptrDragon->Phase=SORTIE_DRAGON;
-                ptrJoueur->compteurApparition=0;
+                ptrJoueur->CompteurApparition=0;
                 ptrJoueur->Phase=CHUTE;
                 ptrJoueur->Invincible=1;
             }
@@ -2487,7 +2504,7 @@ void MvtJoueur()
             // SI LE DRAGON NE S'ENVOLE PAS, ON INCREMENTE LE COMPTEUR //
             if(ptrDragon->Phase!=SORTIE_DRAGON)
             {
-                ptrJoueur->compteurApparition++;
+                ptrJoueur->CompteurApparition++;
             }
         }
     }
@@ -2555,8 +2572,31 @@ void MvtJoueur()
     }
 
 
-
-
+    //////////////////
+    //     AURA     //
+    //////////////////
+    if(ptrAura->Init==1)
+    {
+        // JOUEUR VERS LA DROITE
+        if(ptrJoueur->Axe==0)
+        {
+            SPR_setHFlip(ptrAura->SpriteA, FALSE);
+            ptrAura->PosX=ptrJoueur->PosX+19;
+            ptrAura->PosY=ptrJoueur->PosY+5;
+        }
+        // JOUEUR VERS LA GAUCHE
+        else
+        {
+            SPR_setHFlip(ptrAura->SpriteA, TRUE);
+            ptrAura->PosX=ptrJoueur->PosX-11;
+            ptrAura->PosY=ptrJoueur->PosY+5;
+        }
+    }
+    else
+    {
+        ptrAura->PosX=0;
+        ptrAura->PosY=-24;
+    }
 
 
     // JOUEUR //
@@ -2565,11 +2605,8 @@ void MvtJoueur()
     SPR_setPosition(ptrDragon->SpriteD, ptrDragon->PosX, ptrDragon->PosY);
     // SPLASH //
     SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
-
-
-    //SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7);
-    //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7);
-
+    // AURA //
+    SPR_setPosition(ptrAura->SpriteA, ptrAura->PosX, ptrAura->PosY);
 }
 
 // TILES //
@@ -2883,7 +2920,7 @@ void TilesSplash()
 {
     SpriteDragon_ *ptrDragon=&Dragon;
     SpriteSplash_ *ptrSplash=&Splash;
-    
+
     SPR_setFrame(ptrSplash->SpriteS,(s16)ptrSplash->IndexFrameSplash);
 
     ptrSplash->CompteurFrameSplash+=1;
@@ -2908,11 +2945,40 @@ void TilesSplash()
     }
 }
 
+void TilesAura()
+{
+    SpriteAura_ *ptrAura=&Aura;
+
+    SPR_setFrame(ptrAura->SpriteA,(s16)ptrAura->IndexFrameAura);
+
+    ptrAura->CompteurFrameAura+=1;
+
+    // MAJ des tiles toutes les 2 images (0 à 1)
+    if(ptrAura->CompteurFrameAura>1)
+    {
+        ptrAura->CompteurFrameAura=0;
+        ptrAura->IndexFrameAura+=1;
+
+        // Cycle de FRAME de 0 à 3 (4 étapes)
+        if(ptrAura->IndexFrameAura>3)
+        {
+            ptrAura->IndexFrameAura=0;
+            ptrAura->Init=0;
+
+            ptrAura->PosX=0;
+            ptrAura->PosY=-24;
+
+        }
+    }
+
+}
+
 void TilesJoueur()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
     SpriteDragon_ *ptrDragon=&Dragon;
     SpriteSplash_ *ptrSplash=&Splash;
+    SpriteAura_ *ptrAura=&Aura;
 
     //--------------//
     //    DRAGON    //
@@ -2923,12 +2989,22 @@ void TilesJoueur()
     }
 
 
-    //--------------//
+     //--------------//
     //    SPLASH    //
     //--------------//
     if(ptrSplash->Init==1)
     {
         TilesSplash();
+    }
+
+
+
+    //--------------//
+    //     AURA     //
+    //--------------//
+    if(ptrAura->Init==1)
+    {
+        TilesAura();
     }
 
 
@@ -3059,7 +3135,7 @@ void TilesJoueur()
     else if(ptrJoueur->Phase==APPARITION)
     {
         SpriteSplash_ *ptrSplash=&Splash;
-        
+
         // SI LE SPLASH EST TERMINE //
         if(ptrSplash->Init==0)
         {

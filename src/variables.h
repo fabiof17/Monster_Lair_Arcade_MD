@@ -37,6 +37,8 @@
 #define SORTIE_DRAGON           2
 #define DUREE_INVINCIBLE        119
 
+#define ENERGIE_DEPART          7
+
 
 ///////////////////////////////////
 //		Variables principales    //
@@ -51,7 +53,13 @@ extern bool PauseJeu;
 extern u8 num_Niveau;
 extern u8 selectJoueur;
 
+extern u8 CompteurEnergie;
+extern u8 Energie;
+
 extern char texteSortie[2];
+
+extern u16 AdresseVram_BarreEnergie;
+extern u16 AdresseVram_BarreVierge;
 
 ///////////////////////////////////
 //		Variables scrolling      //
@@ -94,7 +102,7 @@ typedef struct
     s16 pt_Coll2_X;
     s16 pt_Coll2_Y;
 
-    u16 compteurApparition;
+    u16 CompteurApparition;
     bool Invincible;
     u8 CompteurInvincible;
     bool HorsChamp;
@@ -181,7 +189,7 @@ typedef struct
 } SpritePlateforme_;
 
 extern SpritePlateforme_ Plateforme[MAX_PLATEFORMES];
-extern u8 indexCreaPlateformes;
+extern u8 IndexCreaPlateformes;
 extern u8 nb_Plateformes;
 extern bool contactPlt_OK;
 
@@ -218,6 +226,22 @@ typedef struct
 } SpriteSplash_;
 
 extern SpriteSplash_ Splash;
+
+
+//----------------------------------------------------//
+//                        AURA                        //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteA;
+    bool Init;
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+    u8 CompteurFrameAura;       // Compteur pour passer à la prochaine FRAME AURA
+    u8 IndexFrameAura;          // Index de FRAME AURA
+} SpriteAura_;
+
+extern SpriteAura_ Aura;
 
 
 

@@ -12,6 +12,7 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
     SpriteDragon_ *ptrDragon=&Dragon;
+    SpriteAura_ *ptrAura=&Aura;
 
     // START //
     if (changed & state & BUTTON_START)
@@ -54,7 +55,7 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
         {
             ptrJoueur->Phase=CHUTE;
             ptrDragon->Phase=SORTIE_DRAGON;
-            ptrJoueur->compteurApparition=0;
+            ptrJoueur->CompteurApparition=0;
             ptrJoueur->Invincible=1;
 
         }
@@ -68,6 +69,12 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
         {
             // SAUT + TIR
             ptrJoueur->Phase=SAUT_TIR;
+
+            // L'AURA SE DECLENCHE
+            if(ptrAura->Init==0)
+            {
+                ptrAura->Init=1;
+            }
         }
 
         // SI JOUEUR ARRET OU MARCHE //
@@ -75,6 +82,12 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
         {
             // MARCHE + TIR
             ptrJoueur->Phase=TIR;
+
+            // L'AURA SE DECLENCHE
+            if(ptrAura->Init==0)
+            {
+                ptrAura->Init=1;
+            }
         }
     }
 
