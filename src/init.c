@@ -508,9 +508,18 @@ void InitNiveau1()
     // On récupère l'adresse en Vram des tiles de la tête
     AdresseVram_Tete=ind;
 
-    // SI JOUEUR FEMME
-    // TETE FEMME DANS LE LAYER WINDOW
-    if(selectJoueur==1)
+    ///////////////////
+    //  TETE JOUEUR  //
+    ///////////////////
+    if(selectJoueur==0)
+    {
+        VDP_loadTileSet(&tileset_TETE_H, ind, DMA);
+        VDP_setTileMapEx(WINDOW, image_TETE_H.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);
+ 
+        // we offset tile index by the number of tiles previously loaded in VRAM
+        ind += tileset_TETE_H.numTile;
+    }
+    else
     {
         VDP_loadTileSet(&tileset_TETE_F, ind, DMA);
         VDP_setTileMapEx(WINDOW, image_TETE_F.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);

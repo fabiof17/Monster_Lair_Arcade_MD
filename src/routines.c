@@ -92,8 +92,22 @@ void Maj_BarreEnergie(u8 valeurCompteur, u8 valeurEnergie)
 
 void Init_BarreEnergie()
 {
+    ///////////////////
+    //  TETE JOUEUR  //
+    ///////////////////
+    if(selectJoueur==0)
+    {
+        VDP_loadTileSet(&tileset_TETE_H, AdresseVram_Tete, DMA);
+    }
+    else
+    {
+        VDP_loadTileSet(&tileset_TETE_F, AdresseVram_Tete, DMA);
+    }
+
     VDP_loadTileSet(&tileset_BARRE_VERTE1, AdresseVram_BarreEnergie, DMA);
     
+
+
     u8 i;
     
     for (i=0; i<ENERGIE_DEPART; i++)
@@ -1512,8 +1526,6 @@ void Phases_Joueur()
         }
         //return;
     }
-
-    //VDP_drawInt( value , 1 , 16 , 6);
 }
 
 void MvtJoueur()
@@ -2430,6 +2442,10 @@ void MvtJoueur()
     //----------------------------------------------------//
     else if(ptrJoueur->Phase==TOUCHE)
     {
+        VDP_loadTileSet(&tileset_TETE_MORT, AdresseVram_Tete, DMA);
+        //VDP_setTileMapEx(WINDOW, image_TETE_F.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Tete), 1, 1, 0, 0, 2, 2, DMA);
+
+        
         // LA BARRE D'ENERGIE SE VIDE //
         Vider_BarreEnergie();
         CompteurEnergie=0;
