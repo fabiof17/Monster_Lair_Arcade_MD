@@ -1,5 +1,7 @@
 IMAGE image_NIVEAU1_WINDOW "maps/global/tiles_NIVEAU1_WINDOW.png" BEST DUPLICATE
+
 IMAGE image_TETE_F "maps/global/tiles_TETE_F.png" BEST DUPLICATE
+IMAGE image_TETE_MORT "maps/global/tiles_TETE_MORT.png" BEST DUPLICATE
 
 IMAGE image_BARRE_ORANGE "maps/global/tiles_BARRE_ORANGE.png" NONE DUPLICATE
 IMAGE image_BARRE_JAUNE "maps/global/tiles_BARRE_JAUNE.png" NONE DUPLICATE

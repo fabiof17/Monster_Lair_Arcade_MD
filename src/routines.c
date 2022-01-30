@@ -62,6 +62,8 @@ void Maj_BarreEnergie(u8 valeurCompteur, u8 valeurEnergie)
 
 void Init_BarreEnergie()
 {
+    VDP_loadTileSet(&tileset_BARRE_VERTE1, AdresseVram_BarreEnergie, DMA);
+    
     u8 i;
     
     for (i=0; i<ENERGIE_DEPART; i++)
@@ -75,14 +77,9 @@ void Init_BarreEnergie()
     }
 }
 
-void Vide_BarreEnergie()
+void Vider_BarreEnergie()
 {
-    u8 i;
-    
-    for (i=0; i<TAILLE_BARRE; i++)
-    {
-        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVierge), 4+i, 3, 0, 0, 1, 2, DMA);
-    }
+    VDP_loadTileSet(&tileset_BARRE_VIERGE, AdresseVram_BarreEnergie, DMA);
 }
 
 // SCROLLING //
@@ -2366,6 +2363,11 @@ void MvtJoueur()
                 ptrSplash->PosY=168;
                 SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
+                // LA BARRE D'ENERGIE SE VIDE //
+                Vider_BarreEnergie();
+                CompteurEnergie=0;
+                Energie=0;
+
                 // JOUEUR //
                 ptrJoueur->Phase=APPARITION;
                 //ptrJoueur->Invincible=1;
@@ -2376,9 +2378,6 @@ void MvtJoueur()
                 positionY=intToFix32(16);
                 movX=0;
                 SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
-
-                // DRAGON //
-                //ptrDragon->Phase=VOL_DRAGON;
 
                 // CHANGEMENT PALETTE //
                 PAL_setColor( 10 , 0x0A4C );
@@ -2401,7 +2400,7 @@ void MvtJoueur()
     else if(ptrJoueur->Phase==TOUCHE)
     {
         // LA BARRE D'ENERGIE SE VIDE //
-        Vide_BarreEnergie();
+        Vider_BarreEnergie();
         CompteurEnergie=0;
         Energie=0;
         

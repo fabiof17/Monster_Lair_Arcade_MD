@@ -504,6 +504,10 @@ void InitNiveau1()
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += tileset_NIVEAU1_WINDOW.numTile;
 
+
+    // On récupère l'adresse en Vram des tiles de la tête
+    AdresseVram_Tete=ind;
+
     // SI JOUEUR FEMME
     // TETE FEMME DANS LE LAYER WINDOW
     if(selectJoueur==1)

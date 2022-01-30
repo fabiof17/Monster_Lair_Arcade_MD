@@ -19,6 +19,8 @@ u8 Energie;
 
 char texteSortie[2];
 
+u16 AdresseVram_Tete=0;
+
 u16 AdresseVram_BarreEnergie=0;
 u16 AdresseVram_BarreVierge=0;
 

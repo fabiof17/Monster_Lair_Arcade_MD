@@ -10,6 +10,7 @@ extern const TileSet tileset_BARRE_VERTE1;
 extern const TileSet tileset_BARRE_VIERGE;
 extern const Image image_NIVEAU1_WINDOW;
 extern const Image image_TETE_F;
+extern const Image image_TETE_MORT;
 extern const Image image_BARRE_ORANGE;
 extern const Image image_BARRE_JAUNE;
 extern const Image image_BARRE_VERTE1;
