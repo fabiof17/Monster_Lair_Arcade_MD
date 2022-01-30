@@ -52,11 +52,41 @@ void Maj_CompteurEnergie()
 
 void Maj_BarreEnergie(u8 valeurCompteur, u8 valeurEnergie)
 {
-    // SI LE COMPTEUR EST A 0 //
-    if(valeurCompteur==0)
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    if(ptrJoueur->Phase!=TOUCHE && ptrJoueur->Phase!=APPARITION)
     {
-        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVierge), 4 + (u16)valeurEnergie, 3, 0, 0, 1, 2, DMA);
- 
+        // SI LE COMPTEUR EST A 0 //
+        if(valeurCompteur==0)
+        {
+            // Pointeur vers la tilemap à charger pour la barre d'énergie //
+            const TileSet *ptrBARRE;
+
+            if(valeurEnergie<5)
+            {
+                ptrBARRE=&tileset_BARRE_ORANGE;
+                //break;
+            }
+            else if(valeurEnergie>4 && valeurEnergie<7)
+            {
+                ptrBARRE=&tileset_BARRE_JAUNE;
+                //break;
+            }
+            else if(valeurEnergie>6 && valeurEnergie<8)
+            {
+                ptrBARRE=&tileset_BARRE_VERTE1;
+                //break;
+            }
+            else if(valeurEnergie>7)
+            {
+                ptrBARRE=&tileset_BARRE_VERTE2;
+                //break;
+            }
+
+            VDP_loadTileSet(ptrBARRE, AdresseVram_BarreEnergie, DMA);
+            VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVierge), 4 + (u16)valeurEnergie, 3, 0, 0, 1, 2, DMA);
+    
+        }
     }
 }
 
