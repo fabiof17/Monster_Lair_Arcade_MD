@@ -1,12 +1,12 @@
-out/src/variables.o: src/variables.c C:/sgdk/inc/genesis.h \
- C:/sgdk/inc/config.h C:/sgdk/inc/asm.h C:/sgdk/inc/types.h \
- C:/sgdk/inc/sys.h C:/sgdk/inc/sram.h C:/sgdk/inc/mapper.h \
- C:/sgdk/inc/memory.h C:/sgdk/inc/tools.h C:/sgdk/inc/bmp.h \
- C:/sgdk/inc/maths.h C:/sgdk/inc/vdp.h C:/sgdk/inc/pal.h \
- C:/sgdk/inc/dma.h C:/sgdk/inc/vdp_tile.h C:/sgdk/inc/vdp_bg.h \
- C:/sgdk/inc/map.h C:/sgdk/inc/font.h C:/sgdk/res/libres.h \
- C:/sgdk/inc/string.h C:/sgdk/inc/tab_cnv.h C:/sgdk/inc/maths3D.h \
- C:/sgdk/inc/vdp_dma.h C:/sgdk/inc/vdp_spr.h C:/sgdk/inc/vdp_pal.h \
- C:/sgdk/inc/vram.h C:/sgdk/inc/sprite_eng.h C:/sgdk/inc/sound.h \
- C:/sgdk/inc/xgm.h C:/sgdk/inc/z80_ctrl.h C:/sgdk/inc/ym2612.h \
- C:/sgdk/inc/psg.h C:/sgdk/inc/joy.h C:/sgdk/inc/timer.h src/variables.h
+out/src/variables.o: src/variables.c C:/SGDK/inc/genesis.h \
+ C:/SGDK/inc/config.h C:/SGDK/inc/asm.h C:/SGDK/inc/types.h \
+ C:/SGDK/inc/sys.h C:/SGDK/inc/sram.h C:/SGDK/inc/mapper.h \
+ C:/SGDK/inc/memory.h C:/SGDK/inc/tools.h C:/SGDK/inc/bmp.h \
+ C:/SGDK/inc/maths.h C:/SGDK/inc/vdp.h C:/SGDK/inc/pal.h \
+ C:/SGDK/inc/dma.h C:/SGDK/inc/vdp_tile.h C:/SGDK/inc/vdp_bg.h \
+ C:/SGDK/inc/map.h C:/SGDK/inc/font.h C:/SGDK/res/libres.h \
+ C:/SGDK/inc/string.h C:/SGDK/inc/tab_cnv.h C:/SGDK/inc/maths3D.h \
+ C:/SGDK/inc/vdp_dma.h C:/SGDK/inc/vdp_spr.h C:/SGDK/inc/vdp_pal.h \
+ C:/SGDK/inc/vram.h C:/SGDK/inc/sprite_eng.h C:/SGDK/inc/sound.h \
+ C:/SGDK/inc/xgm.h C:/SGDK/inc/z80_ctrl.h C:/SGDK/inc/ym2612.h \
+ C:/SGDK/inc/psg.h C:/SGDK/inc/joy.h C:/SGDK/inc/timer.h src/variables.h

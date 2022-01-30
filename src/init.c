@@ -420,7 +420,7 @@ void InitNiveau1()
 
     PosYinvincible=0;
 
-    CompteurEnergie=0;
+    CompteurEnergie=1;
     Energie=ENERGIE_DEPART;
           
     // Position X initiale du sprite : 64 pixels

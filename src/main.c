@@ -53,11 +53,16 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
         // LARGAGE APRES RÉAPPARITION //
         else if(ptrJoueur->Phase==APPARITION)
         {
-            ptrJoueur->Phase=CHUTE;
             ptrDragon->Phase=SORTIE_DRAGON;
+
+            ptrJoueur->Phase=CHUTE;
             ptrJoueur->CompteurApparition=0;
             ptrJoueur->Invincible=1;
 
+            // REINIT BARRE D'ENERGIE //
+            Energie=ENERGIE_DEPART;
+            CompteurEnergie=0;
+            Init_BarreEnergie();
         }
     }
 
@@ -156,6 +161,9 @@ void MainLoop()
 
                 MvtJoueur();
                 TilesJoueur();
+
+                Maj_CompteurEnergie();
+                Maj_BarreEnergie(CompteurEnergie, Energie);
 
             }
 

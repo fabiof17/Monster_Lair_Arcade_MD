@@ -38,6 +38,8 @@
 #define DUREE_INVINCIBLE        119
 
 #define ENERGIE_DEPART          7
+#define DELAI_MAJ_ENERGIE       239
+#define TAILLE_BARRE            14
 
 
 ///////////////////////////////////
@@ -56,10 +58,10 @@ extern u8 selectJoueur;
 extern u8 CompteurEnergie;
 extern u8 Energie;
 
-extern char texteSortie[2];
-
 extern u16 AdresseVram_BarreEnergie;
 extern u16 AdresseVram_BarreVierge;
+
+extern char texteSortie[2];
 
 ///////////////////////////////////
 //		Variables scrolling      //
@@ -145,7 +147,7 @@ extern u16 PosYinvincible;
 typedef struct
 {
     Sprite* SpriteE;
-    u8 Phase;                   // 0 = ARRET / 1 = MARCHE
+    u8 Etat;                    // 0 = VIVANT / 1 = MORT
     bool Axe;                   // 0 = Bas / 1 = Haut
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type d'ennemi

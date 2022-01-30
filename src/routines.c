@@ -17,6 +17,73 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 	VDP_drawText(texteSortie,x,y);
 }
 
+// BARRE ENERGIE //
+void Maj_CompteurEnergie()
+{
+    // LA BARRE SE BLOQUE A LA FIN DU NIVEAU
+    if(CamPosX>-4336)
+    {
+        SpriteJoueur_ *ptrJoueur=&Joueur;
+        
+        // LA BARRE SE BLOQUE SI JOUEUR TOUCHE OU EN COURS D'APPARITION //
+        if(ptrJoueur->Phase!=TOUCHE && ptrJoueur->Phase!=APPARITION)
+        {            
+            CompteurEnergie++;
+
+            if(CompteurEnergie>DELAI_MAJ_ENERGIE)
+            {
+                // COMPTEUR REMIS A 0 //
+                CompteurEnergie=0;
+
+                // ON ENLEVE 1 BARRE D'ENERGIE //
+                Energie-=1;
+
+                // SI L'ENERGIE TOMBE A 0 //
+                if(Energie==0)
+                {
+                    ptrJoueur->Phase=TOUCHE;
+                    ptrJoueur->ptrPosition=&anim_TOUCHE[0];
+                    Energie=ENERGIE_DEPART;
+                }
+            }
+        }
+    }
+}
+
+void Maj_BarreEnergie(u8 valeurCompteur, u8 valeurEnergie)
+{
+    // SI LE COMPTEUR EST A 0 //
+    if(valeurCompteur==0)
+    {
+        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVierge), 4 + (u16)valeurEnergie, 3, 0, 0, 1, 2, DMA);
+ 
+    }
+}
+
+void Init_BarreEnergie()
+{
+    u8 i;
+    
+    for (i=0; i<ENERGIE_DEPART; i++)
+    {
+        VDP_setTileMapEx(WINDOW, image_BARRE_VERTE1.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 4+i, 3, 0, 0, 1, 2, DMA);
+    }
+
+    for (i=ENERGIE_DEPART; i<ENERGIE_DEPART+7; i++)
+    {
+        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVierge), 4+i, 3, 0, 0, 1, 2, DMA);
+    }
+}
+
+void Vide_BarreEnergie()
+{
+    u8 i;
+    
+    for (i=0; i<TAILLE_BARRE; i++)
+    {
+        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVierge), 4+i, 3, 0, 0, 1, 2, DMA);
+    }
+}
 
 // SCROLLING //
 void Scrolling_Niveau1()
@@ -400,7 +467,7 @@ void CreaSprites_Niveau1()
                     ptrEnnemi->ID=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
 
                     ptrEnnemi->Init=1;
-                    ptrEnnemi->Phase=MARCHE;
+                    ptrEnnemi->Etat=0;
                     ptrEnnemi->PointsVie=1;
 
                     ptrEnnemi->CompteurPosition=0;
@@ -2333,6 +2400,11 @@ void MvtJoueur()
     //----------------------------------------------------//
     else if(ptrJoueur->Phase==TOUCHE)
     {
+        // LA BARRE D'ENERGIE SE VIDE //
+        Vide_BarreEnergie();
+        CompteurEnergie=0;
+        Energie=0;
+        
         //--------------------------//
         //         POSITION X       //
         //--------------------------//
@@ -2424,11 +2496,13 @@ void MvtJoueur()
         // SI LE SPLASH EST EN COURS //
         if(ptrSplash->Init==1)
         {
+            // SI LE SCROLLING EST EN COURS, LE SPLASH SE DEPLACE //
             if(CamPosX!=-4336)
             {
                 ptrSplash->PosX-=vitesseScrolling;
             }
 
+            // QUAND L'ANIM DU SPLASH EST FINE, IL DEVIENT HORS CHAMP //
             if(ptrSplash->CompteurFrameSplash==0 && ptrSplash->IndexFrameSplash==7)
             {
                 ptrSplash->PosY-=8;
@@ -2496,9 +2570,15 @@ void MvtJoueur()
             else if(ptrJoueur->CompteurApparition>254)
             {
                 ptrDragon->Phase=SORTIE_DRAGON;
-                ptrJoueur->CompteurApparition=0;
+
                 ptrJoueur->Phase=CHUTE;
+                ptrJoueur->CompteurApparition=0;
                 ptrJoueur->Invincible=1;
+
+                // REINIT BARRE D'ENERGIE //
+                Energie=ENERGIE_DEPART;
+                CompteurEnergie=0;
+                Init_BarreEnergie();
             }
 
             // SI LE DRAGON NE S'ENVOLE PAS, ON INCREMENTE LE COMPTEUR //

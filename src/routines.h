@@ -1,6 +1,10 @@
 #ifndef _ROUTINES_H
 #define _ROUTINES_H
 
+extern void Maj_CompteurEnergie();
+extern void Maj_BarreEnergie();
+extern void Init_BarreEnergie();
+
 extern void Scrolling_Niveau1();
 extern void Tiles_Niveau1();
 extern void ChgtPalette_Niveau1();
