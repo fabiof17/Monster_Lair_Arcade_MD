@@ -177,7 +177,7 @@ void MainLoop()
 
 
             // DEBUG
-            //VDP_drawInt( Splash.CompteurFrameSplash , 1 , 12 , 6);
+            VDP_drawInt( Joueur.Phase , 1 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();

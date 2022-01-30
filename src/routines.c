@@ -1466,14 +1466,13 @@ void Phases_Joueur()
     ///////////////
     //   ARRET   //
     ///////////////
-    if(value==0)
+    if((value & BUTTON_DIR)==0)
     {
-        // Si le joueur ne tombe pas
         if(ptrJoueur->Phase!=SAUT && ptrJoueur->Phase!=TIR && ptrJoueur->Phase!=SAUT_TIR && ptrJoueur->Phase!=CHUTE && ptrJoueur->Phase!=TOUCHE && ptrJoueur->Phase!=APPARITION)
         {
             ptrJoueur->Phase=ARRET;
         }
-        return;
+        //return;
     }
 
     ////////////////
@@ -1492,7 +1491,7 @@ void Phases_Joueur()
         {
             ptrJoueur->Axe=0;
         }
-        return;
+        //return;
     }
 
     ////////////////
@@ -1511,8 +1510,10 @@ void Phases_Joueur()
         {
             ptrJoueur->Axe=1;
         }
-        return;
+        //return;
     }
+
+    //VDP_drawInt( value , 1 , 16 , 6);
 }
 
 void MvtJoueur()
