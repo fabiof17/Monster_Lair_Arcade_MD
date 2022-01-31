@@ -7,6 +7,7 @@
 #include "palettes.h"
 #include "routines.h"
 #include "sprites_JEU.h"
+#include "musique.h"
 
 void joyEventCallback(u16 joy, u16 changed, u16 state)
 {
@@ -26,7 +27,8 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
             SPR_setPosition(sprite_Pause[0], 140, 116);
             SPR_setPosition(sprite_Pause[1], 172, 116);
 
-            //break;
+            //XGM_pausePlay(Niveau1);
+
         }
         // Sortir du mode Pause //
         else if (PauseJeu==1)
@@ -36,6 +38,8 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
 
             SPR_setPosition(sprite_Pause[0], -40, 0);
             SPR_setPosition(sprite_Pause[1], -32, 0);
+
+           //XGM_resumePlay(Niveau1);
         }
     }
 
@@ -53,16 +57,19 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
         // LARGAGE APRES RÉAPPARITION //
         else if(ptrJoueur->Phase==APPARITION)
         {
-            ptrDragon->Phase=SORTIE_DRAGON;
+            if(ptrJoueur->CompteurApparition>55 && ptrJoueur->CompteurApparition<255)
+            {
+                ptrDragon->Phase=SORTIE_DRAGON;
 
-            ptrJoueur->Phase=CHUTE;
-            ptrJoueur->CompteurApparition=0;
-            ptrJoueur->Invincible=1;
+                ptrJoueur->Phase=CHUTE;
+                ptrJoueur->CompteurApparition=0;
+                ptrJoueur->Invincible=1;
 
-            // REINIT BARRE D'ENERGIE //
-            Energie=ENERGIE_DEPART;
-            CompteurEnergie=0;
-            Init_BarreEnergie();
+                // REINIT BARRE D'ENERGIE //
+                Energie=ENERGIE_DEPART;
+                CompteurEnergie=0;
+                Init_BarreEnergie();
+            }
         }
     }
 
@@ -144,10 +151,11 @@ void MainLoop()
     switch (num_Niveau)
     {
         case 1:
+
+        XGM_startPlay(Niveau1);
+
         while(TRUE)
         {
-
-            //u16 value=JOY_readJoypad(JOY_1);
 
             // Jeu en Pause ?
             if(PauseJeu==0)
