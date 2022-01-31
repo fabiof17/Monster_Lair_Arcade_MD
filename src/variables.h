@@ -19,6 +19,7 @@
 #define MAX_ETAPES_POULPE1      50
 #define MAX_ETAPES_POULPE2      55
 #define MAX_ETAPES_PF_V1        69
+#define MAX_ETAPES_PF_V2        28
 
 #define MAX_ENNEMIS             11
 #define MAX_PLATEFORMES         7

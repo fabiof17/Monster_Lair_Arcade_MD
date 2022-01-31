@@ -609,6 +609,10 @@ void CreaSprites_Niveau1()
                     {
                         ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
                     }
+                    else if(ptrPlateforme->ID==5)
+                    {
+                        ptrPlateforme->ptrPosition=&anim_PLATEFORME_V2[0];
+                    }
 
 
                     IndexCreaPlateformes++;
@@ -1360,8 +1364,19 @@ void MvtSprites_Niveau1()
                     // PLATEFORME VERTICALE RAPIDE //
                     /////////////////////////////////
                     case 5:
-                        // Position X
+                        // POSITION X
                         ptrPlateforme->PosX-=vitesseScrolling;
+
+                        // POSITION Y
+                        ptrPlateforme->PosY += *(ptrPlateforme->ptrPosition);
+
+                        ptrPlateforme->ptrPosition++;
+
+                        if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_V2[MAX_ETAPES_PF_V2])
+                        {
+                            ptrPlateforme->ptrPosition=&anim_PLATEFORME_V2[0];
+                        }
+
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
                         ptrPlateforme->pt_Coll1_X=ptrPlateforme->PosX;
