@@ -152,7 +152,7 @@ void MainLoop()
     {
         case 1:
 
-        XGM_startPlay(Niveau1);
+        //XGM_startPlay(Niveau1_Remix);
 
         while(TRUE)
         {
@@ -185,7 +185,7 @@ void MainLoop()
 
 
             // DEBUG
-            //VDP_drawInt( Joueur.Phase , 1 , 12 , 6);
+            //VDP_drawInt( Joueur.PosY , 1 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();
