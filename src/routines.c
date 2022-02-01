@@ -17,6 +17,8 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 	VDP_drawText(texteSortie,x,y);
 }
 
+
+
 // BARRE ENERGIE //
 void Maj_CompteurEnergie()
 {
@@ -126,6 +128,8 @@ void Vider_BarreEnergie()
     VDP_loadTileSet(&tileset_BARRE_VIERGE, AdresseVram_BarreEnergie, DMA);
 }
 
+
+
 // SCROLLING //
 void Scrolling_Niveau1()
 {
@@ -232,6 +236,7 @@ void ChgtPalette_Niveau1()
         PAL_setPaletteColors(48, &palette_NIVEAU1_BGA2, DMA);
     }
 }
+
 
 
 // COLLISIONS //
@@ -466,6 +471,7 @@ void Collision_Plateformes()
 }
 
 
+
 // SPRITES NIVEAU 1 //
 void CreaSprites_Niveau1()
 {
@@ -585,9 +591,6 @@ void CreaSprites_Niveau1()
 
                      // tilemapCreaPlateformes_Niveau1[3][indexCreaPlateformes] : MOUVANTE OU NON
                     ptrPlateforme->Mouvante=tilemapCreaPlateformes_Niveau1[3][IndexCreaPlateformes];
-
-                    //VDP_drawInt( ptrPlateforme->Mouvante , 1 , 12 , 6);
-                    //VDP_drawInt( ptrPlateforme->Declencheur , 1 , 14 , 6);
 
                     ptrPlateforme->Init=1;
                     ptrPlateforme->Declencheur=0;
@@ -1484,6 +1487,7 @@ void MvtSprites_Niveau1()
 }
 
 
+
 // JOUEUR //
 void Phases_Joueur()
 {
@@ -1501,7 +1505,6 @@ void Phases_Joueur()
         {
             ptrJoueur->Phase=ARRET;
         }
-        //return;
     }
 
     ////////////////
@@ -1520,7 +1523,6 @@ void Phases_Joueur()
         {
             ptrJoueur->Axe=0;
         }
-        //return;
     }
 
     ////////////////
@@ -1539,7 +1541,18 @@ void Phases_Joueur()
         {
             ptrJoueur->Axe=1;
         }
-        //return;
+    }
+
+    ////////////////
+    //    HAUT    //
+    ////////////////
+    else if(value & BUTTON_UP || value & BUTTON_DOWN)
+    {
+        // Si joueur marche
+        if(ptrJoueur->Phase==MARCHE)
+        {
+            ptrJoueur->Phase=ARRET;
+        }
     }
 }
 
@@ -1988,12 +2001,18 @@ void MvtJoueur()
                 {
                     positionX -= GLISSEMENT;
                 }
+
+                // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+                if(movX <= -maxSpeed_G)
+                {
+                    movX = -maxSpeed_G;
+                }
             }
 
             // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
-            if(movX <= -maxSpeed_G)
+            else if(movX <= -maxSpeed_D)
             {
-                movX = -maxSpeed_G;
+                movX = -maxSpeed_D;
             }
         }
 
@@ -2749,6 +2768,8 @@ void MvtJoueur()
     // AURA //
     SPR_setPosition(ptrAura->SpriteA, ptrAura->PosX, ptrAura->PosY);
 }
+
+
 
 // TILES //
 void TilesBloque()
