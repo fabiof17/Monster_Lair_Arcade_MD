@@ -15,7 +15,7 @@
 #define MAX_POS_G       FIX32(11L)
 
 #define MAX_ETAPES_SAUT         40
-#define MAX_ETAPES_TOUCHE       38
+#define MAX_ETAPES_TOUCHE       37
 #define MAX_ETAPES_POULPE1      50
 #define MAX_ETAPES_POULPE2      55
 #define MAX_ETAPES_PF_V1        69

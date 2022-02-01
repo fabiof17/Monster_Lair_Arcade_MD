@@ -325,9 +325,9 @@ void Collision_Ennemis()
                                 if(ptrJoueur->PosY <= ptrEnnemi->PosY+24)
                                 {
                                     ptrJoueur->Phase=TOUCHE;
+                                    ptrJoueur->ptrPosition=&anim_SAUT[0];
                                     ptrJoueur->ptrPosition=&anim_TOUCHE[0];
                                     return;
-
                                 }
                             }
                         }
@@ -451,14 +451,19 @@ void Collision_Plateformes()
                                 ptrJoueur->ptrPosition=&anim_SAUT[0];
 
 
-
                                 if((value & BUTTON_DIR) == 0)
                                 {
-                                    ptrJoueur->Phase=ARRET;
+                                    if(ptrJoueur->Phase!=TIR)
+                                    {
+                                        ptrJoueur->Phase=ARRET;
+                                    }
                                 }
                                 else if(value & BUTTON_RIGHT || value & BUTTON_LEFT)
                                 {
-                                    ptrJoueur->Phase=MARCHE;
+                                    if(ptrJoueur->Phase!=TIR)
+                                    {
+                                        ptrJoueur->Phase=MARCHE;
+                                    }
                                 }
                                 return;
                             }
@@ -1543,10 +1548,10 @@ void Phases_Joueur()
         }
     }
 
-    ////////////////
-    //    HAUT    //
-    ////////////////
-    else if(value & BUTTON_UP || value & BUTTON_DOWN)
+    ///////////////////////
+    //    HAUT OU BAS    //
+    ///////////////////////
+    else if(value & (BUTTON_UP | BUTTON_DOWN))
     {
         // Si joueur marche
         if(ptrJoueur->Phase==MARCHE)
@@ -1831,7 +1836,7 @@ void MvtJoueur()
         //       AUCUN BOUTON DE DIRECTION      //
         //////////////////////////////////////////
 
-        else if((value & BUTTON_DIR) == 0)
+        else if((value & BUTTON_DIR) == 0 || value & (BUTTON_UP | BUTTON_DOWN) )
         {
             //--------------------------//
             //         POSITION X       //
@@ -2020,7 +2025,7 @@ void MvtJoueur()
         //       AUCUN BOUTON DE DIRECTION      //
         //////////////////////////////////////////
 
-        else if((value & BUTTON_DIR) == 0)
+        else if((value & BUTTON_DIR) == 0 || value & (BUTTON_UP | BUTTON_DOWN) )
         {
             //--------------------------//
             //         POSITION X       //
@@ -2168,7 +2173,7 @@ void MvtJoueur()
         //       AUCUN BOUTON DE DIRECTION      //
         //////////////////////////////////////////
 
-        else if((value & BUTTON_DIR) == 0)
+        else if((value & BUTTON_DIR) == 0 || value & (BUTTON_UP | BUTTON_DOWN) )
         {
             //--------------------------//
             //         POSITION X       //
@@ -2492,31 +2497,10 @@ void MvtJoueur()
         // SI ON N'EST PAS A LA FIN DU NIVEAU
         if(CamPosX!=-4336)
         {
-            if(movX>= FIX32(-1L))
-            {
-                positionX -= GLISSEMENT;
-            }
+            positionX -= GLISSEMENT;
         }
 
-        // JOUEUR ORIENTÉ VERS LA DROITE
-        if(ptrJoueur->Axe==0)
-        {
-            movX -= ACCEL_D;
-            if(movX < FIX32(0))
-            {
-                movX=0;
-            }
-        }
-
-        // JOUEUR ORIENTÉ VERS LA GAUCHE
-        else if(ptrJoueur->Axe==1)
-        {
-            movX += ACCEL_G;
-            if(movX > FIX32(0))
-            {
-                movX=0;
-            }
-        }
+        movX=0;
 
         //--------------------------//
         //         POSITION Y       //
