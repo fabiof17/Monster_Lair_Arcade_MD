@@ -613,13 +613,17 @@ void CreaSprites_Niveau1()
 
 
                     // PLATEFORME VERTICALE 1 //
-                    if(ptrPlateforme->ID==1 || ptrPlateforme->ID==3 || ptrPlateforme->ID==4)
+                    if(ptrPlateforme->ID==1 || ptrPlateforme->ID==3 || ptrPlateforme->ID==4 || ptrPlateforme->ID==6)
                     {
                         ptrPlateforme->ptrPosition=&anim_PLATEFORME_V1[0];
                     }
                     else if(ptrPlateforme->ID==5)
                     {
                         ptrPlateforme->ptrPosition=&anim_PLATEFORME_V2[0];
+                    }
+                    else if(ptrPlateforme->ID==2)
+                    {
+                        ptrPlateforme->ptrPosition=&anim_PLATEFORME_H1[0];
                     }
 
 
@@ -1271,8 +1275,17 @@ void MvtSprites_Niveau1()
                     // PLATEFORME HORIZONTALE //
                     ////////////////////////////
                     case 2:
-                        // Position X
+                        // POSITION X
                         ptrPlateforme->PosX-=vitesseScrolling;
+
+                        ptrPlateforme->PosX += *(ptrPlateforme->ptrPosition);
+                        ptrPlateforme->ptrPosition++;
+
+                        if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_H1[MAX_ETAPES_PF_H1])
+                        {
+                            ptrPlateforme->ptrPosition=&anim_PLATEFORME_H1[0];
+                        }
+
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 
                         ptrPlateforme->pt_Coll1_X=ptrPlateforme->PosX;
