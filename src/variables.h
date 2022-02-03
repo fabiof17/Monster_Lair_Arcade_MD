@@ -87,10 +87,10 @@ extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 extern Sprite *sprite_Vie[3];
 extern Sprite *sprite_Pause[2];
 
-extern Sprite *sprite_repere_BG;
-extern Sprite *sprite_repere_BD;
-extern Sprite *sprite_repere_HG;
-extern Sprite *sprite_repere_HD;
+//extern Sprite *sprite_repere_BG;
+//extern Sprite *sprite_repere_BD;
+//extern Sprite *sprite_repere_HG;
+//extern Sprite *sprite_repere_HD;
 
 //----------------------------------------------------//
 //                       JOUEUR                       //

@@ -381,14 +381,21 @@ void Collision_Plateformes()
                                     ptrPlateforme->Declencheur=1;
                                 }
 
+
+                                // Plateformes mouvantes horizontales
+                                if(ptrPlateforme->ID==2 || ptrPlateforme->ID==7)
+                                {
+                                    positionX += intToFix32(*(ptrPlateforme->ptrPosition));
+                                }
+
+
                                 // Position du joueur = position de la plateforme-hauteur du sprite (32px)
                                 ptrJoueur->PosY = ptrPlateforme->PosY-32;
-
                                 // MAJ de la variable positionY
                                 positionY=intToFix32(ptrJoueur->PosY);
-
                                 // réinit de l'accélération verticale
                                 movY=0;
+
 
                                 // réinit de l'anim de saut
                                 ptrJoueur->ptrPosition=&anim_SAUT[0];
@@ -438,17 +445,25 @@ void Collision_Plateformes()
                                     ptrPlateforme->Declencheur=1;
                                 }
 
+                                
+                                // Plateformes mouvantes horizontales
+                                if(ptrPlateforme->ID==2 || ptrPlateforme->ID==7)
+                                {
+                                    positionX += intToFix32(*(ptrPlateforme->ptrPosition));
+                                }
+
+
                                 // Position du joueur = position de la plateforme-hauteur du sprite (32px)
                                 ptrJoueur->PosY = ptrPlateforme->PosY-32;
-
                                 // MAJ de la variable positionY
                                 positionY=intToFix32(ptrJoueur->PosY);
-
                                 // réinit de l'accélération verticale
                                 movY=0;
 
+
                                 // réinit de l'anim de saut
                                 ptrJoueur->ptrPosition=&anim_SAUT[0];
+
 
 
                                 if((value & BUTTON_DIR) == 0)
@@ -1275,16 +1290,19 @@ void MvtSprites_Niveau1()
                     // PLATEFORME HORIZONTALE //
                     ////////////////////////////
                     case 2:
-                        // POSITION X
+                        // POSITION X //
                         ptrPlateforme->PosX-=vitesseScrolling;
 
-                        ptrPlateforme->PosX += *(ptrPlateforme->ptrPosition);
+                        // POSITION Y //                       
                         ptrPlateforme->ptrPosition++;
 
                         if(ptrPlateforme->ptrPosition >= &anim_PLATEFORME_H1[MAX_ETAPES_PF_H1])
                         {
                             ptrPlateforme->ptrPosition=&anim_PLATEFORME_H1[0];
                         }
+
+                        ptrPlateforme->PosX += *(ptrPlateforme->ptrPosition);
+
 
                         SPR_setPosition(ptrPlateforme->SpriteP, ptrPlateforme->PosX, ptrPlateforme->PosY);
 

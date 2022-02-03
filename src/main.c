@@ -27,7 +27,7 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
             SPR_setPosition(sprite_Pause[0], 140, 116);
             SPR_setPosition(sprite_Pause[1], 172, 116);
 
-            XGM_pausePlay(Niveau1);
+            XGM_pausePlay(Niveau1_Remix);
 
         }
         // Sortir du mode Pause //
@@ -39,7 +39,7 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
             SPR_setPosition(sprite_Pause[0], -40, 0);
             SPR_setPosition(sprite_Pause[1], -32, 0);
 
-           XGM_resumePlay(Niveau1);
+           XGM_resumePlay(Niveau1_Remix);
         }
     }
 
@@ -154,7 +154,7 @@ void MainLoop()
     {
         case 1:
 
-        XGM_startPlay(Niveau1);
+        XGM_startPlay(Niveau1_Remix);
 
         while(TRUE)
         {
@@ -172,8 +172,8 @@ void MainLoop()
                 MvtJoueur();
                 TilesJoueur();
 
-                Maj_CompteurEnergie();
-                Maj_BarreEnergie(CompteurEnergie, Energie);
+                //Maj_CompteurEnergie();
+                //Maj_BarreEnergie(CompteurEnergie, Energie);
 
             }
 
@@ -187,7 +187,7 @@ void MainLoop()
 
 
             // DEBUG
-            //VDP_drawInt( Joueur.pt_Coll1_X , 1 , 12 , 6);
+            //VDP_drawInt( ID_Plateforme , 1 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();
