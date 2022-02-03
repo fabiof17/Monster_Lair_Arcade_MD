@@ -21,6 +21,7 @@
 #define MAX_ETAPES_PF_V1        69
 #define MAX_ETAPES_PF_V2        28
 #define MAX_ETAPES_PF_H1        50
+#define MAX_ETAPES_PF_H2        65
 
 #define MAX_ENNEMIS             11
 #define MAX_PLATEFORMES         7
