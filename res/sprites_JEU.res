@@ -10,11 +10,11 @@ SPRITE tiles_Sprite_PAUSE1 "sprites/global/tiles_PAUSE1.png" 4 1 BEST 0
 SPRITE tiles_Sprite_PAUSE2 "sprites/global/tiles_PAUSE2.png" 1 1 BEST 0
 
 // JOUEUR //
-SPRITE tiles_Sprite_JOUEUR_H "sprites/global/tiles_JOUEUR_H.png" 4 4 NONE 0 NONE NONE
-SPRITE tiles_Sprite_JOUEUR_F "sprites/global/tiles_JOUEUR_F.png" 4 4 NONE 0 NONE NONE
+SPRITE tiles_Sprite_JOUEUR_H_BAS "sprites/global/tiles_JOUEUR_H_BAS.png" 4 1 NONE 0 NONE NONE
+SPRITE tiles_Sprite_JOUEUR_H_HAUT "sprites/global/tiles_JOUEUR_H_HAUT.png" 4 3 NONE 0 NONE NONE
 
-SPRITE tiles_Sprite_JOUEUR_H_HAUT "sprites/global/tiles_JOUEUR_H_HAUT.png" 4 2 NONE 0 NONE NONE
-SPRITE tiles_Sprite_JOUEUR_H_BAS "sprites/global/tiles_JOUEUR_H_BAS.png" 4 2 NONE 0 NONE NONE
+SPRITE tiles_Sprite_JOUEUR_F_BAS "sprites/global/tiles_JOUEUR_F_BAS.png" 4 1 NONE 0 NONE NONE
+SPRITE tiles_Sprite_JOUEUR_F_HAUT "sprites/global/tiles_JOUEUR_F_HAUT.png" 4 3 NONE 0 NONE NONE
 
 // AURA DU TIR //
 SPRITE tiles_Sprite_AURA_H "sprites/global/tiles_AURA_H.png" 3 3 NONE 0

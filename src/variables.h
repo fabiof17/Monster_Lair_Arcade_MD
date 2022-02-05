@@ -98,7 +98,8 @@ extern Sprite *sprite_Pause[2];
 //----------------------------------------------------//
 typedef struct
 {
-    Sprite* SpriteJ;
+    Sprite* SpriteJ_BAS;
+    Sprite* SpriteJ_HAUT;
     u8 Phase; // 0=ARRET - 1=MARCHE - 2=SAUT - 3=TIR - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
     u8 Axe; // 0=DROITE - 1=GAUCHE
 

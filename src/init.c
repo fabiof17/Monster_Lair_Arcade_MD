@@ -425,8 +425,8 @@ void InitNiveau1()
           
     // Position X initiale du sprite : 64 pixels
     positionX=FIX32(64L);
-    // Position Y initiale du sprite : 128 pixels
-    positionY=FIX32(128L);
+    // Position Y initiale du sprite : 56 pixels
+    positionY=FIX32(56L);
     movX = FIX32(0);
     movY = FIX32(0);
     maxSpeed_D = MAX_SPEED_D;
@@ -648,16 +648,17 @@ void InitNiveau1()
 
     if(selectJoueur==0)
     {
-        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_H, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+        ptrJoueur->SpriteJ_BAS = SPR_addSprite(&tiles_Sprite_JOUEUR_H_BAS, 64, 56, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+        ptrJoueur->SpriteJ_HAUT = SPR_addSprite(&tiles_Sprite_JOUEUR_H_HAUT, 64, 32, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     }
     else
     {
-        ptrJoueur->SpriteJ = SPR_addSprite(&tiles_Sprite_JOUEUR_F, 0, 128, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
-    
+        ptrJoueur->SpriteJ_BAS = SPR_addSprite(&tiles_Sprite_JOUEUR_F_BAS, 64, 56, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+        ptrJoueur->SpriteJ_HAUT = SPR_addSprite(&tiles_Sprite_JOUEUR_F_HAUT, 64, 32, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     }
     
     // PHASE CHUTE DEBUT //
-    ptrJoueur->Phase=0;
+    ptrJoueur->Phase=CHUTE;
 
     // ORIENTE DROITE //
     ptrJoueur->Axe=0;
@@ -669,7 +670,7 @@ void InitNiveau1()
     ptrJoueur->PosX=fix32ToInt(positionX);
     ptrJoueur->PosY=fix32ToInt(positionY);
 
-    SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY);
+    //SPR_setPosition(ptrJoueur->SpriteJ_BAS, ptrJoueur->PosX, ptrJoueur->PosY);
 
     // INIT DES COMPTEURS //
     ptrJoueur->CompteurFrameBloque=0;
@@ -687,19 +688,21 @@ void InitNiveau1()
     ptrJoueur->CompteurApparition=0;
 
     ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
-    ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+34;
+    ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+10;
     ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+21;
     ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
 
     posTileY=ptrJoueur->pt_Coll1_Y>>3;
 
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,4);
+    SPR_setFrame(ptrJoueur->SpriteJ_BAS,0);
 
     /***********/
     /* REPERES */
     /***********/
 
     //sprite_repere_BG=SPR_addSprite(&tiles_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
-    //sprite_repere_BD=SPR_addSprite(&tiles_repere_BD, ptrJoueur->pt_Coll2_X, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+    //sprite_repere_BD=SPR_addSprite(&tiles_repere_BD, ptrJoueur->pt_Coll2_X-7, ptrJoueur->pt_Coll1_Y-7, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
 
 
 

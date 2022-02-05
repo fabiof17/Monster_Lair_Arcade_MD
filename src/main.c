@@ -184,7 +184,7 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            //VDP_drawInt( ID_Plateforme , 1 , 12 , 6);
+            //VDP_drawInt( Joueur.Phase , 1 , 12 , 6);
 
             // Vblank
             SYS_doVBlankProcess();

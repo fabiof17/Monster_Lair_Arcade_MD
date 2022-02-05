@@ -252,7 +252,7 @@ void MAJ_PtsCollision_Joueur()
     {
         ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+11;
     }
-    ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+34;
+    ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+10;
 
     ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+21;
     ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
@@ -319,10 +319,10 @@ void Collision_Ennemis()
                         if(ptrJoueur->PosX+16 <= ptrEnnemi->PosX+24)
                         {
                             // LIMITE HAUT DU SPRITE ENNEMI
-                            if(ptrJoueur->PosY+16 >= ptrEnnemi->PosY)
+                            if(ptrJoueur->PosY-8 >= ptrEnnemi->PosY)
                             {
                                 //
-                                if(ptrJoueur->PosY <= ptrEnnemi->PosY+24)
+                                if(ptrJoueur->PosY-24 <= ptrEnnemi->PosY+24)
                                 {
                                     ptrJoueur->Phase=TOUCHE;
                                     ptrJoueur->ptrPosition=&anim_SAUT[0];
@@ -389,8 +389,8 @@ void Collision_Plateformes()
                                 }
 
 
-                                // Position du joueur = position de la plateforme-hauteur du sprite (32px)
-                                ptrJoueur->PosY = ptrPlateforme->PosY-32;
+                                // Position du joueur = position de la plateforme-hauteur du sprite (8px)
+                                ptrJoueur->PosY = ptrPlateforme->PosY-8;
                                 // MAJ de la variable positionY
                                 positionY=intToFix32(ptrJoueur->PosY);
                                 // réinit de l'accélération verticale
@@ -453,8 +453,8 @@ void Collision_Plateformes()
                                 }
 
 
-                                // Position du joueur = position de la plateforme-hauteur du sprite (32px)
-                                ptrJoueur->PosY = ptrPlateforme->PosY-32;
+                                // Position du joueur = position de la plateforme-hauteur du sprite (8px)
+                                ptrJoueur->PosY = ptrPlateforme->PosY-8;
                                 // MAJ de la variable positionY
                                 positionY=intToFix32(ptrJoueur->PosY);
                                 // réinit de l'accélération verticale
@@ -1695,7 +1695,7 @@ void MvtJoueur()
             // SI LE JOUEUR NE CHUTE PAS
             else
             {
-                ptrJoueur->PosY = (posTileY<<3)-32;
+                ptrJoueur->PosY = (posTileY<<3)-8;
                 positionY=intToFix32(ptrJoueur->PosY);
             }
         }
@@ -1806,7 +1806,7 @@ void MvtJoueur()
             // SI LE JOUEUR NE CHUTE PAS
             else if(tileID_G==1 || tileID_D==1)
             {
-                ptrJoueur->PosY = (posTileY<<3)-32;
+                ptrJoueur->PosY = (posTileY<<3)-8;
                 positionY=intToFix32(ptrJoueur->PosY);
             }
         }
@@ -1966,7 +1966,7 @@ void MvtJoueur()
                 {
                     // PHASE ARRET //
                     ptrJoueur->Phase=ARRET;
-                    ptrJoueur->PosY = (posTileY<<3)-32;
+                    ptrJoueur->PosY = (posTileY<<3)-8;
                     ptrJoueur->ptrPosition=&anim_SAUT[0];
                     positionY = intToFix32(ptrJoueur->PosY);
 
@@ -1998,7 +1998,7 @@ void MvtJoueur()
             positionX=intToFix32(63);
             positionY=intToFix32(16);
             movX=0;
-            SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+            SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
 
             // DRAGON //
             //ptrDragon->Phase=VOL_DRAGON;
@@ -2146,7 +2146,7 @@ void MvtJoueur()
             // SI LE JOUEUR NE CHUTE PAS
             else if(tileID_G==1 || tileID_D==1)
             {
-                ptrJoueur->PosY = (posTileY<<3)-32;
+                ptrJoueur->PosY = (posTileY<<3)-8;
                 positionY=intToFix32(ptrJoueur->PosY);
             }
         }
@@ -2311,7 +2311,7 @@ void MvtJoueur()
                         ptrJoueur->Phase=ARRET;
                     }
 
-                    ptrJoueur->PosY=(posTileY<<3)-32;
+                    ptrJoueur->PosY=(posTileY<<3)-8;
                     ptrJoueur->ptrPosition=&anim_SAUT[0];
                     positionY=intToFix32(ptrJoueur->PosY);
                 }
@@ -2341,7 +2341,7 @@ void MvtJoueur()
             positionX=intToFix32(63);
             positionY=intToFix32(16);
             movX=0;
-            SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+            SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
 
             // DRAGON //
             //ptrDragon->Phase=VOL_DRAGON;
@@ -2506,7 +2506,7 @@ void MvtJoueur()
                 positionX=intToFix32(63);
                 positionY=intToFix32(16);
                 movX=0;
-                SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+                SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
 
                 // CHANGEMENT PALETTE //
                 PAL_setColor( 10 , 0x0A4C );
@@ -2523,7 +2523,7 @@ void MvtJoueur()
 
     //----------------------------------------------------//
     //----------------------------------------------------//
-    //                       TOUCHE                       //
+    //                       TOUCHÉ                       //
     //----------------------------------------------------//
     //----------------------------------------------------//
     else if(ptrJoueur->Phase==TOUCHE)
@@ -2579,11 +2579,11 @@ void MvtJoueur()
             //ptrJoueur->Invincible=1;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
-            ptrJoueur->PosY=16;
+            ptrJoueur->PosY=40;
             positionX=intToFix32(63);
             positionY=intToFix32(16);
             movX=0;
-            SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+            SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
 
             // DRAGON //
             //ptrDragon->Phase=VOL_DRAGON;
@@ -2630,7 +2630,7 @@ void MvtJoueur()
                 positionY=intToFix32(ptrJoueur->PosY);
 
                 ptrDragon->PosX=ptrJoueur->PosX;
-                ptrDragon->PosY=ptrJoueur->PosY-25;
+                ptrDragon->PosY=ptrJoueur->PosY-49;
             }
 
             // ATTENTE DE LARGAGE //
@@ -2773,14 +2773,14 @@ void MvtJoueur()
         {
             SPR_setHFlip(ptrAura->SpriteA, FALSE);
             ptrAura->PosX=ptrJoueur->PosX+19;
-            ptrAura->PosY=ptrJoueur->PosY+5;
+            ptrAura->PosY=ptrJoueur->PosY-19;
         }
         // JOUEUR VERS LA GAUCHE
         else
         {
             SPR_setHFlip(ptrAura->SpriteA, TRUE);
             ptrAura->PosX=ptrJoueur->PosX-11;
-            ptrAura->PosY=ptrJoueur->PosY+5;
+            ptrAura->PosY=ptrJoueur->PosY-19;
         }
     }
     else
@@ -2789,9 +2789,13 @@ void MvtJoueur()
         ptrAura->PosY=-24;
     }
 
+    //SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-PosYinvincible-7);
+    //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X-7, ptrJoueur->pt_Coll1_Y-PosYinvincible-7);
+
 
     // JOUEUR //
-    SPR_setPosition(ptrJoueur->SpriteJ, ptrJoueur->PosX, ptrJoueur->PosY-PosYinvincible);
+    SPR_setPosition(ptrJoueur->SpriteJ_BAS, ptrJoueur->PosX, ptrJoueur->PosY-PosYinvincible);
+    SPR_setPosition(ptrJoueur->SpriteJ_HAUT, ptrJoueur->PosX, ptrJoueur->PosY-PosYinvincible-24);
     // DRAGON //
     SPR_setPosition(ptrDragon->SpriteD, ptrDragon->PosX, ptrDragon->PosY);
     // SPLASH //
@@ -2807,7 +2811,8 @@ void TilesBloque()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,1);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,1);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,1);
 
     ptrJoueur->CompteurFrameArret=0;
     ptrJoueur->IndexFrameArret=0;
@@ -2818,9 +2823,11 @@ void TilesBloque()
     ptrJoueur->CompteurFrameTir=0;
     ptrJoueur->IndexFrameTir=0;
 
-    SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+    SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
+    SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
 
-    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameBloque);
+    SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameBloque);
+    SPR_setFrame(ptrJoueur->SpriteJ_HAUT,(s16)ptrJoueur->IndexFrameBloque);
 
     // Anim des tiles
     ptrJoueur->CompteurFrameBloque+=1;
@@ -2843,7 +2850,8 @@ void TilesArret()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,0);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,0);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,0);
 
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
@@ -2854,7 +2862,8 @@ void TilesArret()
     ptrJoueur->CompteurFrameTir=0;
     ptrJoueur->IndexFrameTir=0;
 
-    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameArret);
+    SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameArret);
+    SPR_setFrame(ptrJoueur->SpriteJ_HAUT,(s16)ptrJoueur->IndexFrameArret);
 
     // Anim des tiles
     ptrJoueur->CompteurFrameArret+=1;
@@ -2877,7 +2886,8 @@ void TilesMarche()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,2);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,2);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,2);
 
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
@@ -2888,15 +2898,18 @@ void TilesMarche()
     ptrJoueur->CompteurFrameTir=0;
     ptrJoueur->IndexFrameTir=0;
 
-    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameMarche);
+    SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameMarche);
+    SPR_setFrame(ptrJoueur->SpriteJ_HAUT,(s16)ptrJoueur->IndexFrameMarche);
 
     if(ptrJoueur->Axe==0)
     {
-        SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
     }
     else
     {
-        SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, TRUE);
     }
 
     // Anim des tiles
@@ -2920,7 +2933,8 @@ void TilesDerapage()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,5);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,5);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,5);
 
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
@@ -2939,7 +2953,8 @@ void TilesSaut()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,3);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,3);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,3);
 
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
@@ -2955,11 +2970,13 @@ void TilesSaut()
 
     if(ptrJoueur->Axe==0)
     {
-        SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
     }
     else
     {
-        SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, TRUE);
     }
 }
 
@@ -2967,8 +2984,11 @@ void TilesTir()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,4);
-    SPR_setFrame(ptrJoueur->SpriteJ,1);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,2);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,4);
+
+    SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameMarche);
+    SPR_setFrame(ptrJoueur->SpriteJ_HAUT,1);
 
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
@@ -2976,18 +2996,35 @@ void TilesTir()
     ptrJoueur->CompteurFrameArret=0;
     ptrJoueur->IndexFrameArret=0;
 
-    ptrJoueur->CompteurFrameMarche=0;
-    ptrJoueur->IndexFrameMarche=0;
+    //ptrJoueur->CompteurFrameMarche=0;
+    //ptrJoueur->IndexFrameMarche=0;
 
     if(ptrJoueur->Axe==0)
     {
-        SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
     }
     else
     {
-        SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, TRUE);
     }
 
+    // Anim des tiles
+    ptrJoueur->CompteurFrameMarche+=1;
+
+    // MAJ des tiles toutes les 6 images (0 à 5)
+    if(ptrJoueur->CompteurFrameMarche>5)
+    {
+        ptrJoueur->CompteurFrameMarche=0;
+        ptrJoueur->IndexFrameMarche+=1;
+
+        // Cycle de FRAME de 0 à 3 (4 étapes)
+        if(ptrJoueur->IndexFrameMarche>3)
+        {
+            ptrJoueur->IndexFrameMarche=0;
+        }
+    }
 
     // Anim des tiles
     ptrJoueur->CompteurFrameTir+=1;
@@ -3005,17 +3042,22 @@ void TilesSautTir()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,4);
-    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameTir);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,4);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,4);
+
+    SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameTir);
+    SPR_setFrame(ptrJoueur->SpriteJ_HAUT,(s16)ptrJoueur->IndexFrameTir);
 
 
     if(ptrJoueur->Axe==0)
     {
-        SPR_setHFlip(ptrJoueur->SpriteJ, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
     }
     else
     {
-        SPR_setHFlip(ptrJoueur->SpriteJ, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, TRUE);
     }
 
 
@@ -3041,8 +3083,11 @@ void TilesTouche()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,6);
-    SPR_setFrame(ptrJoueur->SpriteJ,(s16)ptrJoueur->IndexFrameTouche);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,6);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,6);
+
+    SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameTouche);
+    SPR_setFrame(ptrJoueur->SpriteJ_HAUT,(s16)ptrJoueur->IndexFrameTouche);
 
     ptrJoueur->CompteurFrameBloque=0;
     ptrJoueur->IndexFrameBloque=0;
@@ -3077,7 +3122,8 @@ void TilesApparition()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ,7);
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,7);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,7);
 
     // TILES DU DRAGON //
     ptrJoueur->CompteurFrameTouche=0;
