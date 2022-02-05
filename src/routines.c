@@ -2982,12 +2982,25 @@ void TilesSaut()
 
 void TilesTir()
 {
+    // Gestion manette
+	u16 value=JOY_readJoypad(JOY_1);
+    
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    SPR_setAnim(ptrJoueur->SpriteJ_BAS,2);
+    
     SPR_setAnim(ptrJoueur->SpriteJ_HAUT,4);
 
-    SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameMarche);
+    if((value & BUTTON_DIR)==0)
+    {
+        SPR_setAnim(ptrJoueur->SpriteJ_BAS,4);
+        SPR_setFrame(ptrJoueur->SpriteJ_BAS,1);
+    }
+    else if(value & (BUTTON_RIGHT | BUTTON_LEFT))
+    {
+        SPR_setAnim(ptrJoueur->SpriteJ_BAS,2);
+        SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameMarche);
+    }
+    
     SPR_setFrame(ptrJoueur->SpriteJ_HAUT,1);
 
     ptrJoueur->CompteurFrameBloque=0;
