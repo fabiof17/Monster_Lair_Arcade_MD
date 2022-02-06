@@ -1540,6 +1540,14 @@ void MvtSprites_Niveau1()
 
 
 
+// TIRS //
+void MvtTirs()
+{
+    //
+}
+
+
+
 // JOUEUR //
 void Phases_Joueur()
 {
@@ -2502,11 +2510,12 @@ void MvtJoueur()
                 //ptrJoueur->Invincible=1;
                 ptrJoueur->Axe=0;
                 ptrJoueur->PosX=63;
-                ptrJoueur->PosY=16;
+                ptrJoueur->PosY=40;
                 positionX=intToFix32(63);
                 positionY=intToFix32(16);
                 movX=0;
                 SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
+                SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
 
                 // CHANGEMENT PALETTE //
                 PAL_setColor( 10 , 0x0A4C );
@@ -2569,10 +2578,10 @@ void MvtJoueur()
         if(ptrJoueur->PosY>192)
         {
             // SPLASH //
-            ptrSplash->Init=1;
+            /*ptrSplash->Init=1;
             ptrSplash->PosX=ptrJoueur->PosX;
             ptrSplash->PosY=168;
-            SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
+            SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);*/
 
             // JOUEUR //
             ptrJoueur->Phase=APPARITION;
@@ -2603,8 +2612,9 @@ void MvtJoueur()
     //----------------------------------------------------//
     else if(ptrJoueur->Phase==APPARITION)
     {
-        // SPLASH //
-        // SI LE SPLASH EST EN COURS //
+        //--------------------------//
+        //           SPLASH         //
+        //--------------------------//
         if(ptrSplash->Init==1)
         {
             // SI LE SCROLLING EST EN COURS, LE SPLASH SE DEPLACE //
@@ -2620,11 +2630,15 @@ void MvtJoueur()
             }
         }
 
-        // SI LE SPLASH EST FINI //
+        //--------------------------//
+        //           DRAGON         //
+        //--------------------------//
         else
         {
-            // DESCENTE //
-            if(ptrJoueur->CompteurApparition<56)
+            //-------------------------------------//
+            //           APPARITION DRAGON         //
+            //-------------------------------------//
+            if(ptrJoueur->CompteurApparition>20 && ptrJoueur->CompteurApparition<76)
             {
                 ptrJoueur->PosY+=1;
                 positionY=intToFix32(ptrJoueur->PosY);
@@ -2633,8 +2647,10 @@ void MvtJoueur()
                 ptrDragon->PosY=ptrJoueur->PosY-49;
             }
 
-            // ATTENTE DE LARGAGE //
-            else if(ptrJoueur->CompteurApparition>55 && ptrJoueur->CompteurApparition<255)
+            //-------------------------------------//
+            //            ATTENTE LARGAGE          //
+            //-------------------------------------//
+            else if(ptrJoueur->CompteurApparition>75 && ptrJoueur->CompteurApparition<275)
             {
                 //--------------------------//
                 //         POSITION X       //
@@ -2673,12 +2689,12 @@ void MvtJoueur()
                     positionX=intToFix32(ptrJoueur->PosX);
                     ptrDragon->PosX=ptrJoueur->PosX;
                 }
-
-
             }
 
-            // ENVOL DRAGON APRES LARGAGE //
-            else if(ptrJoueur->CompteurApparition>254)
+            //-------------------------------------//
+            //              ENVOL DRAGON           //
+            //-------------------------------------//
+            else if(ptrJoueur->CompteurApparition>274)
             {
                 ptrDragon->Phase=SORTIE_DRAGON;
 
@@ -2733,7 +2749,6 @@ void MvtJoueur()
     //----------------------------------------------------//
     //                    ETAT INVINCIBLE                 //
     //----------------------------------------------------//
-
     if(ptrJoueur->Invincible==1)
     {
         ptrJoueur->CompteurInvincible++;
@@ -2763,9 +2778,9 @@ void MvtJoueur()
     }
 
 
-    //////////////////
-    //     AURA     //
-    //////////////////
+    //-----------------------------//
+    //             AURA            //
+    //-----------------------------//
     if(ptrAura->Init==1)
     {
         // JOUEUR VERS LA DROITE

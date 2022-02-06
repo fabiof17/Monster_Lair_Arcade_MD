@@ -14,6 +14,8 @@ extern const SpriteDefinition tiles_Sprite_AURA_H;
 extern const SpriteDefinition tiles_Sprite_AURA_F;
 extern const SpriteDefinition tiles_Sprite_DRAGON;
 extern const SpriteDefinition tiles_Sprite_SPLASH;
+extern const SpriteDefinition tiles_Sprite_KIWI;
+extern const SpriteDefinition tiles_Sprite_CAROTTE;
 extern const SpriteDefinition tiles_repere_BG;
 extern const SpriteDefinition tiles_repere_BD;
 extern const SpriteDefinition tiles_repere_HG;

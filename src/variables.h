@@ -52,6 +52,7 @@
 extern u16 StatutJoy;
 
 extern u8 nb_Vie;
+extern u8 nb_Tirs;
 extern u16 GameOver;
 extern bool PauseJeu;
 
@@ -251,6 +252,19 @@ typedef struct
 
 extern SpriteAura_ Aura;
 
+
+//----------------------------------------------------//
+//                       FRUIT                        //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteF;
+    bool Init;
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+    u8 CompteurFrameFruit;      // Compteur pour passer à la prochaine FRAME FRUIT
+    u8 IndexFrameFruit;         // Index de FRAME FRUIT
+} SpriteFruit_;
 
 
 //----------------------------------------------------//

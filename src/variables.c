@@ -8,6 +8,7 @@
 u16 StatutJoy=0;
 
 u8 nb_Vie=2;
+u8 nb_Tirs=0;
 u16 GameOver=0;
 bool PauseJeu=0;
 

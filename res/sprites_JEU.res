@@ -26,6 +26,11 @@ SPRITE tiles_Sprite_DRAGON "sprites/global/tiles_DRAGON.png" 4 4 NONE 0
 // SPLASH //
 SPRITE tiles_Sprite_SPLASH "sprites/global/tiles_SPLASH.png" 4 4 NONE 0
 
+// FRUITS //
+SPRITE tiles_Sprite_KIWI "sprites/global/tiles_KIWI.png" 3 2 NONE 0
+SPRITE tiles_Sprite_CAROTTE "sprites/global/tiles_CAROTTE.png" 3 3 NONE 0
+
+
 // REPERES //
 SPRITE tiles_repere_BG "sprites/global/repere_BG.png" 1 1 BEST 0
 SPRITE tiles_repere_BD "sprites/global/repere_BD.png" 1 1 BEST 0
