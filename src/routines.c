@@ -6,6 +6,7 @@
 #include "maps_GLOBALES.h"
 #include "maps_NIVEAU1.h"
 #include "tilemaps_ennemis.h"
+#include "palettes_ennemis.h"
 #include "tilemaps_plateformes.h"
 #include "animation_sprites.h"
 #include "sprites_JEU.h"
@@ -530,9 +531,6 @@ void CreaSprites_Niveau1()
                 // Si on trouve un emplacement vide
                 if(ptrEnnemi->Init==0)
                 {
-                    // tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis] : ID
-                    ptrEnnemi->ID=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
-
                     ptrEnnemi->Init=1;
                     ptrEnnemi->Etat=0;
                     ptrEnnemi->PointsVie=1;
@@ -543,46 +541,37 @@ void CreaSprites_Niveau1()
 
                     ptrEnnemi->Axe=0;
 
-                    // Les escargots V ont une position en X à part
-                    if(ptrEnnemi->ID==4)
-                    {
-                        ptrEnnemi->PosX=323-delta;
-                    }
-                    else
-                    {
-                        // Tous les autres ennemis
-                        ptrEnnemi->PosX=325-delta;
-                    }
+                    //---------------------------//
+                    //             ID            //
+                    //---------------------------//
+                    ptrEnnemi->ID=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
 
-                    // tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis] : PosY
-                    ptrEnnemi->PosY=(u16)tilemapCreaEnnemis_Niveau1[1][indexCreaEnnemis]<<3;
+                    //-----------------------------------//
+                    //             POSITION X            //
+                    //-----------------------------------//
+                    ptrEnnemi->PosX=tilemapCreaEnnemis_Niveau1[3][indexCreaEnnemis]-delta;
 
+                    //-----------------------------------//
+                    //             POSITION Y            //
+                    //-----------------------------------//
+                    ptrEnnemi->PosY=tilemapCreaEnnemis_Niveau1[4][indexCreaEnnemis];
 
-                    // Différentes palettes pour les ennemis
-                    // MORSE
-                    if(ptrEnnemi->ID==7)
-                    {
-                        ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
-                    }
                     // POULPE 1
-                    else if(ptrEnnemi->ID==8)
+                    if(ptrEnnemi->ID==8)
                     {
-                        ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
                         ptrEnnemi->ptrPosition=&anim_POULPE1[0];
                         SPR_setDepth(ptrEnnemi->SpriteE,7);
                     }
                     // POULPE 2
                     else if(ptrEnnemi->ID==9)
                     {
-                        ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
                         ptrEnnemi->ptrPosition=&anim_POULPE2[0];
                         SPR_setDepth(ptrEnnemi->SpriteE,7);
                     }
-                    // Tous les autres ennemis
-                    else
-                    {
-                        ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
-                    }
+
+
+                    ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(paletteEnnemis_Niveau1[(ptrEnnemi->ID)-1], FALSE, FALSE, FALSE));
+
 
                     indexCreaEnnemis++;
                     nb_Ennemis+=1;

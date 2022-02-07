@@ -145,7 +145,7 @@ void MainLoop()
 {
     InitNiveaux();
     
-    //SYS_showFrameLoad(TRUE);
+    SYS_showFrameLoad(TRUE);
 
     // Manette
     JOY_setEventHandler(joyEventCallback);

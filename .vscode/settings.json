@@ -15,7 +15,8 @@
         "gestionpad.h": "c",
         "genesis.h": "c",
         "animation_ennemis.h": "c",
-        "animation_sprites.h": "c"
+        "animation_sprites.h": "c",
+        "tilemaps_ennemis.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
