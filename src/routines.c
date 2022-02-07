@@ -516,13 +516,6 @@ void CreaSprites_Niveau1()
         // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
         if (-CamPosX>>3 == tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis])
         {
-            /*#ifndef RELEASE
-            if(indexCreaEnnemis * sizeof(tilemapCreaEnnemis_Niveau1[0][0]) >= sizeof(tilemapCreaEnnemis_Niveau1))
-            {
-                SYS_die("Je viens de péter la limite de tilemapCreaEnnemis_Niveau1");
-            }
-            #endif*/
-
             // On scanne les emplacements vides
             for(i=0;i<MAX_ENNEMIS;i++)
             {
@@ -556,22 +549,22 @@ void CreaSprites_Niveau1()
                     //-----------------------------------//
                     ptrEnnemi->PosY=tilemapCreaEnnemis_Niveau1[4][indexCreaEnnemis];
 
+
+                    ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(paletteEnnemis_Niveau1[(ptrEnnemi->ID)-1], FALSE, FALSE, FALSE));
+
+
                     // POULPE 1
                     if(ptrEnnemi->ID==8)
                     {
                         ptrEnnemi->ptrPosition=&anim_POULPE1[0];
-                        SPR_setDepth(ptrEnnemi->SpriteE,7);
+                        //SPR_setDepth(ptrEnnemi->SpriteE,7);
                     }
                     // POULPE 2
                     else if(ptrEnnemi->ID==9)
                     {
                         ptrEnnemi->ptrPosition=&anim_POULPE2[0];
-                        SPR_setDepth(ptrEnnemi->SpriteE,7);
+                        //SPR_setDepth(ptrEnnemi->SpriteE,7);
                     }
-
-
-                    ptrEnnemi->SpriteE = SPR_addSprite(adrResEnnemi[ptrEnnemi->ID], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(paletteEnnemis_Niveau1[(ptrEnnemi->ID)-1], FALSE, FALSE, FALSE));
-
 
                     indexCreaEnnemis++;
                     nb_Ennemis+=1;

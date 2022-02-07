@@ -155,7 +155,7 @@ typedef struct
 {
     Sprite* SpriteE;
     u8 Etat;                    // 0 = VIVANT / 1 = MORT
-    bool Axe;                   // 0 = Bas / 1 = Haut
+    bool Axe;                   // 0 = BAS / 1 = HAUT
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type d'ennemi
     u8 PointsVie;               // Nb points de vie
@@ -230,8 +230,8 @@ typedef struct
     bool Init;
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
-    u8 CompteurFrameSplash;          // Compteur pour passer à la prochaine FRAME SPLASH
-    u8 IndexFrameSplash;             // Index de FRAME SPLASH
+    u8 CompteurFrameSplash;     // Compteur pour passer à la prochaine FRAME SPLASH
+    u8 IndexFrameSplash;        // Index de FRAME SPLASH
 } SpriteSplash_;
 
 extern SpriteSplash_ Splash;

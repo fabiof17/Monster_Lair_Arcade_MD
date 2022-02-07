@@ -145,7 +145,7 @@ void MainLoop()
 {
     InitNiveaux();
     
-    SYS_showFrameLoad(TRUE);
+    //SYS_showFrameLoad(TRUE);
 
     // Manette
     JOY_setEventHandler(joyEventCallback);
@@ -172,8 +172,8 @@ void MainLoop()
                 MvtJoueur();
                 TilesJoueur();
 
-                Maj_CompteurEnergie();
-                Maj_BarreEnergie(CompteurEnergie, Energie);
+                //Maj_CompteurEnergie();
+                //Maj_BarreEnergie(CompteurEnergie, Energie);
 
             }
 
