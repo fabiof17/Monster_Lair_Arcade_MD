@@ -86,7 +86,7 @@ SpriteSplash_ Splash;
 //                      ENNEMIS                       //
 //----------------------------------------------------//
 SpriteEnnemi_ Ennemi[MAX_ENNEMIS];
-const SpriteDefinition *adrResEnnemi[12];
+const SpriteDefinition *AdrTilesEnnemi[7];
 
 
 //----------------------------------------------------//

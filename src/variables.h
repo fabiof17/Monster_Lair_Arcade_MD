@@ -8,7 +8,7 @@
 
 #define ACCEL_D         FIX32(0.08)  // ACCELERATION DROITE
 #define ACCEL_G         FIX32(0.16)  // ACCELERATION GAUCHE
-#define ACCEL_B         FIX32(0.25)  // ACCELERATION BAS (CHUTE)
+#define ACCEL_B         FIX32(0.5)   // ACCELERATION BAS (CHUTE)
 #define GLISSEMENT      FIX32(1L)
 
 #define MAX_POS_D       FIX32(228L)
@@ -101,8 +101,9 @@ typedef struct
 {
     Sprite* SpriteJ_BAS;
     Sprite* SpriteJ_HAUT;
-    u8 Phase; // 0=ARRET - 1=MARCHE - 2=SAUT - 3=TIR - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
-    u8 Axe; // 0=DROITE - 1=GAUCHE
+    u8 Phase;   // 0=ARRET - 1=MARCHE - 2=SAUT - 3=TIR - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
+    u8 Axe;     // 0=DROITE - 1=GAUCHE
+    u8 Arme;    // 0=TIR DE BASE - 1=SHURIKEN - 2=DOUBLE BOULE - 
 
     s16 PosX;
     s16 PosY;
@@ -158,6 +159,7 @@ typedef struct
     bool Axe;                   // 0 = BAS / 1 = HAUT
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type d'ennemi
+    u8 Bonus;
     u8 PointsVie;               // Nb points de vie
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
@@ -172,7 +174,7 @@ typedef struct
 } SpriteEnnemi_;
 
 extern SpriteEnnemi_ Ennemi[MAX_ENNEMIS];
-extern const SpriteDefinition *adrResEnnemi[12];
+extern const SpriteDefinition *AdrTilesEnnemi[7];
 extern u8 indexCreaEnnemis;
 extern u8 nb_Ennemis;
 

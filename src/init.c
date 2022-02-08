@@ -662,6 +662,7 @@ void InitNiveau1()
 
     // ORIENTE DROITE //
     ptrJoueur->Axe=0;
+    ptrJoueur->Arme=0;
 
     ptrJoueur->Invincible=0;
     ptrJoueur->HorsChamp=0;
@@ -741,18 +742,14 @@ void InitNiveau1()
         Ennemi[i].Init=0;
     }
 
-    // Init adresse sreesources sprites ennemis
-    adrResEnnemi[1]=&tiles_Sprite_ESCARGOT_H;
-    adrResEnnemi[2]=&tiles_Sprite_BULOT;
-    adrResEnnemi[3]=&tiles_Sprite_BULOT;
-    adrResEnnemi[4]=&tiles_Sprite_ESCARGOT_V;
-    adrResEnnemi[5]=&tiles_Sprite_BULOT;
-    adrResEnnemi[6]=&tiles_Sprite_ESCARGOT_H;
-    adrResEnnemi[7]=&tiles_Sprite_MORSE;
-    adrResEnnemi[8]=&tiles_Sprite_POULPE;
-    adrResEnnemi[9]=&tiles_Sprite_POULPE;
-    adrResEnnemi[10]=&tiles_Sprite_PELICAN;
-    adrResEnnemi[11]=&tiles_Sprite_PELICAN;
+    // Init adresse reesources sprites ennemis
+    AdrTilesEnnemi[0]=&tiles_Sprite_ESCARGOT_H;
+    AdrTilesEnnemi[1]=&tiles_Sprite_BULOT;
+    AdrTilesEnnemi[2]=&tiles_Sprite_ESCARGOT_V;
+    AdrTilesEnnemi[3]=&tiles_Sprite_MORSE;
+    AdrTilesEnnemi[4]=&tiles_Sprite_POULPE;
+    AdrTilesEnnemi[5]=&tiles_Sprite_POULPE;
+    AdrTilesEnnemi[6]=&tiles_Sprite_PELICAN;
 
     SPR_update();
 
