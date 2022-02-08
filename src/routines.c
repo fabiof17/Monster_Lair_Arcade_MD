@@ -1786,23 +1786,31 @@ void MvtJoueur()
             ptrSplash->PosY=168;
             SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
+            // LA BARRE D'ENERGIE SE VIDE //
+            Vider_BarreEnergie();
+            CompteurEnergie=0;
+            Energie=0;
+
+            ptrJoueur->CompteurInvincible=0;
+            ptrJoueur->Invincible=0;
+            ptrJoueur->HorsChamp=0;
+            PosYinvincible=0;
+
             // JOUEUR //
             ptrJoueur->Phase=APPARITION;
             //ptrJoueur->Invincible=1;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
-            ptrJoueur->PosY=16;
+            ptrJoueur->PosY=40;
             positionX=intToFix32(63);
-            positionY=intToFix32(16);
+            positionY=intToFix32(40);
             movX=0;
             SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
-
-            // DRAGON //
-            //ptrDragon->Phase=VOL_DRAGON;
+            SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
 
             // CHANGEMENT PALETTE //
-            PAL_setColor( 10 , 0x0A4C );
-            PAL_setColor( 13 , 0x0C6C );
+            //PAL_setColor( 10 , 0x0A4C );
+            //PAL_setColor( 13 , 0x0C6C );
         }
     }
 
@@ -2129,23 +2137,31 @@ void MvtJoueur()
             ptrSplash->PosY=168;
             SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
+            // LA BARRE D'ENERGIE SE VIDE //
+            Vider_BarreEnergie();
+            CompteurEnergie=0;
+            Energie=0;
+
+            ptrJoueur->CompteurInvincible=0;
+            ptrJoueur->Invincible=0;
+            ptrJoueur->HorsChamp=0;
+            PosYinvincible=0;
+
             // JOUEUR //
             ptrJoueur->Phase=APPARITION;
             //ptrJoueur->Invincible=1;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
-            ptrJoueur->PosY=16;
+            ptrJoueur->PosY=40;
             positionX=intToFix32(63);
-            positionY=intToFix32(16);
+            positionY=intToFix32(40);
             movX=0;
             SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
-
-            // DRAGON //
-            //ptrDragon->Phase=VOL_DRAGON;
+            SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
 
             // CHANGEMENT PALETTE //
-            PAL_setColor( 10 , 0x0A4C );
-            PAL_setColor( 13 , 0x0C6C );
+            //PAL_setColor( 10 , 0x0A4C );
+            //PAL_setColor( 13 , 0x0C6C );
         }
     }
 
@@ -2294,6 +2310,11 @@ void MvtJoueur()
                 CompteurEnergie=0;
                 Energie=0;
 
+                ptrJoueur->CompteurInvincible=0;
+                ptrJoueur->Invincible=0;
+                ptrJoueur->HorsChamp=0;
+                PosYinvincible=0;
+
                 // JOUEUR //
                 ptrJoueur->Phase=APPARITION;
                 //ptrJoueur->Invincible=1;
@@ -2307,8 +2328,8 @@ void MvtJoueur()
                 SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
 
                 // CHANGEMENT PALETTE //
-                PAL_setColor( 10 , 0x0A4C );
-                PAL_setColor( 13 , 0x0C6C );
+                //PAL_setColor( 10 , 0x0A4C );
+                //PAL_setColor( 13 , 0x0C6C );
             }
         }
 
@@ -2367,10 +2388,20 @@ void MvtJoueur()
         if(ptrJoueur->PosY>192)
         {
             // SPLASH //
-            /*ptrSplash->Init=1;
+            ptrSplash->Init=1;
             ptrSplash->PosX=ptrJoueur->PosX;
             ptrSplash->PosY=168;
-            SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);*/
+            SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
+
+            // LA BARRE D'ENERGIE SE VIDE //
+            Vider_BarreEnergie();
+            CompteurEnergie=0;
+            Energie=0;
+
+            ptrJoueur->CompteurInvincible=0;
+            ptrJoueur->Invincible=0;
+            ptrJoueur->HorsChamp=0;
+            PosYinvincible=0;
 
             // JOUEUR //
             ptrJoueur->Phase=APPARITION;
@@ -2379,16 +2410,14 @@ void MvtJoueur()
             ptrJoueur->PosX=63;
             ptrJoueur->PosY=40;
             positionX=intToFix32(63);
-            positionY=intToFix32(16);
+            positionY=intToFix32(40);
             movX=0;
             SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
-
-            // DRAGON //
-            //ptrDragon->Phase=VOL_DRAGON;
+            SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
 
             // CHANGEMENT PALETTE //
-            PAL_setColor( 10 , 0x0A4C );
-            PAL_setColor( 13 , 0x0C6C );
+            //PAL_setColor( 10 , 0x0A4C );
+            //PAL_setColor( 13 , 0x0C6C );
         }
 
     }
@@ -2416,6 +2445,9 @@ void MvtJoueur()
             if(ptrSplash->CompteurFrameSplash==0 && ptrSplash->IndexFrameSplash==7)
             {
                 ptrSplash->PosY-=8;
+                // CHANGEMENT PALETTE //
+                PAL_setColor( 10 , 0x0A4C );
+                PAL_setColor( 13 , 0x0C6C );
             }
         }
 
