@@ -247,15 +247,15 @@ void MAJ_PtsCollision_Joueur()
 
     if(ptrJoueur->PosX>=0)
     {
-        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
+        ptrJoueur->pt_Coll1_X=fix32ToInt(positionX)+8;
     }
     else
     {
-        ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+11;
+        ptrJoueur->pt_Coll1_X=fix32ToInt(positionX)+11;
     }
-    ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+10;
+    ptrJoueur->pt_Coll1_Y=fix32ToInt(positionY)+10;
 
-    ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+21;
+    ptrJoueur->pt_Coll2_X=fix32ToInt(positionX)+21;
     ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
 
     posTileY=ptrJoueur->pt_Coll1_Y>>3;
@@ -270,17 +270,17 @@ void Collision_Decor()
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
     // Récuperation ID de tile de collision
-    if(CamPosX>=7)
-    {
-        offsetTilemap=1;
-    }
-    else
+    /*if(CamPosX%8==0)
     {
         offsetTilemap=0;
     }
+    else
+    {
+        offsetTilemap=1;
+    }*/
 
-    *ptrtileID_G=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll1_X >> 3) - (CamPosX >> 3) - offsetTilemap  , posTileY ) & TILE_INDEX_MASK;
-    *ptrtileID_D=MAP_getTile( tilemapCollision , (ptrJoueur->pt_Coll2_X >> 3) - (CamPosX >> 3) - offsetTilemap  , posTileY ) & TILE_INDEX_MASK;
+    *ptrtileID_G=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll1_X - CamPosX) >> 3) , posTileY ) & TILE_INDEX_MASK;
+    *ptrtileID_D=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll2_X - CamPosX) >> 3) , posTileY ) & TILE_INDEX_MASK;
 }
 
 void Collision_Ennemis()
@@ -1456,10 +1456,15 @@ void MvtJoueur()
             }
         }
 
+        // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
+        positionX += movX;
+
 
         //--------------------------------//
         //            POSITION Y          //
         //--------------------------------//
+
+        positionY = intToFix32(ptrJoueur->PosY);
 
         // MAJ POINTS DE COLLISION DU JOUEUR //
         MAJ_PtsCollision_Joueur();
@@ -1565,10 +1570,14 @@ void MvtJoueur()
             }
         }
 
+        // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
+        positionX += movX;
 
         //--------------------------------//
         //            POSITION Y          //
         //--------------------------------//
+
+        positionY = intToFix32(ptrJoueur->PosY);
 
         // MAJ POINTS DE COLLISION DU JOUEUR //
         MAJ_PtsCollision_Joueur();
@@ -1716,6 +1725,9 @@ void MvtJoueur()
             }
         }
 
+        // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
+        positionX += movX;
+
 
         //--------------------------//
         //         POSITION Y       //
@@ -1733,6 +1745,8 @@ void MvtJoueur()
             ptrJoueur->ptrPosition = &anim_SAUT[MAX_ETAPES_SAUT];
         }
 
+        positionY = intToFix32(ptrJoueur->PosY);
+
         // MAJ POINTS DE COLLISION DU JOUEUR //
         MAJ_PtsCollision_Joueur();
 
@@ -1742,7 +1756,7 @@ void MvtJoueur()
 
         Collision_Plateformes();
 
-        positionY = intToFix32(ptrJoueur->PosY);
+        
 
         // SI PAS DE CONTACT AVEC PLATEFORME //
         if(contactPlt_OK == 0)
@@ -1766,8 +1780,9 @@ void MvtJoueur()
                     ptrJoueur->PosY = (posTileY<<3)-8;
                     ptrJoueur->ptrPosition=&anim_SAUT[0];
                     positionY = intToFix32(ptrJoueur->PosY);
+                    MAJ_PtsCollision_Joueur();
 
-                    return;
+                    //return;
                 }
             }
         }
@@ -1913,10 +1928,16 @@ void MvtJoueur()
             }
         }
 
+        // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
+        positionX += movX;
+
 
         //--------------------------//
         //         POSITION Y       //
         //--------------------------//
+
+        positionY = intToFix32(ptrJoueur->PosY);
+
 
         // MAJ POINTS DE COLLISION DU JOUEUR //
         MAJ_PtsCollision_Joueur();
@@ -2061,6 +2082,9 @@ void MvtJoueur()
             }
         }
 
+        // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
+        positionX += movX;
+
 
         //--------------------------//
         //         POSITION Y       //
@@ -2077,6 +2101,9 @@ void MvtJoueur()
         {
             ptrJoueur->ptrPosition = &anim_SAUT[MAX_ETAPES_SAUT];
         }
+
+        positionY = intToFix32(ptrJoueur->PosY);
+
 
         // MAJ POINTS DE COLLISION DU JOUEUR //
         MAJ_PtsCollision_Joueur();
@@ -2119,6 +2146,7 @@ void MvtJoueur()
                     ptrJoueur->PosY=(posTileY<<3)-8;
                     ptrJoueur->ptrPosition=&anim_SAUT[0];
                     positionY=intToFix32(ptrJoueur->PosY);
+                    MAJ_PtsCollision_Joueur();
                 }
             }
         }
@@ -2243,6 +2271,9 @@ void MvtJoueur()
             positionX -= GLISSEMENT;
         }
 
+        // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
+        positionX += movX;
+
 
         //--------------------------//
         //         POSITION Y       //
@@ -2282,10 +2313,14 @@ void MvtJoueur()
             // TEST COLLISION DECOR //
             Collision_Decor();
 
+
             // SI LE JOUEUR TOUCHE LE SOL
             if(tileID_G==1 || tileID_D==1)
             {
                 // PHASE CHUTE
+                ptrJoueur->PosY = (posTileY<<3)-8;
+                positionY=intToFix32(ptrJoueur->PosY);
+                MAJ_PtsCollision_Joueur();
                 ptrJoueur->Phase=ARRET;
                 ptrJoueur->ptrPosition=&anim_SAUT[0];
             }
@@ -2368,6 +2403,7 @@ void MvtJoueur()
 
         movX=0;
 
+
         //--------------------------//
         //         POSITION Y       //
         //--------------------------//
@@ -2383,6 +2419,9 @@ void MvtJoueur()
         {
             ptrJoueur->ptrPosition = &anim_TOUCHE[MAX_ETAPES_TOUCHE];
         }
+
+        positionY = intToFix32(ptrJoueur->PosY);
+
 
         // JOUEUR TOUCHE BAS DE L'ÉCRAN //
         if(ptrJoueur->PosY>192)
@@ -2538,13 +2577,12 @@ void MvtJoueur()
     }
 
 
+
+
     //----------------------------------------------------//
     //             NOUVELLE POSITION DU SPRITE            //
     //----------------------------------------------------//
     vitesseScrolling=1;
-
-     // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
-    positionX += movX;
 
     // SI LE JOUEUR ATTEINT LA GAUCHE DE L'ECRAN
     if(positionX < -MAX_POS_G)
@@ -2625,13 +2663,16 @@ void MvtJoueur()
         ptrAura->PosY=-24;
     }
 
-    //SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-PosYinvincible-7);
-    //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X-7, ptrJoueur->pt_Coll1_Y-PosYinvincible-7);
 
 
     // JOUEUR //
     SPR_setPosition(ptrJoueur->SpriteJ_BAS, ptrJoueur->PosX, ptrJoueur->PosY-PosYinvincible);
     SPR_setPosition(ptrJoueur->SpriteJ_HAUT, ptrJoueur->PosX, ptrJoueur->PosY-PosYinvincible-24);
+
+    // REPERES //
+    //SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-PosYinvincible-7);
+    //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X-7, ptrJoueur->pt_Coll1_Y-PosYinvincible-7);
+
     // DRAGON //
     SPR_setPosition(ptrDragon->SpriteD, ptrDragon->PosX, ptrDragon->PosY);
     // SPLASH //

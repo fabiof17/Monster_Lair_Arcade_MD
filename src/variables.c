@@ -43,10 +43,8 @@ s16 scrollOffset_TILE_NIVEAU1_BGB[28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Sprite *sprite_Vie[3];
 Sprite *sprite_Pause[2];
 
-//Sprite *sprite_repere_BG;
-//Sprite *sprite_repere_BD;
-//Sprite *sprite_repere_HG;
-//Sprite *sprite_repere_HD;
+Sprite *sprite_repere_BG;
+Sprite *sprite_repere_BD;
 
 
 //----------------------------------------------------//
