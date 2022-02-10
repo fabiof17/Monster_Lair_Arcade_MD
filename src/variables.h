@@ -157,7 +157,8 @@ typedef struct
     bool Axe;                   // 0 = BAS / 1 = HAUT
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type d'ennemi
-    u8 Bonus;
+    u8 Bonus;                   // Arme ?
+    u16 Points;                 // Points obtenus lorsque ennemi tué
     u8 PointsVie;               // Nb points de vie
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y

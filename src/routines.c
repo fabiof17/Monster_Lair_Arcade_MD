@@ -245,6 +245,7 @@ void MAJ_PtsCollision_Joueur()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
+    // POINT BAS GAUCHE //
     if(ptrJoueur->PosX>=0)
     {
         ptrJoueur->pt_Coll1_X=fix32ToInt(positionX)+8;
@@ -255,8 +256,11 @@ void MAJ_PtsCollision_Joueur()
     }
     ptrJoueur->pt_Coll1_Y=fix32ToInt(positionY)+10;
 
+
+    // POINT BAS DROITE //
     ptrJoueur->pt_Coll2_X=fix32ToInt(positionX)+21;
     ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
+
 
     posTileY=ptrJoueur->pt_Coll1_Y>>3;
 }
@@ -265,7 +269,7 @@ void Collision_Decor()
 {
     u16 *ptrtileID_G=&tileID_G;
     u16 *ptrtileID_D=&tileID_D;
-    u8 offsetTilemap;
+    //u8 offsetTilemap;
 
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -1614,6 +1618,7 @@ void MvtJoueur()
             {
                 ptrJoueur->PosY = (posTileY<<3)-8;
                 positionY=intToFix32(ptrJoueur->PosY);
+                MAJ_PtsCollision_Joueur();
             }
         }
 
@@ -1974,6 +1979,7 @@ void MvtJoueur()
             {
                 ptrJoueur->PosY = (posTileY<<3)-8;
                 positionY=intToFix32(ptrJoueur->PosY);
+                MAJ_PtsCollision_Joueur();
             }
         }
 
