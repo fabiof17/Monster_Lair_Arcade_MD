@@ -1558,8 +1558,16 @@ void MvtJoueur()
         /////////////////////////////
         if(ptrJoueur->Axe==0)
         {
-            // ON AJOUTE 'ACCEL_D' A 'movX'
-            movX += ACCEL_D;
+            if(CamPosX!=-4336)
+            {
+                // ON AJOUTE 'ACCEL_D' A 'movX'
+                movX += ACCEL_D;
+            }
+            else
+            {
+                // ON AJOUTE 'ACCEL_G' A 'movX'
+                movX += ACCEL_G;
+            }
 
             // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
             if (movX >= maxSpeed_D)
