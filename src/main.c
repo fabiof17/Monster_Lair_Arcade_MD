@@ -167,7 +167,9 @@ void MainLoop()
                 Scrolling_Niveau1();
 
                 CreaSprites_Niveau1();
-                MvtSprites_Niveau1();
+                MvtEnnemis_Niveau1();
+                
+                MvtPlateformes_Niveau1();
 
                 MvtJoueur();
                 TilesJoueur();
@@ -184,9 +186,7 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            //VDP_drawInt( Joueur.Phase , 1 , 10 , 6);
-            //VDP_drawInt( tileID_G , 1 , 10 , 6);
-            //VDP_drawInt( tileID_D , 1 , 12 , 6);
+            //VDP_drawInt( (Joueur.pt_Coll1_X - CamPosX) >> 3 , 2 , 10 , 6);
 
             // Vblank
             SYS_doVBlankProcess();

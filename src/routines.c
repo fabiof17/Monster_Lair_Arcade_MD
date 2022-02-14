@@ -144,7 +144,7 @@ void Scrolling_Niveau1()
         CamPosX=-4336;
     }
 
-    tilemapOffset=(CamPosX>>3)*-1;
+    tilemapOffset=-(CamPosX>>3);
 
 
 
@@ -152,6 +152,8 @@ void Scrolling_Niveau1()
     // MISE A JOUR TILEMAP //
     if(CamPosX>-4336)
     {
+
+        compteurTile+=vitesseScrolling;
 
         // DEPLACEMENT CAMERA //
         // BG_A
@@ -502,12 +504,6 @@ void CreaSprites_Niveau1()
 {
     u16 i;
 
-    if(CamPosX>-4336)
-    {
-        compteurTile+=vitesseScrolling;
-    }
-
-
     // Si compteurTile est supérieur à 7
     if(compteurTile>7)
     {
@@ -648,7 +644,7 @@ void CreaSprites_Niveau1()
     }
 }
 
-void MvtSprites_Niveau1()
+void MvtEnnemis_Niveau1()
 {
     if(CamPosX>-4336)
     {
@@ -1035,6 +1031,36 @@ void MvtSprites_Niveau1()
 
             }
         }
+    }
+ 
+    //////////////////
+    //    DRAGON    //
+    //////////////////
+    SpriteDragon_ *ptrDragon=&Dragon;
+
+    if(ptrDragon->Phase==SORTIE_DRAGON)
+    {
+        ptrDragon->PosY-=1;
+
+        if(ptrDragon->PosY==0)
+        {
+            ptrDragon->Phase=ATTENTE_DRAGON;
+            ptrDragon->CompteurFrameVol=0;
+            ptrDragon->IndexFrameVol=0;
+            ptrDragon->PosX=10;
+            ptrDragon->PosY=-32;
+
+            PAL_setColor( 10 , 0x000C );
+            PAL_setColor( 13 , 0x06CC );
+        }
+    }
+}
+
+void MvtPlateformes_Niveau1()
+{
+    if(CamPosX>-4336)
+    {
+        u8 i;
 
         /////////////////////
         //   PLATEFORMES   //
