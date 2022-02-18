@@ -97,8 +97,8 @@ void InitTitre()
 
     //////////////////////////////////////////////
     //                   SPRITES                //
-    ////////////////////////////////////////////// 
- 
+    //////////////////////////////////////////////
+
     // init Sprite Engine
     SPR_init();
 
@@ -112,7 +112,7 @@ void InitTitre()
         sprite_Titre[i]=SPR_addSprite(&tiles_Sprite_TITRE, 64+(i<<5), 16, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
         SPR_setAnimAndFrame(sprite_Titre[i], 0, i);
     }
-    
+
     SPR_update();
 
     //KLog_U1("Hello Gens KMod - ", 1010);
@@ -278,10 +278,10 @@ void InitSelection()
     }
 
     for (i=0; i<2; i++)
-    {    
+    {
         sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_F, 272+(i<<4), 200, TILE_ATTR(PAL2, TRUE, FALSE, FALSE));
     }
-    
+
     SPR_update();
 
     //////////////////////////////////////////////
@@ -318,12 +318,12 @@ void InitSelection()
             {
                 // scrolling par tile
                 VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_TITRE, 10, CPU);
-    
+
                 for (i=0; i<10; i++)
                 {
                     scrollOffset_TILE_TITRE[i]=0;
                 }
-        
+
                 selectJoueur=1;
                 StatutJoy=0;
             }
@@ -332,12 +332,12 @@ void InitSelection()
             {
                 // scrolling par tile
                 VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_TITRE, 10, CPU);
-    
+
                 for (i=0; i<10; i++)
                 {
                     scrollOffset_TILE_TITRE[i]=128;
                 }
-        
+
                 selectJoueur=0;
                 StatutJoy=0;
             }
@@ -392,7 +392,7 @@ void InitNiveaux()
 
         case 2:
         break;
-    }   
+    }
 }
 
 
@@ -405,9 +405,9 @@ void InitNiveaux()
 void InitNiveau1()
 {
     u16 i;
-    
+
     nb_Vie=2;
-    
+
     vitesseScrolling=1;
     compteurTile=0;
 
@@ -422,7 +422,7 @@ void InitNiveau1()
 
     CompteurEnergie=1;
     Energie=ENERGIE_DEPART;
-          
+
     // Position X initiale du sprite : 64 pixels
     positionX=FIX32(64L);
     // Position Y initiale du sprite : 56 pixels
@@ -432,7 +432,14 @@ void InitNiveau1()
     maxSpeed_D = MAX_SPEED_D;
     maxSpeed_G = MAX_SPEED_G;
     maxSpeed_V = MAX_SPEED_V;
-    
+
+    tileID_BG=0;
+    tileID_BD=0;
+    posTileY=0;
+
+    tileID_CG=0;
+    tileID_CD=0;
+
     //////////////////////////////////////////////
     //                CREATION  BG              //
     //////////////////////////////////////////////
@@ -446,7 +453,7 @@ void InitNiveau1()
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
-    VDP_loadTileSet(&tileset_NIVEAU1_BGB, ind, DMA);   
+    VDP_loadTileSet(&tileset_NIVEAU1_BGB, ind, DMA);
 
     // BGB CREATION
     // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
@@ -469,7 +476,7 @@ void InitNiveau1()
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
-    VDP_loadTileSet(&tileset_NIVEAU1_BGA, ind, DMA);   
+    VDP_loadTileSet(&tileset_NIVEAU1_BGA, ind, DMA);
 
     // BGA CREATION
     // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
@@ -477,7 +484,7 @@ void InitNiveau1()
     //VDP_setTileMap(BG_A, image_NIVEAU1_BGA.tilemap, 0, 0, 64, 28, CPU);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += tileset_NIVEAU1_BGA.numTile;   
+    ind += tileset_NIVEAU1_BGA.numTile;
 
     // Vblank
     SYS_doVBlankProcess();
@@ -495,7 +502,7 @@ void InitNiveau1()
     // WINDOW tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
     VDP_loadTileSet(&tileset_NIVEAU1_WINDOW, ind, DMA);
-    
+
 
     // WINDOW CREATION
     // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
@@ -515,7 +522,7 @@ void InitNiveau1()
     {
         VDP_loadTileSet(&tileset_TETE_H, ind, DMA);
         VDP_setTileMapEx(WINDOW, image_TETE_H.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);
- 
+
         // we offset tile index by the number of tiles previously loaded in VRAM
         ind += tileset_TETE_H.numTile;
     }
@@ -523,7 +530,7 @@ void InitNiveau1()
     {
         VDP_loadTileSet(&tileset_TETE_F, ind, DMA);
         VDP_setTileMapEx(WINDOW, image_TETE_F.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);
- 
+
         // we offset tile index by the number of tiles previously loaded in VRAM
         ind += tileset_TETE_F.numTile;
     }
@@ -550,7 +557,7 @@ void InitNiveau1()
     {
         VDP_setTileMapEx(WINDOW, image_BARRE_VERTE1.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 4+i, 3, 0, 0, 1, 2, DMA);
     }
-    
+
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += tileset_BARRE_VERTE1.numTile;
 
@@ -593,7 +600,7 @@ void InitNiveau1()
 
     /*********/
     /*  VIES */
-    /*********/  
+    /*********/
     for (i=0; i<nb_Vie; i++)
     {
         if(selectJoueur==0)
@@ -603,7 +610,7 @@ void InitNiveau1()
         else
         {
             sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_F, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
-        
+
         }
     }
 
@@ -656,7 +663,7 @@ void InitNiveau1()
         ptrJoueur->SpriteJ_BAS = SPR_addSprite(&tiles_Sprite_JOUEUR_F_BAS, 64, 56, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
         ptrJoueur->SpriteJ_HAUT = SPR_addSprite(&tiles_Sprite_JOUEUR_F_HAUT, 64, 32, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     }
-    
+
     // PHASE CHUTE DEBUT //
     ptrJoueur->Phase=CHUTE;
 
@@ -684,16 +691,16 @@ void InitNiveau1()
     ptrJoueur->IndexFrameTir=0;
 
     ptrJoueur->CompteurFrameTouche=0;
-    ptrJoueur->IndexFrameTouche=0; 
+    ptrJoueur->IndexFrameTouche=0;
 
     ptrJoueur->CompteurApparition=0;
 
-    ptrJoueur->pt_Coll1_X=ptrJoueur->PosX+8;
-    ptrJoueur->pt_Coll1_Y=ptrJoueur->PosY+10;
-    ptrJoueur->pt_Coll2_X=ptrJoueur->PosX+21;
-    ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
+    ptrJoueur->pt_Coll_BG_X=ptrJoueur->PosX+8;
+    ptrJoueur->pt_Coll_BG_Y=ptrJoueur->PosY+10;
+    ptrJoueur->pt_Coll_BD_X=ptrJoueur->PosX+21;
+    ptrJoueur->pt_Coll_BD_Y=ptrJoueur->pt_Coll_BG_Y;
 
-    posTileY=ptrJoueur->pt_Coll1_Y>>3;
+    posTileY=ptrJoueur->pt_Coll_BG_Y>>3;
 
     SPR_setAnim(ptrJoueur->SpriteJ_BAS,4);
     SPR_setFrame(ptrJoueur->SpriteJ_BAS,0);
@@ -718,7 +725,7 @@ void InitNiveau1()
     ptrAura->CompteurFrameAura=0;
     ptrAura->IndexFrameAura=0;
 
-    
+
     if(selectJoueur==0)
     {
         ptrAura->SpriteA=SPR_addSprite(&tiles_Sprite_AURA_H, ptrAura->PosX, ptrAura->PosY, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
@@ -726,7 +733,7 @@ void InitNiveau1()
     else
     {
         ptrAura->SpriteA=SPR_addSprite(&tiles_Sprite_AURA_F, ptrAura->PosX, ptrAura->PosY, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
-    
+
     }
 
 
@@ -775,14 +782,14 @@ void InitNiveau1()
     {
         PAL_setPalette(PAL0, palette_JOUEUR_F.data, DMA); // PALETTE PERSO F
     }
-    
+
     PAL_setPalette(PAL1, palette_NIVEAU1_ESCARGOT.data, DMA);   // PALETTE ENNEMIS
     PAL_setPalette(PAL2, palette_NIVEAU1_BGB.data, DMA);        // PALETTE BG_B
     PAL_setPalette(PAL3, palette_NIVEAU1_BGA.data, DMA);        // PALETTE BG_A
 
     // scroll mode
     VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
- 
+
     // Vblank
     SYS_doVBlankProcess();
 }

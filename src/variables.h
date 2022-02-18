@@ -99,16 +99,21 @@ typedef struct
 {
     Sprite* SpriteJ_BAS;
     Sprite* SpriteJ_HAUT;
-    u8 Phase;   // 0=ARRET - 1=MARCHE - 2=SAUT - 3=TIR - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
-    u8 Axe;     // 0=DROITE - 1=GAUCHE
-    u8 Arme;    // 0=TIR DE BASE - 1=SHURIKEN - 2=DOUBLE BOULE - 
+    u8 Phase;                   // 0=ARRET - 1=MARCHE - 2=SAUT - 3=TIR - 4=SAUT+TIR - 98=CHUTE - 99=TOUCHÉ - 100=MORT
+    u8 Axe;                     // 0=DROITE - 1=GAUCHE
+    u8 Arme;                    // 0=TIR DE BASE - 1=SHURIKEN - 2=DOUBLE BOULE - 
 
     s16 PosX;
     s16 PosY;
-    s16 pt_Coll1_X;
-    s16 pt_Coll1_Y;
-    s16 pt_Coll2_X;
-    s16 pt_Coll2_Y;
+    s16 pt_Coll_BG_X;           // Points de collision BAS
+    s16 pt_Coll_BG_Y;
+    s16 pt_Coll_BD_X;
+    s16 pt_Coll_BD_Y;
+
+    s16 pt_Coll_CG_X;           // Points de collision CÔTÉ
+    s16 pt_Coll_CG_Y;
+    s16 pt_Coll_CD_X;
+    s16 pt_Coll_CD_Y;
 
     u16 CompteurApparition;
     bool Invincible;
@@ -273,9 +278,13 @@ typedef struct
 //----------------------------------------------------//
 extern Map *tilemapCollision;
 
-extern u16 tileID_G;
-extern u16 tileID_D;
+extern u16 tileID_BG;
+extern u16 tileID_BD;
 extern u16 posTileY;
+
+extern u16 tileID_CG;
+extern u16 tileID_CD;
+
 
 extern u8 compteurTile; // 0 -> 7 //
 extern u16 tilemapOffset;

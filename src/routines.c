@@ -247,46 +247,52 @@ void MAJ_PtsCollision_Joueur()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    // POINT BAS GAUCHE //
+    // POINTS GAUCHE //
     if(ptrJoueur->PosX>=0)
     {
-        ptrJoueur->pt_Coll1_X=fix32ToInt(positionX)+8;
+        ptrJoueur->pt_Coll_BG_X=fix32ToInt(positionX)+8;
+        ptrJoueur->pt_Coll_CG_X=ptrJoueur->pt_Coll_BG_X;
     }
     else
     {
-        ptrJoueur->pt_Coll1_X=fix32ToInt(positionX)+11;
+        ptrJoueur->pt_Coll_BG_X=fix32ToInt(positionX)+11;
+        ptrJoueur->pt_Coll_CG_X=ptrJoueur->pt_Coll_BG_X;
     }
-    ptrJoueur->pt_Coll1_Y=fix32ToInt(positionY)+10;
+    ptrJoueur->pt_Coll_BG_Y=fix32ToInt(positionY)+10;
+    ptrJoueur->pt_Coll_CG_Y=fix32ToInt(positionY)+7;
 
 
-    // POINT BAS DROITE //
-    ptrJoueur->pt_Coll2_X=fix32ToInt(positionX)+21;
-    ptrJoueur->pt_Coll2_Y=ptrJoueur->pt_Coll1_Y;
+    // POINTS DROITE //
+    ptrJoueur->pt_Coll_BD_X=fix32ToInt(positionX)+21;
+    ptrJoueur->pt_Coll_CD_X=ptrJoueur->pt_Coll_BD_X;
+
+    ptrJoueur->pt_Coll_BD_Y=ptrJoueur->pt_Coll_BG_Y;
+    ptrJoueur->pt_Coll_CD_Y=ptrJoueur->pt_Coll_CG_Y;
 
 
-    posTileY=ptrJoueur->pt_Coll1_Y>>3;
+    posTileY=ptrJoueur->pt_Coll_BG_Y>>3;
 }
 
-void Collision_Decor()
+void Collision_Decor_Bas()
 {
-    u16 *ptrtileID_G=&tileID_G;
-    u16 *ptrtileID_D=&tileID_D;
-    //u8 offsetTilemap;
+    u16 *ptrtileID_BG=&tileID_BG;
+    u16 *ptrtileID_BD=&tileID_BD;
 
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
-    // Récuperation ID de tile de collision
-    /*if(CamPosX%8==0)
-    {
-        offsetTilemap=0;
-    }
-    else
-    {
-        offsetTilemap=1;
-    }*/
+    *ptrtileID_BG=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll_BG_X - CamPosX) >> 3) , posTileY ) & TILE_INDEX_MASK;
+    *ptrtileID_BD=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll_BD_X - CamPosX) >> 3) , posTileY ) & TILE_INDEX_MASK;
+}
 
-    *ptrtileID_G=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll1_X - CamPosX) >> 3) , posTileY ) & TILE_INDEX_MASK;
-    *ptrtileID_D=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll2_X - CamPosX) >> 3) , posTileY ) & TILE_INDEX_MASK;
+void Collision_Decor_Cotes()
+{
+    u16 *ptrtileID_CG=&tileID_CG;
+    u16 *ptrtileID_CD=&tileID_CD;
+
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    *ptrtileID_CG=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll_CG_X - CamPosX) >> 3) , ((ptrJoueur->pt_Coll_CG_Y - CamPosX) >> 3) ) & TILE_INDEX_MASK;
+    *ptrtileID_CD=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll_CD_X - CamPosX) >> 3) , ((ptrJoueur->pt_Coll_CD_Y - CamPosX) >> 3) ) & TILE_INDEX_MASK;
 }
 
 void Collision_Ennemis()
@@ -368,16 +374,16 @@ void Collision_Plateformes()
                 //       COIN BAS GAUCHE DU JOUEUR        //
                 //----------------------------------------//
                 // Si pt collision X G joueur >= pt collision X G plateforme
-                if(ptrJoueur->pt_Coll1_X >= ptrPlateforme->pt_Coll1_X)
+                if(ptrJoueur->pt_Coll_BG_X >= ptrPlateforme->pt_Coll1_X)
                 {
                     // Si pt collision X G joueur <= pt collision X D plateforme
-                    if((ptrJoueur->pt_Coll1_X <= ptrPlateforme->pt_Coll2_X))
+                    if((ptrJoueur->pt_Coll_BG_X <= ptrPlateforme->pt_Coll2_X))
                     {
                         // Si pt collision Y G joueur >= pt collision Y G plateforme
-                        if(ptrJoueur->pt_Coll1_Y >= ptrPlateforme->pt_Coll1_Y)
+                        if(ptrJoueur->pt_Coll_BG_Y >= ptrPlateforme->pt_Coll1_Y)
                         {
                             // Si pt collision Y G joueur >= pt collision Y G plateforme +7
-                            if(ptrJoueur->pt_Coll1_Y <= ptrPlateforme->pt_Coll1_Y+15)
+                            if(ptrJoueur->pt_Coll_BG_Y <= ptrPlateforme->pt_Coll1_Y+15)
                             {
                                 // Il y a contact
                                 contactPlt_OK=1;
@@ -432,16 +438,16 @@ void Collision_Plateformes()
                 //       COIN BAS DROITE DU JOUEUR        //
                 //----------------------------------------//
                 // Si pt collision X D joueur >= pt collision X G plateforme
-                else if(ptrJoueur->pt_Coll2_X >= ptrPlateforme->pt_Coll1_X)
+                else if(ptrJoueur->pt_Coll_BD_X >= ptrPlateforme->pt_Coll1_X)
                 {
                     // Si pt collision X D joueur <= pt collision X D plateforme
-                    if((ptrJoueur->pt_Coll2_X <= ptrPlateforme->pt_Coll2_X))
+                    if((ptrJoueur->pt_Coll_BD_X <= ptrPlateforme->pt_Coll2_X))
                     {
                         // Si pt collision Y D joueur >= pt collision Y G plateforme
-                        if(ptrJoueur->pt_Coll2_Y >= ptrPlateforme->pt_Coll1_Y)
+                        if(ptrJoueur->pt_Coll_BD_Y >= ptrPlateforme->pt_Coll1_Y)
                         {
                             // Si pt collision Y D joueur >= pt collision Y G plateforme +7
-                            if(ptrJoueur->pt_Coll2_Y <= ptrPlateforme->pt_Coll1_Y+15)
+                            if(ptrJoueur->pt_Coll_BD_Y <= ptrPlateforme->pt_Coll1_Y+15)
                             {
                                 // Il y a contact
                                 contactPlt_OK=1;
@@ -1514,11 +1520,11 @@ void MvtJoueur()
             //--------------------------//
 
             // TEST COLLISION DECOR //
-            Collision_Decor();
+            Collision_Decor_Bas();
 
 
             // SI LE JOUEUR CHUTE
-            if(tileID_G==0 && tileID_D==0)
+            if(tileID_BG==0 && tileID_BD==0)
             {
                 // PHASE CHUTE
                 ptrJoueur->Phase=CHUTE;
@@ -1636,11 +1642,11 @@ void MvtJoueur()
             //--------------------------//
 
             // TEST COLLISION DECOR //
-            Collision_Decor();
+            Collision_Decor_Bas();
 
 
             // SI LE JOUEUR CHUTE
-            if(tileID_G==0 && tileID_D==0)
+            if(tileID_BG==0 && tileID_BD==0)
             {
                 // PHASE CHUTE
                 ptrJoueur->Phase=CHUTE;
@@ -1648,7 +1654,7 @@ void MvtJoueur()
             }
 
             // SI LE JOUEUR NE CHUTE PAS
-            else if(tileID_G==1 || tileID_D==1)
+            else if(tileID_BG==1 || tileID_BD==1)
             {
                 ptrJoueur->PosY = (posTileY<<3)-8;
                 positionY=intToFix32(ptrJoueur->PosY);
@@ -1808,11 +1814,11 @@ void MvtJoueur()
                 //--------------------------//
 
                 // TEST COLLISION DECOR //
-                Collision_Decor();
+                Collision_Decor_Bas();
 
 
                 // SI LE JOUEUR CHUTE //
-                if(tileID_G==1 || tileID_D==1)
+                if(tileID_BG==1 || tileID_BD==1)
                 {
                     // PHASE ARRET //
                     ptrJoueur->Phase=ARRET;
@@ -1997,11 +2003,11 @@ void MvtJoueur()
             //--------------------------//
 
             // TEST COLLISION DECOR //
-            Collision_Decor();
+            Collision_Decor_Bas();
 
 
             // SI LE JOUEUR CHUTE
-            if(tileID_G==0 && tileID_D==0)
+            if(tileID_BG==0 && tileID_BD==0)
             {
                 // PHASE CHUTE
                 ptrJoueur->Phase=CHUTE;
@@ -2009,7 +2015,7 @@ void MvtJoueur()
             }
 
             // SI LE JOUEUR NE CHUTE PAS
-            else if(tileID_G==1 || tileID_D==1)
+            else if(tileID_BG==1 || tileID_BD==1)
             {
                 ptrJoueur->PosY = (posTileY<<3)-8;
                 positionY=intToFix32(ptrJoueur->PosY);
@@ -2167,11 +2173,11 @@ void MvtJoueur()
                 //--------------------------//
 
                 // TEST COLLISION DECOR //
-                Collision_Decor();
+                Collision_Decor_Bas();
 
 
                 // SI LE JOUEUR CHUTE //
-                if(tileID_G==1 || tileID_D==1)
+                if(tileID_BG==1 || tileID_BD==1)
                 {
                     // PHASE ARRET //
                     if(ptrJoueur->Phase==SAUT_TIR)
@@ -2351,11 +2357,11 @@ void MvtJoueur()
             //--------------------------//
 
             // TEST COLLISION DECOR //
-            Collision_Decor();
+            Collision_Decor_Bas();
 
 
             // SI LE JOUEUR TOUCHE LE SOL
-            if(tileID_G==1 || tileID_D==1)
+            if(tileID_BG==1 || tileID_BD==1)
             {
                 // PHASE CHUTE
                 ptrJoueur->PosY = (posTileY<<3)-8;
@@ -2710,8 +2716,8 @@ void MvtJoueur()
     SPR_setPosition(ptrJoueur->SpriteJ_HAUT, ptrJoueur->PosX, ptrJoueur->PosY-PosYinvincible-24);
 
     // REPERES //
-    //SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll1_X, ptrJoueur->pt_Coll1_Y-PosYinvincible-7);
-    //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll2_X-7, ptrJoueur->pt_Coll1_Y-PosYinvincible-7);
+    //SPR_setPosition(sprite_repere_BG, ptrJoueur->pt_Coll_BG_X, ptrJoueur->pt_Coll_BG_Y-PosYinvincible-7);
+    //SPR_setPosition(sprite_repere_BD, ptrJoueur->pt_Coll_BD_X-7, ptrJoueur->pt_Coll_BG_Y-PosYinvincible-7);
 
     // DRAGON //
     SPR_setPosition(ptrDragon->SpriteD, ptrDragon->PosX, ptrDragon->PosY);

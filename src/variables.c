@@ -108,9 +108,12 @@ SpriteAura_ Aura;
 //----------------------------------------------------//
 Map *tilemapCollision;
 
-u16 tileID_G=0;
-u16 tileID_D=0;
+u16 tileID_BG=0;
+u16 tileID_BD=0;
 u16 posTileY;
+
+u16 tileID_CG=0;
+u16 tileID_CD=0;
 
 u8 compteurTile=0; // 0 -> 7 //
 u16 tilemapOffset=0;
