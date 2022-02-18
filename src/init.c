@@ -464,6 +464,8 @@ void InitNiveau1()
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += tileset_NIVEAU1_BGB.numTile;
 
+    AdresseVram_BG_A=ind;
+
     // Vblank
     SYS_doVBlankProcess();
 
@@ -477,6 +479,9 @@ void InitNiveau1()
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
     VDP_loadTileSet(&tileset_NIVEAU1_BGA, ind, DMA);
+
+    // Vblank
+    SYS_doVBlankProcess();
 
     // BGA CREATION
     // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res

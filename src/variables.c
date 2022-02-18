@@ -24,6 +24,7 @@ u16 AdresseVram_Tete=0;
 
 u16 AdresseVram_BarreEnergie=0;
 u16 AdresseVram_BarreVierge=0;
+u16 AdresseVram_BG_A=0;
 
 ///////////////////////////////////
 //		Variables scrolling      //

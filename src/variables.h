@@ -66,6 +66,7 @@ extern u16 AdresseVram_Tete;
 
 extern u16 AdresseVram_BarreEnergie;
 extern u16 AdresseVram_BarreVierge;
+extern u16 AdresseVram_BG_A;
 
 extern char texteSortie[2];
 
