@@ -6,6 +6,6 @@
 
 - Version SGDK : 53 couleurs maximum à l'écran.
 
-####
+<p align="center">Comparaison</p>
 
 <p align="center"><img src='Comparatif.png'></p>
