@@ -1,4 +1,5 @@
-<p align="center"># Monster Lair Arcade pour Megadrive</p>
+#
+<p align="center">Monster Lair Arcade pour Megadrive</p>
  
 ### Projet de conversion à l'aide du SGDK
 
