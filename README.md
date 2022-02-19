@@ -2,4 +2,4 @@
  
 ### Projet de conversion à l'aide du SGDK
 
-<center><img src='Comparatif.png'>
+<center><img src='Comparatif.png'></center>
