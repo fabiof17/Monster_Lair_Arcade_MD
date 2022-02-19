@@ -34,7 +34,7 @@ u8 vitesseScrolling=1;
 s16 CamPosX=0;
 s16 CamPosY=0;
 
-s16 scrollOffset_TILE_TITRE[10]={1,1,1,1,1,1,1,1,1,0};
+//s16 scrollOffset_TILE_TITRE[10]={1,1,1,1,1,1,1,1,1,0};
 s16 scrollOffset_TILE_NIVEAU1_BGA[28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 s16 scrollOffset_TILE_NIVEAU1_BGB[28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 

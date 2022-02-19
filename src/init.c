@@ -132,7 +132,7 @@ void InitTitre()
     //SYS_doVBlankProcess();
 
 
-
+    s16 scrollOffset_TILE_TITRE[10]={1,1,1,1,1,1,1,1,1,0};
 
     while(TRUE)
 	{
@@ -233,6 +233,8 @@ void InitSelection()
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += image_SELECTION_BGB.tileset->numTile;
 
+    u16 AdresseVram_BG_A=ind;
+
     // safe VBlank wait between 2 BG creations
     SYS_doVBlankProcess();
 
@@ -249,6 +251,7 @@ void InitSelection()
 
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += image_SELECTION_BGA.tileset->numTile;
+
 
     // safe VBlank wait between 2 BG creations
     SYS_doVBlankProcess();
@@ -295,14 +298,36 @@ void InitSelection()
 
     SYS_doVBlankProcess();
 
+    s16 scrollOffset_TILE_SELECTION[10]={0,0,0,0,0,0,0,0,0,0};
     for (i=0; i<10; i++)
     {
-        scrollOffset_TILE_TITRE[i]=128;
+        scrollOffset_TILE_SELECTION[i]=128;
     }
 
 
+    u8 CompteurClignotement=1;
+    
+
     while(TRUE)
 	{
+        // Clignotement
+        
+        if(CompteurClignotement==0)
+        {
+            VDP_setTileMapEx(BG_A,image_SELECTION_BGA.tilemap,TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, AdresseVram_BG_A),8, 9, 0, 0, 26, 2, CPU);
+        }
+        else if(CompteurClignotement==4)
+        {
+            VDP_setTileMapEx(BG_A,image_SELECTION_BGA.tilemap,TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, AdresseVram_BG_A),8, 9, 8, 9, 26, 2, CPU);
+        }        
+
+        CompteurClignotement++;
+
+        if(CompteurClignotement>8)
+        {
+            CompteurClignotement=0;
+        }
+
 
         // Gestion manette
 		u16 value=JOY_readJoypad(JOY_1);
@@ -317,11 +342,11 @@ void InitSelection()
             if (value & BUTTON_RIGHT && selectJoueur == 0 )
             {
                 // scrolling par tile
-                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_TITRE, 10, CPU);
+                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
 
                 for (i=0; i<10; i++)
                 {
-                    scrollOffset_TILE_TITRE[i]=0;
+                    scrollOffset_TILE_SELECTION[i]=0;
                 }
 
                 selectJoueur=1;
@@ -331,11 +356,11 @@ void InitSelection()
             if (value & BUTTON_LEFT && selectJoueur == 1 )
             {
                 // scrolling par tile
-                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_TITRE, 10, CPU);
+                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
 
                 for (i=0; i<10; i++)
                 {
-                    scrollOffset_TILE_TITRE[i]=128;
+                    scrollOffset_TILE_SELECTION[i]=128;
                 }
 
                 selectJoueur=0;
@@ -350,11 +375,11 @@ void InitSelection()
 
                 for (i=0; i<10; i++)
                 {
-                    scrollOffset_TILE_TITRE[i]=0;
+                    scrollOffset_TILE_SELECTION[i]=0;
                 }
 
                 // réinit scrolling par tile
-                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_TITRE, 10, CPU);
+                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
 
 
                 // Si on quitte

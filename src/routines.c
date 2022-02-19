@@ -215,27 +215,32 @@ void ChgtPalette_Niveau1()
 
      if(CamPosX<-700 && CamPosX>-704)
     {
-        PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
+        const u16* NouvellePalette = palette_NIVEAU1_BULOT.data;
+        PAL_setPalette(PAL1, NouvellePalette, DMA);
     }
 
     else if(CamPosX<-1110 && CamPosX>-1114)
     {
-        PAL_setPaletteColors(16, &palette_NIVEAU1_ESCARGOT, DMA);
+        const u16* NouvellePalette = palette_NIVEAU1_ESCARGOT.data;
+        PAL_setPalette(PAL1, NouvellePalette, DMA);
     }
 
     else if(CamPosX<-2600 && CamPosX>-2604)
     {
-        PAL_setPaletteColors(16, &palette_NIVEAU1_PELICAN, DMA);
+        const u16* NouvellePalette = palette_NIVEAU1_PELICAN.data;
+        PAL_setPalette(PAL1, NouvellePalette, DMA);
     }
 
     else if(CamPosX<-3700 && CamPosX>-3704)
     {
-        PAL_setPaletteColors(16, &palette_NIVEAU1_BULOT, DMA);
+        const u16* NouvellePalette = palette_NIVEAU1_BULOT.data;
+        PAL_setPalette(PAL1, NouvellePalette, DMA);
     }
 
     else if(CamPosX<-4016 && CamPosX>-4020)
     {
-        PAL_setPaletteColors(48, &palette_NIVEAU1_BGA2, DMA);
+        const u16* NouvellePalette = palette_NIVEAU1_BGA2.data;
+        PAL_setPalette(PAL3, NouvellePalette, DMA);
     }
 }
 

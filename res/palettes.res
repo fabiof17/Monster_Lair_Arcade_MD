@@ -18,5 +18,5 @@ PALETTE palette_JOUEUR_F "sprites/global/tiles_JOUEUR_F.png"
 PALETTE palette_DRAGON "sprites/global/tiles_DRAGON.png"
 
 PALETTE palette_NIVEAU1_ESCARGOT "palettes/niveau1/palette_Niveau1_ESCARGOT.png"
-PALETTE palette_NIVEAU1_BULOT "sprites/niveau1/tiles_BULOT.png"
+PALETTE palette_NIVEAU1_BULOT "palettes/niveau1/palette_Niveau1_BULOT.png"
 PALETTE palette_NIVEAU1_PELICAN "sprites/niveau1/tiles_PELICAN.png"

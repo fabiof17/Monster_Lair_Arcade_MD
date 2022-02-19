@@ -79,7 +79,7 @@ extern u8 vitesseScrolling;
 extern s16 CamPosX;
 extern s16 CamPosY;
 
-extern s16 scrollOffset_TILE_TITRE[10];
+//extern s16 scrollOffset_TILE_TITRE[10];
 extern s16 scrollOffset_TILE_NIVEAU1_BGA[28];
 extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 
