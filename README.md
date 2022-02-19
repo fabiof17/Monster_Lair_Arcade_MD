@@ -1,3 +1,5 @@
 # Monster Lair Arcade pour Megadrive
  
-### Projet de conversion avec le SGDK
+### Projet de conversion à l'aide du SGDK
+
+<img src='Comparatif.png'>
