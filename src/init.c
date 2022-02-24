@@ -52,6 +52,10 @@ void InitTitre()
     //                CREATION BG               //
     //////////////////////////////////////////////
 
+    /********************************************/
+    /*                     BGB                  */
+    /********************************************/
+
     // safe starting VRAM adress (16)
     u16 ind = TILE_USERINDEX;
 
@@ -71,6 +75,9 @@ void InitTitre()
 
 
 
+    /********************************************/
+    /*                     BGA                  */
+    /********************************************/
 
     // BGA tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_TITRE.res
@@ -113,6 +120,12 @@ void InitTitre()
         SPR_setAnimAndFrame(sprite_Titre[i], 0, i);
     }
 
+    // création des sprites PRESS START
+    Sprite *sprite_PRESS_START;
+    
+    sprite_PRESS_START=SPR_addSprite(&tiles_Sprite_PRESS_START, 116, 48, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+
+
     SPR_update();
 
     //KLog_U1("Hello Gens KMod - ", 1010);
@@ -131,11 +144,28 @@ void InitTitre()
 
     //SYS_doVBlankProcess();
 
-
+    u8 CompteurPressStart=1;
     s16 scrollOffset_TILE_TITRE[10]={1,1,1,1,1,1,1,1,1,0};
 
     while(TRUE)
 	{
+        // Clignotement       
+        if(CompteurPressStart==0)
+        {
+            SPR_setPosition(sprite_PRESS_START,116,48);
+        }
+        else if(CompteurPressStart==6)
+        {
+            SPR_setPosition(sprite_PRESS_START,0,-8);
+        }        
+
+        CompteurPressStart++;
+
+        if(CompteurPressStart>11)
+        {
+            CompteurPressStart=0;
+        }
+
         CamPosX-=1;
 
         for (i=0; i<9; i++)
@@ -166,6 +196,8 @@ void InitTitre()
             }
         }
 
+        SPR_update();
+
         // Vblank
 		SYS_doVBlankProcess();
     }
@@ -195,6 +227,8 @@ void InitTitre()
         SPR_releaseSprite(sprite_Titre[i]);
     }
 
+    SPR_releaseSprite(sprite_PRESS_START);
+
     // réinitialise le Sprite Engine
     SPR_reset();
     // désactive le Sprite Engine
@@ -217,6 +251,10 @@ void InitSelection()
     //////////////////////////////////////////////
     //                BG CREATION               //
     //////////////////////////////////////////////
+
+    /********************************************/
+    /*                     BGB                  */
+    /********************************************/
 
     // safe starting VRAM adress (16)
     u16 ind = TILE_USERINDEX;
@@ -241,6 +279,10 @@ void InitSelection()
 
 
 
+    /********************************************/
+    /*                     BGA                  */
+    /********************************************/
+
     // BGA tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_SELECTION.res
     VDP_loadTileSet(image_SELECTION_BGA.tileset, ind, DMA);
@@ -258,9 +300,49 @@ void InitSelection()
 
 
 
+    /********************************************/
+    /*                  WINDOW                  */
+    /********************************************/
+
+    VDP_setWindowHPos(0, 0);
+    VDP_setWindowVPos(0, 6);
+
+    // WINDOW tileset loading in VRAM
+    // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
+    VDP_loadTileSet(&tileset_NIVEAU1_WINDOW, ind, DMA);
+
+
+    // WINDOW CREATION
+    // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
+    VDP_setTileMapEx(WINDOW, image_NIVEAU1_WINDOW.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 40, 6, DMA);
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += tileset_NIVEAU1_WINDOW.numTile;
+
+
+    ///////////////////
+    //  TETE JOUEUR  //
+    ///////////////////
+
+    VDP_loadTileSet(&tileset_TETE_H, ind, DMA);
+    VDP_setTileMapEx(WINDOW, image_TETE_H.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += tileset_TETE_H.numTile;
+
+    VDP_loadTileSet(&tileset_TETE_F, ind, DMA);
+    VDP_setTileMapEx(WINDOW, image_TETE_F.tilemap, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, ind), 21, 1, 0, 0, 2, 2, DMA);
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += tileset_TETE_F.numTile;
+
+
 
     // scroll mode
     VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
+
+
+
 
 
     //////////////////////////////////////////////
@@ -291,7 +373,7 @@ void InitSelection()
     //               CHARGEMENT PALETTES        //
     //////////////////////////////////////////////
 
-
+    PAL_setPalette(PAL3, palette_JOUEUR_H.data, DMA);
     PAL_setPalette(PAL0, palette_SELECTION_BGB.data, DMA);
     PAL_setPalette(PAL1, palette_SELECTION_BGA.data, DMA);
     PAL_setPalette(PAL2, palette_02_SELECTION.data, DMA);
@@ -310,8 +392,7 @@ void InitSelection()
 
     while(TRUE)
 	{
-        // Clignotement
-        
+        // Clignotement       
         if(CompteurClignotement==0)
         {
             VDP_setTileMapEx(BG_A,image_SELECTION_BGA.tilemap,TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, AdresseVram_BG_A),8, 9, 0, 0, 26, 2, CPU);
@@ -386,6 +467,7 @@ void InitSelection()
                 // On efface les BG
                 VDP_clearPlane(BG_B,TRUE);
                 VDP_clearPlane(BG_A,TRUE);
+                VDP_clearPlane(WINDOW,TRUE);
 
                 StatutJoy=0;
 

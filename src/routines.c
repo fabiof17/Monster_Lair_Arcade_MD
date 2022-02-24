@@ -2263,7 +2263,7 @@ void MvtJoueur()
             ptrJoueur->Axe=0;
 
             // ON AJOUTE 'ACCEL_D' A 'movX'
-            movX += ACCEL_D;
+            movX += ACCEL_C;
 
             // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
             if (movX >= maxSpeed_D)
@@ -2280,7 +2280,7 @@ void MvtJoueur()
             ptrJoueur->Axe=1;
 
             // ON SOUSTRAIT 'ACCEL_D' A 'movX'
-            movX -= ACCEL_D;
+            movX -= ACCEL_C;
 
         // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
             if(movX <= -maxSpeed_D)
@@ -2297,7 +2297,7 @@ void MvtJoueur()
             // JOUEUR ORIENTÉ VERS LA DROITE
             if(ptrJoueur->Axe==0)
             {
-                movX -= ACCEL_D;
+                movX -= ACCEL_C;
                 if(movX < FIX32(0))
                 {
                     movX=0;
@@ -2307,7 +2307,7 @@ void MvtJoueur()
             // JOUEUR ORIENTÉ VERS LA GAUCHE
             else if(ptrJoueur->Axe==1)
             {
-                movX += ACCEL_G;
+                movX += ACCEL_C;
                 if(movX > FIX32(0))
                 {
                     movX=0;

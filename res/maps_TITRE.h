@@ -6,7 +6,5 @@ extern const TileSet tileset_TITRE_BGA;
 extern const TileSet tileset_TITRE;
 extern const Image image_TITRE_BGB;
 extern const Image image_TITRE_BGA;
-extern const MapDefinition map_TITRE_BGB;
-extern const MapDefinition map_TITRE_BGA;
 
 #endif // _RES_MAPS_TITRE_H_

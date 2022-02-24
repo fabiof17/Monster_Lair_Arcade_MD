@@ -1,6 +1,9 @@
 // ECRAN TITRE //
 SPRITE tiles_Sprite_TITRE "sprites/titre/tiles_TITRE.png" 4 3 BEST 0
 
+// ECRAN SELECTION //
+SPRITE tiles_Sprite_PRESS_START "sprites/titre/tiles_PRESS_START.png" 12 1 BEST 0
+
 // GLOBAL //
 SPRITE tiles_Sprite_VIE_H "sprites/global/tile_VIE_H.png" 2 2 BEST 0
 SPRITE tiles_Sprite_VIE_F "sprites/global/tile_VIE_F.png" 2 2 BEST 0
