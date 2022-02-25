@@ -29,12 +29,14 @@
 
 #define ARRET                   0
 #define MARCHE                  1
-#define SAUT                    2
-#define TIR                     3
+#define TIR                     2
+#define SAUT                    3
 #define SAUT_TIR                4
 #define CHUTE                   5
-#define TOUCHE                  6
-#define APPARITION              7
+#define CHUTE_TIR               6
+#define TOUCHE                  7
+#define APPARITION              8
+
 
 #define ATTENTE_DRAGON          0
 #define VOL_DRAGON              1

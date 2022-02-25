@@ -324,17 +324,17 @@ void InitSelection()
     //  TETE JOUEUR  //
     ///////////////////
 
-    VDP_loadTileSet(&tileset_TETE_H, ind, DMA);
-    VDP_setTileMapEx(WINDOW, image_TETE_H.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);
+    VDP_loadTileSet(&tileset_TETE_H_SELECTION, ind, DMA);
+    VDP_setTileMapEx(WINDOW, image_TETE_H_SELECTION.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, ind), 1, 1, 0, 0, 2, 2, DMA);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += tileset_TETE_H.numTile;
+    ind += tileset_TETE_H_SELECTION.numTile;
 
-    VDP_loadTileSet(&tileset_TETE_F, ind, DMA);
-    VDP_setTileMapEx(WINDOW, image_TETE_F.tilemap, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, ind), 21, 1, 0, 0, 2, 2, DMA);
+    VDP_loadTileSet(&tileset_TETE_F_SELECTION, ind, DMA);
+    VDP_setTileMapEx(WINDOW, image_TETE_F_SELECTION.tilemap, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, ind), 21, 1, 0, 0, 2, 2, DMA);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += tileset_TETE_F.numTile;
+    ind += tileset_TETE_F_SELECTION.numTile;
 
 
 

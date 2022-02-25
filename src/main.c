@@ -103,6 +103,19 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
                 ptrAura->Init=1;
             }
         }
+ 
+         // SI JOUEUR ARRET OU MARCHE //
+        else if(ptrJoueur->Phase==CHUTE)
+        {
+            // MARCHE + TIR
+            ptrJoueur->Phase=CHUTE_TIR;
+
+            // L'AURA SE DECLENCHE
+            if(ptrAura->Init==0)
+            {
+                ptrAura->Init=1;
+            }
+        }
     }
 
 }
@@ -186,7 +199,7 @@ void MainLoop()
             Tiles_Niveau1();
 
             // DEBUG
-            //VDP_drawInt( (Joueur.pt_Coll1_X - CamPosX) >> 3 , 2 , 10 , 6);
+            //VDP_drawInt( Joueur.Phase , 2 , 10 , 6);
 
             // Vblank
             SYS_doVBlankProcess();

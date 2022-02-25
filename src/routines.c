@@ -1390,7 +1390,7 @@ void Phases_Joueur()
     ///////////////
     if((value & BUTTON_DIR)==0)
     {
-        if(ptrJoueur->Phase!=SAUT && ptrJoueur->Phase!=TIR && ptrJoueur->Phase!=SAUT_TIR && ptrJoueur->Phase!=CHUTE && ptrJoueur->Phase!=TOUCHE && ptrJoueur->Phase!=APPARITION)
+        if(ptrJoueur->Phase!=SAUT && ptrJoueur->Phase!=TIR && ptrJoueur->Phase!=SAUT_TIR && ptrJoueur->Phase!=CHUTE && ptrJoueur->Phase!=CHUTE_TIR && ptrJoueur->Phase!=TOUCHE && ptrJoueur->Phase!=APPARITION)
         {
             ptrJoueur->Phase=ARRET;
         }
@@ -2180,7 +2180,7 @@ void MvtJoueur()
                 Collision_Decor_Bas();
 
 
-                // SI LE JOUEUR CHUTE //
+                // SI LE JOUEUR TOUCHE LE SOL //
                 if(tileID_BG==1 || tileID_BD==1)
                 {
                     // PHASE ARRET //
@@ -2374,6 +2374,195 @@ void MvtJoueur()
                 ptrJoueur->Phase=ARRET;
                 ptrJoueur->ptrPosition=&anim_SAUT[0];
             }
+
+            // SI LE JOUEUR NE TOUCHE PAS LE SOL
+            else
+            {
+                ptrJoueur->PosY=fix32ToInt(positionY);
+            }
+
+            // JOUEUR TOUCHE BAS DE L'ÉCRAN //
+            if(ptrJoueur->PosY>192)
+            {
+                // SPLASH //
+                ptrSplash->Init=1;
+                ptrSplash->PosX=ptrJoueur->PosX;
+                ptrSplash->PosY=168;
+                SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
+
+                // LA BARRE D'ENERGIE SE VIDE //
+                Vider_BarreEnergie();
+                CompteurEnergie=0;
+                Energie=0;
+
+                ptrJoueur->CompteurInvincible=0;
+                ptrJoueur->Invincible=0;
+                ptrJoueur->HorsChamp=0;
+                PosYinvincible=0;
+
+                // JOUEUR //
+                ptrJoueur->Phase=APPARITION;
+                //ptrJoueur->Invincible=1;
+                ptrJoueur->Axe=0;
+                ptrJoueur->PosX=63;
+                ptrJoueur->PosY=40;
+                positionX=intToFix32(63);
+                positionY=intToFix32(16);
+                movX=0;
+                SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
+                SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
+
+                // CHANGEMENT PALETTE //
+                //PAL_setColor( 10 , 0x0A4C );
+                //PAL_setColor( 13 , 0x0C6C );
+            }
+        }
+
+        if(ptrJoueur->Invincible==0)
+        {
+            Collision_Ennemis();
+        }
+    }
+
+
+    //----------------------------------------------------//
+    //----------------------------------------------------//
+    //                     CHUTE_TIR                      //
+    //----------------------------------------------------//
+    //----------------------------------------------------//
+    else if(ptrJoueur->Phase==CHUTE_TIR)
+    {
+        //--------------------------//
+        //         POSITION X       //
+        //--------------------------//
+
+        /////////////////////////////
+        //      BOUTON DROITE      //
+        /////////////////////////////
+        if(value & BUTTON_RIGHT)
+        {
+            ptrJoueur->Axe=0;
+
+            // ON AJOUTE 'ACCEL_D' A 'movX'
+            movX += ACCEL_C;
+
+            // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+            if (movX >= maxSpeed_D)
+            {
+                movX = maxSpeed_D;
+            }
+        }
+
+        /////////////////////////////
+        //      BOUTON GAUCHE      //
+        /////////////////////////////
+        else if(value & BUTTON_LEFT)
+        {
+            ptrJoueur->Axe=1;
+
+            // ON SOUSTRAIT 'ACCEL_D' A 'movX'
+            movX -= ACCEL_C;
+
+        // ON BLOQUE LA VITESSE A 'maxSpeed_D (1)'
+            if(movX <= -maxSpeed_D)
+            {
+                movX = -maxSpeed_D;
+            }
+        }
+
+        /////////////////////////////
+        //       AUCUN BOUTON      //
+        /////////////////////////////
+        else if(value == 0)
+        {
+            // JOUEUR ORIENTÉ VERS LA DROITE
+            if(ptrJoueur->Axe==0)
+            {
+                movX -= ACCEL_C;
+                if(movX < FIX32(0))
+                {
+                    movX=0;
+                }
+            }
+
+            // JOUEUR ORIENTÉ VERS LA GAUCHE
+            else if(ptrJoueur->Axe==1)
+            {
+                movX += ACCEL_C;
+                if(movX > FIX32(0))
+                {
+                    movX=0;
+                }
+            }
+        }
+
+        // SI ON N'EST PAS A LA FIN DU NIVEAU
+        if(CamPosX!=-4336)
+        {
+            positionX -= GLISSEMENT;
+        }
+
+        // ON AJOUTE 'movX' A L'ACCUMULATEUR 'positionX'
+        positionX += movX;
+
+
+        //--------------------------//
+        //         POSITION Y       //
+        //--------------------------//
+
+        movY += ACCEL_B;
+
+        // ON BLOQUE LA VITESSE A 'maxSpeed_V (3)'
+        if (movY >= maxSpeed_V)
+        {
+            movY = maxSpeed_V;
+        }
+
+        // ON AJOUTE 'movY' A L'ACCUMULATEUR 'positionY'
+        positionY += movY;
+
+
+
+        // MAJ POINTS DE COLLISION DU JOUEUR //
+        MAJ_PtsCollision_Joueur();
+
+
+        //--------------------------------//
+        //     COLLISIONS PLATEFORMES     //
+        //--------------------------------//
+
+        Collision_Plateformes();
+
+
+        // SI PAS DE CONTACT AVEC PLATEFORME
+        if(contactPlt_OK == 0)
+        {
+            //--------------------------//
+            //     COLLISIONS DECOR     //
+            //--------------------------//
+
+            // TEST COLLISION DECOR //
+            Collision_Decor_Bas();
+
+
+                // SI LE JOUEUR TOUCHE LE SOL //
+                if(tileID_BG==1 || tileID_BD==1)
+                {
+                    // PHASE ARRET //
+                    if(ptrJoueur->Phase==CHUTE_TIR)
+                    {
+                        ptrJoueur->Phase=TIR;
+                    }
+                    else
+                    {
+                        ptrJoueur->Phase=ARRET;
+                    }
+
+                    ptrJoueur->PosY = (posTileY<<3)-8;
+                    positionY=intToFix32(ptrJoueur->PosY);
+                    MAJ_PtsCollision_Joueur();
+                }
+
 
             // SI LE JOUEUR NE TOUCHE PAS LE SOL
             else
@@ -3019,6 +3208,47 @@ void TilesSautTir()
     }
 }
 
+void TilesChuteTir()
+{
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    SPR_setAnim(ptrJoueur->SpriteJ_BAS,4);
+    SPR_setAnim(ptrJoueur->SpriteJ_HAUT,4);
+
+    SPR_setFrame(ptrJoueur->SpriteJ_BAS,(s16)ptrJoueur->IndexFrameTir);
+    SPR_setFrame(ptrJoueur->SpriteJ_HAUT,(s16)ptrJoueur->IndexFrameTir);
+
+
+    if(ptrJoueur->Axe==0)
+    {
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
+    }
+    else
+    {
+        SPR_setHFlip(ptrJoueur->SpriteJ_BAS, TRUE);
+        SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, TRUE);
+    }
+
+
+    // Anim des tiles
+    ptrJoueur->CompteurFrameTir+=1;
+
+    // MAJ des tiles toutes les 8 images (0 à 7)
+    if(ptrJoueur->CompteurFrameTir>7)
+    {
+        ptrJoueur->CompteurFrameTir=0;
+        ptrJoueur->IndexFrameTir++;
+
+        // Cycle de FRAME de 0 à 1 (2 étapes)
+        if(ptrJoueur->IndexFrameTir>1)
+        {
+            ptrJoueur->IndexFrameTir=0;
+            ptrJoueur->Phase=CHUTE;
+        }
+    }
+}
+
 void TilesTouche()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
@@ -3296,6 +3526,15 @@ void TilesJoueur()
     else if(ptrJoueur->Phase==CHUTE)
     {
         TilesSaut();
+        return;
+    }
+
+    ////////////////////////
+    //     CHUTE + TIR    //
+    ////////////////////////
+    else if(ptrJoueur->Phase==CHUTE_TIR)
+    {
+        TilesChuteTir();
         return;
     }
 
