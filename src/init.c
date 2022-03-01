@@ -490,7 +490,7 @@ void InitSelection()
 
 void InitNiveaux()
 {
-    switch (num_Niveau)
+    switch (Num_Niveau)
     {
         case 1:
         waitMs(500);
@@ -513,7 +513,8 @@ void InitNiveau1()
 {
     u16 i;
 
-    nb_Vie=2;
+    Nb_Vie=2;
+    Tir_OK=0;
 
     vitesseScrolling=1;
     compteurTile=0;
@@ -713,7 +714,7 @@ void InitNiveau1()
     /*********/
     /*  VIES */
     /*********/
-    for (i=0; i<nb_Vie; i++)
+    for (i=0; i<Nb_Vie; i++)
     {
         if(selectJoueur==0)
         {

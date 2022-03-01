@@ -84,6 +84,8 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
             // SAUT + TIR
             ptrJoueur->Phase=SAUT_TIR;
 
+            Tir_OK=1;
+
             // L'AURA SE DECLENCHE
             if(ptrAura->Init==0)
             {
@@ -97,6 +99,8 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
             // MARCHE + TIR
             ptrJoueur->Phase=TIR;
 
+            Tir_OK=1;
+
             // L'AURA SE DECLENCHE
             if(ptrAura->Init==0)
             {
@@ -109,6 +113,8 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
         {
             // MARCHE + TIR
             ptrJoueur->Phase=CHUTE_TIR;
+
+            Tir_OK=1;
 
             // L'AURA SE DECLENCHE
             if(ptrAura->Init==0)
@@ -163,7 +169,7 @@ void MainLoop()
     // Manette
     JOY_setEventHandler(joyEventCallback);
     
-    switch (num_Niveau)
+    switch (Num_Niveau)
     {
         case 1:
 
@@ -185,6 +191,8 @@ void MainLoop()
                 MvtPlateformes_Niveau1();
 
                 MvtJoueur();
+                //GestionTirs();
+                
                 TilesJoueur();
 
                 //Maj_CompteurEnergie();

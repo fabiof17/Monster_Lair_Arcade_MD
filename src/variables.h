@@ -12,8 +12,8 @@
 #define ACCEL_C         FIX32(0.1)   // ACCELERATION DROITE/GAUCHE LORS DE LA CHUTE
 #define GLISSEMENT      FIX32(1L)
 
-#define MAX_POS_D       FIX32(228L)
-#define MAX_POS_G       FIX32(11L)
+#define MAX_POS_D       FIX32(228L) // LIMITE DROITE ECRAN
+#define MAX_POS_G       FIX32(11L)  // LIMITE GAUCHE ECRAN
 
 #define MAX_ETAPES_SAUT         40
 #define MAX_ETAPES_TOUCHE       37
@@ -54,24 +54,25 @@
 
 extern u16 StatutJoy;
 
-extern u8 nb_Vie;
-extern u8 nb_Tirs;
+extern u8 Nb_Vie;
+extern u8 Nb_Tirs;
 extern u16 GameOver;
 extern bool PauseJeu;
 
-extern u8 num_Niveau;
+extern u8 Num_Niveau;
 extern u8 selectJoueur;
 
 extern u8 CompteurEnergie;
 extern u8 Energie;
 
 extern u16 AdresseVram_Tete;
-
 extern u16 AdresseVram_BarreEnergie;
 extern u16 AdresseVram_BarreVierge;
 extern u16 AdresseVram_BG_A;
 
-extern char texteSortie[2];
+extern bool Tir_OK;
+
+extern char texteSortie[3];
 
 ///////////////////////////////////
 //		Variables scrolling      //
@@ -292,7 +293,5 @@ extern u16 tileID_CD;
 
 extern u8 compteurTile; // 0 -> 7 //
 extern u16 tilemapOffset;
-
-//bool contactSol_OK;
 
 #endif // _MAIN

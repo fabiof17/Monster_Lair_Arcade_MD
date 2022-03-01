@@ -20,7 +20,9 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 
 
 
-// BARRE ENERGIE //
+//----------------------------------------------------//
+//                    BARRE ENERGIE                   //
+//----------------------------------------------------//
 void Maj_CompteurEnergie()
 {
     // LA BARRE SE BLOQUE A LA FIN DU NIVEAU
@@ -124,14 +126,16 @@ void Init_BarreEnergie()
     }
 }
 
-void Vider_BarreEnergie()
+inline static void Vider_BarreEnergie()
 {
     VDP_loadTileSet(&tileset_BARRE_VIERGE, AdresseVram_BarreEnergie, DMA);
 }
 
 
 
-// SCROLLING //
+//----------------------------------------------------//
+//                      SCROLLING                     //
+//----------------------------------------------------//
 void Scrolling_Niveau1()
 {
     u16 i;
@@ -245,9 +249,10 @@ void ChgtPalette_Niveau1()
 }
 
 
-
-// COLLISIONS //
-void MAJ_PtsCollision_Joueur()
+//----------------------------------------------------//
+//                      COLLISIONS                    //
+//----------------------------------------------------//
+inline static void MAJ_PtsCollision_Joueur()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -277,7 +282,7 @@ void MAJ_PtsCollision_Joueur()
     posTileY=ptrJoueur->pt_Coll_BG_Y>>3;
 }
 
-void Collision_Decor_Bas()
+inline static void Collision_Decor_Bas()
 {
     u16 *ptrtileID_BG=&tileID_BG;
     u16 *ptrtileID_BD=&tileID_BD;
@@ -288,7 +293,7 @@ void Collision_Decor_Bas()
     *ptrtileID_BD=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll_BD_X - CamPosX) >> 3) , posTileY ) & TILE_INDEX_MASK;
 }
 
-void Collision_Decor_Cotes()
+inline static void Collision_Decor_Cotes()
 {
     u16 *ptrtileID_CG=&tileID_CG;
     u16 *ptrtileID_CD=&tileID_CD;
@@ -299,7 +304,7 @@ void Collision_Decor_Cotes()
     *ptrtileID_CD=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll_CD_X - CamPosX) >> 3) , ((ptrJoueur->pt_Coll_CD_Y - CamPosX) >> 3) ) & TILE_INDEX_MASK;
 }
 
-void Collision_Ennemis()
+inline static void Collision_Ennemis()
 {
     // SI IL Y A DES ENNEMIS
     if(nb_Ennemis != 0)
@@ -355,7 +360,7 @@ void Collision_Ennemis()
     }
 }
 
-void Collision_Plateformes()
+inline static void Collision_Plateformes()
 {
     u8 i;
     u16 value=JOY_readJoypad(JOY_1);
@@ -509,7 +514,9 @@ void Collision_Plateformes()
 
 
 
-// SPRITES NIVEAU 1 //
+//----------------------------------------------------//
+//                   SPRITES NIVEAU 1                 //
+//----------------------------------------------------//
 void CreaSprites_Niveau1()
 {
     u16 i;
@@ -1369,15 +1376,93 @@ void MvtPlateformes_Niveau1()
 
 
 
-// TIRS //
-void MvtTirs()
+//-----------------------------------------------//
+//                      TIRS                     //
+//-----------------------------------------------//
+void CreaTirBase()
+{
+    //
+}
+
+void CreaTirShuriken()
+{
+    //
+}
+
+void CreaTirBoule()
+{
+    //
+}
+
+void CreaTirBouleFeu()
+{
+    //
+}
+
+void CreaTirLaser()
 {
     //
 }
 
 
+void (*TabCreaTir[5])()={CreaTirBase,CreaTirShuriken,CreaTirBoule,CreaTirBouleFeu,CreaTirLaser};
 
-// JOUEUR //
+
+void CreaTirs()
+{
+    if(Tir_OK==0)
+    {
+        SpriteJoueur_ *ptrJoueur=&Joueur;
+
+        TabCreaTir[ptrJoueur->Arme];
+    }
+}
+
+
+
+void MvtTirBase()
+{
+    //
+}
+
+void MvtTirShuriken()
+{
+    //
+}
+
+void MvtTirBoule()
+{
+    //
+}
+
+void MvtTirBouleFeu()
+{
+    //
+}
+
+void MvtTirLaser()
+{
+    //
+}
+
+
+void (*TabMvtTir[5])()={MvtTirBase,MvtTirShuriken,MvtTirBoule,MvtTirBouleFeu,MvtTirLaser};
+
+
+void AnimTirs()
+{
+    if(Tir_OK==1)
+    {
+        SpriteJoueur_ *ptrJoueur=&Joueur;
+
+        TabMvtTir[ptrJoueur->Arme];
+    }
+}
+
+
+//-----------------------------------------------//
+//                     JOUEUR                    //
+//-----------------------------------------------//
 void Phases_Joueur()
 {
     // Gestion manette
@@ -2922,8 +3007,10 @@ void MvtJoueur()
 
 
 
-// TILES //
-void TilesBloque()
+//-----------------------------------------------//
+//                      TILES                    //
+//-----------------------------------------------//
+inline static void TilesBloque()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -2962,7 +3049,7 @@ void TilesBloque()
     }
 }
 
-void TilesArret()
+inline static void TilesArret()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -2998,7 +3085,7 @@ void TilesArret()
     }
 }
 
-void TilesMarche()
+inline static void TilesMarche()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -3045,7 +3132,7 @@ void TilesMarche()
     }
 }
 
-void TilesDerapage()
+inline static void TilesDerapage()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -3065,7 +3152,7 @@ void TilesDerapage()
     ptrJoueur->IndexFrameTir=0;
 }
 
-void TilesSaut()
+inline static void TilesSaut()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -3096,7 +3183,7 @@ void TilesSaut()
     }
 }
 
-void TilesTir()
+inline static void TilesTir()
 {
     // Gestion manette
 	u16 value=JOY_readJoypad(JOY_1);
@@ -3167,7 +3254,7 @@ void TilesTir()
     }
 }
 
-void TilesSautTir()
+inline static void TilesSautTir()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -3208,7 +3295,7 @@ void TilesSautTir()
     }
 }
 
-void TilesChuteTir()
+inline static void TilesChuteTir()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -3249,7 +3336,7 @@ void TilesChuteTir()
     }
 }
 
-void TilesTouche()
+inline static void TilesTouche()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -3288,7 +3375,7 @@ void TilesTouche()
     }
 }
 
-void TilesApparition()
+inline static void TilesApparition()
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
 
@@ -3302,7 +3389,7 @@ void TilesApparition()
     //
 }
 
-void TilesDragon()
+inline static void TilesDragon()
 {
     SpriteDragon_ *ptrDragon=&Dragon;
 
@@ -3325,7 +3412,7 @@ void TilesDragon()
     }
 }
 
-void TilesSplash()
+inline static void TilesSplash()
 {
     SpriteDragon_ *ptrDragon=&Dragon;
     SpriteSplash_ *ptrSplash=&Splash;
@@ -3354,7 +3441,7 @@ void TilesSplash()
     }
 }
 
-void TilesAura()
+inline static void TilesAura()
 {
     SpriteAura_ *ptrAura=&Aura;
 
@@ -3562,3 +3649,4 @@ void TilesJoueur()
         }
     }
 }
+
