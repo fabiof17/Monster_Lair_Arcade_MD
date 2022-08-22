@@ -56,6 +56,10 @@ extern u16 StatutJoy;
 
 extern u8 Nb_Vie;
 extern u8 Nb_Tirs;
+extern u8 Nb_Balles;
+
+extern u8 CompteurTir;
+
 extern u16 GameOver;
 extern bool PauseJeu;
 
@@ -92,7 +96,9 @@ extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 ///////////////////////////////////
 
 extern Sprite *sprite_Vie[3];
-extern Sprite *sprite_Pause[2];
+extern Sprite *sprite_Pause;
+extern Sprite *sprite_Round;
+extern Sprite *sprite_NumRound;
 
 extern Sprite *sprite_repere_BG;
 extern Sprite *sprite_repere_BD;
@@ -276,6 +282,20 @@ typedef struct
     u8 CompteurFrameFruit;      // Compteur pour passer à la prochaine FRAME FRUIT
     u8 IndexFrameFruit;         // Index de FRAME FRUIT
 } SpriteFruit_;
+
+
+//----------------------------------------------------//
+//                        TIRS                        //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteF;
+    bool Init;
+    u8 ID;
+    bool Axe;
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+} SpriteTir_;
 
 
 //----------------------------------------------------//

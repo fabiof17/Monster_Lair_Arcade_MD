@@ -17,8 +17,17 @@ SPRITE tiles_Sprite_VIE_F "sprites/global/tiles_VIE_F.png" 2 2 BEST 0
 //----------------------------------------------------//
 //                         PAUSE                      //
 //----------------------------------------------------//
-SPRITE tiles_Sprite_PAUSE1 "sprites/global/tiles_PAUSE1.png" 4 1 BEST 0
-SPRITE tiles_Sprite_PAUSE2 "sprites/global/tiles_PAUSE2.png" 1 1 BEST 0
+SPRITE tiles_Sprite_PAUSE "sprites/global/tiles_PAUSE.png" 5 1 BEST 0
+
+//----------------------------------------------------//
+//                         ROUND                      //
+//----------------------------------------------------//
+SPRITE tiles_Sprite_ROUND "sprites/global/tiles_ROUND.png" 5 1 BEST 0
+
+//----------------------------------------------------//
+//                       CHIFFRES                     //
+//----------------------------------------------------//
+SPRITE tiles_Sprite_1 "sprites/global/tiles_1.png" 1 1 BEST 0
 
 //----------------------------------------------------//
 //                        JOUEUR                      //

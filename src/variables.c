@@ -9,6 +9,10 @@ u16 StatutJoy=0;
 
 u8 Nb_Vie=2;
 u8 Nb_Tirs=0;
+u8 Nb_Balles=0;
+
+u8 CompteurTir=0;
+
 u16 GameOver=0;
 bool PauseJeu=0;
 
@@ -43,7 +47,9 @@ s16 scrollOffset_TILE_NIVEAU1_BGB[28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 //		Variables Sprites        //
 ///////////////////////////////////
 Sprite *sprite_Vie[3];
-Sprite *sprite_Pause[2];
+Sprite *sprite_Pause;
+Sprite *sprite_Round;
+Sprite *sprite_NumRound;
 
 Sprite *sprite_repere_BG;
 Sprite *sprite_repere_BD;

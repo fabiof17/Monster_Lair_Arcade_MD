@@ -706,10 +706,19 @@ void InitNiveau1()
     SPR_init();
 
     /*********/
+    /* ROUND */
+    /*********/
+    sprite_Round=SPR_addSprite(&tiles_Sprite_ROUND, 132, 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+
+    if(Num_Niveau==1)
+    {
+        sprite_NumRound=SPR_addSprite(&tiles_Sprite_1, 180, 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+    }
+
+    /*********/
     /* PAUSE */
     /*********/
-    sprite_Pause[0]=SPR_addSprite(&tiles_Sprite_PAUSE1, -40, 0, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
-    sprite_Pause[1]=SPR_addSprite(&tiles_Sprite_PAUSE2, -32, 0, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+    sprite_Pause=SPR_addSprite(&tiles_Sprite_PAUSE, -40, 0, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
 
     /*********/
     /*  VIES */

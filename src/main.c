@@ -9,7 +9,8 @@
 #include "sprites_JEU.h"
 #include "musique.h"
 
-void joyEventCallback(u16 joy, u16 changed, u16 state)
+// Gestion manette pour les séquences de Plateforme //
+void Game_PF_Callback(u16 joy, u16 changed, u16 state)
 {
     SpriteJoueur_ *ptrJoueur=&Joueur;
     SpriteDragon_ *ptrDragon=&Dragon;
@@ -24,8 +25,7 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
             PauseJeu=1;
             StatutJoy=0;
 
-            SPR_setPosition(sprite_Pause[0], 140, 116);
-            SPR_setPosition(sprite_Pause[1], 172, 116);
+            SPR_setPosition(sprite_Pause, 140, 116);
 
             XGM_pausePlay(Niveau1);
 
@@ -36,8 +36,7 @@ void joyEventCallback(u16 joy, u16 changed, u16 state)
             PauseJeu=0;
             StatutJoy=0;
 
-            SPR_setPosition(sprite_Pause[0], -40, 0);
-            SPR_setPosition(sprite_Pause[1], -32, 0);
+            SPR_setPosition(sprite_Pause, -40, 0);
 
            XGM_resumePlay(Niveau1);
         }
@@ -167,7 +166,7 @@ void MainLoop()
     //SYS_showFrameLoad(TRUE);
 
     // Manette
-    JOY_setEventHandler(joyEventCallback);
+    //JOY_setEventHandler(joyEventCallback);
     
     switch (Num_Niveau)
     {
@@ -177,6 +176,8 @@ void MainLoop()
 
         while(TRUE)
         {
+
+            JOY_setEventHandler(Game_PF_Callback);
 
             // Jeu en Pause ?
             if(PauseJeu==0)
