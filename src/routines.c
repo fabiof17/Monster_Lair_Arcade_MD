@@ -1408,16 +1408,6 @@ void CreaTirLaser()
 void (*TabCreaTir[5])()={CreaTirBase,CreaTirShuriken,CreaTirBoule,CreaTirBouleFeu,CreaTirLaser};
 
 
-void CreaTirs()
-{
-    if(Tir_OK==0)
-    {
-        SpriteJoueur_ *ptrJoueur=&Joueur;
-
-        TabCreaTir[ptrJoueur->Arme];
-    }
-}
-
 
 
 void MvtTirBase()

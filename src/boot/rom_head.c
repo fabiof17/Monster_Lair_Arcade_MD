@@ -10,8 +10,8 @@ const ROMHeader rom_header = {
     "SEGA MEGA DRIVE ",
 #endif
     "(C)SGDK 2021    ",
-    "Wonderboy III Arcade                                  ",
-    "Wonderboy III Arcade                                  ",
+    "WB_III                                  ",
+    "WB_III                                  ",
     "GM 00000000-00",
     0x000,
     "JD              ",

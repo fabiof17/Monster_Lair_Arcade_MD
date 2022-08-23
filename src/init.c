@@ -33,17 +33,12 @@ void InitSystem()
 
 
 ///////////////////////////////
-//      INIT ECRAN TITRE     //
+//         ECRAN TITRE       //
 ///////////////////////////////
 
 void InitTitre()
 {
-    // init VDP
-    VDP_init();
-
-    SYS_doVBlankProcess();
-
-    // set all palette to black
+    // set all palettes to black
     PAL_setPaletteColors(0, &palette_NOIR, DMA);
 
     //SYS_doVBlankProcess();
@@ -110,7 +105,7 @@ void InitTitre()
     SPR_init();
 
     // création des sprites du titre
-    Sprite *sprite_Titre[6];
+    //Sprite *sprite_Titre[6];
 
     u16 i;
 
@@ -120,10 +115,8 @@ void InitTitre()
         SPR_setAnimAndFrame(sprite_Titre[i], 0, i);
     }
 
-    // création des sprites PRESS START
-    Sprite *sprite_PRESS_START;
-    
-    sprite_PRESS_START=SPR_addSprite(&tiles_Sprite_PRESS_START, 116, 48, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+    // création du sprite PRESS START //
+    sprite_Press_Start=SPR_addSprite(&tiles_Sprite_PRESS_START, 116, 48, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
 
 
     SPR_update();
@@ -142,21 +135,31 @@ void InitTitre()
 
     SYS_enableInts();
 
-    //SYS_doVBlankProcess();
+    // ECRAN TITRE chargé //
+    Titre_OK=1;
 
+}
+
+void AnimTitre()
+{
     u8 CompteurPressStart=1;
     s16 scrollOffset_TILE_TITRE[10]={1,1,1,1,1,1,1,1,1,0};
 
+    /********************************************/
+    /*            BOUCLE ECRAN TITRE            */
+    /********************************************/
     while(TRUE)
 	{
-        // Clignotement       
+        /********************************************/
+        /*                CLIGNOTEMENT              */
+        /********************************************/     
         if(CompteurPressStart==0)
         {
-            SPR_setPosition(sprite_PRESS_START,116,48);
+            SPR_setPosition(sprite_Press_Start,116,48);
         }
         else if(CompteurPressStart==6)
         {
-            SPR_setPosition(sprite_PRESS_START,0,-8);
+            SPR_setPosition(sprite_Press_Start,0,-8);
         }        
 
         CompteurPressStart++;
@@ -166,7 +169,14 @@ void InitTitre()
             CompteurPressStart=0;
         }
 
+
+
+        /********************************************/
+        /*                 SCROLLING                */
+        /********************************************/ 
         CamPosX-=1;
+
+        u16 i=0;
 
         for (i=0; i<9; i++)
         {
@@ -178,16 +188,18 @@ void InitTitre()
 
 
 
-        // Gestion manette
+        /********************************************/
+        /*                  MANETTE                 */
+        /********************************************/ 
 		u16 value=JOY_readJoypad(JOY_1);
 
-        // Désactivation auto-fire
+        // Désactivation auto-fire //
         if (!value) StatutJoy++;
         if (StatutJoy>4) StatutJoy=4;
 
         if (StatutJoy>2)
         {
-            // Si A ou B ou C ou START : on quitte
+            // Si A ou B ou C ou START : on quitte BOUCLE ECRAN TITRE //
             if (value & (BUTTON_A | BUTTON_B | BUTTON_C | BUTTON_START))
             {
                 CamPosX=0;
@@ -196,44 +208,51 @@ void InitTitre()
             }
         }
 
+        // Update sprites //
         SPR_update();
 
-        // Vblank
+        // Vblank //
 		SYS_doVBlankProcess();
     }
 
 
-    // set all palette to black
+    /********************************************/
+    /*             SORTIE ECRAN TITRE           */
+    /********************************************/
+
+    // set all palettes to black //
     VDP_setPaletteColors(0, (u16*) palette_black, 64);
 
+    u16 i=0;
 
     for (i=0; i<9; i++)
     {
         scrollOffset_TILE_TITRE[i]=0;
     }
 
-    // réinit scrolling par tile
+    // réinit scrolling par tile //
     VDP_setHorizontalScrollTile(BG_B, 9, scrollOffset_TILE_TITRE, 9, DMA_QUEUE);
 
 
-    // Si on quitte
-    // On efface les BG
+    // On efface les BG //
     VDP_clearPlane(BG_B,TRUE);
     VDP_clearPlane(BG_A,TRUE);
 
-
+    // On supprime les sprites //
     for (i=0; i<6; i++)
     {
         SPR_releaseSprite(sprite_Titre[i]);
     }
 
-    SPR_releaseSprite(sprite_PRESS_START);
+    SPR_releaseSprite(sprite_Press_Start);
 
     // réinitialise le Sprite Engine
     SPR_reset();
     // désactive le Sprite Engine
     SPR_end();
 
+    // On passe à l'ECRAN DE SELECTION //
+    Scene=1;
 
     SYS_doVBlankProcess();
 }
@@ -242,7 +261,7 @@ void InitTitre()
 
 
 ///////////////////////////////////
-//      INIT ECRAN SELECTION     //
+//         ECRAN SELECTION       //
 ///////////////////////////////////
 
 void InitSelection()
@@ -271,7 +290,7 @@ void InitSelection()
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += image_SELECTION_BGB.tileset->numTile;
 
-    u16 AdresseVram_BG_A=ind;
+    AdresseVram_BG_A=ind;
 
     // safe VBlank wait between 2 BG creations
     SYS_doVBlankProcess();
@@ -380,19 +399,28 @@ void InitSelection()
 
     SYS_doVBlankProcess();
 
-    s16 scrollOffset_TILE_SELECTION[10]={0,0,0,0,0,0,0,0,0,0};
+    
     for (i=0; i<10; i++)
     {
         scrollOffset_TILE_SELECTION[i]=128;
     }
 
 
+    // ECRAN SELECTION chargé //
+    Selection_OK=1;
+
+}    
+
+void AnimSelection()
+{
+    u16 i=0;
     u8 CompteurClignotement=1;
-    
 
     while(TRUE)
 	{
-        // Clignotement       
+        /********************************************/
+        /*                CLIGNOTEMENT              */
+        /********************************************/       
         if(CompteurClignotement==0)
         {
             VDP_setTileMapEx(BG_A,image_SELECTION_BGA.tilemap,TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, AdresseVram_BG_A),8, 9, 0, 0, 26, 2, CPU);
@@ -410,7 +438,9 @@ void InitSelection()
         }
 
 
-        // Gestion manette
+        /********************************************/
+        /*                  MANETTE                 */
+        /********************************************/ 
 		u16 value=JOY_readJoypad(JOY_1);
 
         // Désactivation auto-fire
@@ -450,6 +480,10 @@ void InitSelection()
 
             if (value & BUTTON_START)
             {
+                /********************************************/
+                /*             SORTIE ECRAN TITRE           */
+                /********************************************/
+                
                 // set all palette to black
                 VDP_setPaletteColors(0, (u16*) palette_black, 64);
 
@@ -475,10 +509,13 @@ void InitSelection()
             }
         }
 
+        // On passe au NIVEAU 1 //
+        Scene=2;
 
         // Vblank
 		SYS_doVBlankProcess();
     }
+
 }
 
 
@@ -911,6 +948,9 @@ void InitNiveau1()
 
     // scroll mode
     VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
+
+    // NIVEAU chargé //
+    Niveau_OK=1;
 
     // Vblank
     SYS_doVBlankProcess();

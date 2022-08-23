@@ -54,6 +54,12 @@
 
 extern u16 StatutJoy;
 
+extern u8 Scene;
+
+extern bool Titre_OK;
+extern bool Selection_OK;
+extern bool Niveau_OK;
+
 extern u8 Nb_Vie;
 extern u8 Nb_Tirs;
 extern u8 Nb_Balles;
@@ -82,6 +88,9 @@ extern char texteSortie[3];
 //		Variables scrolling      //
 ///////////////////////////////////
 
+extern u16 AdresseVram_BG_A;
+extern s16 scrollOffset_TILE_SELECTION[10];
+
 extern u8 vitesseScrolling;
 
 extern s16 CamPosX;
@@ -95,7 +104,10 @@ extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 //		Variables Sprites        //
 ///////////////////////////////////
 
+extern Sprite *sprite_Press_Start;
+
 extern Sprite *sprite_Vie[3];
+extern Sprite *sprite_Titre[6];
 extern Sprite *sprite_Pause;
 extern Sprite *sprite_Round;
 extern Sprite *sprite_NumRound;

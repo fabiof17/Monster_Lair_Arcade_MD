@@ -134,88 +134,143 @@ int main(u16 hardreset)
 	// Init HW
 	InitSystem();
 
-    // Ecran Titre
-    StartMain();
+    // init VDP
+    VDP_init();
 
-    return 0;
-}
 
-// Titre + Selection joueur //
-void StartMain()
-{
-    // Init Ecran Titre
-    InitTitre();
+    // Attente VBLANK //
+    SYS_doVBlankProcess();
 
-    // Init Ecran sélection
-    InitSelection();
-
-    // Init Niveaux
-    //InitNiveaux();
-
-    // Boucle du jeu
-    MainLoop();
-
-    return;  
-}
-
-// Boucle Niveaux //
-void MainLoop()
-{
-    InitNiveaux();
-    
-    //SYS_showFrameLoad(TRUE);
-
-    // Manette
-    //JOY_setEventHandler(joyEventCallback);
-    
-    switch (Num_Niveau)
+    //******************************************************************************************//
+    //******************************************************************************************//
+    //                                                                                          //
+    //                                   BOUCLE PRINCIPALE                                      //
+    //                                                                                          //
+    //******************************************************************************************//
+    //******************************************************************************************//
+    while(TRUE)
     {
-        case 1:
-
-        XGM_startPlay(Niveau1);
-
-        while(TRUE)
+        //**************************************************************************************//
+        //                                  ECRAN TITRE                                         //
+        //**************************************************************************************//       
+        if(Scene==0)
         {
-
-            JOY_setEventHandler(Game_PF_Callback);
-
-            // Jeu en Pause ?
-            if(PauseJeu==0)
+            //////////////////////////////////////////////////////////////////////////////////////
+            //                            CHARGEMENT ECRAN TITRE                                //
+            //////////////////////////////////////////////////////////////////////////////////////           
+            if(Titre_OK==0)
             {
-                Phases_Joueur();
-
-                Scrolling_Niveau1();
-
-                CreaSprites_Niveau1();
-                MvtEnnemis_Niveau1();
-                
-                MvtPlateformes_Niveau1();
-
-                MvtJoueur();
-                //GestionTirs();
-                
-                TilesJoueur();
-
-                //Maj_CompteurEnergie();
-                //Maj_BarreEnergie(CompteurEnergie, Energie);
-
+                // Init ECRAN TITRE //
+                InitTitre();
             }
 
-            // MAJ sprites
-            SPR_update();
+            //////////////////////////////////////////////////////////////////////////////////////
+            //                             ANIMATION ECRAN TITRE                                //
+            //////////////////////////////////////////////////////////////////////////////////////
+            else if(Titre_OK==1)
+            {
+                // Anim ECRAN TITRE //
+                AnimTitre();
+            }
+        }
 
-            // MAJ tiles BG
-            Tiles_Niveau1();
+        //**************************************************************************************//
+        //                                ECRAN SELECTION                                       //
+        //**************************************************************************************// 
+        else if(Scene==1)
+        {
+            ///////////////////////////////////////////////////////////////////////////////////////
+            //                              CHARGEMENT SELECTION                                 //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            if(Selection_OK==0)
+            {
+                // Init ECRAN SELECTION //
+                InitSelection();
+            }
 
-            // DEBUG
-            //VDP_drawInt( Joueur.Phase , 2 , 10 , 6);
+            //////////////////////////////////////////////////////////////////////////////////////
+            //                           ANIMATION ECRAN SELECTION                              //
+            //////////////////////////////////////////////////////////////////////////////////////
+            else if(Selection_OK==1)
+            {
+                // Anim ECRAN SELECTION //
+                AnimSelection();
+            }
+        }
 
-            // Vblank
-            SYS_doVBlankProcess();
+        //**************************************************************************************//
+        //                                    NIVEAUX                                           //
+        //**************************************************************************************// 
+        else if(Scene==2)
+        {
+            ///////////////////////////////////////////////////////////////////////////////////////
+            //                                CHARGEMENT NIVEAU                                  //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            if(Niveau_OK==0)
+            {
+                // Init NIVEAU //
+                InitNiveaux();
+            }
 
-            // CHANGEMENT DES PALETTES
-            ChgtPalette_Niveau1();
-        }       
-        //break;
+            ///////////////////////////////////////////////////////////////////////////////////////
+            //                                       JEU                                         //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            else if(Niveau_OK==1)
+            {
+                SYS_showFrameLoad(TRUE);
+                
+                switch (Num_Niveau)
+                {
+                    case 1:
+
+                    XGM_startPlay(Niveau1);
+
+                    while(TRUE)
+                    {
+
+                        JOY_setEventHandler(Game_PF_Callback);
+
+                        // Jeu en Pause ?
+                        if(PauseJeu==0)
+                        {
+                            Phases_Joueur();
+
+                            Scrolling_Niveau1();
+
+                            CreaSprites_Niveau1();
+                            MvtEnnemis_Niveau1();
+                            
+                            MvtPlateformes_Niveau1();
+
+                            MvtJoueur();
+                            //GestionTirs();
+                            
+                            TilesJoueur();
+
+                            Maj_CompteurEnergie();
+                            Maj_BarreEnergie(CompteurEnergie, Energie);
+
+                        }
+
+                        // MAJ sprites
+                        SPR_update();
+
+                        // MAJ tiles BG
+                        Tiles_Niveau1();
+
+                        // DEBUG
+                        //VDP_drawInt( Joueur.Phase , 2 , 10 , 6);
+
+                        // Vblank
+                        SYS_doVBlankProcess();
+
+                        // CHANGEMENT DES PALETTES
+                        ChgtPalette_Niveau1();
+                    }       
+                }
+            }
+        }
     }
+
+    return 0;
 }

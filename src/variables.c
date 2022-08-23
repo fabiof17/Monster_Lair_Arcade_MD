@@ -7,6 +7,12 @@
 
 u16 StatutJoy=0;
 
+u8 Scene=0;
+
+bool Titre_OK=0;
+bool Selection_OK=0;
+bool Niveau_OK=0;
+
 u8 Nb_Vie=2;
 u8 Nb_Tirs=0;
 u8 Nb_Balles=0;
@@ -25,7 +31,6 @@ u8 Energie;
 u16 AdresseVram_Tete=0;
 u16 AdresseVram_BarreEnergie=0;
 u16 AdresseVram_BarreVierge=0;
-u16 AdresseVram_BG_A=0;
 
 bool Tir_OK=0;
 
@@ -34,6 +39,9 @@ char texteSortie[3];
 ///////////////////////////////////
 //		Variables scrolling      //
 ///////////////////////////////////
+u16 AdresseVram_BG_A=0;
+s16 scrollOffset_TILE_SELECTION[10]={0,0,0,0,0,0,0,0,0,0};
+
 u8 vitesseScrolling=1;
 
 s16 CamPosX=0;
@@ -47,9 +55,12 @@ s16 scrollOffset_TILE_NIVEAU1_BGB[28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 //		Variables Sprites        //
 ///////////////////////////////////
 Sprite *sprite_Vie[3];
+Sprite *sprite_Titre[6];
 Sprite *sprite_Pause;
 Sprite *sprite_Round;
 Sprite *sprite_NumRound;
+
+Sprite *sprite_Press_Start;
 
 Sprite *sprite_repere_BG;
 Sprite *sprite_repere_BD;
