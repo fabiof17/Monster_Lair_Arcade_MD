@@ -42,6 +42,7 @@ void InitTitre()
     
     // set all palettes to black
     PAL_setPaletteColors(0, &palette_NOIR, DMA);
+    //PAL_setColors(0, (u16*) palette_black, 64, CPU);
 
 
     //////////////////////////////////////////////
