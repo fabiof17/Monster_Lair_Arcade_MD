@@ -63,6 +63,7 @@ extern bool Niveau_OK;
 extern u8 Nb_Vie;
 extern u8 Nb_Tirs;
 extern u8 Nb_Balles;
+extern u8 Continue;
 
 extern u8 CompteurTir;
 
@@ -75,10 +76,13 @@ extern u8 selectJoueur;
 extern u8 CompteurEnergie;
 extern u8 Energie;
 
+extern u8 Compteur_Continue;
+
 extern u16 AdresseVram_Tete;
 extern u16 AdresseVram_BarreEnergie;
 extern u16 AdresseVram_BarreVierge;
-extern u16 AdresseVram_BG_A;
+extern u16 AdresseVram_Continue;
+extern u16 AdresseVram_ChiffresContinue;
 
 extern bool Tir_OK;
 

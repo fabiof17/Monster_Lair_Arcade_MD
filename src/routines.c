@@ -20,6 +20,95 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 
 
 
+
+//----------------------------------------------------//
+//                      CONTINUE                      //
+//----------------------------------------------------//
+void Maj_Continue()
+{
+    // Pointeur vers la tilemap à charger pour la barre d'énergie //
+    const TileSet *ptrBARRE;
+
+    if(Compteur_Continue==0)
+    {
+        // On pointe sur le tileset de la barre noire //
+        ptrBARRE=&tileset_BARRE_NOIRE;
+
+        // EFFACEMENT BARRE ENERGIE //
+        // Chargement de la barre noire en Vram //
+        VDP_loadTileSet(ptrBARRE, AdresseVram_BarreEnergie, DMA);
+
+
+        // AFFICHAGE CONTINUE ? //
+        // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
+        VDP_setTileMapEx(WINDOW, image_CONTINUE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 3, 3, 0, 0, 12, 2, DMA);
+
+
+        // AFFICHAGE CHIFFRE 9 //
+        // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
+        VDP_setTileMapEx(WINDOW, image_CHIFFRE_9.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_ChiffresContinue), 17, 3, 0, 0, 2, 2, DMA);
+    }
+    /*
+    else if(Compteur_Continue==60)
+    {
+        // CHIFFRE 8 //
+        VDP_loadTileSet(image_CHIFFRE_8.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+    else if(Compteur_Continue==120)
+    {
+        // CHIFFRE 7 //
+        VDP_loadTileSet(image_CHIFFRE_7.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+    else if(Compteur_Continue==180)
+    {
+        // CHIFFRE 6 //
+        VDP_loadTileSet(image_CHIFFRE_6.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+    else if(Compteur_Continue==240)
+    {
+        // CHIFFRE 5 //
+        VDP_loadTileSet(image_CHIFFRE_5.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+    else if(Compteur_Continue==300)
+    {
+        // CHIFFRE 4 //
+        //VDP_loadTileSet(image_CHIFFRE_4.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+    else if(Compteur_Continue==360)
+    {
+        // CHIFFRE 3 //
+        //VDP_loadTileSet(image_CHIFFRE_3.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+    else if(Compteur_Continue==420)
+    {
+        // CHIFFRE 2 //
+        //VDP_loadTileSet(image_CHIFFRE_2.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+    else if(Compteur_Continue==480)
+    {
+        // CHIFFRE 1 //
+        //VDP_loadTileSet(image_CHIFFRE_1.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+    else if(Compteur_Continue==540)
+    {
+        // CHIFFRE 0 //
+        //VDP_loadTileSet(image_CHIFFRE_0.tileset, AdresseVram_ChiffresContinue, DMA);
+    }
+
+
+*/
+}
+
+
+
 //----------------------------------------------------//
 //                    BARRE ENERGIE                   //
 //----------------------------------------------------//
@@ -1436,16 +1525,16 @@ void MvtTirLaser()
 }
 
 
-void (*TabMvtTir[5])()={MvtTirBase,MvtTirShuriken,MvtTirBoule,MvtTirBouleFeu,MvtTirLaser};
+//void (*TabMvtTir[5])()={MvtTirBase,MvtTirShuriken,MvtTirBoule,MvtTirBouleFeu,MvtTirLaser};
 
 
 void AnimTirs()
 {
     if(Tir_OK==1)
     {
-        SpriteJoueur_ *ptrJoueur=&Joueur;
+        //SpriteJoueur_ *ptrJoueur=&Joueur;
 
-        TabMvtTir[ptrJoueur->Arme];
+        //TabMvtTir[ptrJoueur->Arme];
     }
 }
 

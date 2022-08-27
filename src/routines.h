@@ -18,6 +18,8 @@ extern void Maj_CompteurEnergie();
 extern void Maj_BarreEnergie();
 extern void Init_BarreEnergie();
 
+extern void Maj_Continue();
+
 extern void ChgtPalette_Niveau1();
 
 extern void VDP_drawInt();

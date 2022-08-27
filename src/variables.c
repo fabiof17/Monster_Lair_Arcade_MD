@@ -16,6 +16,7 @@ bool Niveau_OK=0;
 u8 Nb_Vie=2;
 u8 Nb_Tirs=0;
 u8 Nb_Balles=0;
+u8 Continue=0;
 
 u8 CompteurTir=0;
 
@@ -28,9 +29,13 @@ u8 selectJoueur=0;
 u8 CompteurEnergie;
 u8 Energie;
 
+u8 Compteur_Continue=0;
+
 u16 AdresseVram_Tete=0;
 u16 AdresseVram_BarreEnergie=0;
 u16 AdresseVram_BarreVierge=0;
+u16 AdresseVram_Continue=0;
+u16 AdresseVram_ChiffresContinue=0;
 
 bool Tir_OK=0;
 
@@ -139,5 +144,3 @@ u16 tilemapOffset=0;
 
 u8 nb_Ennemis;
 u8 indexCreaEnnemis;
-
-//bool contactSol_OK=0;

@@ -17,16 +17,16 @@
 void InitSystem()
 {
     // disable interrupt when accessing VDP
-    SYS_disableInts();
+    //SYS_disableInts();
 
 	// init resolution
     VDP_setScreenWidth320();
     VDP_setScreenHeight224();
 
     // set all palette to black
-    PAL_setPaletteColors(0, &palette_NOIR, DMA);
+    //PAL_setPaletteColors(0, &palette_NOIR, DMA);
 
-    SYS_doVBlankProcess();
+    //SYS_doVBlankProcess();
 }
 
 
@@ -38,10 +38,11 @@ void InitSystem()
 
 void InitTitre()
 {
+    SYS_doVBlankProcess();
+    
     // set all palettes to black
     PAL_setPaletteColors(0, &palette_NOIR, DMA);
 
-    //SYS_doVBlankProcess();
 
     //////////////////////////////////////////////
     //                CREATION BG               //
@@ -127,13 +128,17 @@ void InitTitre()
     //               PALETTES LOADING           //
     //////////////////////////////////////////////
 
-    SYS_doVBlankProcess();
+    //SYS_enableInts();
+
+    //SYS_doVBlankProcess();
 
     PAL_setPalette(PAL0, palette_TITRE_BGB.data, DMA);
     PAL_setPalette(PAL1, palette_TITRE_BGA.data, DMA);
     PAL_setPalette(PAL2, palette_TITRE.data ,DMA);
 
-    SYS_enableInts();
+    SYS_doVBlankProcess();
+
+    //SYS_enableInts();
 
     // ECRAN TITRE chargé //
     Titre_OK=1;
@@ -598,7 +603,7 @@ void InitNiveau1()
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
-    VDP_loadTileSet(&tileset_NIVEAU1_BGB, ind, DMA);
+    VDP_loadTileSet(image_NIVEAU1_BGB.tileset, ind, DMA);
 
     // BGB CREATION
     // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
@@ -607,7 +612,7 @@ void InitNiveau1()
     //VDP_setTileMap(BG_B, image_NIVEAU1_BGB.tilemap, 0, 0, 64, 28, CPU);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += tileset_NIVEAU1_BGB.numTile;
+    ind += image_NIVEAU1_BGB.tileset->numTile;
 
     AdresseVram_BG_A=ind;
 
@@ -623,7 +628,7 @@ void InitNiveau1()
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
-    VDP_loadTileSet(&tileset_NIVEAU1_BGA, ind, DMA);
+    VDP_loadTileSet(image_NIVEAU1_BGA.tileset, ind, DMA);
 
     // Vblank
     SYS_doVBlankProcess();
@@ -634,7 +639,7 @@ void InitNiveau1()
     //VDP_setTileMap(BG_A, image_NIVEAU1_BGA.tilemap, 0, 0, 64, 28, CPU);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += tileset_NIVEAU1_BGA.numTile;
+    ind += image_NIVEAU1_BGA.tileset->numTile;
 
     // Vblank
     SYS_doVBlankProcess();
@@ -650,24 +655,57 @@ void InitNiveau1()
     VDP_setWindowVPos(0, 6);
 
     // WINDOW tileset loading in VRAM
-    // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
-    VDP_loadTileSet(&tileset_NIVEAU1_WINDOW, ind, DMA);
+    // getting tileset data from IMAGE structure declared in maps_GLOBALES.res
+    VDP_loadTileSet(image_NIVEAU1_WINDOW.tileset, ind, DMA);
 
 
     // WINDOW CREATION
-    // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
+    // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
     VDP_setTileMapEx(WINDOW, image_NIVEAU1_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 40, 6, DMA);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += tileset_NIVEAU1_WINDOW.numTile;
+    ind += image_NIVEAU1_WINDOW.tileset->numTile;
+
+    // Vblank
+    SYS_doVBlankProcess();
 
 
-    // On récupère l'adresse en Vram des tiles de la tête
-    AdresseVram_Tete=ind;
+
+    //////////////////////////////////////
+    //          TILES CONTINUE ?        //
+    //////////////////////////////////////
+
+    AdresseVram_Continue=ind;
+
+    // getting tileset data from IMAGE structure declared in maps_GLOBALES.res
+    VDP_loadTileSet(image_CONTINUE.tileset, ind, DMA);
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += image_CONTINUE.tileset->numTile;
+
+
+    //////////////////////////////////////
+    //           TILES CHIFFRES         //
+    //////////////////////////////////////
+
+    AdresseVram_ChiffresContinue=ind;
+
+    // getting tileset data from IMAGE structure declared in maps_GLOBALES.res
+    VDP_loadTileSet(image_CHIFFRE_9.tileset, ind, DMA);
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += image_CHIFFRE_9.tileset->numTile;
+
+
 
     ///////////////////
     //  TETE JOUEUR  //
     ///////////////////
+
+    // On récupère l'adresse en Vram des tiles de la tête
+    AdresseVram_Tete=ind;
+
+
     if(selectJoueur==0)
     {
         VDP_loadTileSet(&tileset_TETE_H, ind, DMA);

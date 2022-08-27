@@ -137,6 +137,8 @@ int main(u16 hardreset)
     // init VDP
     VDP_init();
 
+    // set all palette to black
+    //PAL_setPaletteColors(0, &palette_NOIR, DMA);
 
     // Attente VBLANK //
     SYS_doVBlankProcess();
@@ -230,36 +232,45 @@ int main(u16 hardreset)
 
                         JOY_setEventHandler(Game_PF_Callback);
 
-                        // Jeu en Pause ?
-                        if(PauseJeu==0)
+                        // En attente Continue ? //
+                        if(Continue==0)
                         {
-                            Phases_Joueur();
+                            // Jeu en Pause ? //
+                            if(PauseJeu==0)
+                            {
+                                Phases_Joueur();
 
-                            Scrolling_Niveau1();
+                                Scrolling_Niveau1();
 
-                            CreaSprites_Niveau1();
-                            MvtEnnemis_Niveau1();
-                            
-                            MvtPlateformes_Niveau1();
+                                CreaSprites_Niveau1();
+                                MvtEnnemis_Niveau1();
+                                
+                                MvtPlateformes_Niveau1();
 
-                            MvtJoueur();
-                            //GestionTirs();
-                            
-                            TilesJoueur();
+                                MvtJoueur();
+                                //GestionTirs();
+                                
+                                TilesJoueur();
 
-                            Maj_CompteurEnergie();
-                            Maj_BarreEnergie(CompteurEnergie, Energie);
+                                Maj_CompteurEnergie();
+                                Maj_BarreEnergie(CompteurEnergie, Energie);
+
+                            }
+
+                            // MAJ sprites
+                            SPR_update();
+
+                            // MAJ tiles BG
+                            Tiles_Niveau1();
+
+                            // DEBUG
+                            //VDP_drawInt( Joueur.Phase , 2 , 10 , 6);
 
                         }
-
-                        // MAJ sprites
-                        SPR_update();
-
-                        // MAJ tiles BG
-                        Tiles_Niveau1();
-
-                        // DEBUG
-                        //VDP_drawInt( Joueur.Phase , 2 , 10 , 6);
+                        else
+                        {
+                            Maj_Continue();
+                        }
 
                         // Vblank
                         SYS_doVBlankProcess();
