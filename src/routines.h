@@ -19,6 +19,7 @@ extern void Maj_BarreEnergie();
 extern void Init_BarreEnergie();
 
 extern void Maj_Continue();
+extern void Maj_Vies();
 
 extern void ChgtPalette_Niveau1();
 

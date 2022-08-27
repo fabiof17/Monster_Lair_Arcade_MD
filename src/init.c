@@ -334,15 +334,15 @@ void InitSelection()
 
     // WINDOW tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
-    VDP_loadTileSet(&tileset_NIVEAU1_WINDOW, ind, DMA);
+    VDP_loadTileSet(&tileset_WINDOW, ind, DMA);
 
 
     // WINDOW CREATION
     // getting tilemap data from IMAGE structure declared in maps_NIVEAU1.res
-    VDP_setTileMapEx(WINDOW, image_NIVEAU1_WINDOW.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 40, 6, DMA);
+    VDP_setTileMapEx(WINDOW, image_WINDOW.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 40, 6, DMA);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += tileset_NIVEAU1_WINDOW.numTile;
+    ind += tileset_WINDOW.numTile;
 
 
     ///////////////////
@@ -657,15 +657,15 @@ void InitNiveau1()
 
     // WINDOW tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_GLOBALES.res
-    VDP_loadTileSet(image_NIVEAU1_WINDOW.tileset, ind, DMA);
+    VDP_loadTileSet(image_WINDOW.tileset, ind, DMA);
 
 
     // WINDOW CREATION
     // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
-    VDP_setTileMapEx(WINDOW, image_NIVEAU1_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 40, 6, DMA);
+    VDP_setTileMapEx(WINDOW, image_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 40, 6, DMA);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
-    ind += image_NIVEAU1_WINDOW.tileset->numTile;
+    ind += image_WINDOW.tileset->numTile;
 
     // Vblank
     SYS_doVBlankProcess();

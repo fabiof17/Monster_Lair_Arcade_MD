@@ -26,8 +26,6 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 //----------------------------------------------------//
 void Maj_Continue()
 {
-    u8 i;
-    
     // Pointeur vers la tilemap à charger pour la barre d'énergie //
     const TileSet *ptrBARRE;
 
@@ -39,18 +37,18 @@ void Maj_Continue()
         // EFFACEMENT BARRE ENERGIE //
         // Chargement de la barre noire en Vram //
         VDP_loadTileSet(ptrBARRE, AdresseVram_BarreEnergie, DMA);
-
+        VDP_loadTileSet(ptrBARRE, AdresseVram_BarreVierge, DMA);
 
         // AFFICHAGE CONTINUE ? //
         // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
-        VDP_setTileMapEx(WINDOW, image_CONTINUE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 3, 3, 0, 0, 12, 2, DMA);
+        VDP_setTileMapEx(WINDOW, image_CONTINUE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 4, 3, 0, 0, 12, 2, DMA);
 
 
         // AFFICHAGE CHIFFRE 9 //
         // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
         VDP_setTileMapEx(WINDOW, image_CHIFFRE_9.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_ChiffresContinue), 17, 3, 0, 0, 2, 2, DMA);
     }
-    /*
+    
     else if(Compteur_Continue==60)
     {
         // CHIFFRE 8 //
@@ -108,22 +106,62 @@ void Maj_Continue()
     else if(Compteur_Continue==600)
     {
         // Effacer CONTINUE ? //
-        for(i=3,i<19,i++)
-        {
-            VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), i, 3, 0, 0, 1, 2, DMA);
-        }
+        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 3, 3, 0, 0, 1, 2, DMA);
+        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 4, 3, 0, 0, 1, 2, DMA);
+        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 17, 3, 0, 0, 1, 2, DMA);
+        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 18, 3, 0, 0, 1, 2, DMA);        
         
-        
-        // Chargement tiles GAMEOVER //
-        VDP_loadTileSet(image_CONTINUE.tileset, AdresseVram_Continue, DMA);
+        // Chargement tiles GAMEOVER à la place des tiles CONTINUE ? //
+        VDP_loadTileSet(image_GAMEOVER_WINDOW.tileset, AdresseVram_Continue, DMA);
 
         // Affichage GAMEOVER //
+        // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
+        VDP_setTileMapEx(WINDOW, image_GAMEOVER_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 5, 3, 0, 0, 11, 2, DMA);
 
     }
 
-*/
+    else if(Compteur_Continue>601)
+    {
+        Compteur_Continue=601;
+    }
+
+    Compteur_Continue++;
 }
 
+void Maj_Vies()
+{
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+    
+    // Si je joueur n'a plus de vies //
+    if(Nb_Vie==0)
+    {
+        // Si le joueur n'a plus de Continue //
+        if(Nb_Continue==0)
+        {
+            // Game over //
+            ptrJoueur->Phase=GAMEOVER;
+        }
+        else
+        {
+            // Sinon entrée en phase Continue //
+            Continue=1;
+        }                
+    }
+
+    // Player spawns again //
+    else
+    {
+        
+        
+        // Life sprite suppressed //
+        SPR_releaseSprite(sprite_Vie[Nb_Vie-1]);
+
+        Nb_Vie-=1;
+        
+        // Player enters APPARITION phase //
+        //ptrJoueur->Phase=APPARITION;
+    }
+}
 
 
 //----------------------------------------------------//
@@ -353,6 +391,7 @@ void ChgtPalette_Niveau1()
         PAL_setPalette(PAL3, NouvellePalette, DMA);
     }
 }
+
 
 
 //----------------------------------------------------//
@@ -1175,6 +1214,8 @@ void MvtEnnemis_Niveau1()
 
             PAL_setColor( 10 , 0x000C );
             PAL_setColor( 13 , 0x06CC );
+
+            //Maj_Vies();
         }
     }
 }
@@ -2863,6 +2904,7 @@ void MvtJoueur()
             PosYinvincible=0;
 
             // JOUEUR //
+            ptrJoueur->Phase=APPARITION;
             //ptrJoueur->Invincible=1;
             ptrJoueur->Axe=0;
             ptrJoueur->PosX=63;
@@ -2873,28 +2915,9 @@ void MvtJoueur()
             SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
             SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
 
-
-            // Si je joueur n'a plus de vies //
-            if(Nb_Vie==0)
-            {
-                // Si le joueur n'a plus de Continue //
-                if(Nb_Continue==0)
-                {
-                    // Game over //
-                    ptrJoueur->Phase=GAMEOVER;
-                }
-                else
-                {
-                    // Sinon entrée en phase Continue //
-                    Continue=1;
-                }                
-            }
-            // Sinon le joueur réapparait //
-            else
-            {
-                ptrJoueur->Phase=APPARITION;
-            }
-        
+            // CHANGEMENT PALETTE //
+            //PAL_setColor( 10 , 0x0A4C );
+            //PAL_setColor( 13 , 0x0C6C );
         }
 
     }
@@ -2925,6 +2948,8 @@ void MvtJoueur()
                 // CHANGEMENT PALETTE //
                 PAL_setColor( 10 , 0x0A4C );
                 PAL_setColor( 13 , 0x0C6C );
+
+                //Maj_Vies();
             }
         }
 
@@ -3551,6 +3576,8 @@ inline static void TilesSplash()
             ptrSplash->PosY=-32;
 
             ptrDragon->Phase=VOL_DRAGON;
+
+            Maj_Vies();
         }
     }
 }

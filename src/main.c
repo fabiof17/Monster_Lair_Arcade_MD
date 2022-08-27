@@ -253,15 +253,8 @@ int main(u16 hardreset)
                                 TilesJoueur();
 
                                 Maj_CompteurEnergie();
-                                Maj_BarreEnergie(CompteurEnergie, Energie);
-
+                                Maj_BarreEnergie(CompteurEnergie, Energie);                               
                             }
-
-                            // MAJ sprites
-                            SPR_update();
-
-                            // MAJ tiles BG
-                            Tiles_Niveau1();
 
                             // DEBUG
                             //VDP_drawInt( Joueur.Phase , 2 , 10 , 6);
@@ -271,6 +264,12 @@ int main(u16 hardreset)
                         {
                             Maj_Continue();
                         }
+
+                        // MAJ sprites
+                        SPR_update();
+
+                        // MAJ tiles BG
+                        Tiles_Niveau1();
 
                         // Vblank
                         SYS_doVBlankProcess();

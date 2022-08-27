@@ -30,7 +30,7 @@ u8 selectJoueur=0;
 u8 CompteurEnergie;
 u8 Energie;
 
-u8 Compteur_Continue=0;
+u16 Compteur_Continue=0;
 
 u16 AdresseVram_Tete=0;
 u16 AdresseVram_BarreEnergie=0;

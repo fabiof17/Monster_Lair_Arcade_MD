@@ -18,7 +18,8 @@
         "animation_sprites.h": "c",
         "tilemaps_ennemis.h": "c",
         "tilemaps_plateformes.h": "c",
-        "palettes_ennemis.h": "c"
+        "palettes_ennemis.h": "c",
+        "dma.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -79,7 +79,7 @@ extern u8 selectJoueur;
 extern u8 CompteurEnergie;
 extern u8 Energie;
 
-extern u8 Compteur_Continue;
+extern u16 Compteur_Continue;
 
 extern u16 AdresseVram_Tete;
 extern u16 AdresseVram_BarreEnergie;
