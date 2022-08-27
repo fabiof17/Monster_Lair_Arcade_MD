@@ -16,6 +16,7 @@ bool Niveau_OK=0;
 u8 Nb_Vie=2;
 u8 Nb_Tirs=0;
 u8 Nb_Balles=0;
+u8 Nb_Continue=3;
 u8 Continue=0;
 
 u8 CompteurTir=0;

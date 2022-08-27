@@ -36,6 +36,8 @@
 #define CHUTE_TIR               6
 #define TOUCHE                  7
 #define APPARITION              8
+#define CONTINUE                9
+#define GAMEOVER                10
 
 
 #define ATTENTE_DRAGON          0
@@ -63,6 +65,7 @@ extern bool Niveau_OK;
 extern u8 Nb_Vie;
 extern u8 Nb_Tirs;
 extern u8 Nb_Balles;
+extern u8 Nb_Continue;
 extern u8 Continue;
 
 extern u8 CompteurTir;
