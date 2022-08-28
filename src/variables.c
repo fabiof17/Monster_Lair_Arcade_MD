@@ -17,11 +17,11 @@ u8 Nb_Vie=2;
 u8 Nb_Tirs=0;
 u8 Nb_Balles=0;
 u8 Nb_Continue=3;
-u8 Continue=0;
+bool Continue=0;
+bool GameOver=0;
 
 u8 CompteurTir=0;
 
-u16 GameOver=0;
 bool PauseJeu=0;
 
 u8 Num_Niveau=1;
@@ -67,6 +67,7 @@ Sprite *sprite_Round;
 Sprite *sprite_NumRound;
 
 Sprite *sprite_Press_Start;
+Sprite *sprite_GameOver;
 
 Sprite *sprite_repere_BG;
 Sprite *sprite_repere_BD;

@@ -47,6 +47,7 @@ void Maj_Continue()
         // AFFICHAGE CHIFFRE 9 //
         // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
         VDP_setTileMapEx(WINDOW, image_CHIFFRE_9.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_ChiffresContinue), 17, 3, 0, 0, 2, 2, DMA);
+    
     }
     
     else if(Compteur_Continue==60)
@@ -107,7 +108,7 @@ void Maj_Continue()
     {
         // Effacer CONTINUE ? //
         VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 3, 3, 0, 0, 1, 2, DMA);
-        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 4, 3, 0, 0, 1, 2, DMA);
+        //VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 4, 3, 0, 0, 1, 2, DMA);
         VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 17, 3, 0, 0, 1, 2, DMA);
         VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 18, 3, 0, 0, 1, 2, DMA);        
         
@@ -116,8 +117,10 @@ void Maj_Continue()
 
         // Affichage GAMEOVER //
         // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
-        VDP_setTileMapEx(WINDOW, image_GAMEOVER_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 5, 3, 0, 0, 11, 2, DMA);
+        VDP_setTileMapEx(WINDOW, image_GAMEOVER_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 4, 3, 0, 0, 12, 2, DMA);
 
+        // Sprite GAMEOVER //
+        sprite_GameOver=SPR_addSprite(&tiles_Sprite_GAMEOVER, 80, 88, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
     }
 
     else if(Compteur_Continue>601)
@@ -2072,6 +2075,8 @@ void MvtJoueur()
             ptrSplash->PosY=168;
             SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
+            VDP_loadTileSet(&tileset_TETE_MORT, AdresseVram_Tete, DMA);
+
             // LA BARRE D'ENERGIE SE VIDE //
             Vider_BarreEnergie();
             CompteurEnergie=0;
@@ -2437,6 +2442,8 @@ void MvtJoueur()
             ptrSplash->PosY=168;
             SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
+            VDP_loadTileSet(&tileset_TETE_MORT, AdresseVram_Tete, DMA);
+
             // LA BARRE D'ENERGIE SE VIDE //
             Vider_BarreEnergie();
             CompteurEnergie=0;
@@ -2611,6 +2618,8 @@ void MvtJoueur()
                 ptrSplash->PosX=ptrJoueur->PosX;
                 ptrSplash->PosY=168;
                 SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
+
+                VDP_loadTileSet(&tileset_TETE_MORT, AdresseVram_Tete, DMA);
 
                 // LA BARRE D'ENERGIE SE VIDE //
                 Vider_BarreEnergie();
@@ -2800,6 +2809,8 @@ void MvtJoueur()
                 ptrSplash->PosX=ptrJoueur->PosX;
                 ptrSplash->PosY=168;
                 SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
+
+                VDP_loadTileSet(&tileset_TETE_MORT, AdresseVram_Tete, DMA);
 
                 // LA BARRE D'ENERGIE SE VIDE //
                 Vider_BarreEnergie();
@@ -3574,6 +3585,8 @@ inline static void TilesSplash()
 
             ptrSplash->PosX=48;
             ptrSplash->PosY=-32;
+
+            SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
 
             ptrDragon->Phase=VOL_DRAGON;
 

@@ -66,11 +66,11 @@ extern u8 Nb_Vie;
 extern u8 Nb_Tirs;
 extern u8 Nb_Balles;
 extern u8 Nb_Continue;
-extern u8 Continue;
+extern bool Continue;
+extern bool GameOver;
 
 extern u8 CompteurTir;
 
-extern u16 GameOver;
 extern bool PauseJeu;
 
 extern u8 Num_Niveau;
@@ -112,6 +112,7 @@ extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 ///////////////////////////////////
 
 extern Sprite *sprite_Press_Start;
+extern Sprite *sprite_GameOver;
 
 extern Sprite *sprite_Vie[3];
 extern Sprite *sprite_Titre[6];
