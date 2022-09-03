@@ -158,7 +158,7 @@ void AnimTitre()
 	{
         /********************************************/
         /*                CLIGNOTEMENT              */
-        /********************************************/     
+        /********************************************/
         if(CompteurPressStart==0)
         {
             SPR_setPosition(sprite_Press_Start,116,48);
@@ -226,40 +226,53 @@ void AnimTitre()
     /*             SORTIE ECRAN TITRE           */
     /********************************************/
 
-    // set all palettes to black //
+    // Set all palettes to black //
     VDP_setPaletteColors(0, (u16*) palette_black, 64);
+
+
 
     u16 i=0;
 
+    // Set all tiles offset to 0 //
     for (i=0; i<9; i++)
     {
         scrollOffset_TILE_TITRE[i]=0;
     }
 
-    // réinit scrolling par tile //
+    // Reset tile scrolling //
     VDP_setHorizontalScrollTile(BG_B, 9, scrollOffset_TILE_TITRE, 9, DMA_QUEUE);
 
-
-    // On efface les BG //
+     // Clear all BG //
     VDP_clearPlane(BG_B,TRUE);
     VDP_clearPlane(BG_A,TRUE);
 
-    // On supprime les sprites //
+
+    /*
+    // Clear all sprites //
     for (i=0; i<6; i++)
     {
         SPR_releaseSprite(sprite_Titre[i]);
     }
 
     SPR_releaseSprite(sprite_Press_Start);
+    */
 
-    // réinitialise le Sprite Engine
+    // Clear all sprites //
     SPR_reset();
-    // désactive le Sprite Engine
+
+    // Disable Sprite Engine //
     SPR_end();
+
+
 
     // On passe à l'ECRAN DE SELECTION //
     Scene=1;
 
+    Titre_OK=0;
+
+
+
+    // Vblank //
     SYS_doVBlankProcess();
 }
 
@@ -503,11 +516,13 @@ void AnimSelection()
                 VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
 
 
-                // Si on quitte
-                // On efface les BG
+                // Clear all BG //
                 VDP_clearPlane(BG_B,TRUE);
                 VDP_clearPlane(BG_A,TRUE);
                 VDP_clearPlane(WINDOW,TRUE);
+
+                // Clear all sprites //
+                SPR_reset();
 
                 StatutJoy=0;
 

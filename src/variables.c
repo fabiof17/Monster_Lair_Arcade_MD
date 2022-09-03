@@ -27,8 +27,8 @@ bool PauseJeu=0;
 u8 Num_Niveau=1;
 u8 selectJoueur=0;
 
-u8 CompteurEnergie;
-u8 Energie;
+u8 CompteurEnergie=0;
+u8 Energie=0;
 
 u16 Compteur_Continue=0;
 

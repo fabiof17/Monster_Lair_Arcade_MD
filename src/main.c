@@ -16,113 +16,122 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
     SpriteDragon_ *ptrDragon=&Dragon;
     SpriteAura_ *ptrAura=&Aura;
 
-    // START //
-    if (changed & state & BUTTON_START)
+    // Si pas CONTINUE ? ni GAMEOVER //
+    if(Continue==0 && GameOver==0)
     {
-        // Mettre en mode Pause //
-        if (PauseJeu==0)
+        // START //
+        if (changed & state & BUTTON_START)
         {
-            PauseJeu=1;
-            StatutJoy=0;
+            // Mettre en mode Pause //
+            if (PauseJeu==0)
+            {
+                PauseJeu=1;
+                StatutJoy=0;
 
-            SPR_setPosition(sprite_Pause, 140, 116);
+                SPR_setPosition(sprite_Pause, 140, 116);
 
-            XGM_pausePlay(Niveau1);
+                XGM_pausePlay(Niveau1);
 
+            }
+            // Sortir du mode Pause //
+            else if (PauseJeu==1)
+            {
+                PauseJeu=0;
+                StatutJoy=0;
+
+                SPR_setPosition(sprite_Pause, -40, 0);
+
+            XGM_resumePlay(Niveau1);
+            }
         }
-        // Sortir du mode Pause //
-        else if (PauseJeu==1)
+
+        // can't do more in paused state
+        if (PauseJeu==1) return;
+
+
+
+        // SAUT //
+        if (changed & state & BUTTON_C)
         {
-            PauseJeu=0;
-            StatutJoy=0;
+            if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
+            {
+                ptrJoueur->Phase=SAUT;
+            }
 
-            SPR_setPosition(sprite_Pause, -40, 0);
+            // LARGAGE APRES RÉAPPARITION //
+            else if(ptrJoueur->Phase==APPARITION)
+            {
+                if(ptrJoueur->CompteurApparition>55 && ptrJoueur->CompteurApparition<255)
+                {
+                    ptrDragon->Phase=SORTIE_DRAGON;
 
-           XGM_resumePlay(Niveau1);
+                    ptrJoueur->Phase=CHUTE;
+                    ptrJoueur->CompteurApparition=0;
+                    ptrJoueur->Invincible=1;
+
+                    // REINIT BARRE D'ENERGIE //
+                    Energie=ENERGIE_DEPART;
+                    CompteurEnergie=0;
+                    Init_BarreEnergie();
+                }
+            }
+        }
+
+        // TIR //
+        if (changed & state & BUTTON_B)
+        {
+            // SI LE JOUEUR SAUTE //
+            if(ptrJoueur->Phase==SAUT)
+            {
+                // SAUT + TIR
+                ptrJoueur->Phase=SAUT_TIR;
+
+                Tir_OK=1;
+
+                // L'AURA SE DECLENCHE
+                if(ptrAura->Init==0)
+                {
+                    ptrAura->Init=1;
+                }
+            }
+
+            // SI JOUEUR ARRET OU MARCHE //
+            else if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
+            {
+                // MARCHE + TIR
+                ptrJoueur->Phase=TIR;
+
+                Tir_OK=1;
+
+                // L'AURA SE DECLENCHE
+                if(ptrAura->Init==0)
+                {
+                    ptrAura->Init=1;
+                }
+            }
+    
+            // SI JOUEUR ARRET OU MARCHE //
+            else if(ptrJoueur->Phase==CHUTE)
+            {
+                // MARCHE + TIR
+                ptrJoueur->Phase=CHUTE_TIR;
+
+                Tir_OK=1;
+
+                // L'AURA SE DECLENCHE
+                if(ptrAura->Init==0)
+                {
+                    ptrAura->Init=1;
+                }
+            }
         }
     }
 
-    // can't do more in paused state
-    if (PauseJeu==1) return;
-
-
-
-    // SAUT //
-    if (changed & state & BUTTON_C)
+    // Si CONTINUE ? //
+    else
     {
-        if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
-        {
-            ptrJoueur->Phase=SAUT;
-        }
-
-        // LARGAGE APRES RÉAPPARITION //
-        else if(ptrJoueur->Phase==APPARITION)
-        {
-            if(ptrJoueur->CompteurApparition>55 && ptrJoueur->CompteurApparition<255)
-            {
-                ptrDragon->Phase=SORTIE_DRAGON;
-
-                ptrJoueur->Phase=CHUTE;
-                ptrJoueur->CompteurApparition=0;
-                ptrJoueur->Invincible=1;
-
-                // REINIT BARRE D'ENERGIE //
-                Energie=ENERGIE_DEPART;
-                CompteurEnergie=0;
-                Init_BarreEnergie();
-            }
-        }
+        //
     }
-
-    // TIR //
-    if (changed & state & BUTTON_B)
-    {
-        // SI LE JOUEUR SAUTE //
-        if(ptrJoueur->Phase==SAUT)
-        {
-            // SAUT + TIR
-            ptrJoueur->Phase=SAUT_TIR;
-
-            Tir_OK=1;
-
-            // L'AURA SE DECLENCHE
-            if(ptrAura->Init==0)
-            {
-                ptrAura->Init=1;
-            }
-        }
-
-        // SI JOUEUR ARRET OU MARCHE //
-        else if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
-        {
-            // MARCHE + TIR
-            ptrJoueur->Phase=TIR;
-
-            Tir_OK=1;
-
-            // L'AURA SE DECLENCHE
-            if(ptrAura->Init==0)
-            {
-                ptrAura->Init=1;
-            }
-        }
- 
-         // SI JOUEUR ARRET OU MARCHE //
-        else if(ptrJoueur->Phase==CHUTE)
-        {
-            // MARCHE + TIR
-            ptrJoueur->Phase=CHUTE_TIR;
-
-            Tir_OK=1;
-
-            // L'AURA SE DECLENCHE
-            if(ptrAura->Init==0)
-            {
-                ptrAura->Init=1;
-            }
-        }
-    }
-
 }
 
 // Procédure principale //
@@ -158,21 +167,21 @@ int main(u16 hardreset)
         if(Scene==0)
         {
             //////////////////////////////////////////////////////////////////////////////////////
-            //                            CHARGEMENT ECRAN TITRE                                //
-            //////////////////////////////////////////////////////////////////////////////////////           
-            if(Titre_OK==0)
-            {
-                // Init ECRAN TITRE //
-                InitTitre();
-            }
-
-            //////////////////////////////////////////////////////////////////////////////////////
             //                             ANIMATION ECRAN TITRE                                //
-            //////////////////////////////////////////////////////////////////////////////////////
-            else if(Titre_OK==1)
+            //////////////////////////////////////////////////////////////////////////////////////          
+            if(Titre_OK==1)
             {
                 // Anim ECRAN TITRE //
                 AnimTitre();
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////////
+            //                            CHARGEMENT ECRAN TITRE                                //
+            ////////////////////////////////////////////////////////////////////////////////////// 
+            else
+            {
+                // Init ECRAN TITRE //
+                InitTitre();
             }
         }
 
@@ -181,22 +190,21 @@ int main(u16 hardreset)
         //**************************************************************************************// 
         else if(Scene==1)
         {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            //                              CHARGEMENT SELECTION                                 //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            if(Selection_OK==0)
-            {
-                // Init ECRAN SELECTION //
-                InitSelection();
-            }
-
             //////////////////////////////////////////////////////////////////////////////////////
             //                           ANIMATION ECRAN SELECTION                              //
             //////////////////////////////////////////////////////////////////////////////////////
-            else if(Selection_OK==1)
+            if(Selection_OK==1)
             {
                 // Anim ECRAN SELECTION //
                 AnimSelection();
+            }
+            ///////////////////////////////////////////////////////////////////////////////////////
+            //                              CHARGEMENT SELECTION                                 //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            else
+            {
+                // Init ECRAN SELECTION //
+                InitSelection();
             }
         }
 
@@ -219,7 +227,7 @@ int main(u16 hardreset)
             ///////////////////////////////////////////////////////////////////////////////////////
             else if(Niveau_OK==1)
             {
-                SYS_showFrameLoad(TRUE);
+                //SYS_showFrameLoad(TRUE);
                 
                 switch (Num_Niveau)
                 {
@@ -227,7 +235,7 @@ int main(u16 hardreset)
 
                     XGM_startPlay(Niveau1);
 
-                    while(TRUE)
+                    while(GameOver==0)
                     {
 
                         JOY_setEventHandler(Game_PF_Callback);
@@ -257,7 +265,7 @@ int main(u16 hardreset)
                             }
 
                             // DEBUG
-                            //VDP_drawInt( Joueur.Phase , 2 , 10 , 6);
+                            //VDP_drawInt( Continue , 2 , 10 , 6);
 
                         }
                         else
@@ -276,11 +284,12 @@ int main(u16 hardreset)
 
                         // CHANGEMENT DES PALETTES
                         ChgtPalette_Niveau1();
-                    }       
+                    }      
                 }
             }
         }
     }
 
+    //return;
     return 0;
 }

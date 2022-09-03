@@ -121,6 +121,8 @@ void Maj_Continue()
 
         // Sprite GAMEOVER //
         sprite_GameOver=SPR_addSprite(&tiles_Sprite_GAMEOVER, 80, 88, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+
+        //Reinit_Jeu();
     }
 
     else if(Compteur_Continue>601)
@@ -166,6 +168,52 @@ void Maj_Vies()
     }
 }
 
+void Clear_Niveau1()
+{
+    // Disable interruptions //
+    SYS_disableInts();
+
+
+    u16 i;
+
+    // Reset BG_A tile scrolling //
+    for (i=0; i<28; i++)
+    {
+        scrollOffset_TILE_NIVEAU1_BGA[i]=0;
+    }
+
+    // Reset BG_A tile scrolling //
+    VDP_setHorizontalScrollTile(BG_A, 7, scrollOffset_TILE_NIVEAU1_BGA, 21, DMA_QUEUE);
+
+
+    // Reset BG_B tile scrolling //
+    for (i=0; i<21; i++)
+    {
+        scrollOffset_TILE_NIVEAU1_BGB[i]=0;
+    }
+
+    // Reset BG_B tile scrolling //
+    VDP_setHorizontalScrollTile(BG_B, 7, scrollOffset_TILE_NIVEAU1_BGB, 24, DMA_QUEUE);
+
+
+
+    // Clear all BG //
+    VDP_clearPlane(BG_B,TRUE);
+    VDP_clearPlane(BG_A,TRUE);
+    VDP_clearPlane(WINDOW,TRUE);
+
+    // Clear collision MAP //
+    MEM_free(tilemapCollision);
+
+
+
+    // Clear all sprites //
+    SPR_reset();
+
+    // Disable Sprite Engine //
+    SPR_end();
+
+}
 
 //----------------------------------------------------//
 //                    BARRE ENERGIE                   //
@@ -341,12 +389,12 @@ void Tiles_Niveau1()
     {
         if (tilemapOffset>0 && tilemapOffset<520)
         {
-            // BG_B
+            // BG_B //
             VDP_setTileMapColumnEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, FALSE, FALSE, FALSE, 16), (tilemapOffset>>1)-2, 62+(tilemapOffset>>1), 7, 20, DMA_QUEUE);
             VDP_setTileMapColumnEx(BG_B, image_NIVEAU1_BGB.tilemap, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, 16), (tilemapOffset>>1)-2, 62+(tilemapOffset>>1), 27, 4, DMA_QUEUE);
 
-            // BG_A
-            // TETE DE DRAGON EN PRIORITE 1
+            // BG_A //
+            // TETE DE DRAGON DE FIN DE NIVEAU EN PRIORITE 1 //
             if(tilemapOffset>482)
             {
                 VDP_setTileMapColumnEx(BG_A, image_NIVEAU1_BGA.tilemap, TILE_ATTR_FULL(PAL3, TRUE, FALSE, FALSE, AdresseVram_BG_A), tilemapOffset-2, 62+tilemapOffset, 7, 21, DMA_QUEUE);
