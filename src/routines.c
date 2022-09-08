@@ -10,6 +10,7 @@
 #include "tilemaps_plateformes.h"
 #include "animation_sprites.h"
 #include "sprites_JEU.h"
+#include "musique.h"
 
 
 void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
@@ -3876,7 +3877,7 @@ void Selection_Callback(u16 joy, u16 changed, u16 state)
                 }
 
                 selectJoueur=1;
-                StatutJoy=0;
+                //StatutJoy=0;
             }
 
             // Si GAUCHE //
@@ -3921,22 +3922,20 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                 if (PauseJeu==0)
                 {
                     PauseJeu=1;
-                    StatutJoy=0;
 
                     SPR_setPosition(sprite_Pause, 140, 116);
 
-                    //XGM_pausePlay(Niveau1);
+                    XGM_pausePlay(Niveau1);
 
                 }
                 // Sortir du mode Pause //
                 else if (PauseJeu==1)
                 {
                     PauseJeu=0;
-                    StatutJoy=0;
 
                     SPR_setPosition(sprite_Pause, -40, 0);
 
-                //XGM_resumePlay(Niveau1);
+                    XGM_resumePlay(Niveau1);
                 }
             }
 

@@ -5,7 +5,7 @@
 //		Variables principales    //
 ///////////////////////////////////
 
-u16 StatutJoy=0;                                            // init ---> InitTitre() //
+//u16 StatutJoy=0;                                            // init ---> InitTitre() //
 
 u8 Scene=0;                                                 // init ---> InitSystem() //
 

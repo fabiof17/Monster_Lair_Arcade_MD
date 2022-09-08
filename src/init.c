@@ -72,9 +72,12 @@ void InitTitre()
 {
     Exit_Titre=0;
     
+    VDP_init();
+
     // set all palettes to black
     PAL_setPaletteColors(0, &palette_NOIR, DMA);
-    //PAL_setColors(0, (u16*) palette_black, 64, CPU);
+
+    SYS_doVBlankProcess();
 
     // scroll mode
     VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
@@ -169,14 +172,14 @@ void InitTitre()
     //SYS_enableInts();
 
     //SYS_doVBlankProcess();
-
+    PAL_setPaletteColors(0, &palette_NOIR, DMA);
     PAL_setPalette(PAL0, palette_TITRE_BGB.data, DMA);
     PAL_setPalette(PAL1, palette_TITRE_BGA.data, DMA);
     PAL_setPalette(PAL2, palette_TITRE.data ,DMA);
 
     SYS_doVBlankProcess();
 
-    StatutJoy=0;
+    //StatutJoy=0;
 
     // ECRAN TITRE chargé //
     Titre_OK=1;

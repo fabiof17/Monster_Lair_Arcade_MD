@@ -54,7 +54,7 @@
 //		Variables principales    //
 ///////////////////////////////////
 
-extern u16 StatutJoy;
+//extern u16 StatutJoy;
 
 extern u8 Scene;
 

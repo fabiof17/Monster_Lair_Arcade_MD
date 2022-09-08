@@ -13,4 +13,4 @@ out/src/routines.o: src/routines.c C:/sgdk/inc/genesis.h \
  C:/sgdk/inc/task.h C:/sgdk/inc/task_cst.h src/main.h src/init.h \
  src/variables.h res/palettes.h res/maps_GLOBALES.h res/maps_NIVEAU1.h \
  src/tilemaps_ennemis.h src/palettes_ennemis.h src/tilemaps_plateformes.h \
- src/animation_sprites.h res/sprites_JEU.h
+ src/animation_sprites.h res/sprites_JEU.h res/musique.h

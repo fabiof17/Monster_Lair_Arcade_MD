@@ -29,7 +29,7 @@ int main(u16 hardreset)
     JOY_init();
 
     // Waiting VBLANK //
-    SYS_doVBlankProcess();
+    //SYS_doVBlankProcess();
 
     //******************************************************************************************//
     //******************************************************************************************//
@@ -113,7 +113,7 @@ int main(u16 hardreset)
                 {
                     case 1:
 
-                    //XGM_startPlay(Niveau1);
+                    XGM_startPlay(Niveau1);
 
                     while(GameOver==0)
                     {
@@ -170,7 +170,10 @@ int main(u16 hardreset)
                     //XGM_pausePlay();
                     //XGM_stopPlay();
                     waitMs(4000);
-                   
+                    XGM_pausePlay();
+                    XGM_stopPlay();
+
+
                     Clear_Niveau1();
                     SYS_doVBlankProcess();
 
