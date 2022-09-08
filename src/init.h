@@ -2,6 +2,7 @@
 #define _INIT_H
 
 extern void InitSystem();
+extern void InitVariablesGeneral();
 
 extern void InitTitre();
 extern void AnimTitre();

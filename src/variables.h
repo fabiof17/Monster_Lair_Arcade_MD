@@ -76,6 +76,9 @@ extern bool PauseJeu;
 extern u8 Num_Niveau;
 extern u8 selectJoueur;
 
+extern bool Exit_Titre;
+extern bool Exit_Selection;
+
 extern u8 CompteurEnergie;
 extern u8 Energie;
 
@@ -102,10 +105,6 @@ extern u8 vitesseScrolling;
 
 extern s16 CamPosX;
 extern s16 CamPosY;
-
-//extern s16 scrollOffset_TILE_TITRE[10];
-extern s16 scrollOffset_TILE_NIVEAU1_BGA[28];
-extern s16 scrollOffset_TILE_NIVEAU1_BGB[28];
 
 ///////////////////////////////////
 //		Variables Sprites        //

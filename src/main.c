@@ -9,130 +9,6 @@
 #include "sprites_JEU.h"
 #include "musique.h"
 
-// Gestion manette pour les séquences de Plateforme //
-void Game_PF_Callback(u16 joy, u16 changed, u16 state)
-{
-    SpriteJoueur_ *ptrJoueur=&Joueur;
-    SpriteDragon_ *ptrDragon=&Dragon;
-    SpriteAura_ *ptrAura=&Aura;
-
-    // Si pas CONTINUE ? ni GAMEOVER //
-    if(Continue==0 && GameOver==0)
-    {
-        // START //
-        if (changed & state & BUTTON_START)
-        {
-            // Mettre en mode Pause //
-            if (PauseJeu==0)
-            {
-                PauseJeu=1;
-                StatutJoy=0;
-
-                SPR_setPosition(sprite_Pause, 140, 116);
-
-                XGM_pausePlay(Niveau1);
-
-            }
-            // Sortir du mode Pause //
-            else if (PauseJeu==1)
-            {
-                PauseJeu=0;
-                StatutJoy=0;
-
-                SPR_setPosition(sprite_Pause, -40, 0);
-
-            XGM_resumePlay(Niveau1);
-            }
-        }
-
-        // can't do more in paused state
-        if (PauseJeu==1) return;
-
-
-
-        // SAUT //
-        if (changed & state & BUTTON_C)
-        {
-            if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
-            {
-                ptrJoueur->Phase=SAUT;
-            }
-
-            // LARGAGE APRES RÉAPPARITION //
-            else if(ptrJoueur->Phase==APPARITION)
-            {
-                if(ptrJoueur->CompteurApparition>55 && ptrJoueur->CompteurApparition<255)
-                {
-                    ptrDragon->Phase=SORTIE_DRAGON;
-
-                    ptrJoueur->Phase=CHUTE;
-                    ptrJoueur->CompteurApparition=0;
-                    ptrJoueur->Invincible=1;
-
-                    // REINIT BARRE D'ENERGIE //
-                    Energie=ENERGIE_DEPART;
-                    CompteurEnergie=0;
-                    Init_BarreEnergie();
-                }
-            }
-        }
-
-        // TIR //
-        if (changed & state & BUTTON_B)
-        {
-            // SI LE JOUEUR SAUTE //
-            if(ptrJoueur->Phase==SAUT)
-            {
-                // SAUT + TIR
-                ptrJoueur->Phase=SAUT_TIR;
-
-                Tir_OK=1;
-
-                // L'AURA SE DECLENCHE
-                if(ptrAura->Init==0)
-                {
-                    ptrAura->Init=1;
-                }
-            }
-
-            // SI JOUEUR ARRET OU MARCHE //
-            else if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
-            {
-                // MARCHE + TIR
-                ptrJoueur->Phase=TIR;
-
-                Tir_OK=1;
-
-                // L'AURA SE DECLENCHE
-                if(ptrAura->Init==0)
-                {
-                    ptrAura->Init=1;
-                }
-            }
-    
-            // SI JOUEUR ARRET OU MARCHE //
-            else if(ptrJoueur->Phase==CHUTE)
-            {
-                // MARCHE + TIR
-                ptrJoueur->Phase=CHUTE_TIR;
-
-                Tir_OK=1;
-
-                // L'AURA SE DECLENCHE
-                if(ptrAura->Init==0)
-                {
-                    ptrAura->Init=1;
-                }
-            }
-        }
-    }
-
-    // Si CONTINUE ? //
-    else
-    {
-        //
-    }
-}
 
 // Procédure principale //
 int main(u16 hardreset)
@@ -140,16 +16,19 @@ int main(u16 hardreset)
 
     if (!hardreset) SYS_hardReset();
 
-	// Init HW
+	// Init HW //
 	InitSystem();
 
-    // init VDP
+    // Reset variables //
+    InitVariablesGeneral();
+
+    // init VDP //
     VDP_init();
 
-    // set all palette to black
-    //PAL_setPaletteColors(0, &palette_NOIR, DMA);
+    // Init joypad //
+    JOY_init();
 
-    // Attente VBLANK //
+    // Waiting VBLANK //
     SYS_doVBlankProcess();
 
     //******************************************************************************************//
@@ -167,21 +46,21 @@ int main(u16 hardreset)
         if(Scene==0)
         {
             //////////////////////////////////////////////////////////////////////////////////////
-            //                             ANIMATION ECRAN TITRE                                //
-            //////////////////////////////////////////////////////////////////////////////////////          
-            if(Titre_OK==1)
-            {
-                // Anim ECRAN TITRE //
-                AnimTitre();
-            }
-
-            //////////////////////////////////////////////////////////////////////////////////////
             //                            CHARGEMENT ECRAN TITRE                                //
-            ////////////////////////////////////////////////////////////////////////////////////// 
-            else
+            //////////////////////////////////////////////////////////////////////////////////////         
+            if(Titre_OK==0)
             {
                 // Init ECRAN TITRE //
                 InitTitre();
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////////
+            //                             ANIMATION ECRAN TITRE                                //
+            ////////////////////////////////////////////////////////////////////////////////////// 
+            else
+            {
+                // Anim ECRAN TITRE //
+                AnimTitre();
             }
         }
 
@@ -190,21 +69,22 @@ int main(u16 hardreset)
         //**************************************************************************************// 
         else if(Scene==1)
         {
-            //////////////////////////////////////////////////////////////////////////////////////
-            //                           ANIMATION ECRAN SELECTION                              //
-            //////////////////////////////////////////////////////////////////////////////////////
-            if(Selection_OK==1)
-            {
-                // Anim ECRAN SELECTION //
-                AnimSelection();
-            }
             ///////////////////////////////////////////////////////////////////////////////////////
             //                              CHARGEMENT SELECTION                                 //
             ///////////////////////////////////////////////////////////////////////////////////////
-            else
+            if(Selection_OK==0)
             {
                 // Init ECRAN SELECTION //
                 InitSelection();
+
+            }
+            //////////////////////////////////////////////////////////////////////////////////////
+            //                           ANIMATION ECRAN SELECTION                              //
+            //////////////////////////////////////////////////////////////////////////////////////
+            else
+            {
+                // Anim ECRAN SELECTION //
+                AnimSelection();
             }
         }
 
@@ -225,7 +105,7 @@ int main(u16 hardreset)
             ///////////////////////////////////////////////////////////////////////////////////////
             //                                       JEU                                         //
             ///////////////////////////////////////////////////////////////////////////////////////
-            else if(Niveau_OK==1)
+            else
             {
                 //SYS_showFrameLoad(TRUE);
                 
@@ -233,7 +113,7 @@ int main(u16 hardreset)
                 {
                     case 1:
 
-                    XGM_startPlay(Niveau1);
+                    //XGM_startPlay(Niveau1);
 
                     while(GameOver==0)
                     {
@@ -265,9 +145,10 @@ int main(u16 hardreset)
                             }
 
                             // DEBUG
-                            //VDP_drawInt( Continue , 2 , 10 , 6);
+                            //VDP_drawInt( Niveau_OK , 5 , 10 , 6);
 
                         }
+
                         else
                         {
                             Maj_Continue();
@@ -284,12 +165,25 @@ int main(u16 hardreset)
 
                         // CHANGEMENT DES PALETTES
                         ChgtPalette_Niveau1();
-                    }      
+                    }
+
+                    //XGM_pausePlay();
+                    //XGM_stopPlay();
+                    waitMs(4000);
+                   
+                    Clear_Niveau1();
+                    SYS_doVBlankProcess();
+
+                    SPR_end();
+                    SYS_doVBlankProcess();
+
+                    InitVariablesGeneral();
+
+                    //SYS_hardReset();
                 }
             }
         }
     }
-
-    //return;
+    
     return 0;
 }

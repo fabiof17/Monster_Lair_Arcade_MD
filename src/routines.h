@@ -23,6 +23,10 @@ extern void Maj_Vies();
 extern void Maj_Continue();
 extern void Clear_Niveau1();
 
+extern void Titre_Callback(u16 joy, u16 changed, u16 state);
+extern void Selection_Callback(u16 joy, u16 changed, u16 state);
+extern void Game_PF_Callback(u16 joy, u16 changed, u16 state);
+
 extern void ChgtPalette_Niveau1();
 
 extern void VDP_drawInt();

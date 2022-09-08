@@ -16,20 +16,52 @@
 ///////////////////////////////
 void InitSystem()
 {
-    // disable interrupt when accessing VDP
-    //SYS_disableInts();
-
-	// init resolution
+	// Init game resolution //
     VDP_setScreenWidth320();
     VDP_setScreenHeight224();
-
-    // set all palette to black
-    //PAL_setPaletteColors(0, &palette_NOIR, DMA);
-
-    //SYS_doVBlankProcess();
 }
 
+void InitVariablesGeneral()
+{
+   // We start on the title secrren //
+    Scene=0;
 
+    // Title screen not loaded yet //
+    Titre_OK=0;
+
+    // Selection screen not loaded yet //
+    Selection_OK=0;
+
+    // No level loaded yet //
+    Niveau_OK=0;
+
+    // We start the game at level 1 //
+    Num_Niveau=1;
+
+    // Counter for the Continue ? numbers //
+    Compteur_Continue=0;
+
+    AdresseVram_BG_A=0;
+
+    // Game is not in Continue ? mode // //
+    Continue=0;
+
+    // Game is not over //
+    GameOver=0;
+
+    // Game is not in pause mode //
+    PauseJeu=0;
+
+    // Life number //
+    Nb_Vie=2;
+
+    // Number of continues //
+    Nb_Continue=3;
+
+    Exit_Titre=0;
+
+    Exit_Selection=0;
+}
 
 
 ///////////////////////////////
@@ -38,11 +70,14 @@ void InitSystem()
 
 void InitTitre()
 {
-    SYS_doVBlankProcess();
+    Exit_Titre=0;
     
     // set all palettes to black
     PAL_setPaletteColors(0, &palette_NOIR, DMA);
     //PAL_setColors(0, (u16*) palette_black, 64, CPU);
+
+    // scroll mode
+    VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
 
 
     //////////////////////////////////////////////
@@ -94,8 +129,10 @@ void InitTitre()
 
 
     // scroll mode
-    VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
+    //VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
 
+    VDP_setVerticalScroll(BG_B, 0);
+    VDP_setVerticalScroll(BG_A, 0);
 
 
 
@@ -139,7 +176,7 @@ void InitTitre()
 
     SYS_doVBlankProcess();
 
-    //SYS_enableInts();
+    StatutJoy=0;
 
     // ECRAN TITRE chargé //
     Titre_OK=1;
@@ -154,7 +191,7 @@ void AnimTitre()
     /********************************************/
     /*            BOUCLE ECRAN TITRE            */
     /********************************************/
-    while(TRUE)
+    while(Exit_Titre==0)
 	{
         /********************************************/
         /*                CLIGNOTEMENT              */
@@ -192,33 +229,17 @@ void AnimTitre()
         // scrolling par tile
         VDP_setHorizontalScrollTile(BG_B, 9, scrollOffset_TILE_TITRE, 9, DMA_QUEUE);
 
-
-
-        /********************************************/
-        /*                  MANETTE                 */
-        /********************************************/ 
-		u16 value=JOY_readJoypad(JOY_1);
-
-        // Désactivation auto-fire //
-        if (!value) StatutJoy++;
-        if (StatutJoy>4) StatutJoy=4;
-
-        if (StatutJoy>2)
-        {
-            // Si A ou B ou C ou START : on quitte BOUCLE ECRAN TITRE //
-            if (value & (BUTTON_A | BUTTON_B | BUTTON_C | BUTTON_START))
-            {
-                CamPosX=0;
-                StatutJoy=0;
-                break;
-            }
-        }
-
         // Update sprites //
         SPR_update();
 
         // Vblank //
 		SYS_doVBlankProcess();
+
+        /********************************************/
+        /*                  MANETTE                 */
+        /********************************************/ 
+        JOY_setEventHandler(Titre_Callback);
+
     }
 
 
@@ -245,17 +266,6 @@ void AnimTitre()
      // Clear all BG //
     VDP_clearPlane(BG_B,TRUE);
     VDP_clearPlane(BG_A,TRUE);
-
-
-    /*
-    // Clear all sprites //
-    for (i=0; i<6; i++)
-    {
-        SPR_releaseSprite(sprite_Titre[i]);
-    }
-
-    SPR_releaseSprite(sprite_Press_Start);
-    */
 
     // Clear all sprites //
     SPR_reset();
@@ -285,6 +295,8 @@ void AnimTitre()
 
 void InitSelection()
 {
+    Exit_Selection=0;
+    selectJoueur=0;
 
     //////////////////////////////////////////////
     //                BG CREATION               //
@@ -435,7 +447,7 @@ void AnimSelection()
     u16 i=0;
     u8 CompteurClignotement=1;
 
-    while(TRUE)
+    while(Exit_Selection==0)
 	{
         /********************************************/
         /*                CLIGNOTEMENT              */
@@ -456,87 +468,52 @@ void AnimSelection()
             CompteurClignotement=0;
         }
 
-
         /********************************************/
         /*                  MANETTE                 */
         /********************************************/ 
-		u16 value=JOY_readJoypad(JOY_1);
+        JOY_setEventHandler(Selection_Callback);       
 
-        // Désactivation auto-fire
-        if (!value) StatutJoy++;
-        if (StatutJoy>4) StatutJoy=4;
+        // Update sprites //
+        SPR_update();
 
-        if (StatutJoy>2)
-        {
-            // Si A ou B ou C ou START : on quitte
-            if (value & BUTTON_RIGHT && selectJoueur == 0 )
-            {
-                // scrolling par tile
-                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
-
-                for (i=0; i<10; i++)
-                {
-                    scrollOffset_TILE_SELECTION[i]=0;
-                }
-
-                selectJoueur=1;
-                StatutJoy=0;
-            }
-
-            if (value & BUTTON_LEFT && selectJoueur == 1 )
-            {
-                // scrolling par tile
-                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
-
-                for (i=0; i<10; i++)
-                {
-                    scrollOffset_TILE_SELECTION[i]=128;
-                }
-
-                selectJoueur=0;
-                StatutJoy=0;
-            }
-
-            if (value & BUTTON_START)
-            {
-                /********************************************/
-                /*             SORTIE ECRAN TITRE           */
-                /********************************************/
-                
-                // set all palette to black
-                VDP_setPaletteColors(0, (u16*) palette_black, 64);
-
-
-                for (i=0; i<10; i++)
-                {
-                    scrollOffset_TILE_SELECTION[i]=0;
-                }
-
-                // réinit scrolling par tile
-                VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
-
-
-                // Clear all BG //
-                VDP_clearPlane(BG_B,TRUE);
-                VDP_clearPlane(BG_A,TRUE);
-                VDP_clearPlane(WINDOW,TRUE);
-
-                // Clear all sprites //
-                SPR_reset();
-
-                StatutJoy=0;
-
-                break;
-            }
-        }
-
-        // On passe au NIVEAU 1 //
-        Scene=2;
-
-        // Vblank
+        // Vblank //
 		SYS_doVBlankProcess();
     }
 
+
+
+    /********************************************/
+    /*           SORTIE ECRAN SELECTION         */
+    /********************************************/
+    
+    // set all palette to black
+    VDP_setPaletteColors(0, (u16*) palette_black, 64);
+
+
+    for (i=0; i<10; i++)
+    {
+        scrollOffset_TILE_SELECTION[i]=0;
+    }
+
+    // réinit scrolling par tile
+    VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
+
+
+    // Clear all BG //
+    VDP_clearPlane(BG_B,TRUE);
+    VDP_clearPlane(BG_A,TRUE);
+    VDP_clearPlane(WINDOW,TRUE);
+
+    // Clear all sprites //
+    SPR_reset();
+
+    //Selection_OK=0;
+
+    // On passe au NIVEAU 1 //
+    Scene=2;
+
+    // Vblank
+    SYS_doVBlankProcess();
 }
 
 
@@ -571,11 +548,25 @@ void InitNiveau1()
 {
     u16 i;
 
-    Nb_Vie=2;
+    Nb_Tirs=0;
+    Nb_Balles=0;
+    
+    CompteurTir=0;
     Tir_OK=0;
+
+    CompteurEnergie=1;
+    Energie=ENERGIE_DEPART;
+
+    AdresseVram_Tete=0;
+    AdresseVram_BarreEnergie=0;
+    AdresseVram_BarreVierge=0;
+    AdresseVram_Continue=0;
+    AdresseVram_ChiffresContinue=0;
 
     vitesseScrolling=1;
     compteurTile=0;
+
+    tilemapOffset=0;
 
     nb_Ennemis=0;
     indexCreaEnnemis=0;
@@ -586,18 +577,22 @@ void InitNiveau1()
 
     PosYinvincible=0;
 
-    CompteurEnergie=1;
-    Energie=ENERGIE_DEPART;
+
 
     // Position X initiale du sprite : 64 pixels
     positionX=FIX32(64L);
     // Position Y initiale du sprite : 56 pixels
     positionY=FIX32(56L);
+
     movX = FIX32(0);
     movY = FIX32(0);
+
     maxSpeed_D = MAX_SPEED_D;
     maxSpeed_G = MAX_SPEED_G;
     maxSpeed_V = MAX_SPEED_V;
+
+    CamPosX=0;
+    CamPosY=0;
 
     tileID_BG=0;
     tileID_BD=0;
@@ -971,6 +966,21 @@ void InitNiveau1()
     AdrTilesEnnemi[5]=&tiles_Sprite_POULPE;
     AdrTilesEnnemi[6]=&tiles_Sprite_PELICAN;
 
+
+
+    /***************/
+    /* PLATEFORMES */
+    /***************/
+    // Init de la structure des sprites des plateformes.
+    // Init=0 car les plateformes n'ont pas encore été créés.
+    // Aucune assignation de sprite dans SpriteP.
+    for(i=0;i<MAX_PLATEFORMES;i++)
+    {
+        Plateforme[i].Init=0;
+        Plateforme[i].ptrPosition=0;
+    }
+
+
     SPR_update();
 
     /////////////////////////////
@@ -1003,9 +1013,9 @@ void InitNiveau1()
     // scroll mode
     VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
 
-    // NIVEAU chargé //
-    Niveau_OK=1;
 
     // Vblank
     SYS_doVBlankProcess();
+
+    Niveau_OK=1;
 }

@@ -5,57 +5,76 @@
 //		Variables principales    //
 ///////////////////////////////////
 
-u16 StatutJoy=0;
+u16 StatutJoy=0;                                            // init ---> InitTitre() //
 
-u8 Scene=0;
+u8 Scene=0;                                                 // init ---> InitSystem() //
 
-bool Titre_OK=0;
-bool Selection_OK=0;
-bool Niveau_OK=0;
+bool Titre_OK;                                              // init ---> InitSystem() //
+bool Selection_OK;                                          // init ---> InitSystem() //
+bool Niveau_OK;                                             // init ---> InitSystem() //
 
-u8 Nb_Vie=2;
-u8 Nb_Tirs=0;
-u8 Nb_Balles=0;
-u8 Nb_Continue=3;
-bool Continue=0;
-bool GameOver=0;
+bool Continue;                                              // init ---> InitSystem() //
+bool GameOver;                                              // init ---> InitSystem() //
+bool PauseJeu;                                              // init ---> InitSystem() //
 
-u8 CompteurTir=0;
+u8 Num_Niveau;                                              // init ---> InitSystem() //
 
-bool PauseJeu=0;
+u16 Compteur_Continue;                                      // init ---> InitSystem() //
 
-u8 Num_Niveau=1;
-u8 selectJoueur=0;
+u16 AdresseVram_BG_A;                                       // init ---> InitSystem() //
 
-u8 CompteurEnergie=0;
-u8 Energie=0;
+u8 Nb_Vie;                                                  // init ---> InitSystem() //
+u8 Nb_Continue;                                             // init ---> InitSystem() //
 
-u16 Compteur_Continue=0;
-
-u16 AdresseVram_Tete=0;
-u16 AdresseVram_BarreEnergie=0;
-u16 AdresseVram_BarreVierge=0;
-u16 AdresseVram_Continue=0;
-u16 AdresseVram_ChiffresContinue=0;
-
-bool Tir_OK=0;
 
 char texteSortie[3];
+
+
+///////////////////////////////////
+//		  Variables titre        //
+///////////////////////////////////
+
+bool Exit_Titre;                                            // init ---> InitTitre() //
+
+
+///////////////////////////////////
+//		Variables sélection      //
+///////////////////////////////////
+
+u8 selectJoueur;                                            // init ---> InitSelection() //
+s16 scrollOffset_TILE_SELECTION[10];                        // init ---> InitSelection() //
+bool Exit_Selection;                                        // init ---> InitSelection() //
+
+
+///////////////////////////////////
+//		 Variables niveaux       //
+///////////////////////////////////
+
+u8 Nb_Tirs;                                                 // init ---> InitNiveau1() //
+u8 Nb_Balles;                                               // init ---> InitNiveau1() //
+
+u8 CompteurTir=0;                                           // init ---> InitNiveau1() //
+bool Tir_OK=0;                                              // init ---> InitNiveau1() //
+
+u8 CompteurEnergie;                                         // init ---> InitNiveau1() //
+u8 Energie;                                                 // init ---> InitNiveau1() //
+
+u16 AdresseVram_Tete=0;                                     // init ---> InitNiveau1() //
+u16 AdresseVram_BarreEnergie=0;                             // init ---> InitNiveau1() //
+u16 AdresseVram_BarreVierge=0;                              // init ---> InitNiveau1() //
+u16 AdresseVram_Continue=0;                                 // init ---> InitNiveau1() //
+u16 AdresseVram_ChiffresContinue=0;                         // init ---> InitNiveau1() //
 
 ///////////////////////////////////
 //		Variables scrolling      //
 ///////////////////////////////////
-u16 AdresseVram_BG_A=0;
-s16 scrollOffset_TILE_SELECTION[10]={0,0,0,0,0,0,0,0,0,0};
 
-u8 vitesseScrolling=1;
 
-s16 CamPosX=0;
-s16 CamPosY=0;
+u8 vitesseScrolling;                                        // init ---> InitNiveau1() //
 
-//s16 scrollOffset_TILE_TITRE[10]={1,1,1,1,1,1,1,1,1,0};
-s16 scrollOffset_TILE_NIVEAU1_BGA[28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-s16 scrollOffset_TILE_NIVEAU1_BGB[28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+s16 CamPosX=0;                                              // init ---> InitNiveau1() //
+s16 CamPosY=0;                                              // init ---> InitNiveau1() //
+
 
 ///////////////////////////////////
 //		Variables Sprites        //
@@ -81,16 +100,17 @@ SpriteJoueur_ Joueur;
 ///////////////////////////////////
 //		 Variables Joueur        //
 ///////////////////////////////////
-fix32 maxSpeed_D;
-fix32 maxSpeed_G;
-fix32 maxSpeed_V;
+fix32 maxSpeed_D;                                           // init ---> InitNiveau1() //
+fix32 maxSpeed_G;                                           // init ---> InitNiveau1() //
+fix32 maxSpeed_V;                                           // init ---> InitNiveau1() //
 
-fix32 positionX;
-fix32 positionY;
-fix32 movX;
-fix32 movY;
+fix32 positionX;                                            // init ---> InitNiveau1() //
+fix32 positionY;                                            // init ---> InitNiveau1() //
 
-u16 PosYinvincible;
+fix32 movX;                                                 // init ---> InitNiveau1() //
+fix32 movY;                                                 // init ---> InitNiveau1() //
+
+u16 PosYinvincible;                                         // init ---> InitNiveau1() //
 
 
 //----------------------------------------------------//
@@ -117,9 +137,10 @@ const SpriteDefinition *AdrTilesEnnemi[7];
 //                    PLATEFORMES                     //
 //----------------------------------------------------//
 SpritePlateforme_ Plateforme[MAX_PLATEFORMES];
-u8 IndexCreaPlateformes;
-u8 nb_Plateformes=0;
-bool contactPlt_OK=0;
+
+u8 IndexCreaPlateformes;                                    // init ---> InitNiveau1() //
+u8 nb_Plateformes;                                          // init ---> InitNiveau1() //
+bool contactPlt_OK;                                         // init ---> InitNiveau1() //
 
 
 //----------------------------------------------------//
@@ -134,15 +155,15 @@ SpriteAura_ Aura;
 //----------------------------------------------------//
 Map *tilemapCollision;
 
-u16 tileID_BG=0;
-u16 tileID_BD=0;
-u16 posTileY;
+u16 tileID_BG;                                              // init ---> InitNiveau1() //
+u16 tileID_BD;                                              // init ---> InitNiveau1() //
+u16 posTileY;                                               // init ---> InitNiveau1() //
 
-u16 tileID_CG=0;
-u16 tileID_CD=0;
+u16 tileID_CG;                                              // init ---> InitNiveau1() //
+u16 tileID_CD;                                              // init ---> InitNiveau1() //
 
-u8 compteurTile=0; // 0 -> 7 //
-u16 tilemapOffset=0;
+u8 compteurTile;                                            // init ---> InitNiveau1() //
+u16 tilemapOffset;                                          // init ---> InitNiveau1() //
 
-u8 nb_Ennemis;
-u8 indexCreaEnnemis;
+u8 nb_Ennemis;                                              // init ---> InitNiveau1() //
+u8 indexCreaEnnemis;                                        // init ---> InitNiveau1() //
