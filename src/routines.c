@@ -150,6 +150,8 @@ void Maj_Vies()
         {
             // Sinon entrée en phase Continue //
             SWITCH_CONTINUE = 1;
+
+            Compteur_Continue = 0;
         }                
     }
 
