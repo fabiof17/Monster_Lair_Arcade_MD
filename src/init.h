@@ -11,6 +11,7 @@ extern void InitSelection();
 extern void AnimSelection();
 
 extern void InitNiveaux();
+extern void InitVies();
 extern void InitNiveau1();
 
 #endif // _MAIN

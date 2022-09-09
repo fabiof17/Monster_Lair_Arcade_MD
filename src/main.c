@@ -28,6 +28,7 @@ int main(u16 hardreset)
     // Init joypad //
     JOY_init();
 
+    DEBUG_COLLISIONS_ENNEMIS=0;
     // Waiting VBLANK //
     //SYS_doVBlankProcess();
 
@@ -115,16 +116,16 @@ int main(u16 hardreset)
 
                     XGM_startPlay(Niveau1);
 
-                    while(GameOver==0)
+                    while(SWITCH_GAMEOVER == 0)
                     {
 
                         JOY_setEventHandler(Game_PF_Callback);
 
                         // En attente Continue ? //
-                        if(Continue==0)
+                        if(SWITCH_CONTINUE==0)
                         {
                             // Jeu en Pause ? //
-                            if(PauseJeu==0)
+                            if(PauseJeu == 0)
                             {
                                 Phases_Joueur();
 
@@ -145,7 +146,7 @@ int main(u16 hardreset)
                             }
 
                             // DEBUG
-                            //VDP_drawInt( Niveau_OK , 5 , 10 , 6);
+                            //VDP_drawInt( Joueur.CompteurApparition , 5 , 10 , 6);
 
                         }
 

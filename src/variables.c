@@ -2,29 +2,33 @@
 #include "variables.h"
 
 ///////////////////////////////////
+//		       DEBUG            //
+///////////////////////////////////
+
+bool DEBUG_COLLISIONS_ENNEMIS;
+
+///////////////////////////////////
 //		Variables principales    //
 ///////////////////////////////////
 
-//u16 StatutJoy=0;                                            // init ---> InitTitre() //
+u8 Scene=0;                                                 // init ---> InitVariablesGeneral() //
 
-u8 Scene=0;                                                 // init ---> InitSystem() //
+bool Titre_OK;                                              // init ---> InitVariablesGeneral() //
+bool Selection_OK;                                          // init ---> InitVariablesGeneral() //
+bool Niveau_OK;                                             // init ---> InitVariablesGeneral() //
 
-bool Titre_OK;                                              // init ---> InitSystem() //
-bool Selection_OK;                                          // init ---> InitSystem() //
-bool Niveau_OK;                                             // init ---> InitSystem() //
+bool SWITCH_CONTINUE;                                       // init ---> InitVariablesGeneral() //
+bool SWITCH_GAMEOVER;                                       // init ---> InitVariablesGeneral() //
+bool PauseJeu;                                              // init ---> InitVariablesGeneral() //
 
-bool Continue;                                              // init ---> InitSystem() //
-bool GameOver;                                              // init ---> InitSystem() //
-bool PauseJeu;                                              // init ---> InitSystem() //
+u8 Num_Niveau;                                              // init ---> InitVariablesGeneral() //
 
-u8 Num_Niveau;                                              // init ---> InitSystem() //
+u16 Compteur_Continue;                                      // init ---> InitVariablesGeneral() //
 
-u16 Compteur_Continue;                                      // init ---> InitSystem() //
+u16 AdresseVram_BG_A;                                       // init ---> InitVariablesGeneral() //
 
-u16 AdresseVram_BG_A;                                       // init ---> InitSystem() //
-
-u8 Nb_Vie;                                                  // init ---> InitSystem() //
-u8 Nb_Continue;                                             // init ---> InitSystem() //
+u8 Nb_Vie;                                                  // init ---> InitVariablesGeneral() //
+u8 Nb_Continue;                                             // init ---> InitVariablesGeneral() //
 
 
 char texteSortie[3];
@@ -62,6 +66,7 @@ u8 Energie;                                                 // init ---> InitNiv
 u16 AdresseVram_Tete=0;                                     // init ---> InitNiveau1() //
 u16 AdresseVram_BarreEnergie=0;                             // init ---> InitNiveau1() //
 u16 AdresseVram_BarreVierge=0;                              // init ---> InitNiveau1() //
+u16 AdresseVram_BarreNoire=0;                               // init ---> InitNiveau1() //
 u16 AdresseVram_Continue=0;                                 // init ---> InitNiveau1() //
 u16 AdresseVram_ChiffresContinue=0;                         // init ---> InitNiveau1() //
 

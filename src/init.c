@@ -24,43 +24,43 @@ void InitSystem()
 void InitVariablesGeneral()
 {
    // We start on the title secrren //
-    Scene=0;
+    Scene = 0;
 
     // Title screen not loaded yet //
-    Titre_OK=0;
+    Titre_OK = 0;
 
     // Selection screen not loaded yet //
-    Selection_OK=0;
+    Selection_OK = 0;
 
     // No level loaded yet //
-    Niveau_OK=0;
+    Niveau_OK = 0;
 
     // We start the game at level 1 //
-    Num_Niveau=1;
+    Num_Niveau = 1;
 
     // Counter for the Continue ? numbers //
-    Compteur_Continue=0;
+    Compteur_Continue = 0;
 
-    AdresseVram_BG_A=0;
+    AdresseVram_BG_A = 0;
 
     // Game is not in Continue ? mode // //
-    Continue=0;
+    SWITCH_CONTINUE = 0;
 
     // Game is not over //
-    GameOver=0;
+    SWITCH_GAMEOVER = 0;
 
     // Game is not in pause mode //
-    PauseJeu=0;
+    PauseJeu = 0;
 
     // Life number //
-    Nb_Vie=2;
+    Nb_Vie = 2;
 
     // Number of continues //
-    Nb_Continue=3;
+    Nb_Continue = 3;
 
-    Exit_Titre=0;
+    Exit_Titre = 0;
 
-    Exit_Selection=0;
+    Exit_Selection = 0;
 }
 
 
@@ -546,6 +546,24 @@ void InitNiveaux()
 ///////////////////////////////
 //        INIT NIVEAU 1      //
 ///////////////////////////////
+void InitVies()
+{
+    u8 i;
+    
+    for (i=0; i<Nb_Vie; i++)
+    {
+        if(selectJoueur==0)
+        {
+            sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_H, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+        }
+        else
+        {
+            sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_F, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+
+        }
+    }
+}
+
 
 void InitNiveau1()
 {
@@ -563,6 +581,7 @@ void InitNiveau1()
     AdresseVram_Tete=0;
     AdresseVram_BarreEnergie=0;
     AdresseVram_BarreVierge=0;
+    AdresseVram_BarreNoire=0;
     AdresseVram_Continue=0;
     AdresseVram_ChiffresContinue=0;
 
@@ -765,7 +784,7 @@ void InitNiveau1()
 
 
 
-    // On récupère l'adresse en Vram des tiles de la barre noire
+    // On récupère l'adresse en Vram des tiles de la barre vierge
     AdresseVram_BarreVierge=ind;
 
     // WINDOW tileset loading in VRAM
@@ -780,6 +799,17 @@ void InitNiveau1()
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += tileset_BARRE_VIERGE.numTile;
 
+
+    
+    // On récupère l'adresse en Vram des tiles de la barre noire
+    AdresseVram_BarreNoire=ind;
+
+    // WINDOW tileset loading in VRAM
+    // getting tileset data from IMAGE structure declared in maps_GLOBAL.res
+    VDP_loadTileSet(&tileset_BARRE_NOIRE, ind, DMA);
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += tileset_BARRE_NOIRE.numTile;
 
     // Vblank
     SYS_doVBlankProcess();
@@ -812,18 +842,7 @@ void InitNiveau1()
     /*********/
     /*  VIES */
     /*********/
-    for (i=0; i<Nb_Vie; i++)
-    {
-        if(selectJoueur==0)
-        {
-            sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_H, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
-        }
-        else
-        {
-            sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_F, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
-
-        }
-    }
+    InitVies();
 
     /**********/
     /* SPLASH */

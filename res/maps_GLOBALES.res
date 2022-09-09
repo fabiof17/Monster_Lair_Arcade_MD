@@ -13,6 +13,7 @@ IMAGE image_GAMEOVER_WINDOW "maps/global/tiles_GAMEOVER_WINDOW.png" BEST DUPLICA
 
 IMAGE image_BARRE_VERTE1 "maps/global/tiles_BARRE_VERTE1.png" NONE DUPLICATE
 IMAGE image_BARRE_VIERGE "maps/global/tiles_BARRE_VIERGE.png" NONE DUPLICATE
+//IMAGE image_BARRE_NOIRE "maps/global/tiles_BARRE_NOIRE.png" NONE DUPLICATE
 
 
 IMAGE image_CHIFFRE_9 "maps/global/tiles_CHIFFRE_9.png" NONE DUPLICATE

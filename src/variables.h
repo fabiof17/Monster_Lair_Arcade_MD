@@ -12,6 +12,7 @@
 #define ACCEL_C         FIX32(0.1)   // ACCELERATION DROITE/GAUCHE LORS DE LA CHUTE
 #define GLISSEMENT      FIX32(1L)
 
+#define MAX_POS_FIN     FIX32(288L) // LIMITE DROITE ECRAN FIN DE NIVEAU
 #define MAX_POS_D       FIX32(228L) // LIMITE DROITE ECRAN
 #define MAX_POS_G       FIX32(11L)  // LIMITE GAUCHE ECRAN
 
@@ -51,6 +52,12 @@
 
 
 ///////////////////////////////////
+//		       DEBUG            //
+///////////////////////////////////
+
+extern bool DEBUG_COLLISIONS_ENNEMIS;
+
+///////////////////////////////////
 //		Variables principales    //
 ///////////////////////////////////
 
@@ -66,8 +73,8 @@ extern u8 Nb_Vie;
 extern u8 Nb_Tirs;
 extern u8 Nb_Balles;
 extern u8 Nb_Continue;
-extern bool Continue;
-extern bool GameOver;
+extern bool SWITCH_CONTINUE;
+extern bool SWITCH_GAMEOVER;
 
 extern u8 CompteurTir;
 
@@ -87,6 +94,7 @@ extern u16 Compteur_Continue;
 extern u16 AdresseVram_Tete;
 extern u16 AdresseVram_BarreEnergie;
 extern u16 AdresseVram_BarreVierge;
+extern u16 AdresseVram_BarreNoire;
 extern u16 AdresseVram_Continue;
 extern u16 AdresseVram_ChiffresContinue;
 
