@@ -2,6 +2,8 @@
 #define _VARIABLES_H
 
 // CONSTANTES //
+//#define ADR_NUM_VRAM          1456  // ADRESSE DES CHIFFRES EN VRAM
+
 #define MAX_SPEED_D     FIX32(1L)   // VITESSE MAX HORIZONTALE DROITE
 #define MAX_SPEED_G     FIX32(2L)   // VITESSE MAX HORIZONTALE GAUCHE
 #define MAX_SPEED_V     FIX32(3L)   // VITESSE MAX VERTICALE
@@ -72,7 +74,7 @@ extern bool Niveau_OK;
 extern u8 Nb_Vie;
 extern u8 Nb_Tirs;
 extern u8 Nb_Balles;
-extern u8 Nb_Continue;
+extern u8 Nb_Credits;
 extern bool SWITCH_CONTINUE;
 extern bool SWITCH_GAMEOVER;
 
@@ -126,6 +128,8 @@ extern Sprite *sprite_Titre[6];
 extern Sprite *sprite_Pause;
 extern Sprite *sprite_Round;
 extern Sprite *sprite_NumRound;
+extern Sprite *sprite_Credits;
+extern Sprite *sprite_Nb_Credits;
 
 extern Sprite *sprite_repere_BG;
 extern Sprite *sprite_repere_BD;

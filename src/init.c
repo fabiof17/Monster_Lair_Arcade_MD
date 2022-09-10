@@ -56,7 +56,7 @@ void InitVariablesGeneral()
     Nb_Vie = 2;
 
     // Number of continues //
-    Nb_Continue = 3;
+    Nb_Credits = 3;
 
     Exit_Titre = 0;
 
@@ -833,6 +833,12 @@ void InitNiveau1()
     {
         sprite_NumRound=SPR_addSprite(&tiles_Sprite_1, 180, 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
     }
+
+    /***********/
+    /* CREDITS */
+    /***********/
+    //sprite_Credits=SPR_addSprite(&tiles_Sprite_CREDITS, -40, 0, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+    //sprite_Nb_Credits=SPR_addSprite(&tiles_Sprite_CHIFFRES, -40, 0, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
 
     /*********/
     /* PAUSE */

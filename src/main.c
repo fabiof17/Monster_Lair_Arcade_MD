@@ -121,7 +121,7 @@ int main(u16 hardreset)
 
                         JOY_setEventHandler(Game_PF_Callback);
 
-                        // En attente Continue ? //
+                        // NOT in CONTINUE phase //
                         if(SWITCH_CONTINUE==0)
                         {
                             // Jeu en Pause ? //
@@ -146,15 +146,16 @@ int main(u16 hardreset)
                             }
 
                             // DEBUG
-                            //VDP_drawInt( Joueur.CompteurApparition , 5 , 10 , 6);
-
+                            //VDP_drawInt( SWITCH_CONTINUE , 1 , 10 , 5 );
                         }
 
+                        // In CONTINUE phase //
                         else
                         {
                             Maj_Continue();
                         }
 
+                        //VDP_drawInt( SWITCH_GAMEOVER , 1 , 12 , 5);
                         // MAJ sprites
                         SPR_update();
 
@@ -168,22 +169,20 @@ int main(u16 hardreset)
                         ChgtPalette_Niveau1();
                     }
 
-                    //XGM_pausePlay();
-                    //XGM_stopPlay();
-                    waitMs(4000);
+                    Afficher_GameOver();
+                    SPR_update();
+
+                    waitMs(6000);
+
                     XGM_pausePlay();
                     XGM_stopPlay();
 
-
                     Clear_Niveau1();
-                    SYS_doVBlankProcess();
-
-                    SPR_end();
-                    SYS_doVBlankProcess();
 
                     InitVariablesGeneral();
+                    SPR_end();
 
-                    //SYS_hardReset();
+                    SYS_doVBlankProcess();
                 }
             }
         }

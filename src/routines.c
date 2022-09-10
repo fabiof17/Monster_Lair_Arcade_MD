@@ -16,7 +16,7 @@
 void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 {
 	intToStr(valeur,texteSortie,zeros); //MIN -500.000.000 - MAX 500.000.000
-	VDP_drawText(texteSortie,x,y);
+	VDP_drawTextBG(WINDOW,texteSortie,x,y);
 }
 
 
@@ -24,6 +24,27 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 //----------------------------------------------------//
 //                      CONTINUE                      //
 //----------------------------------------------------//
+void Afficher_GameOver()
+{
+    // Effacer CONTINUE ? //
+    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 3, 3, 0, 0, 1, 2, DMA);
+    //VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 4, 3, 0, 0, 1, 2, DMA);
+    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 17, 3, 0, 0, 1, 2, DMA);
+    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 18, 3, 0, 0, 1, 2, DMA);        
+    
+    // Chargement tiles GAMEOVER à la place des tiles CONTINUE ? //
+    VDP_loadTileSet(image_GAMEOVER_WINDOW.tileset, AdresseVram_Continue, DMA);
+
+    // Affichage GAMEOVER //
+    // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
+    VDP_setTileMapEx(WINDOW, image_GAMEOVER_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 4, 3, 0, 0, 12, 2, DMA);
+
+    // Sprite GAMEOVER //
+    sprite_GameOver=SPR_addSprite(&tiles_Sprite_GAMEOVER, 80, 88, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
+
+    //SWITCH_GAMEOVER = 1;
+}
+
 void Maj_Continue()
 {
     // Pointeur vers la tilemap à charger pour la barre d'énergie //
@@ -39,6 +60,9 @@ void Maj_Continue()
         VDP_loadTileSet(ptrBARRE, AdresseVram_BarreEnergie, DMA);
         VDP_loadTileSet(ptrBARRE, AdresseVram_BarreVierge, DMA);
 
+        // CHIFFRE 9 //
+        VDP_loadTileSet(image_CHIFFRE_9.tileset, AdresseVram_ChiffresContinue, DMA);
+
         // AFFICHAGE CONTINUE ? //
         // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
         VDP_setTileMapEx(WINDOW, image_CONTINUE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 4, 3, 0, 0, 12, 2, DMA);
@@ -47,7 +71,15 @@ void Maj_Continue()
         // AFFICHAGE CHIFFRE 9 //
         // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
         VDP_setTileMapEx(WINDOW, image_CHIFFRE_9.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_ChiffresContinue), 17, 3, 0, 0, 2, 2, DMA);
-    
+
+        /***********/
+        /* CREDITS */
+        /***********/
+        sprite_Credits=SPR_addSprite(&tiles_Sprite_CREDITS, 124, 116, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+
+        sprite_Nb_Credits=SPR_addSprite(&tiles_Sprite_CHIFFRES, 188, 116, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+        SPR_setFrame(sprite_Nb_Credits,Nb_Credits);
+
     }
     
     else if(Compteur_Continue==60)
@@ -106,67 +138,49 @@ void Maj_Continue()
 
     else if(Compteur_Continue==600)
     {
-        // Effacer CONTINUE ? //
-        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 3, 3, 0, 0, 1, 2, DMA);
-        //VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 4, 3, 0, 0, 1, 2, DMA);
-        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 17, 3, 0, 0, 1, 2, DMA);
-        VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 18, 3, 0, 0, 1, 2, DMA);        
-        
-        // Chargement tiles GAMEOVER à la place des tiles CONTINUE ? //
-        VDP_loadTileSet(image_GAMEOVER_WINDOW.tileset, AdresseVram_Continue, DMA);
-
-        // Affichage GAMEOVER //
-        // getting tilemap data from IMAGE structure declared in maps_GLOBALES.res
-        VDP_setTileMapEx(WINDOW, image_GAMEOVER_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 4, 3, 0, 0, 12, 2, DMA);
-
-        // Sprite GAMEOVER //
-        sprite_GameOver=SPR_addSprite(&tiles_Sprite_GAMEOVER, 80, 88, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
-
+        SPR_releaseSprite(sprite_Credits);
+        SPR_releaseSprite(sprite_Nb_Credits);
         SWITCH_GAMEOVER = 1;
+        //Afficher_GameOver();
     }
 
-    else if(Compteur_Continue>601)
+
+
+    Compteur_Continue++;
+
+
+
+    if(Compteur_Continue>601)
     {
         Compteur_Continue=601;
     }
 
-    Compteur_Continue++;
 }
 
 void Maj_Vies()
-{
-    SpriteJoueur_ *ptrJoueur=&Joueur;
-    
-    // Si je joueur n'a plus de vies //
+{  
+    // If player runs out of life //
     if(Nb_Vie==0)
     {
-        // Si le joueur n'a plus de Continue //
-        if(Nb_Continue==0)
-        {
-            // Game over //
-            ptrJoueur->Phase=GAMEOVER;
-        }
-        else
-        {
-            // Sinon entrée en phase Continue //
+        // If there are remaining credits //
+        //if(Nb_Credits != 0)
+        //{
+            // Switch to CONTINUE phase //
             SWITCH_CONTINUE = 1;
 
+            // Reset CONTINUE counter //
             Compteur_Continue = 0;
-        }                
+        //}
     }
 
-    // Player spawns again //
+    // If player still has life //
     else
     {
-        
-        
-        // Life sprite suppressed //
+        // Clear Life sprite //
         SPR_releaseSprite(sprite_Vie[Nb_Vie-1]);
 
+        // Substract 1 life //
         Nb_Vie-=1;
-        
-        // Player enters APPARITION phase //
-        //ptrJoueur->Phase=APPARITION;
     }
 }
 
@@ -1262,8 +1276,6 @@ void MvtEnnemis_Niveau1()
 
             PAL_setColor( 10 , 0x000C );
             PAL_setColor( 13 , 0x06CC );
-
-            //Maj_Vies();
         }
     }
 }
@@ -4108,7 +4120,7 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
         else if(SWITCH_CONTINUE == 1)
         {
             // If there are remaining CONTINUE //
-            if(Nb_Continue != 0)
+            if(Nb_Credits != 0)
             {
                 // If the CONTINUE counter hasn't reached the end (600) //
                 if(Compteur_Continue < 600)
@@ -4117,9 +4129,13 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                     if (changed & state & (BUTTON_A | BUTTON_B | BUTTON_C | BUTTON_START))
                     {
                         // Player loses 1 CONTINUE //
-                        Nb_Continue -= 1;
+                        Nb_Credits -= 1;
 
                         Nb_Vie = 2;
+
+                        // Clears credits sprites //
+                        SPR_releaseSprite(sprite_Credits);
+                        SPR_releaseSprite(sprite_Nb_Credits);
 
                         // Refill lives //
                         InitVies();
@@ -4134,6 +4150,13 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                     }
                 }
             }
+
+            /*else
+            {
+                SPR_releaseSprite(sprite_Credits);
+                SPR_releaseSprite(sprite_Nb_Credits);
+                Afficher_GameOver();
+            }*/
         }      
     }    
 }

@@ -15,6 +15,12 @@ SPRITE tiles_Sprite_VIE_H "sprites/global/tiles_VIE_H.png" 2 2 BEST 0
 SPRITE tiles_Sprite_VIE_F "sprites/global/tiles_VIE_F.png" 2 2 BEST 0
 
 //----------------------------------------------------//
+//                       CREDITS                      //
+//----------------------------------------------------//
+SPRITE tiles_Sprite_CREDITS "sprites/global/tiles_CREDITS.png" 7 1 BEST 0 NONE 0
+SPRITE tiles_Sprite_CHIFFRES "sprites/global/tiles_CHIFFRES.png" 1 1 BEST 0 NONE 0
+
+//----------------------------------------------------//
 //                       GAMEOVER                     //
 //----------------------------------------------------//
 SPRITE tiles_Sprite_GAMEOVER "sprites/global/tiles_GAMEOVER.png" 20 4 BEST 0 NONE 0

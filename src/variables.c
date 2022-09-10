@@ -28,7 +28,7 @@ u16 Compteur_Continue;                                      // init ---> InitVar
 u16 AdresseVram_BG_A;                                       // init ---> InitVariablesGeneral() //
 
 u8 Nb_Vie;                                                  // init ---> InitVariablesGeneral() //
-u8 Nb_Continue;                                             // init ---> InitVariablesGeneral() //
+u8 Nb_Credits;                                             // init ---> InitVariablesGeneral() //
 
 
 char texteSortie[3];
@@ -89,6 +89,8 @@ Sprite *sprite_Titre[6];
 Sprite *sprite_Pause;
 Sprite *sprite_Round;
 Sprite *sprite_NumRound;
+Sprite *sprite_Credits;
+Sprite *sprite_Nb_Credits;
 
 Sprite *sprite_Press_Start;
 Sprite *sprite_GameOver;
