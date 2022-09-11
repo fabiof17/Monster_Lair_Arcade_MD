@@ -579,7 +579,7 @@ void InitNiveau1()
     Energie=ENERGIE_DEPART;
 
     AdresseVram_Tete=0;
-    AdresseVram_BarreEnergie=0;
+    AdresseVram_BarreVerte=0;
     AdresseVram_BarreVierge=0;
     AdresseVram_BarreNoire=0;
     AdresseVram_Continue=0;
@@ -622,6 +622,8 @@ void InitNiveau1()
 
     tileID_CG=0;
     tileID_CD=0;
+
+    tileID_H=0;
 
     //////////////////////////////////////////////
     //                CREATION  BG              //
@@ -768,7 +770,7 @@ void InitNiveau1()
     ////////////////////////////////////////////////////
 
     // On récupère l'adresse en Vram des tiles de la barre d'énergie
-    AdresseVram_BarreEnergie=ind;
+    AdresseVram_BarreVerte=ind;
 
     // WINDOW tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_GLOBAL.res
@@ -824,6 +826,11 @@ void InitNiveau1()
 
     SPR_init();
 
+    /*************/
+    /* GAME OVER */
+    /*************/
+    sprite_GameOver=SPR_addSprite(&tiles_Sprite_GAMEOVER, 0, -32, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+
     /*********/
     /* ROUND */
     /*********/
@@ -837,8 +844,9 @@ void InitNiveau1()
     /***********/
     /* CREDITS */
     /***********/
-    //sprite_Credits=SPR_addSprite(&tiles_Sprite_CREDITS, -40, 0, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
-    //sprite_Nb_Credits=SPR_addSprite(&tiles_Sprite_CHIFFRES, -40, 0, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+    sprite_Credits=SPR_addSprite(&tiles_Sprite_CREDITS, 0, -8, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+    sprite_Nb_Credits=SPR_addSprite(&tiles_Sprite_CHIFFRES, 0, -8, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+    SPR_setFrame(sprite_Nb_Credits,Nb_Credits);
 
     /*********/
     /* PAUSE */

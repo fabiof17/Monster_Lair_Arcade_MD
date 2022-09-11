@@ -64,9 +64,11 @@ u8 CompteurEnergie;                                         // init ---> InitNiv
 u8 Energie;                                                 // init ---> InitNiveau1() //
 
 u16 AdresseVram_Tete=0;                                     // init ---> InitNiveau1() //
-u16 AdresseVram_BarreEnergie=0;                             // init ---> InitNiveau1() //
+
+u16 AdresseVram_BarreVerte=0;                               // init ---> InitNiveau1() //
 u16 AdresseVram_BarreVierge=0;                              // init ---> InitNiveau1() //
 u16 AdresseVram_BarreNoire=0;                               // init ---> InitNiveau1() //
+
 u16 AdresseVram_Continue=0;                                 // init ---> InitNiveau1() //
 u16 AdresseVram_ChiffresContinue=0;                         // init ---> InitNiveau1() //
 
@@ -168,6 +170,8 @@ u16 posTileY;                                               // init ---> InitNiv
 
 u16 tileID_CG;                                              // init ---> InitNiveau1() //
 u16 tileID_CD;                                              // init ---> InitNiveau1() //
+
+u16 tileID_H;
 
 u8 compteurTile;                                            // init ---> InitNiveau1() //
 u16 tilemapOffset;                                          // init ---> InitNiveau1() //

@@ -22,15 +22,15 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 
 
 //----------------------------------------------------//
-//                      CONTINUE                      //
+//                      GAMEOVER                      //
 //----------------------------------------------------//
 void Afficher_GameOver()
 {
     // Effacer CONTINUE ? //
-    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 3, 3, 0, 0, 1, 2, DMA);
-    //VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 4, 3, 0, 0, 1, 2, DMA);
-    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 17, 3, 0, 0, 1, 2, DMA);
-    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 18, 3, 0, 0, 1, 2, DMA);        
+    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVerte), 3, 3, 0, 0, 1, 2, DMA);
+    //VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVerte), 4, 3, 0, 0, 1, 2, DMA);
+    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVerte), 17, 3, 0, 0, 1, 2, DMA);
+    VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVerte), 18, 3, 0, 0, 1, 2, DMA);        
     
     // Chargement tiles GAMEOVER à la place des tiles CONTINUE ? //
     VDP_loadTileSet(image_GAMEOVER_WINDOW.tileset, AdresseVram_Continue, DMA);
@@ -40,11 +40,12 @@ void Afficher_GameOver()
     VDP_setTileMapEx(WINDOW, image_GAMEOVER_WINDOW.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_Continue), 4, 3, 0, 0, 12, 2, DMA);
 
     // Sprite GAMEOVER //
-    sprite_GameOver=SPR_addSprite(&tiles_Sprite_GAMEOVER, 80, 88, TILE_ATTR(PAL0, FALSE, FALSE, FALSE));
-
-    //SWITCH_GAMEOVER = 1;
+    SPR_setPosition(sprite_GameOver, 80, 88);
 }
 
+//----------------------------------------------------//
+//                      CONTINUE                      //
+//----------------------------------------------------//
 void Maj_Continue()
 {
     // Pointeur vers la tilemap à charger pour la barre d'énergie //
@@ -57,7 +58,7 @@ void Maj_Continue()
 
         // EFFACEMENT BARRE ENERGIE //
         // Chargement de la barre noire en Vram //
-        VDP_loadTileSet(ptrBARRE, AdresseVram_BarreEnergie, DMA);
+        VDP_loadTileSet(ptrBARRE, AdresseVram_BarreVerte, DMA);
         VDP_loadTileSet(ptrBARRE, AdresseVram_BarreVierge, DMA);
 
         // CHIFFRE 9 //
@@ -75,11 +76,8 @@ void Maj_Continue()
         /***********/
         /* CREDITS */
         /***********/
-        sprite_Credits=SPR_addSprite(&tiles_Sprite_CREDITS, 124, 116, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
-
-        sprite_Nb_Credits=SPR_addSprite(&tiles_Sprite_CHIFFRES, 188, 116, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
-        SPR_setFrame(sprite_Nb_Credits,Nb_Credits);
-
+        SPR_setPosition(sprite_Credits, 124, 116);
+        SPR_setPosition(sprite_Nb_Credits, 188, 116);
     }
     
     else if(Compteur_Continue==60)
@@ -138,10 +136,9 @@ void Maj_Continue()
 
     else if(Compteur_Continue==600)
     {
-        SPR_releaseSprite(sprite_Credits);
-        SPR_releaseSprite(sprite_Nb_Credits);
+        SPR_setPosition(sprite_Credits, 0, -8);
+        SPR_setPosition(sprite_Nb_Credits, 0, -8);
         SWITCH_GAMEOVER = 1;
-        //Afficher_GameOver();
     }
 
 
@@ -217,6 +214,12 @@ void Clear_Niveau1()
 //----------------------------------------------------//
 //                    BARRE ENERGIE                   //
 //----------------------------------------------------//
+void Effacer_BarreEnergie()
+{
+     VDP_loadTileSet(&tileset_BARRE_NOIRE, AdresseVram_BarreVerte, DMA);
+     VDP_loadTileSet(&tileset_BARRE_NOIRE, AdresseVram_BarreVierge, DMA);
+}
+
 void Init_BarreEnergie()
 {
     Energie=ENERGIE_DEPART;
@@ -234,7 +237,7 @@ void Init_BarreEnergie()
         VDP_loadTileSet(&tileset_TETE_F, AdresseVram_Tete, DMA);
     }
 
-    VDP_loadTileSet(&tileset_BARRE_VERTE1, AdresseVram_BarreEnergie, DMA);
+    VDP_loadTileSet(&tileset_BARRE_VERTE1, AdresseVram_BarreVerte, DMA);
     VDP_loadTileSet(&tileset_BARRE_VIERGE, AdresseVram_BarreVierge, DMA);
     
 
@@ -243,7 +246,7 @@ void Init_BarreEnergie()
     
     for (i=0; i<ENERGIE_DEPART; i++)
     {
-        VDP_setTileMapEx(WINDOW, image_BARRE_VERTE1.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreEnergie), 4+i, 3, 0, 0, 1, 2, DMA);
+        VDP_setTileMapEx(WINDOW, image_BARRE_VERTE1.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVerte), 4+i, 3, 0, 0, 1, 2, DMA);
     }
 
     for (i=ENERGIE_DEPART; i<ENERGIE_DEPART+7; i++)
@@ -319,7 +322,7 @@ void Maj_BarreEnergie(u8 valeurCompteur, u8 valeurEnergie)
                 //break;
             }
 
-            VDP_loadTileSet(ptrBARRE, AdresseVram_BarreEnergie, DMA);
+            VDP_loadTileSet(ptrBARRE, AdresseVram_BarreVerte, DMA);
             VDP_setTileMapEx(WINDOW, image_BARRE_VIERGE.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, AdresseVram_BarreVierge), 4 + (u16)valeurEnergie, 3, 0, 0, 1, 2, DMA);
     
         }
@@ -328,7 +331,7 @@ void Maj_BarreEnergie(u8 valeurCompteur, u8 valeurEnergie)
 
 inline static void Vider_BarreEnergie()
 {
-    VDP_loadTileSet(&tileset_BARRE_VIERGE, AdresseVram_BarreEnergie, DMA);
+    VDP_loadTileSet(&tileset_BARRE_VIERGE, AdresseVram_BarreVerte, DMA);
 }
 
 
@@ -506,6 +509,15 @@ inline static void Collision_Decor_Cotes()
 
     *ptrtileID_CG=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll_CG_X - CamPosX) >> 3) , ((ptrJoueur->pt_Coll_CG_Y - CamPosX) >> 3) ) & TILE_INDEX_MASK;
     *ptrtileID_CD=MAP_getTile( tilemapCollision , ((ptrJoueur->pt_Coll_CD_X - CamPosX) >> 3) , ((ptrJoueur->pt_Coll_CD_Y - CamPosX) >> 3) ) & TILE_INDEX_MASK;
+}
+
+inline static void Collision_Decor_Haut()
+{
+    u16 *ptrtileID_H=&tileID_H;
+
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    *ptrtileID_H=MAP_getTile( tilemapCollision , ((ptrJoueur->PosX + 16 - CamPosX) >> 3) , posTileY + 5 ) & TILE_INDEX_MASK;     
 }
 
 inline static void Collision_Ennemis()
@@ -2981,11 +2993,17 @@ void MvtJoueur()
         // JOUEUR TOUCHE BAS DE L'ÉCRAN //
         if(ptrJoueur->PosY>192)
         {
-            // SPLASH //
-            ptrSplash->Init=1;
-            ptrSplash->PosX=ptrJoueur->PosX;
-            ptrSplash->PosY=168;
-            SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
+            Collision_Decor_Haut();
+
+            // SI IL N'Y A PAS DE ROCHER AU-DESSUS DE L'EAU //
+            if(tileID_H == 2)
+            {
+                // SPLASH //
+                ptrSplash->Init=1;
+                ptrSplash->PosX=ptrJoueur->PosX;
+                ptrSplash->PosY=168;
+                SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
+            }
 
             // LA BARRE D'ENERGIE SE VIDE //
             Vider_BarreEnergie();
@@ -3008,10 +3026,6 @@ void MvtJoueur()
             movX=0;
             SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
             SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
-
-            // CHANGEMENT PALETTE //
-            //PAL_setColor( 10 , 0x0A4C );
-            //PAL_setColor( 13 , 0x0C6C );
         }
 
     }
@@ -3127,7 +3141,6 @@ void MvtJoueur()
                 Init_BarreEnergie();
             }
 
-//**//
 
             // SI LE DRAGON NE S'ENVOLE PAS, ON INCREMENTE LE COMPTEUR //
             if(ptrDragon->Phase!=SORTIE_DRAGON)
@@ -3180,6 +3193,8 @@ void MvtJoueur()
         {
             // IL EST BLOQUÉ
             positionX = MAX_POS_FIN;
+
+            SWITCH_GAMEOVER = 1;
 
             vitesseScrolling=2;
         }
@@ -4134,8 +4149,8 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                         Nb_Vie = 2;
 
                         // Clears credits sprites //
-                        SPR_releaseSprite(sprite_Credits);
-                        SPR_releaseSprite(sprite_Nb_Credits);
+                        SPR_setPosition(sprite_Credits, 0, -8);
+                        SPR_setPosition(sprite_Nb_Credits, 0, -8);
 
                         // Refill lives //
                         InitVies();

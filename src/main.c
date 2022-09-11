@@ -23,7 +23,7 @@ int main(u16 hardreset)
     InitVariablesGeneral();
 
     // init VDP //
-    VDP_init();
+    //VDP_init();
 
     // Init joypad //
     JOY_init();
@@ -145,7 +145,7 @@ int main(u16 hardreset)
                                 Maj_BarreEnergie(CompteurEnergie, Energie);                               
                             }
 
-                            // DEBUG
+                            //** DEBUG **//
                             //VDP_drawInt( SWITCH_CONTINUE , 1 , 10 , 5 );
                         }
 
@@ -155,7 +155,9 @@ int main(u16 hardreset)
                             Maj_Continue();
                         }
 
+                        //** DEBUG **//
                         //VDP_drawInt( SWITCH_GAMEOVER , 1 , 12 , 5);
+
                         // MAJ sprites
                         SPR_update();
 
@@ -169,10 +171,11 @@ int main(u16 hardreset)
                         ChgtPalette_Niveau1();
                     }
 
+                    Effacer_BarreEnergie();
                     Afficher_GameOver();
                     SPR_update();
 
-                    waitMs(6000);
+                    waitMs(5000);
 
                     XGM_pausePlay();
                     XGM_stopPlay();

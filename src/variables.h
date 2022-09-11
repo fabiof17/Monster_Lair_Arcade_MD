@@ -94,7 +94,7 @@ extern u8 Energie;
 extern u16 Compteur_Continue;
 
 extern u16 AdresseVram_Tete;
-extern u16 AdresseVram_BarreEnergie;
+extern u16 AdresseVram_BarreVerte;
 extern u16 AdresseVram_BarreVierge;
 extern u16 AdresseVram_BarreNoire;
 extern u16 AdresseVram_Continue;
@@ -340,6 +340,8 @@ extern u16 posTileY;
 
 extern u16 tileID_CG;
 extern u16 tileID_CD;
+
+extern u16 tileID_H;
 
 
 extern u8 compteurTile; // 0 -> 7 //

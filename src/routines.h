@@ -15,6 +15,7 @@ extern void TilesJoueur();
 extern void Tiles_Niveau1();
 
 extern void Maj_CompteurEnergie();
+extern void Effacer_BarreEnergie();
 extern void Maj_BarreEnergie();
 extern void Init_BarreEnergie();
 
