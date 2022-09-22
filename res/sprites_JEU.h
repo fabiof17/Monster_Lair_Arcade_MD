@@ -2,6 +2,12 @@
 #define _RES_SPRITES_JEU_H_
 
 extern const SpriteDefinition tiles_Sprite_TITRE;
+extern const SpriteDefinition tiles_Sprite_MENU_TITRE;
+extern const SpriteDefinition tiles_Sprite_BOUTON_OPTIONS;
+extern const SpriteDefinition tiles_Sprite_PLAYER_OPTIONS;
+extern const SpriteDefinition tiles_Sprite_CREDITS_OPTIONS;
+extern const SpriteDefinition tiles_Sprite_START_OPTIONS;
+extern const SpriteDefinition tiles_Sprite_CHIFFRES_OPTIONS;
 extern const SpriteDefinition tiles_Sprite_PRESS_START;
 extern const SpriteDefinition tiles_Sprite_VIE_H;
 extern const SpriteDefinition tiles_Sprite_VIE_F;

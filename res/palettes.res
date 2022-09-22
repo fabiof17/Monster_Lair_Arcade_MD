@@ -12,6 +12,7 @@ PALETTE palette_DRAGON              "palettes/global/palette_DRAGON.png"
 PALETTE palette_TITRE_BGA           "palettes/titre/palette_TITRE_BGA.png"
 PALETTE palette_TITRE_BGB           "palettes/titre/palette_TITRE_BGB.png"
 PALETTE palette_TITRE               "palettes/titre/palette_TITRE.png"
+PALETTE palette_MENU                "palettes/titre/palette_MENU.png"
 
 //--------------------------------------//
 //               SELECTION              //

@@ -8,6 +8,7 @@ extern const Palette palette_DRAGON;
 extern const Palette palette_TITRE_BGA;
 extern const Palette palette_TITRE_BGB;
 extern const Palette palette_TITRE;
+extern const Palette palette_MENU;
 extern const Palette palette_SELECTION_BGA;
 extern const Palette palette_SELECTION_BGB;
 extern const Palette palette_02_SELECTION;

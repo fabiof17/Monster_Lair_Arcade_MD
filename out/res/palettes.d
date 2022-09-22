@@ -1,4 +1,5 @@
 out/res/palettes.o: res/palettes.res \
+G:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/palettes/titre/palette_MENU.png \
 G:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/palettes/niveau1/palette_Niveau1_BULOT.png \
 G:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/palettes/niveau1/palette_Niveau1_ESCARGOT.png \
 G:/RECALBOX/07_DEV/32_MONSTER_LAIR/03_CODE/SGDK/MONSTER_LAIR/res/palettes/selection/palette_SELECTION_BGB2.png \

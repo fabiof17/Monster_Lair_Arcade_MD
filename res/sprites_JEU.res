@@ -3,6 +3,14 @@
 //----------------------------------------------------//
 SPRITE tiles_Sprite_TITRE "sprites/titre/tiles_TITRE.png" 4 3 BEST 0
 
+SPRITE tiles_Sprite_MENU_TITRE "sprites/titre/tiles_MENU_TITRE.png" 14 7 BEST 0
+SPRITE tiles_Sprite_BOUTON_OPTIONS "sprites/titre/tiles_BOUTON_OPTIONS.png" 1 1 BEST 0
+SPRITE tiles_Sprite_PLAYER_OPTIONS "sprites/titre/tiles_PLAYER_OPTIONS.png" 6 1 BEST 0
+SPRITE tiles_Sprite_CREDITS_OPTIONS "sprites/titre/tiles_CREDITS_OPTIONS.png" 7 1 BEST 0
+SPRITE tiles_Sprite_START_OPTIONS "sprites/titre/tiles_START_OPTIONS.png" 5 1 BEST 0
+
+SPRITE tiles_Sprite_CHIFFRES_OPTIONS "sprites/titre/tiles_CHIFFRES_OPTIONS.png" 1 1 BEST 0 NONE 0
+
 //----------------------------------------------------//
 //                    ECRAN SELECTION                 //
 //----------------------------------------------------//

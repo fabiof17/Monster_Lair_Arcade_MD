@@ -157,7 +157,7 @@ void Maj_Continue()
 void Maj_Vies()
 {  
     // If player runs out of life //
-    if(Nb_Vie==0)
+    if(Nb_Vies==0)
     {
         // If there are remaining credits //
         //if(Nb_Credits != 0)
@@ -174,10 +174,10 @@ void Maj_Vies()
     else
     {
         // Clear Life sprite //
-        SPR_releaseSprite(sprite_Vie[Nb_Vie-1]);
+        SPR_releaseSprite(sprite_Vie[Nb_Vies-1]);
 
         // Substract 1 life //
-        Nb_Vie-=1;
+        Nb_Vies-=1;
     }
 }
 
@@ -1286,6 +1286,7 @@ void MvtEnnemis_Niveau1()
             ptrDragon->PosX=10;
             ptrDragon->PosY=-32;
 
+            // CHANGEMENT PALETTE JOUEUR //
             PAL_setColor( 10 , 0x000C );
             PAL_setColor( 13 , 0x06CC );
         }
@@ -1586,6 +1587,7 @@ void MvtPlateformes_Niveau1()
             ptrDragon->PosX=10;
             ptrDragon->PosY=-32;
 
+            // CHANGEMENT PALETTE JOUEUR //
             PAL_setColor( 10 , 0x000C );
             PAL_setColor( 13 , 0x06CC );
         }
@@ -2193,10 +2195,6 @@ void MvtJoueur()
             movX=0;
             SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
             SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
-
-            // CHANGEMENT PALETTE //
-            //PAL_setColor( 10 , 0x0A4C );
-            //PAL_setColor( 13 , 0x0C6C );
         }
     }
 
@@ -2560,10 +2558,6 @@ void MvtJoueur()
             movX=0;
             SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
             SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
-
-            // CHANGEMENT PALETTE //
-            //PAL_setColor( 10 , 0x0A4C );
-            //PAL_setColor( 13 , 0x0C6C );
         }
     }
 
@@ -2737,10 +2731,6 @@ void MvtJoueur()
                 movX=0;
                 SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
                 SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
-
-                // CHANGEMENT PALETTE //
-                //PAL_setColor( 10 , 0x0A4C );
-                //PAL_setColor( 13 , 0x0C6C );
             }
         }
 
@@ -2928,10 +2918,6 @@ void MvtJoueur()
                 movX=0;
                 SPR_setHFlip(ptrJoueur->SpriteJ_BAS, FALSE);
                 SPR_setHFlip(ptrJoueur->SpriteJ_HAUT, FALSE);
-
-                // CHANGEMENT PALETTE //
-                //PAL_setColor( 10 , 0x0A4C );
-                //PAL_setColor( 13 , 0x0C6C );
             }
         }
 
@@ -3004,6 +2990,15 @@ void MvtJoueur()
                 ptrSplash->PosY=168;
                 SPR_setPosition(ptrSplash->SpriteS, ptrSplash->PosX, ptrSplash->PosY);
             }
+            else
+            {
+                // Le décompte de vies ne se fait qu'à la fin du splash //
+                // Dans le cas où il n'y a pas de splash, on fait le décompte tout de suite //
+                // CHANGEMENT PALETTE DRAGON //
+                PAL_setColor( 10 , 0x0A4C );
+                PAL_setColor( 13 , 0x0C6C );
+                Maj_Vies();
+            }
 
             // LA BARRE D'ENERGIE SE VIDE //
             Vider_BarreEnergie();
@@ -3055,7 +3050,7 @@ void MvtJoueur()
             if(ptrSplash->CompteurFrameSplash==0 && ptrSplash->IndexFrameSplash==7)
             {
                 ptrSplash->PosY-=8;
-                // CHANGEMENT PALETTE //
+                // CHANGEMENT PALETTE DRAGON //
                 PAL_setColor( 10 , 0x0A4C );
                 PAL_setColor( 13 , 0x0C6C );
             }
@@ -3149,6 +3144,7 @@ void MvtJoueur()
             }
         }
     }
+
 
     // SPECIAL CASE : IF PLAYER SPAWNS AGAIN AT THE END OF THE LEVEL //
     if(CamPosX == -4336)
@@ -3269,6 +3265,7 @@ void MvtJoueur()
             ptrAura->PosY=ptrJoueur->PosY-19;
         }
     }
+    
     else
     {
         ptrAura->PosX=0;
@@ -3292,7 +3289,6 @@ void MvtJoueur()
     // AURA //
     SPR_setPosition(ptrAura->SpriteA, ptrAura->PosX, ptrAura->PosY);
 }
-
 
 
 //-----------------------------------------------//
@@ -3951,12 +3947,125 @@ void Titre_Callback(u16 joy, u16 changed, u16 state)
 {
     if(joy == JOY_1)
     {
-        // Si START : on quitte BOUCLE ECRAN TITRE //
-        if (changed & state & BUTTON_START)
+
+        // BOUTONS //
+        if(Menu_Titre == 1)
         {
-            CamPosX=0;
-            Exit_Titre=1;
+            // BOUTON BAS //
+            if( changed & state & BUTTON_DOWN )
+            {
+                if(Pos_Menu_Titre == 0)
+                {
+                    Pos_Menu_Titre = 1;
+                    SPR_setPosition(sprite_Bouton_Options,112,104);
+                }
+
+                else if(Pos_Menu_Titre == 1)
+                {
+                    Pos_Menu_Titre = 2;
+                    SPR_setPosition(sprite_Bouton_Options,112,120);
+                }
+            }
+
+            // BOUTON HAUT //
+            else if( changed & state & BUTTON_UP )
+            {
+                if(Pos_Menu_Titre == 1)
+                {
+                    Pos_Menu_Titre = 0;
+                    SPR_setPosition(sprite_Bouton_Options,112,88);
+                }
+
+                else if(Pos_Menu_Titre == 2)
+                {
+                    Pos_Menu_Titre = 1;
+                    SPR_setPosition(sprite_Bouton_Options,112,104);
+                }
+            }
+
+            // BOUTON DROITE //
+            else if( changed & state & (BUTTON_RIGHT | BUTTON_C) )
+            {
+                if(Pos_Menu_Titre == 0)
+                {
+                    if( Nb_Vies_Options < 5 )
+                    {
+                        Nb_Vies_Options += 1;
+                        Nb_Vies = Nb_Vies_Options;
+                        SPR_setFrame( sprite_Nb_Player_Options , Nb_Vies_Options );
+                    }
+                }
+
+                else if(Pos_Menu_Titre == 1)
+                {
+                    if( Nb_Credits < 5 )
+                    {
+                        Nb_Credits += 1;
+                        SPR_setFrame( sprite_Nb_Credits_Options , Nb_Credits );
+                    } 
+                }
+            }
+
+            // BOUTON GAUCHE //
+            else if( changed & state & ( BUTTON_LEFT | BUTTON_B ) )
+            {
+                if(Pos_Menu_Titre == 0)
+                {
+                    if( Nb_Vies_Options > 3 )
+                    {
+                        Nb_Vies_Options -= 1;
+                        Nb_Vies = Nb_Vies_Options;
+                        SPR_setFrame( sprite_Nb_Player_Options , Nb_Vies_Options );
+                    }
+                }
+
+                else if(Pos_Menu_Titre == 1)
+                {
+                    if( Nb_Credits > 3 )
+                    {
+                        Nb_Credits -= 1;
+                        SPR_setFrame( sprite_Nb_Credits_Options , Nb_Credits );
+                    } 
+                }
+            }
+
         }
+
+
+
+        // START //
+        if (changed & state & BUTTON_START)
+        {        
+            // on quitte BOUCLE ECRAN TITRE //
+            if(Menu_Titre == 1)
+            {
+                if(Pos_Menu_Titre == 2)
+                {
+                    CamPosX=0;
+                    Exit_Titre=1;
+                }
+            }
+            
+            // on rentre dans le menu OPTIONS //
+            else
+            {
+                Menu_Titre = 1;
+               
+                SPR_setPosition(sprite_Bouton_Options,112,88);
+
+                SPR_setPosition(sprite_Player_Options,128,88);
+                SPR_setPosition(sprite_Credits_Options,128,104);
+                SPR_setPosition(sprite_Start_Options,128,120);
+
+                SPR_setPosition(sprite_Nb_Player_Options,200,88);
+                SPR_setPosition(sprite_Nb_Credits_Options,200,104);               
+
+                SPR_setPosition(sprite_Menu_Titre,104,80);
+            }
+        }
+
+
+        
     }
 }
 
@@ -3970,7 +4079,7 @@ void Selection_Callback(u16 joy, u16 changed, u16 state)
         if(Exit_Selection==0)
         {
             // Si DROITE //
-            if (changed & state & BUTTON_RIGHT && selectJoueur == 0 )
+            if ( changed & state & BUTTON_RIGHT && selectJoueur == 0 )
             {
                 // scrolling par tile
                 VDP_setHorizontalScrollTile(BG_A, 13, scrollOffset_TILE_SELECTION, 10, CPU);
@@ -4032,7 +4141,7 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
 
                         SPR_setPosition(sprite_Pause, 140, 116);
 
-                        XGM_pausePlay(Niveau1);
+                        XGM_pausePlay();
 
                     }
                     // Exit PAUSE mode //
@@ -4042,7 +4151,7 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
 
                         SPR_setPosition(sprite_Pause, -40, 0);
 
-                        XGM_resumePlay(Niveau1);
+                        XGM_resumePlay();
                     }
                 }
 
@@ -4146,7 +4255,7 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                         // Player loses 1 CONTINUE //
                         Nb_Credits -= 1;
 
-                        Nb_Vie = 2;
+                        Nb_Vies = Nb_Vies_Options;
 
                         // Clears credits sprites //
                         SPR_setPosition(sprite_Credits, 0, -8);

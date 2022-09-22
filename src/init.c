@@ -15,8 +15,8 @@
 //        INIT SYSTEME       //
 ///////////////////////////////
 void InitSystem()
-{
-	// Init game resolution //
+{  
+    // Init game resolution //
     VDP_setScreenWidth320();
     VDP_setScreenHeight224();
 }
@@ -53,9 +53,10 @@ void InitVariablesGeneral()
     PauseJeu = 0;
 
     // Life number //
-    Nb_Vie = 2;
+    Nb_Vies_Options = 3;
+    Nb_Vies = Nb_Vies_Options;
 
-    // Number of continues //
+    // Number of credits //
     Nb_Credits = 3;
 
     Exit_Titre = 0;
@@ -70,14 +71,18 @@ void InitVariablesGeneral()
 
 void InitTitre()
 {
-    Exit_Titre=0;
+    Exit_Titre = 0;
+    Menu_Titre = 0;
+    Pos_Menu_Titre = 0;
     
-    VDP_init();
+
+    VDP_setHilightShadow(TRUE);
+
+    // set all palette to black
+    PAL_setColors(0, (u16*) palette_black, 64, CPU);
 
     // set all palettes to black
-    PAL_setPaletteColors(0, &palette_NOIR, DMA);
-
-    SYS_doVBlankProcess();
+    //PAL_setPaletteColors(0, &palette_NOIR, DMA);
 
     // scroll mode
     VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
@@ -92,7 +97,7 @@ void InitTitre()
     /********************************************/
 
     // safe starting VRAM adress (16)
-    u16 ind = TILE_USERINDEX;
+    u16 ind = TILE_USER_INDEX;
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_TITRE.res
@@ -100,7 +105,7 @@ void InitTitre()
 
     // BGB CREATION
     // getting dtilemap data from IMAGE structure declared in maps_TITRE.res
-    VDP_setTileMapEx(BG_B, image_TITRE_BGB.tilemap, TILE_ATTR_FULL(PAL0, FALSE, FALSE, FALSE, ind), 0, 0, 0, 0, 64, 32, CPU);
+    VDP_setTileMapEx(BG_B, image_TITRE_BGB.tilemap, TILE_ATTR_FULL(PAL0, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 64, 32, CPU);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += image_TITRE_BGB.tileset->numTile;
@@ -120,7 +125,7 @@ void InitTitre()
 
     // BGA CREATION
     // getting tilemap data from IMAGE structure declared in maps_TITRE.res
-    VDP_setTileMapEx(BG_A, image_TITRE_BGA.tilemap, TILE_ATTR_FULL(PAL1, FALSE, FALSE, FALSE, ind), 0, 0, 0, 0, 64, 32, CPU);
+    VDP_setTileMapEx(BG_A, image_TITRE_BGA.tilemap, TILE_ATTR_FULL(PAL1, TRUE, FALSE, FALSE, ind), 0, 0, 0, 0, 64, 32, CPU);
 
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += image_TITRE_BGA.tileset->numTile;
@@ -146,19 +151,32 @@ void InitTitre()
     // init Sprite Engine
     SPR_init();
 
-    // création des sprites du titre
-    //Sprite *sprite_Titre[6];
+    sprite_Bouton_Options=SPR_addSprite(&tiles_Sprite_BOUTON_OPTIONS, 0, -8, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+    sprite_Player_Options=SPR_addSprite(&tiles_Sprite_PLAYER_OPTIONS, 0, -8, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+    sprite_Credits_Options=SPR_addSprite(&tiles_Sprite_CREDITS_OPTIONS, 0, -8, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+    sprite_Start_Options=SPR_addSprite(&tiles_Sprite_START_OPTIONS, 0, -8, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+
+    sprite_Nb_Player_Options=SPR_addSprite(&tiles_Sprite_CHIFFRES_OPTIONS, 0, -8, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+    SPR_setFrame( sprite_Nb_Player_Options , Nb_Vies_Options );
+    sprite_Nb_Credits_Options=SPR_addSprite(&tiles_Sprite_CHIFFRES_OPTIONS, 0, -8, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+    SPR_setFrame( sprite_Nb_Credits_Options , Nb_Credits );
+
+    sprite_Menu_Titre=SPR_addSprite(&tiles_Sprite_MENU_TITRE, 0, -56, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+
+
 
     u16 i;
 
     for (i=0; i<6; i++)
     {
-        sprite_Titre[i]=SPR_addSprite(&tiles_Sprite_TITRE, 64+(i<<5), 16, TILE_ATTR(PAL2, FALSE, FALSE, FALSE));
+        sprite_Titre[i]=SPR_addSprite(&tiles_Sprite_TITRE, 64+(i<<5), 16, TILE_ATTR(PAL2, TRUE, FALSE, FALSE));
         SPR_setAnimAndFrame(sprite_Titre[i], 0, i);
     }
 
     // création du sprite PRESS START //
-    sprite_Press_Start=SPR_addSprite(&tiles_Sprite_PRESS_START, 116, 48, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
+    sprite_Press_Start=SPR_addSprite(&tiles_Sprite_PRESS_START, 116, 48, TILE_ATTR(PAL1, TRUE, FALSE, FALSE));
+
+
 
 
     SPR_update();
@@ -169,17 +187,16 @@ void InitTitre()
     //               PALETTES LOADING           //
     //////////////////////////////////////////////
 
-    //SYS_enableInts();
-
-    //SYS_doVBlankProcess();
-    PAL_setPaletteColors(0, &palette_NOIR, DMA);
-    PAL_setPalette(PAL0, palette_TITRE_BGB.data, DMA);
-    PAL_setPalette(PAL1, palette_TITRE_BGA.data, DMA);
-    PAL_setPalette(PAL2, palette_TITRE.data ,DMA);
 
     SYS_doVBlankProcess();
 
-    //StatutJoy=0;
+    PAL_setPalette(PAL0, palette_TITRE_BGB.data, DMA);
+    PAL_setPalette(PAL1, palette_TITRE_BGA.data, DMA);
+    PAL_setPalette(PAL2, palette_TITRE.data ,DMA);
+    PAL_setPalette(PAL3, palette_MENU.data ,DMA);
+
+
+    SYS_doVBlankProcess();
 
     // ECRAN TITRE chargé //
     Titre_OK=1;
@@ -196,25 +213,32 @@ void AnimTitre()
     /********************************************/
     while(Exit_Titre==0)
 	{
-        /********************************************/
-        /*                CLIGNOTEMENT              */
-        /********************************************/
-        if(CompteurPressStart==0)
+        if(Menu_Titre == 0)
         {
-            SPR_setPosition(sprite_Press_Start,116,48);
+            /********************************************/
+            /*                CLIGNOTEMENT              */
+            /********************************************/
+            if(CompteurPressStart==0)
+            {
+                SPR_setPosition(sprite_Press_Start,116,48);
+            }
+            else if(CompteurPressStart==6)
+            {
+                SPR_setPosition(sprite_Press_Start,0,-8);
+            }        
+
+            CompteurPressStart++;
+
+            if(CompteurPressStart>11)
+            {
+                CompteurPressStart=0;
+            }
         }
-        else if(CompteurPressStart==6)
+        else
         {
             SPR_setPosition(sprite_Press_Start,0,-8);
-        }        
-
-        CompteurPressStart++;
-
-        if(CompteurPressStart>11)
-        {
             CompteurPressStart=0;
         }
-
 
 
         /********************************************/
@@ -251,7 +275,7 @@ void AnimTitre()
     /********************************************/
 
     // Set all palettes to black //
-    VDP_setPaletteColors(0, (u16*) palette_black, 64);
+    PAL_setColors(0, (u16*) palette_black, 64 , DMA_QUEUE);
 
 
 
@@ -298,6 +322,8 @@ void AnimTitre()
 
 void InitSelection()
 {
+    VDP_setHilightShadow(FALSE);
+    
     Exit_Selection=0;
     selectJoueur=0;
 
@@ -310,7 +336,7 @@ void InitSelection()
     /********************************************/
 
     // safe starting VRAM adress (16)
-    u16 ind = TILE_USERINDEX;
+    u16 ind = TILE_USER_INDEX;
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_SELECTION.res
@@ -410,17 +436,19 @@ void InitSelection()
 
     SPR_init();
 
-    for (i=0; i<2; i++)
+    for (i=0; i<Nb_Vies_Options; i++)
     {
         sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_H, 16+(i<<4), 200, TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
     }
 
-    for (i=0; i<2; i++)
+    for (i=0; i<Nb_Vies_Options; i++)
     {
-        sprite_Vie[i]=SPR_addSprite(&tiles_Sprite_VIE_F, 272+(i<<4), 200, TILE_ATTR(PAL2, TRUE, FALSE, FALSE));
+        sprite_Vie[i+Nb_Vies_Options]=SPR_addSprite(&tiles_Sprite_VIE_F, 288-(i<<4), 200, TILE_ATTR(PAL2, TRUE, FALSE, FALSE));
     }
 
     SPR_update();
+
+    SYS_doVBlankProcess();
 
     //////////////////////////////////////////////
     //               CHARGEMENT PALETTES        //
@@ -490,7 +518,7 @@ void AnimSelection()
     /********************************************/
     
     // set all palette to black
-    VDP_setPaletteColors(0, (u16*) palette_black, 64);
+    PAL_setColors(0, (u16*) palette_black, 64, DMA_QUEUE);
 
 
     for (i=0; i<10; i++)
@@ -550,7 +578,7 @@ void InitVies()
 {
     u8 i;
     
-    for (i=0; i<Nb_Vie; i++)
+    for (i=0; i<Nb_Vies; i++)
     {
         if(selectJoueur==0)
         {
@@ -634,7 +662,7 @@ void InitNiveau1()
     /********************************************/
 
     // safe starting VRAM adress (16)
-    u16 ind = TILE_USERINDEX;
+    u16 ind = TILE_USER_INDEX;
 
     // BGB tileset loading in VRAM
     // getting tileset data from IMAGE structure declared in maps_NIVEAU1.res
@@ -1024,7 +1052,7 @@ void InitNiveau1()
     /////////////////////////////
     // Pointeur *tilemapCollision de type Map déclaré dans variables.h
     // MAP tilemap_COLLISION_NIVEAU1 déclarée dans maps_NIVEAU1.res
-    tilemapCollision=MAP_create(&tilemap_COLLISION_NIVEAU1, BG_A, TILE_ATTR_FULL(PAL0, FALSE, FALSE, FALSE, TILE_USERINDEX));
+    tilemapCollision=MAP_create(&tilemap_COLLISION_NIVEAU1, BG_A, TILE_ATTR_FULL(PAL0, FALSE, FALSE, FALSE, TILE_USER_INDEX));
 
 
     //////////////////////////////////////////////

@@ -27,9 +27,10 @@ u16 Compteur_Continue;                                      // init ---> InitVar
 
 u16 AdresseVram_BG_A;                                       // init ---> InitVariablesGeneral() //
 
-u8 Nb_Vie;                                                  // init ---> InitVariablesGeneral() //
-u8 Nb_Credits;                                             // init ---> InitVariablesGeneral() //
-
+u8 Nb_Vies;                                                 // init ---> InitVariablesGeneral() //
+u8 Nb_Vies_Options;                                         // init ---> InitVariablesGeneral() //
+u8 Nb_Credits;                                              // init ---> InitVariablesGeneral() //
+//u8 Nb_Credits_Options;                                      // init ---> InitVariablesGeneral() //
 
 char texteSortie[3];
 
@@ -39,15 +40,16 @@ char texteSortie[3];
 ///////////////////////////////////
 
 bool Exit_Titre;                                            // init ---> InitTitre() //
-
+bool Menu_Titre;                                            // init ---> InitTitre() //
+u8 Pos_Menu_Titre;
 
 ///////////////////////////////////
 //		Variables sélection      //
 ///////////////////////////////////
 
 u8 selectJoueur;                                            // init ---> InitSelection() //
-s16 scrollOffset_TILE_SELECTION[10];                        // init ---> InitSelection() //
 bool Exit_Selection;                                        // init ---> InitSelection() //
+s16 scrollOffset_TILE_SELECTION[10];                        // init ---> InitSelection() //
 
 
 ///////////////////////////////////
@@ -86,8 +88,19 @@ s16 CamPosY=0;                                              // init ---> InitNiv
 ///////////////////////////////////
 //		Variables Sprites        //
 ///////////////////////////////////
-Sprite *sprite_Vie[3];
+Sprite *sprite_Vie[10];
 Sprite *sprite_Titre[6];
+
+Sprite *sprite_Menu_Titre;
+
+Sprite *sprite_Bouton_Options;
+Sprite *sprite_Player_Options;
+Sprite *sprite_Credits_Options;
+Sprite *sprite_Start_Options;
+Sprite *sprite_Nb_Player_Options;
+Sprite *sprite_Nb_Credits_Options;
+
+
 Sprite *sprite_Pause;
 Sprite *sprite_Round;
 Sprite *sprite_NumRound;

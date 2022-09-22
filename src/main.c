@@ -11,10 +11,9 @@
 
 
 // Procédure principale //
-int main(u16 hardreset)
+int main(bool resetType)
 {
-
-    if (!hardreset) SYS_hardReset();
+    if (!resetType) SYS_hardReset();
 
 	// Init HW //
 	InitSystem();
@@ -22,15 +21,11 @@ int main(u16 hardreset)
     // Reset variables //
     InitVariablesGeneral();
 
-    // init VDP //
-    //VDP_init();
-
     // Init joypad //
     JOY_init();
 
     DEBUG_COLLISIONS_ENNEMIS=0;
-    // Waiting VBLANK //
-    //SYS_doVBlankProcess();
+
 
     //******************************************************************************************//
     //******************************************************************************************//
@@ -39,6 +34,7 @@ int main(u16 hardreset)
     //                                                                                          //
     //******************************************************************************************//
     //******************************************************************************************//
+    
     while(TRUE)
     {
         //**************************************************************************************//
@@ -146,7 +142,7 @@ int main(u16 hardreset)
                             }
 
                             //** DEBUG **//
-                            //VDP_drawInt( SWITCH_CONTINUE , 1 , 10 , 5 );
+                            //VDP_drawInt( Nb_Vies , 1 , 20 , 5 );
                         }
 
                         // In CONTINUE phase //

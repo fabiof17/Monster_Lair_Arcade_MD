@@ -63,18 +63,18 @@ extern bool DEBUG_COLLISIONS_ENNEMIS;
 //		Variables principales    //
 ///////////////////////////////////
 
-//extern u16 StatutJoy;
-
 extern u8 Scene;
 
 extern bool Titre_OK;
 extern bool Selection_OK;
 extern bool Niveau_OK;
 
-extern u8 Nb_Vie;
+extern u8 Nb_Vies;
+extern u8 Nb_Vies_Options;
 extern u8 Nb_Tirs;
 extern u8 Nb_Balles;
 extern u8 Nb_Credits;
+//extern u8 Nb_Credits_Options;
 extern bool SWITCH_CONTINUE;
 extern bool SWITCH_GAMEOVER;
 
@@ -83,10 +83,26 @@ extern u8 CompteurTir;
 extern bool PauseJeu;
 
 extern u8 Num_Niveau;
-extern u8 selectJoueur;
+
+
+///////////////////////////////////
+//		  Variables titre        //
+///////////////////////////////////
 
 extern bool Exit_Titre;
+extern bool Menu_Titre;
+extern u8 Pos_Menu_Titre;
+
+
+///////////////////////////////////
+//		Variables sélection      //
+///////////////////////////////////
+
+extern u8 selectJoueur;
 extern bool Exit_Selection;
+extern s16 scrollOffset_TILE_SELECTION[10];
+
+
 
 extern u8 CompteurEnergie;
 extern u8 Energie;
@@ -109,7 +125,6 @@ extern char texteSortie[3];
 ///////////////////////////////////
 
 extern u16 AdresseVram_BG_A;
-extern s16 scrollOffset_TILE_SELECTION[10];
 
 extern u8 vitesseScrolling;
 
@@ -123,8 +138,18 @@ extern s16 CamPosY;
 extern Sprite *sprite_Press_Start;
 extern Sprite *sprite_GameOver;
 
-extern Sprite *sprite_Vie[3];
+extern Sprite *sprite_Vie[10];
 extern Sprite *sprite_Titre[6];
+
+
+extern Sprite *sprite_Menu_Titre;
+extern Sprite *sprite_Bouton_Options;
+extern Sprite *sprite_Player_Options;
+extern Sprite *sprite_Credits_Options;
+extern Sprite *sprite_Start_Options;
+extern Sprite *sprite_Nb_Player_Options;
+extern Sprite *sprite_Nb_Credits_Options;
+
 extern Sprite *sprite_Pause;
 extern Sprite *sprite_Round;
 extern Sprite *sprite_NumRound;
