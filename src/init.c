@@ -597,11 +597,10 @@ void InitNiveau1()
 {
     u16 i;
 
-    Nb_Tirs=0;
-    Nb_Balles=0;
-    
+    ID_Arme=0;
+    Nb_Projectiles=0;
+    Nb_Balles=0;   
     CompteurTir=0;
-    Tir_OK=0;
 
     CompteurEnergie=1;
     Energie=ENERGIE_DEPART;
@@ -1042,6 +1041,15 @@ void InitNiveau1()
     {
         Plateforme[i].Init=0;
         Plateforme[i].ptrPosition=0;
+    }
+
+
+    /***************/
+    /*   BALLES    */
+    /***************/
+    for(i=0;i<MAX_BALLES;i++)
+    {
+        Balles[i].Init=0;
     }
 
 

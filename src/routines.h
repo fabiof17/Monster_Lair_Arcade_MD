@@ -9,7 +9,10 @@ extern void MvtEnnemis_Niveau1();
 extern void MvtPlateformes_Niveau1();
 extern void MvtJoueur();
 
-extern void AnimTirs();
+extern void TirJoueur();
+extern void CreaTirBase();
+
+extern void Mvt_TirJoueur();
 
 extern void TilesJoueur();
 extern void Tiles_Niveau1();

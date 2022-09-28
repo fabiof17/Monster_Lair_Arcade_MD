@@ -27,6 +27,8 @@
 #define MAX_ETAPES_PF_H1        50
 #define MAX_ETAPES_PF_H2        65
 
+#define MAX_BALLES              3
+#define MAX_ANNEAUX             5
 #define MAX_ENNEMIS             11
 #define MAX_PLATEFORMES         7
 
@@ -71,8 +73,10 @@ extern bool Niveau_OK;
 
 extern u8 Nb_Vies;
 extern u8 Nb_Vies_Options;
-extern u8 Nb_Tirs;
+
+extern u8 Nb_Projectiles;
 extern u8 Nb_Balles;
+
 extern u8 Nb_Credits;
 //extern u8 Nb_Credits_Options;
 extern bool SWITCH_CONTINUE;
@@ -116,7 +120,7 @@ extern u16 AdresseVram_BarreNoire;
 extern u16 AdresseVram_Continue;
 extern u16 AdresseVram_ChiffresContinue;
 
-extern bool Tir_OK;
+//xtern bool Tir_OK;
 
 extern char texteSortie[3];
 
@@ -218,6 +222,40 @@ extern fix32 movY;
 
 extern u16 PosYinvincible;
 
+
+//----------------------------------------------------//
+//                       ARMES                        //
+//----------------------------------------------------//
+
+extern u8 ID_Arme;
+
+//----------------------------------------------------//
+//                       BALLES                       //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteBalle;
+    u8 Init;                    // Sprite créé ou non
+    u8 Axe;                     // 0=DROITE - 1=GAUCHE
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+} SpriteBalle_;
+
+extern SpriteBalle_ Balles[MAX_BALLES];
+
+//----------------------------------------------------//
+//                       ANNEAU                       //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteAnneau;
+    u8 Init;                    // Sprite créé ou non
+    s16 PosX;                   // Position X
+    s16 PosY;                   // Position Y
+    u8 CompteurScintillement;
+} SpriteAnneau_;
+
+extern SpriteAnneau_ Anneaux[MAX_ANNEAUX];
 
 //----------------------------------------------------//
 //                      ENNEMIS                       //
@@ -338,20 +376,6 @@ typedef struct
     u8 CompteurFrameFruit;      // Compteur pour passer à la prochaine FRAME FRUIT
     u8 IndexFrameFruit;         // Index de FRAME FRUIT
 } SpriteFruit_;
-
-
-//----------------------------------------------------//
-//                        TIRS                        //
-//----------------------------------------------------//
-typedef struct
-{
-    Sprite* SpriteF;
-    bool Init;
-    u8 ID;
-    bool Axe;
-    s16 PosX;                   // Position X
-    s16 PosY;                   // Position Y
-} SpriteTir_;
 
 
 //----------------------------------------------------//

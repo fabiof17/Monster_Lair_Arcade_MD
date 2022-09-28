@@ -1600,9 +1600,32 @@ void MvtPlateformes_Niveau1()
 //-----------------------------------------------//
 //                      TIRS                     //
 //-----------------------------------------------//
-void CreaTirBase()
+void CreaTirBalle()
 {
-    //
+    if( Nb_Balles < MAX_BALLES )
+    {
+        u8 i;
+        
+        for( i=0 ; i<MAX_BALLES ; i++ )
+        {
+            SpriteBalle_ *ptrBalle=&Balles[i];
+            SpriteJoueur_ *ptrJoueur=&Joueur;
+            
+            if( ptrBalle->Init == 0 )
+            {
+                ptrBalle->Init = 1;
+                ptrBalle->Axe = ptrJoueur->Axe;
+                ptrBalle->PosX = ptrJoueur->PosX + 24;
+                ptrBalle->PosY = ptrJoueur->PosY - 12;
+
+                ptrBalle->SpriteBalle = SPR_addSprite( &tiles_Sprite_BALLE , ptrBalle->PosX, ptrBalle->PosY , TILE_ATTR ( PAL0 , FALSE , FALSE , FALSE ) );
+
+                Nb_Balles += 1;
+                Nb_Projectiles += 1;
+                break;
+            }   
+        }
+    }
 }
 
 void CreaTirShuriken()
@@ -1626,11 +1649,23 @@ void CreaTirLaser()
 }
 
 
-void (*TabCreaTir[5])()={CreaTirBase,CreaTirShuriken,CreaTirBoule,CreaTirBouleFeu,CreaTirLaser};
+
+void TirJoueur()
+{
+    switch (ID_Arme)
+    {
+        case 0:
+
+        CreaTirBalle();
+        return;
+    }
+}
+
+//void (*TabCreaTir[5])()={CreaTirBalle,CreaTirShuriken,CreaTirBoule,CreaTirBouleFeu,CreaTirLaser};
 
 
 
-
+/*
 void MvtTirBase()
 {
     //
@@ -1655,18 +1690,55 @@ void MvtTirLaser()
 {
     //
 }
-
-
+*/
 //void (*TabMvtTir[5])()={MvtTirBase,MvtTirShuriken,MvtTirBoule,MvtTirBouleFeu,MvtTirLaser};
 
 
-void AnimTirs()
+void Mvt_TirJoueur()
 {
-    if(Tir_OK==1)
+    // Si au moins 1 projectile existe //
+    if( Nb_Projectiles != 0 )
     {
-        //SpriteJoueur_ *ptrJoueur=&Joueur;
+        u8 i;
+        
+        // Si au moins 1 balle existe //
+        if( Nb_Balles != 0 )
+        {
+            for( i=0 ; i<MAX_BALLES ; i++)
+            {
+                // Pointeur sur le tableau de balles //
+                SpriteBalle_ *ptrBalle=&Balles[i];
 
-        //TabMvtTir[ptrJoueur->Arme];
+                // Si balle créée //
+                if( ptrBalle->Init == 1)
+                {
+                    // Vers la droite //
+                    if( ptrBalle->Axe == 0 )
+                    {
+                        ptrBalle->PosX += 6;                       
+                    }
+
+                    // Vers la gauche //
+                    else
+                    {
+                        ptrBalle->PosX -= 6;
+                    }
+
+                     SPR_setPosition(ptrBalle->SpriteBalle, ptrBalle->PosX, ptrBalle->PosY);
+                
+
+                    // Sortie écran //
+                    if( ptrBalle->PosX > 320 || ptrBalle->PosX < -8 )
+                    {
+                        ptrBalle->Init = 0;
+                        SPR_releaseSprite(ptrBalle->SpriteBalle);
+
+                        Nb_Projectiles -= 1;
+                        Nb_Balles -= 1;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -4198,13 +4270,15 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                         // SAUT + TIR
                         ptrJoueur->Phase=SAUT_TIR;
 
-                        Tir_OK=1;
+                        //Tir_OK=1;
 
                         // L'AURA SE DECLENCHE
                         if(ptrAura->Init==0)
                         {
                             ptrAura->Init=1;
                         }
+
+                        TirJoueur();
                     }
 
                     // SI JOUEUR ARRET OU MARCHE //
@@ -4213,13 +4287,15 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                         // MARCHE + TIR
                         ptrJoueur->Phase=TIR;
 
-                        Tir_OK=1;
+                        //Tir_OK=1;
 
                         // L'AURA SE DECLENCHE
                         if(ptrAura->Init==0)
                         {
                             ptrAura->Init=1;
                         }
+
+                        TirJoueur();
                     }
             
                     // SI JOUEUR ARRET OU MARCHE //
@@ -4228,13 +4304,15 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                         // MARCHE + TIR
                         ptrJoueur->Phase=CHUTE_TIR;
 
-                        Tir_OK=1;
+                        //Tir_OK=1;
 
                         // L'AURA SE DECLENCHE
                         if(ptrAura->Init==0)
                         {
                             ptrAura->Init=1;
                         }
+
+                        TirJoueur();
                     }
                 }
             }

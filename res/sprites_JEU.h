@@ -24,6 +24,7 @@ extern const SpriteDefinition tiles_Sprite_JOUEUR_F_HAUT;
 extern const SpriteDefinition tiles_Sprite_AURA_H;
 extern const SpriteDefinition tiles_Sprite_AURA_F;
 extern const SpriteDefinition tiles_Sprite_BALLE;
+extern const SpriteDefinition tiles_Sprite_ANNEAU;
 extern const SpriteDefinition tiles_Sprite_SHURIKEN;
 extern const SpriteDefinition tiles_Sprite_DRAGON;
 extern const SpriteDefinition tiles_Sprite_SPLASH;

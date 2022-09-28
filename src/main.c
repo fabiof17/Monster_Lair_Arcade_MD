@@ -133,7 +133,7 @@ int main(bool resetType)
                                 MvtPlateformes_Niveau1();
 
                                 MvtJoueur();
-                                //GestionTirs();
+                                Mvt_TirJoueur();
                                 
                                 TilesJoueur();
 
@@ -142,7 +142,8 @@ int main(bool resetType)
                             }
 
                             //** DEBUG **//
-                            //VDP_drawInt( Nb_Vies , 1 , 20 , 5 );
+                            VDP_drawInt( Nb_Balles , 1 , 20 , 5 );
+                            VDP_drawInt( Nb_Projectiles , 1 , 21 , 5 );
                         }
 
                         // In CONTINUE phase //

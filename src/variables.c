@@ -30,7 +30,6 @@ u16 AdresseVram_BG_A;                                       // init ---> InitVar
 u8 Nb_Vies;                                                 // init ---> InitVariablesGeneral() //
 u8 Nb_Vies_Options;                                         // init ---> InitVariablesGeneral() //
 u8 Nb_Credits;                                              // init ---> InitVariablesGeneral() //
-//u8 Nb_Credits_Options;                                      // init ---> InitVariablesGeneral() //
 
 char texteSortie[3];
 
@@ -56,11 +55,11 @@ s16 scrollOffset_TILE_SELECTION[10];                        // init ---> InitSel
 //		 Variables niveaux       //
 ///////////////////////////////////
 
-u8 Nb_Tirs;                                                 // init ---> InitNiveau1() //
+u8 Nb_Projectiles;                                          // init ---> InitNiveau1() //
 u8 Nb_Balles;                                               // init ---> InitNiveau1() //
 
 u8 CompteurTir=0;                                           // init ---> InitNiveau1() //
-bool Tir_OK=0;                                              // init ---> InitNiveau1() //
+//bool Tir_OK=0;                                            // init ---> InitNiveau1() //
 
 u8 CompteurEnergie;                                         // init ---> InitNiveau1() //
 u8 Energie;                                                 // init ---> InitNiveau1() //
@@ -136,6 +135,28 @@ u16 PosYinvincible;                                         // init ---> InitNiv
 
 
 //----------------------------------------------------//
+//----------------------------------------------------//
+//                       ARMES                        //
+//----------------------------------------------------//
+//----------------------------------------------------//
+
+u8 ID_Arme;
+
+//----------------------------------------------------//
+//                       BALLES                       //
+//----------------------------------------------------//
+SpriteBalle_ Balles[MAX_BALLES];
+
+//----------------------------------------------------//
+//                       ANNEAU                       //
+//----------------------------------------------------//
+SpriteAnneau_ Anneaux[MAX_ANNEAUX];
+
+
+
+
+
+//----------------------------------------------------//
 //                       DRAGON                       //
 //----------------------------------------------------//
 SpriteDragon_ Dragon;
@@ -144,7 +165,6 @@ SpriteDragon_ Dragon;
 //----------------------------------------------------//
 //                       SPLASH                       //
 //----------------------------------------------------//
-
 SpriteSplash_ Splash;
 
 
@@ -170,6 +190,9 @@ bool contactPlt_OK;                                         // init ---> InitNiv
 //----------------------------------------------------//
 
 SpriteAura_ Aura;
+
+
+
 
 
 //----------------------------------------------------//

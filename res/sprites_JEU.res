@@ -67,6 +67,7 @@ SPRITE tiles_Sprite_AURA_F "sprites/global/tiles_AURA_F.png" 3 3 NONE 0
 //                         ARMES                      //
 //----------------------------------------------------//
 SPRITE tiles_Sprite_BALLE "sprites/global/tiles_BALLE.png" 1 1 NONE 0
+SPRITE tiles_Sprite_ANNEAU "sprites/global/tiles_ANNEAU.png" 3 3 NONE 0
 SPRITE tiles_Sprite_SHURIKEN "sprites/global/tiles_SHURIKEN.png" 3 3 NONE 0
 
 //----------------------------------------------------//
