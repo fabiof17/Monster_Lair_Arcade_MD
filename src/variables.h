@@ -18,14 +18,16 @@
 #define MAX_POS_D       FIX32(228L) // LIMITE DROITE ECRAN
 #define MAX_POS_G       FIX32(11L)  // LIMITE GAUCHE ECRAN
 
-#define MAX_ETAPES_SAUT         40
-#define MAX_ETAPES_TOUCHE       37
-#define MAX_ETAPES_POULPE1      50
-#define MAX_ETAPES_POULPE2      55
-#define MAX_ETAPES_PF_V1        69
-#define MAX_ETAPES_PF_V2        28
-#define MAX_ETAPES_PF_H1        50
-#define MAX_ETAPES_PF_H2        65
+#define MAX_ETAPES_SAUT                 40
+#define MAX_ETAPES_TOUCHE               37
+#define MAX_ETAPES_POULPE1              50
+#define MAX_ETAPES_POULPE2              55
+#define MAX_ETAPES_PF_V1                69
+#define MAX_ETAPES_PF_V2                28
+#define MAX_ETAPES_PF_H1                50
+#define MAX_ETAPES_PF_H2                65
+#define MAX_ETAPES_CHUTE_ENNEMI         25
+
 
 #define MAX_BALLES              3
 #define MAX_ANNEAUX             5
@@ -234,9 +236,12 @@ extern u8 ID_Arme;
 //----------------------------------------------------//
 typedef struct
 {
-    Sprite* SpriteBalle;
+    Sprite* SpriteB;
+
     u8 Init;                    // Sprite créé ou non
     u8 Axe;                     // 0=DROITE - 1=GAUCHE
+    u8 Largeur;                 //
+    u8 Hauteur;                 //
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
 } SpriteBalle_;
@@ -248,7 +253,8 @@ extern SpriteBalle_ Balles[MAX_BALLES];
 //----------------------------------------------------//
 typedef struct
 {
-    Sprite* SpriteAnneau;
+    Sprite* SpriteA;
+
     u8 Init;                    // Sprite créé ou non
     s16 PosX;                   // Position X
     s16 PosY;                   // Position Y
@@ -263,9 +269,12 @@ extern SpriteAnneau_ Anneaux[MAX_ANNEAUX];
 typedef struct
 {
     Sprite* SpriteE;
-    u8 Etat;                    // 0 = VIVANT / 1 = MORT
-    bool Axe;                   // 0 = BAS / 1 = HAUT
+
     u8 Init;                    // Sprite créé ou non
+    u8 Etat;                    // 1 = VIVANT / 0 = MORT
+    bool Axe;                   // 0 = BAS / 1 = HAUT
+    u8 Largeur;                 //
+    u8 Hauteur;                 //
     u8 ID;                      // Type d'ennemi
     u8 Bonus;                   // Arme ?
     u16 Points;                 // Points obtenus lorsque ennemi tué
@@ -284,9 +293,9 @@ typedef struct
 
 extern SpriteEnnemi_ Ennemi[MAX_ENNEMIS];
 extern const SpriteDefinition *AdrTilesEnnemi[7];
+//extern const u8 LargeurEnnemis[7];
 extern u8 indexCreaEnnemis;
 extern u8 nb_Ennemis;
-
 
 
 //----------------------------------------------------//
@@ -295,6 +304,7 @@ extern u8 nb_Ennemis;
 typedef struct
 {
     Sprite* SpriteP;
+
     u8 Init;                    // Sprite créé ou non
     u8 ID;                      // Type de plateforme
     u8 Mouvante;                // Plateforme qui se déclenche ou non

@@ -3,9 +3,9 @@
 
 extern void Phases_Joueur();
 extern void Scrolling_Niveau1();
-extern void CreaSprites_Niveau1();
+extern void Crea_Sprites_Niveau1();
 
-extern void MvtEnnemis_Niveau1();
+extern void Mvt_Ennemis_Niveau1();
 extern void MvtPlateformes_Niveau1();
 extern void MvtJoueur();
 

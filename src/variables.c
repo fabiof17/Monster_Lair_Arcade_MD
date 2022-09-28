@@ -173,7 +173,7 @@ SpriteSplash_ Splash;
 //----------------------------------------------------//
 SpriteEnnemi_ Ennemi[MAX_ENNEMIS];
 const SpriteDefinition *AdrTilesEnnemi[7];
-
+//const u8 LargeurEnnemis[7];
 
 //----------------------------------------------------//
 //                    PLATEFORMES                     //

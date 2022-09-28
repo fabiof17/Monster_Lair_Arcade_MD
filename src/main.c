@@ -127,8 +127,8 @@ int main(bool resetType)
 
                                 Scrolling_Niveau1();
 
-                                CreaSprites_Niveau1();
-                                MvtEnnemis_Niveau1();
+                                Crea_Sprites_Niveau1();
+                                Mvt_Ennemis_Niveau1();
                                 
                                 MvtPlateformes_Niveau1();
 
