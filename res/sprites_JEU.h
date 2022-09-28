@@ -28,6 +28,7 @@ extern const SpriteDefinition tiles_Sprite_ANNEAU;
 extern const SpriteDefinition tiles_Sprite_SHURIKEN;
 extern const SpriteDefinition tiles_Sprite_DRAGON;
 extern const SpriteDefinition tiles_Sprite_SPLASH;
+extern const SpriteDefinition tiles_Sprite_IMPACT;
 extern const SpriteDefinition tiles_Sprite_KIWI;
 extern const SpriteDefinition tiles_Sprite_CAROTTE;
 extern const SpriteDefinition tiles_repere_BG;

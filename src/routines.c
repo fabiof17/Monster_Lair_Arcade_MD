@@ -769,19 +769,25 @@ inline static void Collision_Tir_Joueur_Ennemis(SpriteBalle_ *ptrProjectile , u8
                             {
                                 if( ptrProjectile->PosY < ptrEnnemi->PosY+ptrEnnemi->Hauteur)
                                 {
-                                    // Ennemi MORT //
-                                    ptrEnnemi->Etat = 0;
+                                    // On enlève 1 point de vie //
+                                    ptrEnnemi->PointsVie -= 1;
 
-                                    // Tile ENNEMI mort //
-                                    SPR_setAnimAndFrame( ptrEnnemi->SpriteE , 1 , 0 );
+                                    if( ptrEnnemi->PointsVie == 0 )
+                                    {
+                                        // Ennemi MORT //
+                                        ptrEnnemi->Etat = 0;
 
-                                    ptrEnnemi->ptrPosition=&anim_CHUTE_ENNEMIS[0];
+                                        // Tile ENNEMI mort //
+                                        SPR_setAnimAndFrame( ptrEnnemi->SpriteE , 1 , 0 );
 
-                                    ptrProjectile->Init = 0;
-                                    SPR_releaseSprite(ptrProjectile->SpriteB);
+                                        ptrEnnemi->ptrPosition=&anim_CHUTE_ENNEMIS[0];
 
-                                    Nb_Projectiles -= 1;
-                                    Nb_Balles -= 1;
+                                        ptrProjectile->Init = 0;
+                                        SPR_releaseSprite(ptrProjectile->SpriteB);
+
+                                        Nb_Projectiles -= 1;
+                                        Nb_Balles -= 1;
+                                    }
                                 }
                             }
                         }
@@ -850,6 +856,11 @@ void Crea_Sprites_Niveau1()
                     //------------------------------//
                     ptrEnnemi->Bonus=tilemapCreaEnnemis_Niveau1[5][indexCreaEnnemis];
 
+                    //------------------------------//
+                    //         POINTS DE VIE        //
+                    //------------------------------//
+                    ptrEnnemi->PointsVie=1;
+
                     //--------------------------------//
                     //             LARGEUR            //
                     //--------------------------------//
@@ -858,6 +869,7 @@ void Crea_Sprites_Niveau1()
                     {
                         ptrEnnemi->Largeur = 40;
                         ptrEnnemi->Hauteur = 40;
+                        ptrEnnemi->PointsVie=4;
                     }
                     // LES AUTRES ENNEMIS
                     else
@@ -1793,6 +1805,7 @@ void CreaTirBalle()
                 ptrBalle->PosY = ptrJoueur->PosY - 12;
 
                 ptrBalle->SpriteB = SPR_addSprite( &tiles_Sprite_BALLE , ptrBalle->PosX, ptrBalle->PosY , TILE_ATTR ( PAL0 , FALSE , FALSE , FALSE ) );
+                SPR_setDepth(ptrBalle->SpriteB,14);
 
                 Nb_Balles += 1;
                 Nb_Projectiles += 1;

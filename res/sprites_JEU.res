@@ -81,6 +81,11 @@ SPRITE tiles_Sprite_DRAGON "sprites/global/tiles_DRAGON.png" 4 4 NONE 0
 SPRITE tiles_Sprite_SPLASH "sprites/global/tiles_SPLASH.png" 4 4 NONE 0
 
 //----------------------------------------------------//
+//                         IMPACT                      //
+//----------------------------------------------------//
+SPRITE tiles_Sprite_IMPACT "sprites/global/tiles_IMPACT_ENNEMI.png" 3 3 NONE 0
+
+//----------------------------------------------------//
 //                         FRUITS                      //
 //----------------------------------------------------//
 SPRITE tiles_Sprite_KIWI "sprites/global/tiles_KIWI.png" 3 2 NONE 0
