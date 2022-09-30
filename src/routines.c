@@ -752,7 +752,7 @@ inline static void Crea_Impact( SpriteEnnemi_ *ptrEnnemi )
             ptrImpact->Init = 1;
 
             ptrImpact->SpriteI = SPR_addSprite(&tiles_Sprite_IMPACT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR (PAL0, FALSE, FALSE, FALSE) );
-            SPR_setDepth(ptrImpact->SpriteI,14);
+            SPR_setDepth(ptrImpact->SpriteI,15);
             ptrImpact->CompteurFrame = 0;
             ptrImpact->IndexFrame = 0;
             SPR_setFrame(ptrImpact->SpriteI,(s16)ptrImpact->IndexFrame);

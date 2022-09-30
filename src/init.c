@@ -631,6 +631,9 @@ void InitNiveau1()
 
     PosYinvincible=0;
 
+    Nb_Impacts=0;
+    Nb_ExploEnnemis=0;
+
 
 
     // Position X initiale du sprite : 64 pixels
