@@ -10,6 +10,7 @@
 #include "sprites_JEU.h"
 #include "palettes.h"
 #include "routines.h"
+#include "sons.h"
 
 ///////////////////////////////
 //        INIT SYSTEME       //
@@ -1100,6 +1101,11 @@ void InitNiveau1()
 
     // scroll mode
     VDP_setScrollingMode(HSCROLL_TILE, VSCROLL_PLANE);
+
+    //////////////////////////////////////////////
+    //                    SONS                  //
+    //////////////////////////////////////////////
+    XGM_setPCM(AUDIO_SAUT, son_SAUT, sizeof(son_SAUT));
 
 
     // Vblank

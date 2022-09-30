@@ -57,6 +57,9 @@
 #define DELAI_MAJ_ENERGIE       239
 #define TAILLE_BARRE            14
 
+// Definition Sons & Musiques
+#define AUDIO_SAUT              64
+
 
 ///////////////////////////////////
 //		       DEBUG            //
@@ -306,6 +309,7 @@ typedef struct
     bool Axe;                   // 0 = BAS / 1 = HAUT
     u8 Largeur;                 //
     u8 Hauteur;                 //
+    u8 Marge;                   // Pour collisions avec les tirs du joueur
     u8 ID;                      // Type d'ennemi
     u8 Bonus;                   // Arme ?
     u16 Points;                 // Points obtenus lorsque ennemi tué

@@ -11,6 +11,7 @@
 #include "animation_sprites.h"
 #include "sprites_JEU.h"
 #include "musique.h"
+#include "sons.h"
 
 
 void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
@@ -808,9 +809,9 @@ inline static void Collision_Tir_Joueur_Ennemis( SpriteBalle_ *ptrProjectile , u
                 // ON VERIFIE LES COLLISIONS QUAND LE SPRITE EST RENTRE DE 16 PIXELS DANS L'ECRAN // 
                 if( ptrEnnemi->PosX < 304 )
                 {
-                    if( ptrProjectile->PosX+ptrProjectile->Largeur > ptrEnnemi->PosX)
+                    if( ptrProjectile->PosX+ptrProjectile->Largeur > ptrEnnemi->PosX+ptrEnnemi->Marge)
                     {
-                        if( ptrProjectile->PosX < ptrEnnemi->PosX+ptrEnnemi->Largeur )
+                        if( ptrProjectile->PosX < ptrEnnemi->PosX+ptrEnnemi->Largeur-ptrEnnemi->Marge )
                         {
                             if( ptrProjectile->PosY+ptrProjectile->Hauteur > ptrEnnemi->PosY )
                             {
@@ -826,7 +827,9 @@ inline static void Collision_Tir_Joueur_Ennemis( SpriteBalle_ *ptrProjectile , u
                                     Nb_Projectiles -= 1;
                                     Nb_Balles -= 1;
 
-                                    //VDP_drawInt( ptrEnnemi->PointsVie , 1 , 20 , 5 );
+                                    // Création de  l'impact //
+                                    Nb_Impacts += 1;
+                                    Crea_Impact( ptrEnnemi );
 
                                     if( ptrEnnemi->PointsVie == 0 )
                                     {
@@ -839,12 +842,7 @@ inline static void Collision_Tir_Joueur_Ennemis( SpriteBalle_ *ptrProjectile , u
                                         // On commence l'anim de chute //
                                         ptrEnnemi->ptrPosition=&anim_CHUTE_ENNEMIS[0];
 
-
-                                        // Création des impacts //
-                                        Nb_Impacts += 1;
-                                        Crea_Impact( ptrEnnemi );
-
-                                        //  Création des explosions //
+                                        //  Création de l'explosion //
                                         if( ptrEnnemi->ID == 4 || ptrEnnemi->ID == 5 || ptrEnnemi->ID == 6 || ptrEnnemi->ID == 7 )
                                         {
                                             Nb_ExploEnnemis += 1;
@@ -924,16 +922,25 @@ void Crea_Sprites_Niveau1()
                     //         POINTS DE VIE        //
                     //------------------------------//
                     
-
                     //--------------------------------//
                     //             LARGEUR            //
                     //--------------------------------//
+
+                    //--------------------------------//
+                    //             HAUTEUR            //
+                    //--------------------------------//                    
+
+                    //--------------------------------//
+                    //              MARGE             //
+                    //--------------------------------//
+
                     // MORSE
                     if(ptrEnnemi->ID==4)
                     {
                         ptrEnnemi->Largeur = 40;
                         ptrEnnemi->Hauteur = 40;
-                        ptrEnnemi->PointsVie=4;
+                        ptrEnnemi->PointsVie=8;
+                        ptrEnnemi->Marge = 8;
                     }
                     // LES AUTRES ENNEMIS
                     else
@@ -941,6 +948,7 @@ void Crea_Sprites_Niveau1()
                         ptrEnnemi->Largeur = 24;
                         ptrEnnemi->Hauteur = 24;
                         ptrEnnemi->PointsVie=1;
+                        ptrEnnemi->Marge = 4;
                     }
 
 
@@ -964,7 +972,6 @@ void Crea_Sprites_Niveau1()
                     indexCreaEnnemis++;
                     nb_Ennemis+=1;
 
-                    //VDP_drawInt( ptrEnnemi->PointsVie , 1 , 20 , 5 );
                     break;
                 }
             }
@@ -4684,6 +4691,7 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                     if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
                     {
                         ptrJoueur->Phase=SAUT;
+                        XGM_startPlayPCM(AUDIO_SAUT, 15, SOUND_PCM_CH4);
                     }
 
                     //**//

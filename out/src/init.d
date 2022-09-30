@@ -13,4 +13,4 @@ out/src/init.o: src/init.c C:/sgdk/inc/genesis.h C:/sgdk/inc/types.h \
  C:/sgdk/inc/task.h C:/sgdk/inc/task_cst.h src/main.h src/init.h \
  src/variables.h res/maps_TITRE.h res/maps_SELECTION.h \
  res/maps_GLOBALES.h res/maps_NIVEAU1.h res/sprites_JEU.h res/palettes.h \
- src/routines.h
+ src/routines.h res/sons.h
