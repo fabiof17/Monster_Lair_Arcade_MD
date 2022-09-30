@@ -30,6 +30,8 @@ u16 AdresseVram_BG_A;                                       // init ---> InitVar
 u8 Nb_Vies;                                                 // init ---> InitVariablesGeneral() //
 u8 Nb_Vies_Options;                                         // init ---> InitVariablesGeneral() //
 u8 Nb_Credits;                                              // init ---> InitVariablesGeneral() //
+u8 Nb_Impacts;                                              // init ---> InitVariablesGeneral() //
+u8 Nb_ExploEnnemis;                                         // init ---> InitVariablesGeneral() //
 
 char texteSortie[3];
 
@@ -141,6 +143,16 @@ u16 PosYinvincible;                                         // init ---> InitNiv
 //----------------------------------------------------//
 
 u8 ID_Arme;
+
+//----------------------------------------------------//
+//                       IMPACT                       //
+//----------------------------------------------------//
+SpriteImpact_ Impacts[MAX_IMPACTS];
+
+//----------------------------------------------------//
+//                   EXPLOSION ENNEMI                 //
+//----------------------------------------------------//
+SpriteExploEnnemi_ ExploEnnemis[MAX_IMPACTS];
 
 //----------------------------------------------------//
 //                       BALLES                       //

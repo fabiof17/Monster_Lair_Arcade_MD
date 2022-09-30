@@ -86,6 +86,11 @@ SPRITE tiles_Sprite_SPLASH "sprites/global/tiles_SPLASH.png" 4 4 NONE 0
 SPRITE tiles_Sprite_IMPACT "sprites/global/tiles_IMPACT_ENNEMI.png" 3 3 NONE 0
 
 //----------------------------------------------------//
+//                      EXPLOSIONS                    //
+//----------------------------------------------------//
+SPRITE tiles_Sprite_EXPLOSION_ENNEMI "sprites/global/tiles_EXPLOSION_ENNEMI.png" 4 4 NONE 0
+
+//----------------------------------------------------//
 //                         FRUITS                      //
 //----------------------------------------------------//
 SPRITE tiles_Sprite_KIWI "sprites/global/tiles_KIWI.png" 3 2 NONE 0
@@ -106,7 +111,8 @@ SPRITE tiles_repere_HD "sprites/global/repere_HD.png" 1 1 BEST 0
 SPRITE tiles_Sprite_ESCARGOT_H "sprites/niveau1/tiles_ESCARGOT_H.png" 3 3 NONE 0
 SPRITE tiles_Sprite_BULOT "sprites/niveau1/tiles_BULOT.png" 3 3 NONE 0
 SPRITE tiles_Sprite_ESCARGOT_V "sprites/niveau1/tiles_ESCARGOT_V.png" 3 3 NONE 0
-SPRITE tiles_Sprite_MORSE "sprites/niveau1/tiles_MORSE.png" 6 5 NONE 0
+//SPRITE tiles_Sprite_MORSE "sprites/niveau1/tiles_MORSE.png" 6 5 NONE 0
+SPRITE tiles_Sprite_MORSE "sprites/niveau1/tiles_MORSE.png" 5 5 NONE 0
 SPRITE tiles_Sprite_POULPE "sprites/niveau1/tiles_POULPE.png" 3 4 NONE 0
 SPRITE tiles_Sprite_PELICAN "sprites/niveau1/tiles_PELICAN.png" 3 3 NONE 0
 

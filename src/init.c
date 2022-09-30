@@ -62,6 +62,10 @@ void InitVariablesGeneral()
     Exit_Titre = 0;
 
     Exit_Selection = 0;
+
+    Nb_Impacts=0;
+
+    Nb_ExploEnnemis=0;
 }
 
 
@@ -600,6 +604,7 @@ void InitNiveau1()
     ID_Arme=0;
     Nb_Projectiles=0;
     Nb_Balles=0;   
+    Nb_Impacts=0;
     CompteurTir=0;
 
     CompteurEnergie=1;
@@ -1052,6 +1057,14 @@ void InitNiveau1()
         Balles[i].Init=0;
     }
 
+    /******************************/
+    /*    IMPACTS / EXPLOSIONS    */
+    /******************************/
+    for(i=0 ; i<MAX_IMPACTS ; i++)
+    {
+        Impacts[i].Init=0;
+        ExploEnnemis[i].Init=0;
+    }
 
     SPR_update();
 

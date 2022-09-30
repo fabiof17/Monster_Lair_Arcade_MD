@@ -739,14 +739,61 @@ inline static void Collision_Joueur_Plateformes()
 
 
 
-
-inline static void Collision_Tir_Joueur_Ennemis(SpriteBalle_ *ptrProjectile , u8 largeur)
+inline static void Crea_Impact( SpriteEnnemi_ *ptrEnnemi )
 {
     u8 i;
 
-    for(i=0 ; i<MAX_ENNEMIS ; i++)
+    for( i=0 ; i<MAX_IMPACTS ; i++)
     {
-        SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
+        SpriteImpact_ *ptrImpact=&Impacts[i];
+        
+        if( ptrImpact->Init == 0 )
+        {
+            ptrImpact->Init = 1;
+
+            ptrImpact->SpriteI = SPR_addSprite(&tiles_Sprite_IMPACT, ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR (PAL0, FALSE, FALSE, FALSE) );
+            SPR_setDepth(ptrImpact->SpriteI,14);
+            ptrImpact->CompteurFrame = 0;
+            ptrImpact->IndexFrame = 0;
+            SPR_setFrame(ptrImpact->SpriteI,(s16)ptrImpact->IndexFrame);
+
+            break;
+        }
+    }
+}
+
+inline static void Crea_Explo_Ennemi( SpriteEnnemi_ *ptrEnnemi )
+{
+    u8 i;
+
+    for( i=0 ; i<MAX_IMPACTS ; i++)
+    {
+        SpriteExploEnnemi_ *ptrExploEnnemi=&ExploEnnemis[i];
+        
+        if( ptrExploEnnemi->Init == 0 )
+        {
+            ptrExploEnnemi->Init = 1;
+
+            ptrExploEnnemi->SpriteEE = SPR_addSprite(&tiles_Sprite_EXPLOSION_ENNEMI, ptrEnnemi->PosX - ( (32-ptrEnnemi->Largeur) >>1 ), ptrEnnemi->PosY, TILE_ATTR (PAL0, FALSE, FALSE, FALSE) );
+            SPR_setDepth(ptrExploEnnemi->SpriteEE,16);
+            ptrExploEnnemi->CompteurFrame = 0;
+            ptrExploEnnemi->IndexFrame = 0;
+            SPR_setFrame(ptrExploEnnemi->SpriteEE,(s16)ptrExploEnnemi->IndexFrame);
+
+            break;
+        }
+    }
+}
+
+
+
+inline static void Collision_Tir_Joueur_Ennemis( SpriteBalle_ *ptrProjectile , u8 largeur )
+{
+    u8 e;
+
+    for(e=0 ; e<MAX_ENNEMIS ; e++)
+    {
+        SpriteEnnemi_ *ptrEnnemi=&Ennemi[e];
 
         //--------------------------//
         //      SI SPRITE CREE      //
@@ -765,12 +812,21 @@ inline static void Collision_Tir_Joueur_Ennemis(SpriteBalle_ *ptrProjectile , u8
                     {
                         if( ptrProjectile->PosX < ptrEnnemi->PosX+ptrEnnemi->Largeur )
                         {
-                            if( ptrProjectile->PosY+ptrProjectile->Hauteur > ptrEnnemi->PosY)
+                            if( ptrProjectile->PosY+ptrProjectile->Hauteur > ptrEnnemi->PosY )
                             {
-                                if( ptrProjectile->PosY < ptrEnnemi->PosY+ptrEnnemi->Hauteur)
+                                if( ptrProjectile->PosY < ptrEnnemi->PosY+ptrEnnemi->Hauteur )
                                 {
                                     // On enlève 1 point de vie //
                                     ptrEnnemi->PointsVie -= 1;
+
+                                    // On supprime le projectile //
+                                    ptrProjectile->Init = 0;
+                                    SPR_releaseSprite( ptrProjectile->SpriteB );
+
+                                    Nb_Projectiles -= 1;
+                                    Nb_Balles -= 1;
+
+                                    //VDP_drawInt( ptrEnnemi->PointsVie , 1 , 20 , 5 );
 
                                     if( ptrEnnemi->PointsVie == 0 )
                                     {
@@ -780,14 +836,22 @@ inline static void Collision_Tir_Joueur_Ennemis(SpriteBalle_ *ptrProjectile , u8
                                         // Tile ENNEMI mort //
                                         SPR_setAnimAndFrame( ptrEnnemi->SpriteE , 1 , 0 );
 
+                                        // On commence l'anim de chute //
                                         ptrEnnemi->ptrPosition=&anim_CHUTE_ENNEMIS[0];
 
-                                        ptrProjectile->Init = 0;
-                                        SPR_releaseSprite(ptrProjectile->SpriteB);
 
-                                        Nb_Projectiles -= 1;
-                                        Nb_Balles -= 1;
+                                        // Création des impacts //
+                                        Nb_Impacts += 1;
+                                        Crea_Impact( ptrEnnemi );
+
+                                        //  Création des explosions //
+                                        if( ptrEnnemi->ID == 4 || ptrEnnemi->ID == 5 || ptrEnnemi->ID == 6 || ptrEnnemi->ID == 7 )
+                                        {
+                                            Nb_ExploEnnemis += 1;
+                                            Crea_Explo_Ennemi( ptrEnnemi );
+                                        }                                          
                                     }
+                                    break;
                                 }
                             }
                         }
@@ -828,7 +892,7 @@ void Crea_Sprites_Niveau1()
                 {
                     ptrEnnemi->Init=1;          // ENNEMI CREE
                     ptrEnnemi->Etat=1;          // ENNEMI VIVANT
-                    ptrEnnemi->PointsVie=1;
+                    //ptrEnnemi->PointsVie=1;
 
                     ptrEnnemi->CompteurPosition=0;
                     ptrEnnemi->CompteurFrame=i;
@@ -859,13 +923,13 @@ void Crea_Sprites_Niveau1()
                     //------------------------------//
                     //         POINTS DE VIE        //
                     //------------------------------//
-                    ptrEnnemi->PointsVie=1;
+                    
 
                     //--------------------------------//
                     //             LARGEUR            //
                     //--------------------------------//
                     // MORSE
-                    if(ptrEnnemi->ID==6)
+                    if(ptrEnnemi->ID==4)
                     {
                         ptrEnnemi->Largeur = 40;
                         ptrEnnemi->Hauteur = 40;
@@ -873,9 +937,10 @@ void Crea_Sprites_Niveau1()
                     }
                     // LES AUTRES ENNEMIS
                     else
-                    {
+                    {                        
                         ptrEnnemi->Largeur = 24;
                         ptrEnnemi->Hauteur = 24;
+                        ptrEnnemi->PointsVie=1;
                     }
 
 
@@ -886,16 +951,20 @@ void Crea_Sprites_Niveau1()
                     // POULPE 1
                     if(ptrEnnemi->ID==5)
                     {
+                        //ptrEnnemi->Hauteur = 32;
                         ptrEnnemi->ptrPosition=&anim_POULPE1[0];
                     }
                     // POULPE 2
                     else if(ptrEnnemi->ID==6)
                     {
+                        //ptrEnnemi->Hauteur = 32;
                         ptrEnnemi->ptrPosition=&anim_POULPE2[0];
                     }
 
                     indexCreaEnnemis++;
                     nb_Ennemis+=1;
+
+                    //VDP_drawInt( ptrEnnemi->PointsVie , 1 , 20 , 5 );
                     break;
                 }
             }
@@ -1051,7 +1120,7 @@ void Mvt_Ennemis_Niveau1()
 
                         // Si l'ennemi sort de l'écran
                         // 3 tiles (24 px) de large
-                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        if(ptrEnnemi->PosX < -ptrEnnemi->Largeur || ptrEnnemi->PosY > 224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
@@ -1132,7 +1201,7 @@ void Mvt_Ennemis_Niveau1()
 
                         // Si l'ennemi sort de l'écran
                         // 3 tiles (24 px) de large
-                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        if(ptrEnnemi->PosX < -ptrEnnemi->Largeur || ptrEnnemi->PosY > 224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
@@ -1239,7 +1308,7 @@ void Mvt_Ennemis_Niveau1()
 
                         // Si l'ennemi sort de l'écran
                         // 3 tiles (24 px) de large
-                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224 )
+                        if(ptrEnnemi->PosX < -ptrEnnemi->Largeur || ptrEnnemi->PosY > 224 )
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
@@ -1247,37 +1316,67 @@ void Mvt_Ennemis_Niveau1()
                         }
                         break;
 
-                    ///////////
-                    // MORSE //
-                    ///////////
+                    //////////////////////////////////////
+                    //                                  //
+                    //              MORSE               //
+                    //                                  //
+                    //////////////////////////////////////
                     case 4:
 
-                        // Position X
+                        //----------------------//
+                        //      POSITION X      //
+                        //----------------------//
                         ptrEnnemi->PosX -= vitesseScrolling;
 
-                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-                        /*
-                        // Anim des tiles
-                        ptrEnnemi->CompteurFrame+=1;
-
-                        // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame==8)
+                        //----------------------------//
+                        //      SI ENNEMI VIVANT      //
+                        //----------------------------//
+                        if(ptrEnnemi->Etat == 1)
                         {
-                            ptrEnnemi->CompteurFrame=0;
-                            ptrEnnemi->IndexFrame+=1;
+                            /*
+                            //--------------------------//
+                            //      ANIM DES TILES      //
+                            //--------------------------//
+                            ptrEnnemi->CompteurFrame+=1;
 
-                            // Cycle de FRAME de 0 à 12 (13 étapes)
-                            if(ptrEnnemi->IndexFrame==13)
+                            // MAJ des tiles toutes les 8 images (0 à 7)
+                            if(ptrEnnemi->CompteurFrame==8)
                             {
-                                ptrEnnemi->IndexFrame=0;
-                            }
+                                ptrEnnemi->CompteurFrame=0;
+                                ptrEnnemi->IndexFrame+=1;
 
-                            SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
-                        }*/
+                                // Cycle de FRAME de 0 à 12 (13 étapes)
+                                if(ptrEnnemi->IndexFrame==13)
+                                {
+                                    ptrEnnemi->IndexFrame=0;
+                                }
+
+                                SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
+                            }*/
+                        }
+
+                        //--------------------------//
+                        //      SI ENNEMI MORT      //
+                        //--------------------------//
+                        else
+                        {
+                            //----------------------//
+                            //      POSITION Y      //
+                            //----------------------//
+                            ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
+                            ptrEnnemi->ptrPosition++;
+
+                            if(ptrEnnemi->ptrPosition > &anim_CHUTE_ENNEMIS[MAX_ETAPES_CHUTE_ENNEMI])
+                            {
+                                ptrEnnemi->ptrPosition = &anim_CHUTE_ENNEMIS[MAX_ETAPES_CHUTE_ENNEMI];
+                            }
+                        }
+
+                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
 
                         // Si l'ennemi sort de l'écran
                         // 6 tiles (48 px) de large
-                        if(ptrEnnemi->PosX<-48 || ptrEnnemi->PosY>224)
+                        if(ptrEnnemi->PosX < -ptrEnnemi->Largeur || ptrEnnemi->PosY > 224)
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
@@ -1285,166 +1384,227 @@ void Mvt_Ennemis_Niveau1()
                         }
                         break;
 
-                    //////////////
-                    // POULPE 1 //
-                    //////////////
+                    //////////////////////////////////////
+                    //                                  //
+                    //             POULPE 1             //
+                    //                                  //
+                    //////////////////////////////////////
                     case 5:
 
-                        ptrEnnemi->PosX -= vitesseScrolling;
-                        ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
-
-                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-
-
-
-                        ptrEnnemi->ptrPosition++;
-
-                        if(ptrEnnemi->ptrPosition >= &anim_POULPE1[MAX_ETAPES_POULPE1])
+                        //----------------------------//
+                        //      SI ENNEMI VIVANT      //
+                        //----------------------------//
+                        if(ptrEnnemi->Etat == 1)
                         {
-                            ptrEnnemi->ptrPosition=&anim_POULPE1[0];
+                            //----------------------//
+                            //      POSITION X      //
+                            //----------------------//
+                            ptrEnnemi->PosX -= vitesseScrolling;
+
+                            //----------------------//
+                            //      POSITION Y      //
+                            //----------------------//                            
+                            ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
+
+                            ptrEnnemi->ptrPosition++;
+
+                            if(ptrEnnemi->ptrPosition >= &anim_POULPE1[MAX_ETAPES_POULPE1])
+                            {
+                                ptrEnnemi->ptrPosition=&anim_POULPE1[0];
+                            }
+
+                            SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                            /*
+                            //--------------------------//
+                            //      ANIM DES TILES      //
+                            //--------------------------//
+                            ptrEnnemi->CompteurFrame+=1;
+
+                            // MAJ des tiles toutes les 8 images (0 à 7)
+                            if(ptrEnnemi->CompteurFrame==8)
+                            {
+                                ptrEnnemi->CompteurFrame=0;
+                                ptrEnnemi->IndexFrame+=1;
+
+                                // Cycle de FRAME de 0 à 12 (13 étapes)
+                                if(ptrEnnemi->IndexFrame==13)
+                                {
+                                    ptrEnnemi->IndexFrame=0;
+                                }
+
+                                SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
+                            }*/
                         }
 
-
-
-                        // Si l'ennemi sort de l'écran
-                        // 4 tiles (32 px) de large
-                        if(ptrEnnemi->PosX<-32 || ptrEnnemi->PosY>224)
+                        //--------------------------//
+                        //      SI ENNEMI MORT      //
+                        //--------------------------//
+                        else
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
                             nb_Ennemis-=1;
-                            //break;
                         }
 
-
-
-                        /*
-                        // Anim des tiles
-                        ptrEnnemi->CompteurFrame+=1;
-
-                        // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame==8)
+                        // Si l'ennemi sort de l'écran
+                        // 4 tiles (32 px) de large
+                        if(ptrEnnemi->PosX < -ptrEnnemi->Largeur || ptrEnnemi->PosY > 224)
                         {
-                            ptrEnnemi->CompteurFrame=0;
-                            ptrEnnemi->IndexFrame+=1;
-
-                            // Cycle de FRAME de 0 à 12 (13 étapes)
-                            if(ptrEnnemi->IndexFrame==13)
-                            {
-                                ptrEnnemi->IndexFrame=0;
-                            }
-
-                            SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
-                        }*/
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
+                        }
                         break;
 
 
-                    //////////////
-                    // POULPE 2 //
-                    //////////////
+                    //////////////////////////////////////
+                    //                                  //
+                    //             POULPE 2             //
+                    //                                  //
+                    //////////////////////////////////////
                     case 6:
 
-                        // Position X
+                        //----------------------//
+                        //      POSITION X      //
+                        //----------------------//
                         ptrEnnemi->PosX -= vitesseScrolling;
 
-                        // Position Y
-                        ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
-
-                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-
-
-
-                        ptrEnnemi->ptrPosition++;
-
-                        if(ptrEnnemi->ptrPosition >= &anim_POULPE2[MAX_ETAPES_POULPE2])
+                        //----------------------------//
+                        //      SI ENNEMI VIVANT      //
+                        //----------------------------//
+                        if(ptrEnnemi->Etat == 1)
                         {
-                            ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+                            //----------------------//
+                            //      POSITION Y      //
+                            //----------------------//
+                            ptrEnnemi->PosY += *(ptrEnnemi->ptrPosition);
+
+                            ptrEnnemi->ptrPosition++;
+
+                            if(ptrEnnemi->ptrPosition >= &anim_POULPE2[MAX_ETAPES_POULPE2])
+                            {
+                                ptrEnnemi->ptrPosition=&anim_POULPE2[0];
+                            }
+
+                            SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                            /*
+                            //--------------------------//
+                            //      ANIM DES TILES      //
+                            //--------------------------//
+                            ptrEnnemi->CompteurFrame+=1;
+
+                            // MAJ des tiles toutes les 8 images (0 à 7)
+                            if(ptrEnnemi->CompteurFrame==8)
+                            {
+                                ptrEnnemi->CompteurFrame=0;
+                                ptrEnnemi->IndexFrame+=1;
+
+                                // Cycle de FRAME de 0 à 12 (13 étapes)
+                                if(ptrEnnemi->IndexFrame==13)
+                                {
+                                    ptrEnnemi->IndexFrame=0;
+                                }
+
+                                SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
+                            }*/
                         }
 
-
-
-                        // Si l'ennemi sort de l'écran
-                        // 4 tiles (32 px) de large
-                        if(ptrEnnemi->PosX<-32 || ptrEnnemi->PosY>224)
+                        //--------------------------//
+                        //      SI ENNEMI MORT      //
+                        //--------------------------//
+                        else
                         {
                             SPR_releaseSprite(ptrEnnemi->SpriteE);
                             ptrEnnemi->Init=0;
                             nb_Ennemis-=1;
                         }
 
-
-
-                        /*
-                        // Anim des tiles
-                        ptrEnnemi->CompteurFrame+=1;
-
-                        // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame==8)
+                        // Si l'ennemi sort de l'écran
+                        // 4 tiles (32 px) de large
+                        if(ptrEnnemi->PosX < -ptrEnnemi->Largeur || ptrEnnemi->PosY > 224)
                         {
-                            ptrEnnemi->CompteurFrame=0;
-                            ptrEnnemi->IndexFrame+=1;
-
-                            // Cycle de FRAME de 0 à 12 (13 étapes)
-                            if(ptrEnnemi->IndexFrame==13)
-                            {
-                                ptrEnnemi->IndexFrame=0;
-                            }
-
-                            SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
-                        }*/
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
+                        }
                         break;
 
-                    /////////////
-                    // PELICAN //
-                    /////////////
+
+                    //////////////////////////////////////
+                    //                                  //
+                    //              PELICANS            //
+                    //                                  //
+                    //////////////////////////////////////
                     case 7:
 
-                        // Position X
-                        if(ptrEnnemi->CompteurPosition==0)
+                        //----------------------------//
+                        //      SI ENNEMI VIVANT      //
+                        //----------------------------//
+                        if(ptrEnnemi->Etat == 1)
                         {
-                            ptrEnnemi->PosX-=(vitesseScrolling);
-                        }
-                        else if(ptrEnnemi->CompteurPosition==1)
-                        {
-                            ptrEnnemi->PosX-=(vitesseScrolling+1);
-                        }
 
-                        ptrEnnemi->CompteurPosition++;
-
-                        if(ptrEnnemi->CompteurPosition==2)
-                        {
-                            ptrEnnemi->CompteurPosition=0;
-                        }
-
-                        SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
-
-                        // Anim des tiles
-                        ptrEnnemi->CompteurFrame+=1;
-
-                        // MAJ des tiles toutes les 8 images (0 à 7)
-                        if(ptrEnnemi->CompteurFrame>7)
-                        {
-                            ptrEnnemi->CompteurFrame-=8;
-                            ptrEnnemi->IndexFrame+=1;
-
-                            // Cycle de FRAME de 0 à 11 (12 étapes)
-                            if(ptrEnnemi->IndexFrame>11)
+                            //----------------------//
+                            //      POSITION X      //
+                            //----------------------//
+                            if(ptrEnnemi->CompteurPosition==0)
                             {
-                                ptrEnnemi->IndexFrame=0;
+                                ptrEnnemi->PosX-=(vitesseScrolling);
+                            }
+                            else if(ptrEnnemi->CompteurPosition==1)
+                            {
+                                ptrEnnemi->PosX-=(vitesseScrolling+1);
                             }
 
-                            SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
+                            ptrEnnemi->CompteurPosition++;
+
+                            if(ptrEnnemi->CompteurPosition==2)
+                            {
+                                ptrEnnemi->CompteurPosition=0;
+                            }
+
+                            SPR_setPosition(ptrEnnemi->SpriteE, ptrEnnemi->PosX, ptrEnnemi->PosY);
+                            
+                            //--------------------------//
+                            //      ANIM DES TILES      //
+                            //--------------------------//
+                            ptrEnnemi->CompteurFrame+=1;
+
+                            // MAJ des tiles toutes les 8 images (0 à 7)
+                            if(ptrEnnemi->CompteurFrame>7)
+                            {
+                                ptrEnnemi->CompteurFrame-=8;
+                                ptrEnnemi->IndexFrame+=1;
+
+                                // Cycle de FRAME de 0 à 11 (12 étapes)
+                                if(ptrEnnemi->IndexFrame>11)
+                                {
+                                    ptrEnnemi->IndexFrame=0;
+                                }
+
+                                SPR_setFrame(ptrEnnemi->SpriteE,(s16)ptrEnnemi->IndexFrame);
+                            }
+                        }
+
+                        //--------------------------//
+                        //      SI ENNEMI MORT      //
+                        //--------------------------//
+                        else
+                        {
+                            SPR_releaseSprite(ptrEnnemi->SpriteE);
+                            ptrEnnemi->Init=0;
+                            nb_Ennemis-=1;
                         }
 
                         // Si l'ennemi sort de l'écran
                         // 3 tiles (24 px) de large
-                        if(ptrEnnemi->PosX<-24 || ptrEnnemi->PosY>224)
+                        if( ptrEnnemi->PosX < -ptrEnnemi->Largeur || ptrEnnemi->PosY > 224 )
                         {
-                            SPR_releaseSprite(ptrEnnemi->SpriteE);
-                            ptrEnnemi->Init=0;
-                            nb_Ennemis-=1;
+                            SPR_releaseSprite( ptrEnnemi->SpriteE );
+                            ptrEnnemi->Init = 0;
+                            nb_Ennemis -= 1;
                         }
                         break;
+                    
                 }
 
             }
@@ -1471,6 +1631,84 @@ void Mvt_Ennemis_Niveau1()
             // CHANGEMENT PALETTE JOUEUR //
             PAL_setColor( 10 , 0x000C );
             PAL_setColor( 13 , 0x06CC );
+        }
+    }
+
+    ///////////////////
+    //    IMPACTS    //
+    ///////////////////
+    if( Nb_Impacts != 0 )
+    {
+        u8 i;
+        
+        for( i=0 ; i<MAX_IMPACTS ; i++)
+        {
+            SpriteImpact_ *ptrImpact=&Impacts[i];
+
+            if( ptrImpact->Init == 1 )
+            {
+                //--------------------------//
+                //      ANIM DES TILES      //
+                //--------------------------//
+                ptrImpact->CompteurFrame+=1;
+
+                // MAJ des tiles toutes les 4 images (0 à 3)
+                if(ptrImpact->CompteurFrame>3)
+                {
+                    ptrImpact->CompteurFrame-=0;
+                    ptrImpact->IndexFrame+=1;
+
+                    SPR_setFrame(ptrImpact->SpriteI,(s16)ptrImpact->IndexFrame);
+
+                    // Cycle de FRAME de 0 à 2 (3 étapes)
+                    if(ptrImpact->IndexFrame>2)
+                    {
+                        ptrImpact->IndexFrame=0;
+                        ptrImpact->Init=0;
+
+                        SPR_releaseSprite(ptrImpact->SpriteI);
+                    }
+                }
+            }
+        }
+    }
+
+    //////////////////////////////
+    //    EXPLOSIONS ENNEMIS    //
+    //////////////////////////////
+    if( Nb_ExploEnnemis != 0 )
+    {
+        u8 i;
+        
+        for( i=0 ; i<MAX_IMPACTS ; i++)
+        {
+            SpriteExploEnnemi_ *ptrExploEnnemi=&ExploEnnemis[i];
+
+            if( ptrExploEnnemi->Init == 1 )
+            {
+                //--------------------------//
+                //      ANIM DES TILES      //
+                //--------------------------//
+                ptrExploEnnemi->CompteurFrame+=1;
+
+                // MAJ des tiles toutes les 2 images (0 à 1)
+                if(ptrExploEnnemi->CompteurFrame>1)
+                {
+                    ptrExploEnnemi->CompteurFrame-=0;
+                    ptrExploEnnemi->IndexFrame+=1;
+
+                    SPR_setFrame(ptrExploEnnemi->SpriteEE,(s16)ptrExploEnnemi->IndexFrame);
+
+                    // Cycle de FRAME de 0 à 7 (8 étapes)
+                    if(ptrExploEnnemi->IndexFrame>7)
+                    {
+                        ptrExploEnnemi->IndexFrame=0;
+                        ptrExploEnnemi->Init=0;
+
+                        SPR_releaseSprite(ptrExploEnnemi->SpriteEE);
+                    }
+                }
+            }
         }
     }
 }
@@ -1776,7 +2014,6 @@ void MvtPlateformes_Niveau1()
     }
 
 }
-
 
 
 //-----------------------------------------------//

@@ -110,7 +110,7 @@ int main(bool resetType)
                 {
                     case 1:
 
-                    XGM_startPlay(Niveau1);
+                    XGM_startPlay(musique_Niveau1);
 
                     while(SWITCH_GAMEOVER == 0)
                     {
@@ -137,8 +137,8 @@ int main(bool resetType)
                                 
                                 TilesJoueur();
 
-                                Maj_CompteurEnergie();
-                                Maj_BarreEnergie(CompteurEnergie, Energie);                               
+                                //Maj_CompteurEnergie();
+                                //Maj_BarreEnergie(CompteurEnergie, Energie);                               
                             }
 
                             //** DEBUG **//

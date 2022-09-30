@@ -18,21 +18,22 @@
 #define MAX_POS_D       FIX32(228L) // LIMITE DROITE ECRAN
 #define MAX_POS_G       FIX32(11L)  // LIMITE GAUCHE ECRAN
 
-#define MAX_ETAPES_SAUT                 40
-#define MAX_ETAPES_TOUCHE               37
-#define MAX_ETAPES_POULPE1              50
-#define MAX_ETAPES_POULPE2              55
-#define MAX_ETAPES_PF_V1                69
-#define MAX_ETAPES_PF_V2                28
-#define MAX_ETAPES_PF_H1                50
-#define MAX_ETAPES_PF_H2                65
-#define MAX_ETAPES_CHUTE_ENNEMI         25
+#define MAX_ETAPES_SAUT                 40  // 41 ETAPES -1
+#define MAX_ETAPES_TOUCHE               37  // 38 ETAPES -1
+#define MAX_ETAPES_POULPE1              49  // 50 ETAPES -1
+#define MAX_ETAPES_POULPE2              54  // 55 ETAPES -1
+#define MAX_ETAPES_PF_V1                68  // 69 ETAPES -1
+#define MAX_ETAPES_PF_V2                27  // 28 ETAPES -1
+#define MAX_ETAPES_PF_H1                49  // 50 ETAPES -1
+#define MAX_ETAPES_PF_H2                64  // 65 ETAPES -1
+#define MAX_ETAPES_CHUTE_ENNEMI         24  // 25 ETAPES -1
 
 
 #define MAX_BALLES              3
 #define MAX_ANNEAUX             5
 #define MAX_ENNEMIS             11
 #define MAX_PLATEFORMES         7
+#define MAX_IMPACTS             5
 
 #define ARRET                   0
 #define MARCHE                  1
@@ -78,6 +79,8 @@ extern u8 Nb_Vies_Options;
 
 extern u8 Nb_Projectiles;
 extern u8 Nb_Balles;
+extern u8 Nb_Impacts;
+extern u8 Nb_ExploEnnemis;
 
 extern u8 Nb_Credits;
 //extern u8 Nb_Credits_Options;
@@ -230,6 +233,34 @@ extern u16 PosYinvincible;
 //----------------------------------------------------//
 
 extern u8 ID_Arme;
+
+//----------------------------------------------------//
+//                       IMPACT                       //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteI;
+
+    u8 Init;                    // Sprite créé ou non
+    u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
+    u8 IndexFrame;              // Index de FRAME
+} SpriteImpact_;
+
+extern SpriteImpact_ Impacts[MAX_IMPACTS];
+
+//----------------------------------------------------//
+//                   EXPLOSION ENNEMI                 //
+//----------------------------------------------------//
+typedef struct
+{
+    Sprite* SpriteEE;
+
+    u8 Init;                    // Sprite créé ou non
+    u8 CompteurFrame;           // Compteur pour passer à la prochaine FRAME
+    u8 IndexFrame;              // Index de FRAME
+} SpriteExploEnnemi_;
+
+extern SpriteExploEnnemi_ ExploEnnemis[MAX_IMPACTS];
 
 //----------------------------------------------------//
 //                       BALLES                       //
