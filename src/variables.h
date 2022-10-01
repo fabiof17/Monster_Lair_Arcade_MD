@@ -57,8 +57,21 @@
 #define DELAI_MAJ_ENERGIE       239
 #define TAILLE_BARRE            14
 
+
+
+
+
 // Definition Sons & Musiques
 #define AUDIO_SAUT              64
+#define AUDIO_BALLE             65
+#define AUDIO_ENNEMI_TOUCHE     66
+#define AUDIO_SPLASH            67
+#define AUDIO_MORT              68
+#define AUDIO_APPARITION        69
+
+
+
+
 
 
 ///////////////////////////////////

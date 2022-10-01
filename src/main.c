@@ -110,7 +110,7 @@ int main(bool resetType)
                 {
                     case 1:
 
-                    XGM_startPlay(musique_Niveau1);
+                    XGM_startPlay(musique_Niveau1_REMIX);
 
                     while(SWITCH_GAMEOVER == 0)
                     {

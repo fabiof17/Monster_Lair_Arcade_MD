@@ -1106,6 +1106,14 @@ void InitNiveau1()
     //                    SONS                  //
     //////////////////////////////////////////////
     XGM_setPCM(AUDIO_SAUT, son_SAUT, sizeof(son_SAUT));
+    XGM_setPCM(AUDIO_BALLE, son_BALLE, sizeof(son_BALLE));
+    XGM_setPCM(AUDIO_ENNEMI_TOUCHE, son_ENNEMI_TOUCHE, sizeof(son_ENNEMI_TOUCHE));
+    XGM_setPCM(AUDIO_SPLASH, son_SPLASH, sizeof(son_SPLASH));
+    XGM_setPCM(AUDIO_MORT, son_MORT, sizeof(son_MORT));
+    XGM_setPCM(AUDIO_APPARITION, son_APPARITION, sizeof(son_APPARITION));
+
+
+
 
 
     // Vblank

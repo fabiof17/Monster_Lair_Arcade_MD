@@ -570,6 +570,7 @@ inline static void Collision_Joueur_Ennemis()
                                         //
                                         if(ptrJoueur->PosY-24 <= ptrEnnemi->PosY+ptrEnnemi->Largeur)
                                         {
+                                            XGM_startPlayPCM(AUDIO_MORT, 4, SOUND_PCM_CH4);
                                             ptrJoueur->Phase=TOUCHE;
                                             ptrJoueur->ptrPosition=&anim_SAUT[0];
                                             ptrJoueur->ptrPosition=&anim_TOUCHE[0];
@@ -817,6 +818,8 @@ inline static void Collision_Tir_Joueur_Ennemis( SpriteBalle_ *ptrProjectile , u
                             {
                                 if( ptrProjectile->PosY < ptrEnnemi->PosY+ptrEnnemi->Hauteur )
                                 {
+                                    XGM_startPlayPCM(AUDIO_ENNEMI_TOUCHE, 2, SOUND_PCM_CH4);
+                                    
                                     // On enlève 1 point de vie //
                                     ptrEnnemi->PointsVie -= 1;
 
@@ -2692,6 +2695,8 @@ void MvtJoueur()
         if(ptrJoueur->PosY>192)
         {
             // SPLASH //
+            XGM_startPlayPCM(AUDIO_SPLASH, 3, SOUND_PCM_CH4);
+
             ptrSplash->Init=1;
             ptrSplash->PosX=ptrJoueur->PosX;
             ptrSplash->PosY=168;
@@ -3055,6 +3060,8 @@ void MvtJoueur()
         if(ptrJoueur->PosY>192)
         {
             // SPLASH //
+            XGM_startPlayPCM(AUDIO_SPLASH, 3, SOUND_PCM_CH4);
+
             ptrSplash->Init=1;
             ptrSplash->PosX=ptrJoueur->PosX;
             ptrSplash->PosY=168;
@@ -3228,6 +3235,8 @@ void MvtJoueur()
             if(ptrJoueur->PosY>192)
             {
                 // SPLASH //
+                XGM_startPlayPCM(AUDIO_SPLASH, 3, SOUND_PCM_CH4);
+
                 ptrSplash->Init=1;
                 ptrSplash->PosX=ptrJoueur->PosX;
                 ptrSplash->PosY=168;
@@ -3415,6 +3424,8 @@ void MvtJoueur()
             if(ptrJoueur->PosY>192)
             {
                 // SPLASH //
+                XGM_startPlayPCM(AUDIO_SPLASH, 3, SOUND_PCM_CH4);
+
                 ptrSplash->Init=1;
                 ptrSplash->PosX=ptrJoueur->PosX;
                 ptrSplash->PosY=168;
@@ -3574,6 +3585,8 @@ void MvtJoueur()
             // QUAND L'ANIM DU SPLASH EST FINE, IL DEVIENT HORS CHAMP //
             if(ptrSplash->CompteurFrameSplash==0 && ptrSplash->IndexFrameSplash==7)
             {
+                //XGM_startPlayPCM(AUDIO_APPARITION, 5, SOUND_PCM_CH4);
+                
                 ptrSplash->PosY-=8;
                 // CHANGEMENT PALETTE DRAGON //
                 PAL_setColor( 10 , 0x0A4C );
@@ -3593,13 +3606,18 @@ void MvtJoueur()
             //-------------------------------------//
             if(ptrJoueur->CompteurApparition>20 && ptrJoueur->CompteurApparition<76)
             {
+                if( ptrJoueur->CompteurApparition == 21 )
+                {
+                    XGM_startPlayPCM(AUDIO_APPARITION, 5, SOUND_PCM_CH4);
+                }
+                
                 ptrJoueur->PosY+=1;
                 positionY=intToFix32(ptrJoueur->PosY);
 
                 ptrDragon->PosX=ptrJoueur->PosX;
                 ptrDragon->PosY=ptrJoueur->PosY-49;
             }
-//**//
+
             //-------------------------------------//
             //            ATTENTE LARGAGE          //
             //-------------------------------------//
@@ -4691,7 +4709,7 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                     if(ptrJoueur->Phase==ARRET || ptrJoueur->Phase==MARCHE)
                     {
                         ptrJoueur->Phase=SAUT;
-                        XGM_startPlayPCM(AUDIO_SAUT, 15, SOUND_PCM_CH4);
+                        XGM_startPlayPCM(AUDIO_SAUT, 0, SOUND_PCM_CH4);
                     }
 
                     //**//
@@ -4711,7 +4729,6 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                             CompteurEnergie=0;
                             Init_BarreEnergie();
                         }
-                        //**//
                     }
                 }
 
@@ -4723,8 +4740,8 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                     {
                         // SAUT + TIR
                         ptrJoueur->Phase=SAUT_TIR;
+                        XGM_startPlayPCM(AUDIO_BALLE, 1, SOUND_PCM_CH4);
 
-                        //Tir_OK=1;
 
                         // L'AURA SE DECLENCHE
                         if(ptrAura->Init==0)
@@ -4740,8 +4757,8 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                     {
                         // MARCHE + TIR
                         ptrJoueur->Phase=TIR;
+                        XGM_startPlayPCM(AUDIO_BALLE, 1, SOUND_PCM_CH4);
 
-                        //Tir_OK=1;
 
                         // L'AURA SE DECLENCHE
                         if(ptrAura->Init==0)
@@ -4757,8 +4774,8 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
                     {
                         // MARCHE + TIR
                         ptrJoueur->Phase=CHUTE_TIR;
+                        XGM_startPlayPCM(AUDIO_BALLE, 1, SOUND_PCM_CH4);
 
-                        //Tir_OK=1;
 
                         // L'AURA SE DECLENCHE
                         if(ptrAura->Init==0)
