@@ -110,7 +110,7 @@ int main(bool resetType)
                 {
                     case 1:
 
-                    XGM_startPlay(musique_Niveau1_REMIX);
+                    XGM_startPlay(musique_Niveau1);
 
                     while(SWITCH_GAMEOVER == 0)
                     {
@@ -132,7 +132,7 @@ int main(bool resetType)
                                 
                                 MvtPlateformes_Niveau1();
 
-                                MvtJoueur();
+                                Mvt_Joueur();
                                 Mvt_TirJoueur();
                                 
                                 TilesJoueur();
@@ -142,8 +142,17 @@ int main(bool resetType)
                             }
 
                             //** DEBUG **//
-                            //VDP_drawInt( Nb_Balles , 1 , 20 , 5 );
-                            //VDP_drawInt( Nb_Projectiles , 1 , 21 , 5 );
+                            /*
+                            SpriteBalle_ *ptrTOTO=&Balles[0];
+                            SpriteBalle_ *ptrTATA=&Balles[1];
+                            SpriteBalle_ *ptrTUTU=&Balles[2];
+
+                            VDP_drawInt( ptrTOTO->Init , 1 , 20 , 5 );
+                            VDP_drawInt( ptrTATA->Init , 1 , 21 , 5 );
+                            VDP_drawInt( ptrTUTU->Init , 1 , 22 , 5 );
+
+                            VDP_drawInt( Nb_Balles , 1 , 24 , 5 );
+                            */
                         }
 
                         // In CONTINUE phase //

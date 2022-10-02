@@ -7,7 +7,7 @@ extern void Crea_Sprites_Niveau1();
 
 extern void Mvt_Ennemis_Niveau1();
 extern void MvtPlateformes_Niveau1();
-extern void MvtJoueur();
+extern void Mvt_Joueur();
 
 extern void TirJoueur();
 extern void CreaTirBase();

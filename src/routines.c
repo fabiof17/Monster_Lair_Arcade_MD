@@ -21,7 +21,6 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 }
 
 
-
 //----------------------------------------------------//
 //                      GAMEOVER                      //
 //----------------------------------------------------//
@@ -43,6 +42,9 @@ void Afficher_GameOver()
     // Sprite GAMEOVER //
     SPR_setPosition(sprite_GameOver, 80, 88);
 }
+
+
+
 
 //----------------------------------------------------//
 //                      CONTINUE                      //
@@ -212,6 +214,7 @@ void Clear_Niveau1()
 
 
 
+
 //----------------------------------------------------//
 //                    BARRE ENERGIE                   //
 //----------------------------------------------------//
@@ -337,6 +340,7 @@ inline static void Vider_BarreEnergie()
 
 
 
+
 //----------------------------------------------------//
 //                      SCROLLING                     //
 //----------------------------------------------------//
@@ -454,6 +458,190 @@ void ChgtPalette_Niveau1()
         PAL_setPalette(PAL3, NouvellePalette, DMA);
     }
 }
+
+
+
+
+//-----------------------------------------------//
+//                      TIRS                     //
+//-----------------------------------------------//
+inline static void Tri_Balles(SpriteBalle_ *ptrProjectile, u8 index, u8 maximum)
+{
+    ptrProjectile = &Balles[index];
+
+    u8 i;
+
+    for( i=index ; i<maximum-1; i++)
+    {
+
+        ptrProjectile[i].Axe = ptrProjectile[i+1].Axe;
+        ptrProjectile[i].PosX = ptrProjectile[i+1].PosX;
+        ptrProjectile[i].PosY = ptrProjectile[i+1].PosY;
+    }
+}
+
+
+
+
+inline static void Crea_TirBalle()
+{
+    SpriteBalle_ *ptrBalle;
+    SpriteJoueur_ *ptrJoueur=&Joueur;
+
+    if( Nb_Balles < MAX_BALLES )
+    {       
+        ptrBalle=&Balles[Nb_Balles];
+
+        ptrBalle->Init = 1;
+        ptrBalle->Axe = ptrJoueur->Axe;
+
+        ptrBalle->Largeur = 8;
+        ptrBalle->Hauteur = 8;
+
+        ptrBalle->PosX = ptrJoueur->PosX + 24;
+        ptrBalle->PosY = ptrJoueur->PosY - 12;
+
+        ptrBalle->SpriteB = SPR_addSprite( &tiles_Sprite_BALLE , ptrBalle->PosX, ptrBalle->PosY , TILE_ATTR ( PAL0 , FALSE , FALSE , FALSE ) );
+        SPR_setDepth(ptrBalle->SpriteB,14);
+
+        Nb_Balles += 1;
+        Nb_Projectiles += 1;
+    }
+
+    else if( Nb_Balles == MAX_BALLES )
+    {      
+        ptrBalle=&Balles[0];
+        //SPR_releaseSprite( ptrBalle->SpriteB );
+        
+        Tri_Balles( ptrBalle , 0 , MAX_BALLES );
+
+        ptrBalle=&Balles[2];
+
+        ptrBalle->Axe = ptrJoueur->Axe;
+
+        //ptrBalle->Largeur = 8;
+        //ptrBalle->Hauteur = 8;
+
+        ptrBalle->PosX = ptrJoueur->PosX + 24;
+        ptrBalle->PosY = ptrJoueur->PosY - 12;
+
+        //ptrBalle->SpriteB = SPR_addSprite( &tiles_Sprite_BALLE , ptrBalle->PosX, ptrBalle->PosY , TILE_ATTR ( PAL0 , FALSE , FALSE , FALSE ) );
+        //SPR_setDepth(ptrBalle->SpriteB,14);
+    }
+}
+
+/*
+void CreaTirShuriken()
+{
+    //
+}
+
+void CreaTirBoule()
+{
+    //
+}
+
+void CreaTirBouleFeu()
+{
+    //
+}
+
+void CreaTirLaser()
+{
+    //
+}
+*/
+
+inline static void TirJoueur()
+{
+    switch (ID_Arme)
+    {
+        case 0:
+
+        Crea_TirBalle();
+        return;
+    }
+}
+
+void Mvt_TirJoueur()
+{
+    u8 i;
+
+    // Si au moins 1 projectile existe //
+    if( Nb_Projectiles != 0 )
+    {
+        
+        if( Nb_Projectiles != 0 )
+        {
+            
+            // Si au moins 1 balle existe //
+            if( Nb_Balles != 0 )
+            {
+
+                for( i=0 ; i<Nb_Balles ; i++)
+                {
+                    
+                    // Pointeur sur le tableau de balles //
+                    SpriteBalle_ *ptrBalle=&Balles[i];
+
+                    // Si balle créée //
+                    if( ptrBalle->Init == 1)
+                    {
+                        
+                        // Vers la droite //
+                        if( ptrBalle->Axe == 0 )
+                        {
+                            ptrBalle->PosX += 6;                       
+                        }
+
+                        // Vers la gauche //
+                        else
+                        {
+                            ptrBalle->PosX -= 6;
+                        }
+
+                        SPR_setPosition(ptrBalle->SpriteB, ptrBalle->PosX, ptrBalle->PosY);
+                    
+                        //----------------------------------------------------------//
+                        //          TEST COLLISION PROJECTILE --> ENNEMI            //
+                        //----------------------------------------------------------// 
+                        /*if( nb_Ennemis != 0 )
+                        {
+                            Collision_Tir_Joueur_Ennemis( ptrBalle );
+                        }*/
+
+                        // Sortie écran //
+                        if( ptrBalle->PosX > 320 || ptrBalle->PosX < -8 )
+                        {
+                            //------------------------------//
+                            //          SECURITE            //
+                            //------------------------------// 
+
+                            // SI LE SPRITE N'A PAS ETE SUPPRIME DANS LA COLLISION AVEC UN ENNEMI //                       
+                            if( ptrBalle->Init == 1 )
+                            {
+                                // ON TRIE LES BALLES //
+                                Tri_Balles( ptrBalle , i , Nb_Balles );
+
+                                // ON SUPPRIME LE SPRITE DE LA DERNIERE BALLE //
+                                SpriteBalle_ *ptrDernierProjectile=&Balles[Nb_Balles-1];
+                                SPR_releaseSprite( ptrDernierProjectile->SpriteB );
+
+                                Nb_Projectiles -= 1;
+                                Nb_Balles -= 1;
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    }
+}
+
 
 
 
@@ -789,7 +977,7 @@ inline static void Crea_Explo_Ennemi( SpriteEnnemi_ *ptrEnnemi )
 
 
 
-inline static void Collision_Tir_Joueur_Ennemis( SpriteBalle_ *ptrProjectile , u8 largeur )
+inline static void Collision_Tir_Joueur_Ennemis( SpriteBalle_ *ptrProjectile )
 {
     u8 e;
 
@@ -863,6 +1051,88 @@ inline static void Collision_Tir_Joueur_Ennemis( SpriteBalle_ *ptrProjectile , u
     }
     
 }
+
+inline static void Collision_Ennemis_Tir_Joueur( SpriteEnnemi_ *ptrEnnemi )
+{
+    u8 b;
+
+    for(b=0 ; b<Nb_Balles ; b++)
+    {
+        SpriteBalle_ *ptrProjectile=&Balles[b];
+
+        //--------------------------//
+        //      SI SPRITE CREE      //
+        //--------------------------//
+        if( ptrProjectile->Init == 1 )
+        {
+            //----------------------------//
+            //      SI ENNEMI VIVANT      //
+            //----------------------------//
+            if( ptrEnnemi->Etat == 1)
+            {
+                // ON VERIFIE LES COLLISIONS QUAND LE SPRITE EST RENTRE DE 16 PIXELS DANS L'ECRAN // 
+                if( ptrEnnemi->PosX < 304 )
+                {
+                    if( ptrProjectile->PosX+ptrProjectile->Largeur > ptrEnnemi->PosX+ptrEnnemi->Marge)
+                    {
+                        if( ptrProjectile->PosX < ptrEnnemi->PosX+ptrEnnemi->Largeur-ptrEnnemi->Marge )
+                        {
+                            if( ptrProjectile->PosY+ptrProjectile->Hauteur > ptrEnnemi->PosY )
+                            {
+                                if( ptrProjectile->PosY < ptrEnnemi->PosY+ptrEnnemi->Hauteur )
+                                {
+                                    XGM_startPlayPCM(AUDIO_ENNEMI_TOUCHE, 2, SOUND_PCM_CH4);
+                                    
+                                    // ON ENLEVE 1 POINT DE VIE //
+                                    ptrEnnemi->PointsVie -= 1;
+
+                                    // ON TRIE LES BALLES //
+                                    Tri_Balles( ptrProjectile , b , Nb_Balles );
+
+                                    // ON SUPPRIME LE SPRITE DE LA DERNIERE BALLE //
+                                    SpriteBalle_ *ptrDernierProjectile=&Balles[Nb_Balles-1];
+                                    SPR_releaseSprite( ptrDernierProjectile->SpriteB );
+
+                                    Nb_Projectiles -= 1;
+                                    Nb_Balles -= 1;
+
+                                    // CREATION DE L'IMPACT //
+                                    Nb_Impacts += 1;
+                                    Crea_Impact( ptrEnnemi );
+
+                                    // SI POINTS DE VIE A ZERO //
+                                    if( ptrEnnemi->PointsVie == 0 )
+                                    {
+                                        // ENNEMI MORT //
+                                        ptrEnnemi->Etat = 0;
+
+                                        // TILES ENNEMI MORT //
+                                        SPR_setAnimAndFrame( ptrEnnemi->SpriteE , 1 , 0 );
+
+                                        // On commence l'anim de chute //
+                                        ptrEnnemi->ptrPosition=&anim_CHUTE_ENNEMIS[0];
+
+                                        //  CREATION DE L'EXPLOSION //
+                                        if( ptrEnnemi->ID == 4 || ptrEnnemi->ID == 5 || ptrEnnemi->ID == 6 || ptrEnnemi->ID == 7 )
+                                        {
+                                            Nb_ExploEnnemis += 1;
+                                            Crea_Explo_Ennemi( ptrEnnemi );
+                                        }                                          
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+
+
 
 //----------------------------------------------------//
 //                   SPRITES NIVEAU 1                 //
@@ -1050,7 +1320,7 @@ void Crea_Sprites_Niveau1()
 
 void Mvt_Ennemis_Niveau1()
 {
-    if(CamPosX>-4336)
+    if( CamPosX > -4336 )
     {
         u8 i;
 
@@ -1058,14 +1328,14 @@ void Mvt_Ennemis_Niveau1()
         //   ENNEMIS   //
         /////////////////
 
-        for(i=0;i<MAX_ENNEMIS;i++)
+        for( i=0 ; i<MAX_ENNEMIS ; i++ )
         {
             SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
 
             //--------------------------//
             //      SI SPRITE CREE      //
             //--------------------------//
-            if(ptrEnnemi->Init==1)
+            if( ptrEnnemi->Init == 1 )
             {
                 // TYPE D'ENNEMI //
                 switch(ptrEnnemi->ID)
@@ -1082,11 +1352,22 @@ void Mvt_Ennemis_Niveau1()
                         //      POSITION X      //
                         //----------------------//
                         ptrEnnemi->PosX-=vitesseScrolling;
-                        
+
+                        //----------------------------------------------------------//
+                        //          TEST COLLISION ENNEMI --> PROJECTILE            //
+                        //----------------------------------------------------------//
+                        if( Nb_Projectiles != 0 )
+                        {
+                            if( Nb_Balles != 0 )
+                            {
+                                Collision_Ennemis_Tir_Joueur( ptrEnnemi );
+                            }
+                        }
+                                               
                         //----------------------------//
                         //      SI ENNEMI VIVANT      //
                         //----------------------------//
-                        if(ptrEnnemi->Etat == 1)
+                        if( ptrEnnemi->Etat == 1 )
                         {
                             //--------------------------//
                             //      ANIM DES TILES      //
@@ -1094,7 +1375,7 @@ void Mvt_Ennemis_Niveau1()
                             ptrEnnemi->CompteurFrame+=1;
 
                             // MAJ des tiles toutes les 8 images (0 à 7)
-                            if(ptrEnnemi->CompteurFrame>7)
+                            if( ptrEnnemi->CompteurFrame > 7 )
                             {
                                 ptrEnnemi->CompteurFrame-=8;
                                 ptrEnnemi->IndexFrame+=1;
@@ -1136,6 +1417,9 @@ void Mvt_Ennemis_Niveau1()
                             ptrEnnemi->Init=0;
                             nb_Ennemis-=1;
                         }
+
+                        // COLLISIONS
+
                         break;
 
                     //////////////////////////////////////
@@ -1162,6 +1446,17 @@ void Mvt_Ennemis_Niveau1()
                         if(ptrEnnemi->CompteurPosition==2)
                         {
                             ptrEnnemi->CompteurPosition=0;
+                        }
+
+                        //----------------------------------------------------------//
+                        //          TEST COLLISION ENNEMI --> PROJECTILE            //
+                        //----------------------------------------------------------//
+                        if( Nb_Projectiles != 0 )
+                        {
+                            if( Nb_Balles != 0 )
+                            {
+                                Collision_Ennemis_Tir_Joueur( ptrEnnemi );
+                            }
                         }
 
                         //----------------------------//
@@ -1230,6 +1525,17 @@ void Mvt_Ennemis_Niveau1()
                         //      POSITION X      //
                         //----------------------//
                         ptrEnnemi->PosX-=vitesseScrolling;
+
+                        //----------------------------------------------------------//
+                        //          TEST COLLISION ENNEMI --> PROJECTILE            //
+                        //----------------------------------------------------------//
+                        if( Nb_Projectiles != 0 )
+                        {
+                            if( Nb_Balles != 0 )
+                            {
+                                Collision_Ennemis_Tir_Joueur( ptrEnnemi );
+                            }
+                        }
 
                         //----------------------------//
                         //      SI ENNEMI VIVANT      //
@@ -1338,6 +1644,17 @@ void Mvt_Ennemis_Niveau1()
                         //----------------------//
                         ptrEnnemi->PosX -= vitesseScrolling;
 
+                        //----------------------------------------------------------//
+                        //          TEST COLLISION ENNEMI --> PROJECTILE            //
+                        //----------------------------------------------------------//
+                        if( Nb_Projectiles != 0 )
+                        {
+                            if( Nb_Balles != 0 )
+                            {
+                                Collision_Ennemis_Tir_Joueur( ptrEnnemi );
+                            }
+                        }
+
                         //----------------------------//
                         //      SI ENNEMI VIVANT      //
                         //----------------------------//
@@ -1400,6 +1717,17 @@ void Mvt_Ennemis_Niveau1()
                     //                                  //
                     //////////////////////////////////////
                     case 5:
+
+                        //----------------------------------------------------------//
+                        //          TEST COLLISION ENNEMI --> PROJECTILE            //
+                        //----------------------------------------------------------//
+                        if( Nb_Projectiles != 0 )
+                        {
+                            if( Nb_Balles != 0 )
+                            {
+                                Collision_Ennemis_Tir_Joueur( ptrEnnemi );
+                            }
+                        }
 
                         //----------------------------//
                         //      SI ENNEMI VIVANT      //
@@ -1474,16 +1802,27 @@ void Mvt_Ennemis_Niveau1()
                     //////////////////////////////////////
                     case 6:
 
-                        //----------------------//
-                        //      POSITION X      //
-                        //----------------------//
-                        ptrEnnemi->PosX -= vitesseScrolling;
+                        //----------------------------------------------------------//
+                        //          TEST COLLISION ENNEMI --> PROJECTILE            //
+                        //----------------------------------------------------------//
+                        if( Nb_Projectiles != 0 )
+                        {
+                            if( Nb_Balles != 0 )
+                            {
+                                Collision_Ennemis_Tir_Joueur( ptrEnnemi );
+                            }
+                        }
 
                         //----------------------------//
                         //      SI ENNEMI VIVANT      //
                         //----------------------------//
                         if(ptrEnnemi->Etat == 1)
                         {
+                            //----------------------//
+                            //      POSITION X      //
+                            //----------------------//
+                            ptrEnnemi->PosX -= vitesseScrolling;
+
                             //----------------------//
                             //      POSITION Y      //
                             //----------------------//
@@ -1547,12 +1886,22 @@ void Mvt_Ennemis_Niveau1()
                     //////////////////////////////////////
                     case 7:
 
+                        //----------------------------------------------------------//
+                        //          TEST COLLISION ENNEMI --> PROJECTILE            //
+                        //----------------------------------------------------------//
+                        if( Nb_Projectiles != 0 )
+                        {
+                            if( Nb_Balles != 0 )
+                            {
+                                Collision_Ennemis_Tir_Joueur( ptrEnnemi );
+                            }
+                        }
+
                         //----------------------------//
                         //      SI ENNEMI VIVANT      //
                         //----------------------------//
                         if(ptrEnnemi->Etat == 1)
                         {
-
                             //----------------------//
                             //      POSITION X      //
                             //----------------------//
@@ -2026,177 +2375,6 @@ void MvtPlateformes_Niveau1()
 }
 
 
-//-----------------------------------------------//
-//                      TIRS                     //
-//-----------------------------------------------//
-void CreaTirBalle()
-{
-    u8 i;
-
-    if( Nb_Balles < MAX_BALLES )
-    {       
-        for( i=0 ; i<Nb_Balles+1 ; i++ )
-        {
-            SpriteBalle_ *ptrBalle=&Balles[i];
-            SpriteJoueur_ *ptrJoueur=&Joueur;
-            
-            if( ptrBalle->Init == 0 )
-            {
-                ptrBalle->Init = 1;
-                ptrBalle->Axe = ptrJoueur->Axe;
-
-                ptrBalle->Largeur = 8;
-                ptrBalle->Hauteur = 8;
-
-                ptrBalle->PosX = ptrJoueur->PosX + 24;
-                ptrBalle->PosY = ptrJoueur->PosY - 12;
-
-                ptrBalle->SpriteB = SPR_addSprite( &tiles_Sprite_BALLE , ptrBalle->PosX, ptrBalle->PosY , TILE_ATTR ( PAL0 , FALSE , FALSE , FALSE ) );
-                SPR_setDepth(ptrBalle->SpriteB,14);
-
-                Nb_Balles += 1;
-                Nb_Projectiles += 1;
-
-                break;
-            }   
-        }
-    }
-    /*
-    else if( Nb_Balles == MAX_BALLES )
-    {
-        //
-    }*/
-}
-
-void CreaTirShuriken()
-{
-    //
-}
-
-void CreaTirBoule()
-{
-    //
-}
-
-void CreaTirBouleFeu()
-{
-    //
-}
-
-void CreaTirLaser()
-{
-    //
-}
-
-
-
-void TirJoueur()
-{
-    switch (ID_Arme)
-    {
-        case 0:
-
-        CreaTirBalle();
-        return;
-    }
-}
-
-//void (*TabCreaTir[5])()={CreaTirBalle,CreaTirShuriken,CreaTirBoule,CreaTirBouleFeu,CreaTirLaser};
-
-
-
-/*
-void MvtTirBase()
-{
-    //
-}
-
-void MvtTirShuriken()
-{
-    //
-}
-
-void MvtTirBoule()
-{
-    //
-}
-
-void MvtTirBouleFeu()
-{
-    //
-}
-
-void MvtTirLaser()
-{
-    //
-}
-*/
-//void (*TabMvtTir[5])()={MvtTirBase,MvtTirShuriken,MvtTirBoule,MvtTirBouleFeu,MvtTirLaser};
-
-
-void Mvt_TirJoueur()
-{
-    // Si au moins 1 projectile existe //
-    if( Nb_Projectiles != 0 )
-    {
-        u8 i;
-        //u8 e;
-        
-        // Si au moins 1 balle existe //
-        if( Nb_Balles != 0 )
-        {
-            for( i=0 ; i<MAX_BALLES ; i++)
-            {
-                // Pointeur sur le tableau de balles //
-                SpriteBalle_ *ptrBalle=&Balles[i];
-
-                // Si balle créée //
-                if( ptrBalle->Init == 1)
-                {
-                    // Vers la droite //
-                    if( ptrBalle->Axe == 0 )
-                    {
-                        ptrBalle->PosX += 6;                       
-                    }
-
-                    // Vers la gauche //
-                    else
-                    {
-                        ptrBalle->PosX -= 6;
-                    }
-
-                    SPR_setPosition(ptrBalle->SpriteB, ptrBalle->PosX, ptrBalle->PosY);
-                
-                    //----------------------------------------------------------//
-                    //          TEST COLLISION PROJECTILE --> ENNEMI            //
-                    //----------------------------------------------------------// 
-                    if( nb_Ennemis != 0 )
-                    {
-                        Collision_Tir_Joueur_Ennemis(ptrBalle , ptrBalle->Largeur);
-                    }
-
-                    // Sortie écran //
-                    if( ptrBalle->PosX > 320 || ptrBalle->PosX < -8 )
-                    {
-                        //------------------------------//
-                        //          SECURITE            //
-                        //------------------------------// 
-
-                        // SI LE SPRITE N'A PAS ETE SUPPRIME DANS LA COLLISION AVEC UN ENNEMI //                       
-                        if( ptrBalle->Init == 1 )
-                        {
-                            ptrBalle->Init = 0;
-                            SPR_releaseSprite(ptrBalle->SpriteB);
-
-                            Nb_Projectiles -= 1;
-                            Nb_Balles -= 1;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 
 //-----------------------------------------------//
@@ -2295,7 +2473,7 @@ void Phases_Joueur()
     }  
 }
 
-void MvtJoueur()
+void Mvt_Joueur()
 {
     // Gestion manette
 	u16 value=JOY_readJoypad(JOY_1);
@@ -3834,6 +4012,8 @@ void MvtJoueur()
 }
 
 
+
+
 //-----------------------------------------------//
 //                      TILES                    //
 //-----------------------------------------------//
@@ -4480,6 +4660,8 @@ void TilesJoueur()
         }
     }
 }
+
+
 
 
 //----------------------------------------------------//
