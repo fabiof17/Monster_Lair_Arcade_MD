@@ -60,6 +60,12 @@ void InitVariablesGeneral()
     // Number of credits //
     Nb_Credits = 3;
 
+    // Score //
+    Score=0;
+
+    // Nombre de chiffres dans le score //
+    Nb_Chiffres=0;
+
     Exit_Titre = 0;
 
     Exit_Selection = 0;
@@ -662,6 +668,12 @@ void InitNiveau1()
 
     tileID_H=0;
 
+    // Init tableau du score //
+    for( i=0 ; i<9 ; i++ )
+    {
+        tableau_Score[i] = 0;
+    }
+
     //////////////////////////////////////////////
     //                CREATION  BG              //
     //////////////////////////////////////////////
@@ -756,9 +768,10 @@ void InitNiveau1()
     ind += image_CONTINUE.tileset->numTile;
 
 
-    //////////////////////////////////////
-    //           TILES CHIFFRES         //
-    //////////////////////////////////////
+
+    ///////////////////////////////////////////////
+    //           TILES CHIFFRES CONTINUE         //
+    ///////////////////////////////////////////////
 
     AdresseVram_ChiffresContinue=ind;
 
@@ -768,6 +781,20 @@ void InitNiveau1()
     // we offset tile index by the number of tiles previously loaded in VRAM
     ind += image_CHIFFRE_9.tileset->numTile;
 
+
+
+    //////////////////////////////////////
+    //        TILES CHIFFRES SCORE      //
+    //////////////////////////////////////
+
+    AdresseVram_ChiffresScore=ind;
+
+    // getting tileset data from IMAGE structure declared in maps_GLOBALES.res
+    VDP_loadTileSet(image_CHIFFRES_SCORE.tileset, ind, DMA);
+
+    // we offset tile index by the number of tiles previously loaded in VRAM
+    ind += image_CHIFFRES_SCORE.tileset->numTile;
+ 
 
 
     ///////////////////
@@ -799,7 +826,7 @@ void InitNiveau1()
     SYS_doVBlankProcess();
 
 
-    VDP_setVerticalScroll(BG_B, 24);
+    //VDP_setVerticalScroll(BG_B, 24);
 
 
     ////////////////////////////////////////////////////
@@ -853,6 +880,9 @@ void InitNiveau1()
     // Vblank
     SYS_doVBlankProcess();
 
+
+
+    VDP_setVerticalScroll(BG_B, 24);
 
 
 

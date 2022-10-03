@@ -17,6 +17,8 @@ bool Titre_OK;                                              // init ---> InitVar
 bool Selection_OK;                                          // init ---> InitVariablesGeneral() //
 bool Niveau_OK;                                             // init ---> InitVariablesGeneral() //
 
+u8 Score;                                                   // init ---> InitVariablesGeneral() //
+
 bool SWITCH_CONTINUE;                                       // init ---> InitVariablesGeneral() //
 bool SWITCH_GAMEOVER;                                       // init ---> InitVariablesGeneral() //
 bool PauseJeu;                                              // init ---> InitVariablesGeneral() //
@@ -32,6 +34,7 @@ u8 Nb_Vies_Options;                                         // init ---> InitVar
 u8 Nb_Credits;                                              // init ---> InitVariablesGeneral() //
 u8 Nb_Impacts;                                              // init ---> InitVariablesGeneral() //
 u8 Nb_ExploEnnemis;                                         // init ---> InitVariablesGeneral() //
+u8 Nb_Chiffres;                                             // init ---> InitVariablesGeneral() //
 
 char texteSortie[3];
 
@@ -74,6 +77,7 @@ u16 AdresseVram_BarreNoire=0;                               // init ---> InitNiv
 
 u16 AdresseVram_Continue=0;                                 // init ---> InitNiveau1() //
 u16 AdresseVram_ChiffresContinue=0;                         // init ---> InitNiveau1() //
+u16 AdresseVram_ChiffresScore;                              // init ---> InitNiveau1() //
 
 ///////////////////////////////////
 //		Variables scrolling      //
@@ -196,14 +200,16 @@ u8 IndexCreaPlateformes;                                    // init ---> InitNiv
 u8 nb_Plateformes;                                          // init ---> InitNiveau1() //
 bool contactPlt_OK;                                         // init ---> InitNiveau1() //
 
-
 //----------------------------------------------------//
 //                        AURA                        //
 //----------------------------------------------------//
 
 SpriteAura_ Aura;
 
-
+//----------------------------------------------------//
+//                       SCORE                        //
+//----------------------------------------------------//
+u8 tableau_Score[9];
 
 
 

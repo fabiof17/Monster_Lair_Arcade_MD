@@ -20,6 +20,22 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 	VDP_drawTextBG(WINDOW,texteSortie,x,y);
 }
 
+inline static void Maj_Score(u8 score)
+{
+    //Nb_Chiffres = 0;
+    u8 i = 0;
+    u8 chiffre;
+    
+    while( score > 0 )
+    {
+        chiffre = score%10;
+
+        VDP_setTileMapEx(WINDOW, image_CHIFFRES_SCORE.tilemap, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, AdresseVram_ChiffresScore) , 16-(i<<1) , 1 , chiffre<<1 , 0, 2, 2, DMA);
+
+        score = score/10;
+        i++;
+    }
+}
 
 //----------------------------------------------------//
 //                      GAMEOVER                      //
@@ -1083,7 +1099,7 @@ inline static void Collision_Ennemis_Tir_Joueur( SpriteEnnemi_ *ptrEnnemi )
                                 if( ptrProjectile->PosY < ptrEnnemi->PosY+ptrEnnemi->Hauteur )
                                 {
                                     XGM_startPlayPCM(AUDIO_ENNEMI_TOUCHE, 2, SOUND_PCM_CH4);
-                                    
+
                                     // ON ENLEVE 1 POINT DE VIE //
                                     ptrEnnemi->PointsVie -= 1;
 
@@ -1107,6 +1123,9 @@ inline static void Collision_Ennemis_Tir_Joueur( SpriteEnnemi_ *ptrEnnemi )
                                     {
                                         // ENNEMI MORT //
                                         ptrEnnemi->Etat = 0;
+
+                                        Score += ptrEnnemi->Points;
+                                        Maj_Score( Score );
 
                                         // TILES ENNEMI MORT //
                                         SPR_setAnimAndFrame( ptrEnnemi->SpriteE , 1 , 0 );

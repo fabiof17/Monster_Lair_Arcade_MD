@@ -92,14 +92,15 @@ extern bool Niveau_OK;
 
 extern u8 Nb_Vies;
 extern u8 Nb_Vies_Options;
+extern u8 Score;
 
 extern u8 Nb_Projectiles;
 extern u8 Nb_Balles;
 extern u8 Nb_Impacts;
 extern u8 Nb_ExploEnnemis;
-
 extern u8 Nb_Credits;
-//extern u8 Nb_Credits_Options;
+extern u8 Nb_Chiffres;
+
 extern bool SWITCH_CONTINUE;
 extern bool SWITCH_GAMEOVER;
 
@@ -140,6 +141,7 @@ extern u16 AdresseVram_BarreVierge;
 extern u16 AdresseVram_BarreNoire;
 extern u16 AdresseVram_Continue;
 extern u16 AdresseVram_ChiffresContinue;
+extern u16 AdresseVram_ChiffresScore;
 
 //xtern bool Tir_OK;
 
@@ -434,6 +436,12 @@ typedef struct
     u8 CompteurFrameFruit;      // Compteur pour passer à la prochaine FRAME FRUIT
     u8 IndexFrameFruit;         // Index de FRAME FRUIT
 } SpriteFruit_;
+
+
+//----------------------------------------------------//
+//                       SCORE                        //
+//----------------------------------------------------//
+extern u8 tableau_Score[9];
 
 
 //----------------------------------------------------//

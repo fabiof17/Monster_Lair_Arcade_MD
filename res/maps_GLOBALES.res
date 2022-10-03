@@ -27,6 +27,8 @@ IMAGE image_CHIFFRE_2 "maps/global/tiles_CHIFFRE_2.png" NONE DUPLICATE
 IMAGE image_CHIFFRE_1 "maps/global/tiles_CHIFFRE_1.png" NONE DUPLICATE
 IMAGE image_CHIFFRE_0 "maps/global/tiles_CHIFFRE_0.png" NONE DUPLICATE
 
+IMAGE image_CHIFFRES_SCORE "maps/global/tiles_CHIFFRES_SCORE.png" NONE DUPLICATE
+
 
 //**********************************************************************************//
 //                                                                                  //

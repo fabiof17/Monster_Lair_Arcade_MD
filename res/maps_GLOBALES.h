@@ -19,6 +19,7 @@ extern const Image image_CHIFFRE_3;
 extern const Image image_CHIFFRE_2;
 extern const Image image_CHIFFRE_1;
 extern const Image image_CHIFFRE_0;
+extern const Image image_CHIFFRES_SCORE;
 extern const TileSet tileset_WINDOW;
 extern const TileSet tileset_TETE_H;
 extern const TileSet tileset_TETE_F;
