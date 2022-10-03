@@ -591,13 +591,13 @@ void Mvt_TirJoueur()
                         // Vers la droite //
                         if( ptrBalle->Axe == 0 )
                         {
-                            ptrBalle->PosX += 6;                       
+                            ptrBalle->PosX += 5;                       
                         }
 
                         // Vers la gauche //
                         else
                         {
-                            ptrBalle->PosX -= 6;
+                            ptrBalle->PosX -= 5;
                         }
 
                         SPR_setPosition(ptrBalle->SpriteB, ptrBalle->PosX, ptrBalle->PosY);
@@ -626,6 +626,7 @@ void Mvt_TirJoueur()
                                 // ON SUPPRIME LE SPRITE DE LA DERNIERE BALLE //
                                 SpriteBalle_ *ptrDernierProjectile=&Balles[Nb_Balles-1];
                                 SPR_releaseSprite( ptrDernierProjectile->SpriteB );
+                                ptrDernierProjectile->Init = 0;
 
                                 Nb_Projectiles -= 1;
                                 Nb_Balles -= 1;
@@ -1092,6 +1093,7 @@ inline static void Collision_Ennemis_Tir_Joueur( SpriteEnnemi_ *ptrEnnemi )
                                     // ON SUPPRIME LE SPRITE DE LA DERNIERE BALLE //
                                     SpriteBalle_ *ptrDernierProjectile=&Balles[Nb_Balles-1];
                                     SPR_releaseSprite( ptrDernierProjectile->SpriteB );
+                                    ptrDernierProjectile->Init = 0;
 
                                     Nb_Projectiles -= 1;
                                     Nb_Balles -= 1;
@@ -1151,83 +1153,72 @@ void Crea_Sprites_Niveau1()
         /////////////////
 
         // tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] : PosX
-        if (-CamPosX>>3 == tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis])
+        if ( -CamPosX>>3 == tilemapCreaEnnemis_Niveau1[0][indexCreaEnnemis] )
         {
             // On scanne les emplacements vides
-            for(i=0;i<MAX_ENNEMIS;i++)
+            for( i=0 ; i<MAX_ENNEMIS ; i++ )
             {
                 SpriteEnnemi_ *ptrEnnemi=&Ennemi[i];
 
                 // Si on trouve un emplacement vide
-                if(ptrEnnemi->Init==0)
+                if( ptrEnnemi->Init == 0 )
                 {
-                    ptrEnnemi->Init=1;          // ENNEMI CREE
-                    ptrEnnemi->Etat=1;          // ENNEMI VIVANT
-                    //ptrEnnemi->PointsVie=1;
+                    ptrEnnemi->Init = 1;          // ENNEMI CREE
+                    ptrEnnemi->Etat = 1;          // ENNEMI VIVANT
 
-                    ptrEnnemi->CompteurPosition=0;
-                    ptrEnnemi->CompteurFrame=i;
-                    ptrEnnemi->IndexFrame=0;
+                    ptrEnnemi->CompteurPosition = 0;
+                    ptrEnnemi->CompteurFrame = i;
+                    ptrEnnemi->IndexFrame = 0;
 
-                    ptrEnnemi->Axe=0;
+                    ptrEnnemi->Axe = 0;
 
                     //---------------------------//
                     //             ID            //
                     //---------------------------//
-                    ptrEnnemi->ID=tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
+                    ptrEnnemi->ID = tilemapCreaEnnemis_Niveau1[2][indexCreaEnnemis];
 
                     //-----------------------------------//
                     //             POSITION X            //
                     //-----------------------------------//
-                    ptrEnnemi->PosX=tilemapCreaEnnemis_Niveau1[3][indexCreaEnnemis]-delta;
+                    ptrEnnemi->PosX = tilemapCreaEnnemis_Niveau1[3][indexCreaEnnemis]-delta;
 
                     //-----------------------------------//
                     //             POSITION Y            //
                     //-----------------------------------//
-                    ptrEnnemi->PosY=tilemapCreaEnnemis_Niveau1[4][indexCreaEnnemis];
+                    ptrEnnemi->PosY = tilemapCreaEnnemis_Niveau1[4][indexCreaEnnemis];
 
                     //------------------------------//
                     //             BONUS            //
                     //------------------------------//
-                    ptrEnnemi->Bonus=tilemapCreaEnnemis_Niveau1[5][indexCreaEnnemis];
+                    ptrEnnemi->Bonus = tilemapCreaEnnemis_Niveau1[5][indexCreaEnnemis];
+
+                    //--------------------------------//
+                    //              POINTS            //
+                    //--------------------------------//
+                    ptrEnnemi->Points = tilemapCreaEnnemis_Niveau1[6][indexCreaEnnemis];
 
                     //------------------------------//
                     //         POINTS DE VIE        //
                     //------------------------------//
+                    ptrEnnemi->PointsVie = tilemapCreaEnnemis_Niveau1[7][indexCreaEnnemis];
                     
                     //--------------------------------//
                     //             LARGEUR            //
                     //--------------------------------//
+                    ptrEnnemi->Largeur = tilemapCreaEnnemis_Niveau1[8][indexCreaEnnemis];
 
                     //--------------------------------//
                     //             HAUTEUR            //
-                    //--------------------------------//                    
+                    //--------------------------------//
+                    ptrEnnemi->Hauteur = tilemapCreaEnnemis_Niveau1[9][indexCreaEnnemis];                    
 
                     //--------------------------------//
                     //              MARGE             //
                     //--------------------------------//
+                    ptrEnnemi->Marge = tilemapCreaEnnemis_Niveau1[10][indexCreaEnnemis]; 
 
-                    // MORSE
-                    if(ptrEnnemi->ID==4)
-                    {
-                        ptrEnnemi->Largeur = 40;
-                        ptrEnnemi->Hauteur = 40;
-                        ptrEnnemi->PointsVie=8;
-                        ptrEnnemi->Marge = 8;
-                    }
-                    // LES AUTRES ENNEMIS
-                    else
-                    {                        
-                        ptrEnnemi->Largeur = 24;
-                        ptrEnnemi->Hauteur = 24;
-                        ptrEnnemi->PointsVie=1;
-                        ptrEnnemi->Marge = 4;
-                    }
-
-
-
-                    ptrEnnemi->SpriteE = SPR_addSprite(AdrTilesEnnemi[ptrEnnemi->ID-1], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(paletteEnnemis_Niveau1[(ptrEnnemi->ID)-1], FALSE, FALSE, FALSE));
-
+                    
+                    //ptrEnnemi->SpriteE = SPR_addSprite(AdrTilesEnnemi[ptrEnnemi->ID-1], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(paletteEnnemis_Niveau1[(ptrEnnemi->ID)-1], FALSE, FALSE, FALSE));
 
                     // POULPE 1
                     if(ptrEnnemi->ID==5)
@@ -1241,6 +1232,8 @@ void Crea_Sprites_Niveau1()
                         //ptrEnnemi->Hauteur = 32;
                         ptrEnnemi->ptrPosition=&anim_POULPE2[0];
                     }
+
+                    ptrEnnemi->SpriteE = SPR_addSprite(AdrTilesEnnemi[ptrEnnemi->ID-1], ptrEnnemi->PosX, ptrEnnemi->PosY, TILE_ATTR(paletteEnnemis_Niveau1[(ptrEnnemi->ID)-1], FALSE, FALSE, FALSE));
 
                     indexCreaEnnemis++;
                     nb_Ennemis+=1;
@@ -5015,5 +5008,3 @@ void Game_PF_Callback(u16 joy, u16 changed, u16 state)
         }      
     }    
 }
-
-

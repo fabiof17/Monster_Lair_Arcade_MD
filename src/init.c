@@ -595,6 +595,7 @@ void InitVies()
 
         }
     }
+    //SPR_update();
 }
 
 
