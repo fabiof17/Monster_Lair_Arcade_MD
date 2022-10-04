@@ -20,7 +20,7 @@ void VDP_drawInt(u16 valeur,u8 zeros,u8 x, u8 y)
 	VDP_drawTextBG(WINDOW,texteSortie,x,y);
 }
 
-inline static void Maj_Score(u8 score)
+inline static void Maj_Score(u16 score)
 {
     //Nb_Chiffres = 0;
     u8 i = 0;

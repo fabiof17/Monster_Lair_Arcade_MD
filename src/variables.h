@@ -92,7 +92,7 @@ extern bool Niveau_OK;
 
 extern u8 Nb_Vies;
 extern u8 Nb_Vies_Options;
-extern u8 Score;
+extern u16 Score;
 
 extern u8 Nb_Projectiles;
 extern u8 Nb_Balles;

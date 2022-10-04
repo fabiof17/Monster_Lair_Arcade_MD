@@ -17,7 +17,7 @@ bool Titre_OK;                                              // init ---> InitVar
 bool Selection_OK;                                          // init ---> InitVariablesGeneral() //
 bool Niveau_OK;                                             // init ---> InitVariablesGeneral() //
 
-u8 Score;                                                   // init ---> InitVariablesGeneral() //
+u16 Score;                                                  // init ---> InitVariablesGeneral() //
 
 bool SWITCH_CONTINUE;                                       // init ---> InitVariablesGeneral() //
 bool SWITCH_GAMEOVER;                                       // init ---> InitVariablesGeneral() //
